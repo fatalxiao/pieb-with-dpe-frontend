@@ -1,3 +1,7 @@
+/**
+ * @file config.js
+ */
+
 export default {
 
     desktopMinWidth: 768,
