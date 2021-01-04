@@ -1,3 +1,7 @@
+/**
+ * @file index.js
+ */
+
 'use strict';
 
 import React from 'react';
@@ -17,11 +21,29 @@ import 'scss/index.scss';
 const history = createBrowserHistory(),
     store = configureStore(history);
 
-render(
-    <Provider store={store}>
-        <ConnectedRouter history={history}>
-            {renderRoutes(configureRoutes(store))}
-        </ConnectedRouter>
-    </Provider>,
-    document.getElementById('app-container')
-);
+/**
+ * 渲染应用到dom
+ */
+function renderAppContainer() {
+    render(
+        <Provider store={store}>
+            <ConnectedRouter history={history}>
+                {renderRoutes(configureRoutes(store))}
+            </ConnectedRouter>
+        </Provider>,
+        document.getElementById('app-container')
+    );
+}
+
+renderAppContainer();
+
+/**
+ * 开发环境时，添加热替换监听
+ */
+if (process.env.NODE_ENV === 'development' && module.hot) {
+    module.hot.accept('src/config.routes.js', renderAppContainer);
+    module.hot.accept('reduxes/store', renderAppContainer);
+    module.hot.accept('reduxes/reducers', () => {
+        store.replaceReducer(require('reduxes/reducers')?.default);
+    });
+}
