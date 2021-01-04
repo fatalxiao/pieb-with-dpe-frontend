@@ -1,19 +1,28 @@
+/**
+ * @file NavBarTop.js
+ */
+
 import React, {Component, createRef} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import classNames from 'classnames';
 
 import * as actions from 'reduxes/actions';
 
+// Components
 import IconButton from 'alcedo-ui/IconButton';
 import DownloadField from 'alcedo-ui/DownloadField';
 import AddPatientDialog from 'containers/app/modules/editPatient/patientBaseInfo/AddPatientDialog';
 import NavSearch from './NavSearch';
 
+// Statics
 import config from 'src/config';
 import {DEFAULT_ROUTE} from 'src/config.routes';
 
+// Vendors
+import classNames from 'classnames';
+
+// Styles
 import 'scss/containers/app/nav/bar/NavBarTop.scss';
 
 class NavBarTop extends Component {
