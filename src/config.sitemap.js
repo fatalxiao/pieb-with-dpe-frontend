@@ -1,12 +1,10 @@
 /**
- * @file config.sitemap
- * @author liangxiaojun(liangxiaojun@derbysoft.com)
+ * @file config.sitemap.js
  */
 
 const rootSymbol = 'root';
 
-function sitemap(state) {
-
+export function sitemap(state) {
     return {
         [rootSymbol]: true,
         children: [{
@@ -31,7 +29,6 @@ function sitemap(state) {
             }]
         }]
     };
-
 }
 
 export function getPath(pathName, state) {

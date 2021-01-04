@@ -1,6 +1,6 @@
 /**
  * @file Dom vendor
- * @author liangxiaojun(liangxiaojun@derbysoft.com)
+
  */
 
 function getOffset(el) {

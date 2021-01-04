@@ -1,6 +1,14 @@
+/**
+ * @file ApiMiddleware.js
+ */
+
 import * as actionTypes from 'reduxes/actionTypes';
-import RequestManagement from 'apis/RequestManagement';
+
+// Actions
 import {addSuccessResMsg, addFailureResMsg} from 'reduxes/actions/common/ResMsgAction';
+
+// Vendors
+import RequestManagement from 'apis/RequestManagement';
 
 export default store => dispatch => action => {
 
@@ -25,15 +33,6 @@ export default store => dispatch => action => {
 
         [requestType, successType, failureType] = types;
 
-    // parse params
-    let paramsSuccessCallback, paramsFailureCallback, restParams;
-    if (params) {
-        const {successCallback, failureCallback, ...rest} = params;
-        paramsSuccessCallback = successCallback;
-        paramsFailureCallback = failureCallback;
-        restParams = rest;
-    }
-
     // calculate action data
     function actionWith(data) {
         const finalAction = Object.assign({}, action, data);
@@ -46,7 +45,7 @@ export default store => dispatch => action => {
 
     api({
         header,
-        params: restParams,
+        params,
         contentType,
         successCallback(xhr, response, responseData) {
 
@@ -59,8 +58,7 @@ export default store => dispatch => action => {
                 xhr
             }));
 
-            actionSuccessCallback && actionSuccessCallback(responseData, response, xhr);
-            paramsSuccessCallback && paramsSuccessCallback();
+            actionSuccessCallback?.(responseData, response, xhr);
 
         },
         failureCallback(xhr, response, responseData) {
@@ -89,8 +87,7 @@ export default store => dispatch => action => {
                     'Server or Network failure. Please try again later or contact your account manager.'
             }));
 
-            actionFailureCallback && actionFailureCallback(responseData, response, xhr);
-            paramsFailureCallback && paramsFailureCallback();
+            actionFailureCallback?.(responseData, response, xhr);
 
         }
     });
