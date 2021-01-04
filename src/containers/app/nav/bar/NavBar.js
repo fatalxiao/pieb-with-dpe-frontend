@@ -1,38 +1,34 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+/**
+ * @file NavBar.js
+ */
 
+import React from 'react';
+import PropTypes from 'prop-types';
+
+// Components
 import NavBarTop from './NavBarTop';
 import NavBarBottom from './NavBarBottom';
 import NavPatientMenu from '../patients/NavPatientsPopover';
 
+// Vendors
+import classNames from 'classnames';
+
+// Styles
 import 'scss/containers/app/nav/bar/NavBar.scss';
 
-class NavBar extends Component {
+const NavBar = ({isFold}) => (
+    <div className={classNames('nav-bar', {
+        fold: isFold
+    })}>
 
-    constructor(props) {
-        super(props);
-    }
+        <NavBarTop isFold={isFold}/>
 
-    render() {
+        <NavPatientMenu isFold={isFold}/>
 
-        const {isFold} = this.props;
+        <NavBarBottom/>
 
-        return (
-            <div className={classNames('nav-bar', {
-                fold: isFold
-            })}>
-
-                <NavBarTop isFold={isFold}/>
-
-                <NavPatientMenu isFold={isFold}/>
-
-                <NavBarBottom/>
-
-            </div>
-        );
-    }
-}
+    </div>
+);
 
 NavBar.propTypes = {
     isFold: PropTypes.bool
