@@ -2,7 +2,7 @@
  * @file NavBarTop.js
  */
 
-import React, {Component, createRef} from 'react';
+import React, {useRef, useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -25,125 +25,115 @@ import classNames from 'classnames';
 // Styles
 import 'scss/containers/app/nav/bar/NavBarTop.scss';
 
-class NavBarTop extends Component {
+const NavBarTop = ({
+    children, isFold,
+    routerPush, resetPatientBaseInfo
+}) => {
 
-    constructor(props) {
+    const
 
-        super(props);
+        /**
+         * Download Field 的 Ref
+         * @type {React.MutableRefObject<undefined>}
+         */
+        downloadFieldRef = useRef(),
 
-        this.state = {
-            searchDrawerVisible: false,
-            addPatientDialogVisible: false
-        };
+        /**
+         * 是否显示查询抽屉
+         * @type {React.MutableRefObject<undefined>}
+         */
+        [searchDrawerVisible, setSearchDrawerVisible] = useState(false),
 
-        this.downloadFieldRef = createRef();
+        /**
+         * 是否显示新建患者对话框
+         * @type {React.MutableRefObject<undefined>}
+         */
+        [addPatientDialogVisible, setAddPatientDialogVisible] = useState(false),
 
-        this.goToLanding = ::this.goToLanding;
-        this.toggleSearch = ::this.toggleSearch;
-        this.hideSearch = ::this.hideSearch;
-        this.showAddPatient = ::this.showAddPatient;
-        this.hideAddPatient = ::this.hideAddPatient;
-        this.export = ::this.export;
-        this.exportLoadedHandler = ::this.exportLoadedHandler;
+        /**
+         * 跳转到落地页
+         * @type {function(): *}
+         */
+        goToLanding = useCallback(() => routerPush?.(DEFAULT_ROUTE), [routerPush]),
 
-    }
+        /**
+         * 切换查询抽屉显示/隐藏
+         * @type {function(): void}
+         */
+        toggleSearch = useCallback(() => setSearchDrawerVisible(!searchDrawerVisible), [searchDrawerVisible]),
 
-    goToLanding() {
-        this.props.routerPush(DEFAULT_ROUTE);
-    }
+        /**
+         * 隐藏查询抽屉
+         * @type {function(): void}
+         */
+        hideSearch = useCallback(() => setSearchDrawerVisible(false), []),
 
-    toggleSearch() {
-        this.setState({
-            searchDrawerVisible: !this.state.searchDrawerVisible
-        });
-    }
+        /**
+         * 显示新建患者对话框
+         * @type {Function}
+         */
+        showAddPatient = useCallback(() => {
+            setAddPatientDialogVisible(true);
+            resetPatientBaseInfo?.();
+        }, [resetPatientBaseInfo]),
 
-    hideSearch() {
-        this.setState({
-            searchDrawerVisible: false
-        });
-    }
+        /**
+         * 隐藏新建患者对话框
+         * @type {function(): void}
+         */
+        hideAddPatient = useCallback(() => setAddPatientDialogVisible(false), []),
 
-    showAddPatient() {
-        this.setState({
-            addPatientDialogVisible: true
-        }, () => {
-            this.props.resetPatientBaseInfo();
-        });
-    }
+        /**
+         * 导出 Excel
+         * @type {function(): *}
+         */
+        exportExcel = useCallback(() => downloadFieldRef?.current?.download?.(), [downloadFieldRef]);
 
-    hideAddPatient() {
-        this.setState({
-            addPatientDialogVisible: false
-        });
-    }
+    return (
+        <div className={classNames('nav-bar-top', {
+            fold: isFold,
+            'search-drawer-visible': searchDrawerVisible
+        })}>
 
-    export() {
-        this.downloadFieldEl.download();
-    }
+            <IconButton className="nav-bar-item nav-bar-logo-button"
+                        onClick={goToLanding}>
+                <div className="logo"/>
+                <div className="logo-animated"/>
+            </IconButton>
 
-    exportLoadedHandler(e, innerText) {
-        //
-    }
+            <IconButton className="nav-bar-item nav-bar-search-button"
+                        iconCls={searchDrawerVisible ? 'icon-reply' : 'icon-magnifying-glass'}
+                        tip={searchDrawerVisible ? 'Back' : 'Search'}
+                        tipPosition={IconButton.TipPosition.RIGHT}
+                        onClick={toggleSearch}/>
 
-    componentDidMount() {
-        this.downloadFieldEl = this.downloadFieldRef?.current;
-    }
+            <IconButton className="nav-bar-item"
+                        iconCls="icon-plus"
+                        tip="Add Patient"
+                        tipPosition={IconButton.TipPosition.RIGHT}
+                        onClick={showAddPatient}/>
 
-    render() {
+            <IconButton className="nav-bar-item nav-bar-export-button"
+                        iconCls="icon-download"
+                        tip="Export"
+                        tipPosition={IconButton.TipPosition.RIGHT}
+                        onClick={exportExcel}/>
 
-        const {children, isFold} = this.props,
-            {searchDrawerVisible, addPatientDialogVisible} = this.state,
+            <NavSearch visible={searchDrawerVisible}
+                       onRequestClose={hideSearch}/>
 
-            className = classNames('nav-bar-top', {
-                fold: isFold,
-                'search-drawer-visible': searchDrawerVisible
-            });
+            <AddPatientDialog visible={addPatientDialogVisible}
+                              onRequestClose={hideAddPatient}/>
 
-        return (
-            <div className={className}>
+            <DownloadField ref={downloadFieldRef}
+                           url={`${config.appBaseUrl}/patient/exportPatients`}/>
 
-                <IconButton className="nav-bar-item nav-bar-logo-button"
-                            onClick={this.goToLanding}>
-                    <div className="logo"/>
-                    <div className="logo-animated"/>
-                </IconButton>
+            {children}
 
-                <IconButton className="nav-bar-item nav-bar-search-button"
-                            iconCls={searchDrawerVisible ? 'icon-reply' : 'icon-magnifying-glass'}
-                            tip={searchDrawerVisible ? 'Back' : 'Search'}
-                            tipPosition={IconButton.TipPosition.RIGHT}
-                            onClick={this.toggleSearch}/>
+        </div>
+    );
 
-                <IconButton className="nav-bar-item"
-                            iconCls="icon-plus"
-                            tip="Add Patient"
-                            tipPosition={IconButton.TipPosition.RIGHT}
-                            onClick={this.showAddPatient}/>
-
-                <IconButton className="nav-bar-item nav-bar-export-button"
-                            iconCls="icon-download"
-                            tip="Export"
-                            tipPosition={IconButton.TipPosition.RIGHT}
-                            onClick={this.export}/>
-
-                <NavSearch visible={searchDrawerVisible}
-                           onRequestClose={this.hideSearch}/>
-
-                <AddPatientDialog visible={addPatientDialogVisible}
-                                  onRequestClose={this.hideAddPatient}/>
-
-                <DownloadField ref={this.downloadFieldRef}
-                               url={`${config.appBaseUrl}/patient/exportPatients`}
-                               onLoad={this.exportLoadedHandler}/>
-
-                {children}
-
-            </div>
-        );
-
-    }
-}
+};
 
 NavBarTop.propTypes = {
 
@@ -154,7 +144,7 @@ NavBarTop.propTypes = {
 
 };
 
-export default connect(state => ({}), dispatch => bindActionCreators({
+export default connect(null, dispatch => bindActionCreators({
     routerPush: actions.routerPush,
     resetPatientBaseInfo: actions.resetPatientBaseInfo
 }, dispatch))(NavBarTop);
