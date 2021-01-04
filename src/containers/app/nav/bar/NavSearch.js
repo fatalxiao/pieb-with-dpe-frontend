@@ -1,91 +1,81 @@
-import React, {Component} from 'react';
+/**
+ * @file NavSearch.js
+ */
+
+import React, {useState, useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import classNames from 'classnames';
 
+// Components
 import Paper from 'alcedo-ui/Paper';
 import TextField from 'alcedo-ui/TextField';
 import NavPatientList from 'containers/app/nav/patients/NavPatientList';
 
+// Vendors
+import classNames from 'classnames';
+
+// Styles
 import 'scss/containers/app/nav/bar/NavSearch.scss';
 
-class NavSearch extends Component {
+const NavSearch = ({
+    visible, patientList,
+    onRequestClose
+}) => {
 
-    constructor(props) {
+    const
 
-        super(props);
+        /**
+         * 过滤的值
+         */
+        [filterValue, setFilterValue] = useState(''),
 
-        this.state = {
-            filterValue: ''
-        };
-
-        this.filter = ::this.filter;
-        this.filterChangeHandler = ::this.filterChangeHandler;
-
-    }
-
-    filter(filterValue, props = this.props) {
-
-        const {patientList} = props;
-
-        if (!filterValue) {
-            return patientList;
-        }
-
-        return patientList ?
-            patientList.filter(item =>
-                (item.id && item.id.includes(filterValue)) || (item.name && item.name.includes(filterValue))
-            )
+        /**
+         * 根据 filter value 返回数据
+         * @type {Array}
+         */
+        data = useMemo(() => filterValue ?
+            patientList ?
+                patientList.filter(item => item?.id?.includes(filterValue) || item?.name?.includes(filterValue))
+                :
+                []
             :
-            [];
+            patientList,
+            [filterValue, patientList]),
 
-    }
+        /**
+         * 处理 filter 变更
+         * @type {function(*=): void}
+         */
+        handleFilterChange = useCallback(nextFilterValue => setFilterValue(nextFilterValue), []);
 
-    filterChangeHandler(filterValue) {
-        this.setState({
-            filterValue
-        });
-    }
+    return (
+        <div className={classNames('nav-search-wrapper', {
+            hidden: !visible
+        })}>
+            <div className="nav-search-modal"
+                 onClick={onRequestClose}></div>
+            <Paper className="nav-search"
+                   nonRounded={true}
+                   depth={6}>
+                <div className="nav-search-content">
+                    <TextField className="nav-search-field"
+                               value={filterValue}
+                               placeholder="Search"
+                               onChange={handleFilterChange}/>
+                    {
+                        data?.length > 0 ?
+                            <NavPatientList data={data}/>
+                            :
+                            <div className="no-patient-found">
+                                No Patient Found
+                            </div>
+                    }
+                </div>
+            </Paper>
+        </div>
+    );
 
-    render() {
-
-        const {visible, onRequestClose} = this.props,
-            {filterValue} = this.state,
-
-            data = this.filter(filterValue),
-
-            className = classNames('nav-search-wrapper', {
-                hidden: !visible
-            });
-
-        return (
-            <div className={className}>
-                <div className="nav-search-modal"
-                     onClick={onRequestClose}></div>
-                <Paper className="nav-search"
-                       nonRounded={true}
-                       depth={6}>
-                    <div className="nav-search-content">
-                        <TextField className="nav-search-field"
-                                   value={filterValue}
-                                   placeholder="Search"
-                                   onChange={this.filterChangeHandler}/>
-                        {
-                            data && data.length > 0 ?
-                                <NavPatientList data={this.filter(filterValue)}/>
-                                :
-                                <div className="no-patient-found">
-                                    No Patient Found
-                                </div>
-                        }
-                    </div>
-                </Paper>
-            </div>
-        );
-
-    }
-}
+};
 
 NavSearch.propTypes = {
 
@@ -98,4 +88,4 @@ NavSearch.propTypes = {
 
 export default connect(state => ({
     patientList: state.patients.list
-}), dispatch => bindActionCreators({}, dispatch))(NavSearch);
+}))(NavSearch);
