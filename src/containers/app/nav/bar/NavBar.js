@@ -16,14 +16,12 @@ class NavBar extends Component {
 
     render() {
 
-        const {isFold} = this.props,
-
-            wrapperClassName = classNames('nav-bar', {
-                fold: isFold
-            });
+        const {isFold} = this.props;
 
         return (
-            <div className={wrapperClassName}>
+            <div className={classNames('nav-bar', {
+                fold: isFold
+            })}>
 
                 <NavBarTop isFold={isFold}/>
 

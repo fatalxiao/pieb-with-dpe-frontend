@@ -1,4 +1,8 @@
-import React, {Component} from 'react';
+/**
+ * @file AppRoot.js
+ */
+
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -7,11 +11,14 @@ import {Redirect} from 'react-router-dom';
 
 import * as actions from 'reduxes/actions';
 
+// Components
 import Toaster from 'alcedo-ui/Toaster';
 import Notifier from 'alcedo-ui/Notifier';
 
+// Statics
 import {DEFAULT_ROUTE} from 'src/config.routes';
 
+// Styles
 import 'assets/bootstrap/bootstrap-grid.min.css';
 import 'assets/font-awesome/css/fontawesome-all.min.css';
 import 'assets/icomoon/style.css';
@@ -19,42 +26,31 @@ import 'scss/customized/index.scss';
 import 'scss/global.scss';
 import 'scss/containers/AppRoot.scss';
 
-class AppRoot extends Component {
+const AppRoot = ({
+    toastes, notifiers, route, location, clearToaste, clearNotifier
+}) => (
+    <div className="app-root">
 
-    constructor(props) {
-        super(props);
-    }
+        <Toaster toasts={toastes}
+                 position={Toaster.Position.TOP}
+                 onToastPop={clearToaste}/>
 
-    render() {
+        <Notifier notifications={notifiers}
+                  position={Notifier.Position.TOP_RIGHT}
+                  onNotificationPop={clearNotifier}
+                  duration={8000}/>
 
-        const {toastes, notifiers, route, location, clearToaste, clearNotifier} = this.props;
+        {renderRoutes(route.routes)}
 
-        return (
-            <div className="app-root">
+        {
+            location.pathname === '/' ?
+                <Redirect from="/" to={DEFAULT_ROUTE}/>
+                :
+                null
+        }
 
-                <Toaster toasts={toastes}
-                         position={Toaster.Position.TOP}
-                         onToastPop={clearToaste}/>
-
-                <Notifier notifications={notifiers}
-                          position={Notifier.Position.TOP_RIGHT}
-                          onNotificationPop={clearNotifier}
-                          duration={8000}/>
-
-                {renderRoutes(route.routes)}
-
-                {
-                    location.pathname === '/' ?
-                        <Redirect from="/" to={DEFAULT_ROUTE}/>
-                        :
-                        null
-                }
-
-            </div>
-        );
-    }
-
-}
+    </div>
+);
 
 AppRoot.propTypes = {
 

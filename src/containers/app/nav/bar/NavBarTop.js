@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -26,6 +26,8 @@ class NavBarTop extends Component {
             searchDrawerVisible: false,
             addPatientDialogVisible: false
         };
+
+        this.downloadFieldRef = createRef();
 
         this.goToLanding = ::this.goToLanding;
         this.toggleSearch = ::this.toggleSearch;
@@ -76,7 +78,7 @@ class NavBarTop extends Component {
     }
 
     componentDidMount() {
-        this.downloadFieldEl = this.refs.downloadField;
+        this.downloadFieldEl = this.downloadFieldRef?.current;
     }
 
     render() {
@@ -122,7 +124,7 @@ class NavBarTop extends Component {
                 <AddPatientDialog visible={addPatientDialogVisible}
                                   onRequestClose={this.hideAddPatient}/>
 
-                <DownloadField ref="downloadField"
+                <DownloadField ref={this.downloadFieldRef}
                                url={`${config.appBaseUrl}/patient/exportPatients`}
                                onLoad={this.exportLoadedHandler}/>
 

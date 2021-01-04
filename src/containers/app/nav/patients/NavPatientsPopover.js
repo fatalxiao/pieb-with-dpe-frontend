@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
 import {connect} from 'react-redux';
@@ -22,6 +22,8 @@ class NavPatientsPopover extends Component {
             popVisible: false
         };
 
+        this.allPatientButtonRef = createRef();
+
         this.allPatientMouseHandler = ::this.allPatientMouseHandler;
         this.goToList = ::this.goToList;
 
@@ -38,7 +40,7 @@ class NavPatientsPopover extends Component {
     }
 
     componentDidMount() {
-        this.allPatientButtonEl = findDOMNode(this.refs.allPatientButton);
+        this.allPatientButtonEl = findDOMNode(this.allPatientButtonRef?.current);
     }
 
     render() {
@@ -49,7 +51,7 @@ class NavPatientsPopover extends Component {
         return (
             <div className="nav-patient-popover-wrapper">
 
-                <IconButton ref="allPatientButton"
+                <IconButton ref={this.allPatientButtonRef}
                             className="nav-patient-popover-item"
                             iconCls="icon-list"
                             onMouseOver={() => {

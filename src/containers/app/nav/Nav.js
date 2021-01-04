@@ -1,179 +1,261 @@
-import React, {Component} from 'react';
-import classNames from 'classnames';
+/**
+ * @file App.js
+ */
 
+import React, {useMemo, useState, useCallback, useEffect} from 'react';
+
+// Components
 import NavBar from './bar/NavBar';
 import NavPatient from './patients/NavPatients';
 
+// Vendors
+import classNames from 'classnames';
 import Event from 'vendors/Event';
 import Valid from 'vendors/Valid';
 
+// Styles
 import 'scss/containers/app/nav/Nav.scss';
 
-class Nav extends Component {
+const Nav = () => {
 
-    constructor(props) {
+    const
 
-        super(props);
+        /**
+         * 工具栏宽度
+         * @type {number}
+         */
+        navBarWidth = useMemo(() => 64, []),
 
-        this.navBarWidth = 64;
-        this.navPatientWidth = 240;
-        this.defaultWidth = this.navBarWidth + this.navPatientWidth;
+        /**
+         * 患者栏宽度
+         * @type {number}
+         */
+        navPatientWidth = useMemo(() => 240, []),
 
-        this.noMove = false;
-        this.resizing = false;
-        this.startWidth = null;
-        this.mouseX = null;
+        /**
+         * 整个导航栏的默认宽度
+         * @type {number}
+         */
+        defaultWidth = useMemo(() =>
+            navBarWidth + navPatientWidth,
+            [navBarWidth, navPatientWidth]
+        ),
 
-        const navWidth = this.getNavWidth();
-        this.state = {
-            isDragging: false,
-            navWidth,
-            isNavPatientCollapsed: this.isNavPatientCollapsed(navWidth) || this.isNavPatientFold(navWidth),
-            isNavPatientFold: this.isNavPatientFold(navWidth)
-        };
+        /**
+         * 导航栏的默认宽度（ 如果 Local Storage 有值的话优先使用 ）
+         * @type {number}
+         */
+        defaultNavWidth = useMemo(() =>
+            parseInt(localStorage.getItem('navWidth')) || defaultWidth,
+            [defaultWidth]
+        ),
 
-    }
+        /**
+         * 患者栏是否塌缩
+         * @type {function(*): boolean}
+         */
+        isNavPatientCollapsed = useCallback(navWidth =>
+            navWidth < navBarWidth * 2,
+            [navBarWidth]
+        ),
 
-    getNavWidth = () => {
-        return parseInt(localStorage.getItem('navWidth')) || this.defaultWidth;
-    };
+        /**
+         * 患者栏是否折叠
+         * @type {function(*): boolean}
+         */
+        isNavPatientFold = useCallback(navWidth =>
+            navWidth < navBarWidth + navPatientWidth / 3,
+            [navBarWidth, navPatientWidth]
+        ),
 
-    saveNavWidth = navWidth => {
-        localStorage.setItem('navWidth', navWidth);
-    };
+        /**
+         * 是否没有移动
+         * @type {number}
+         */
+        [noMove, setNoMove] = useState(false),
 
-    isNavPatientCollapsed = navWidth => {
-        return navWidth < this.navBarWidth * 2;
-    };
+        /**
+         * 是否正在 resize
+         * @type {number}
+         */
+        [resizing, setResizing] = useState(false),
 
-    isNavPatientFold = navWidth => {
-        return navWidth < this.navBarWidth + this.navPatientWidth / 3;
-    };
+        /**
+         * 拖拽的初始宽度
+         * @type {number}
+         */
+        [startWidth, setStartWidth] = useState(null),
 
-    toggleMouseDownHandler = e => {
+        /**
+         * 鼠标的水平偏移量
+         * @type {number}
+         */
+        [mouseX, setMouseX] = useState(null),
 
-        e.stopPropagation();
+        /**
+         * 是否正在拖拽
+         * @type {number}
+         */
+        [dragging, setDragging] = useState(false),
 
-        this.noMove = true;
-        this.resizing = true;
-        this.startWidth = this.state.navWidth;
-        this.mouseX = e.pageX;
+        /**
+         * 当前导航栏的宽度
+         * @type {number}
+         */
+        [navWidth, setNavWidth] = useState(defaultNavWidth),
 
-    };
+        /**
+         * 当前患者栏是否塌缩
+         * @type {number}
+         */
+        [navPatientCollapsed, setNavPatientCollapsed] = useState(
+            isNavPatientCollapsed(defaultNavWidth) || isNavPatientFold(navWidth)
+        ),
 
-    mouseMoveHandler = e => {
+        /**
+         * 当前患者栏是否折叠
+         * @type {number}
+         */
+        [navPatientFold, setNavPatientFold] = useState(isNavPatientFold(navWidth)),
 
-        e.stopPropagation();
+        /**
+         * 当前导航栏是否折叠
+         * @type {boolean}
+         */
+        collapsed = useMemo(() => navWidth === navBarWidth, [navWidth, navBarWidth]),
 
-        if (!this.resizing) {
-            return;
-        }
+        /**
+         * 更新导航栏宽度到 local storage
+         * @type {function(*=): void}
+         */
+        saveNavWidth = useCallback(navWidth => localStorage.setItem('navWidth', navWidth), []),
 
-        this.noMove = false;
+        /**
+         * 按下鼠标开始拖拽
+         * @type {Function}
+         */
+        startDrag = useCallback(e => {
 
-        const offsetX = e.pageX - this.mouseX,
-            navWidth = Valid.range(this.startWidth + offsetX, this.navBarWidth);
+            e.stopPropagation();
 
-        this.setState({
-            isDragging: true,
-            navWidth,
-            isNavPatientCollapsed: this.isNavPatientCollapsed(navWidth),
-            isNavPatientFold: false
-        });
+            setNoMove(true);
+            setResizing(true);
+            setStartWidth(navWidth);
+            setMouseX(e.pageX);
 
-    };
+        }, [navWidth]),
 
-    mouseUpHandler = () => {
+        /**
+         * 处理鼠标拖拽移动
+         * @type {Function}
+         */
+        handleMouseMove = useCallback(e => {
 
-        this.resizing = false;
+            e.stopPropagation();
 
-        const {navWidth} = this.state,
-            isFold = this.isNavPatientFold(navWidth),
-            newNavWidth = isFold ? this.navBarWidth : (navWidth < this.defaultWidth ? this.defaultWidth : navWidth);
+            if (!resizing) {
+                return;
+            }
 
-        this.setState({
-            isDragging: false,
-            navWidth: newNavWidth,
-            isNavPatientCollapsed: this.isNavPatientCollapsed(newNavWidth) || isFold,
-            isNavPatientFold: isFold
-        }, () => {
-            this.saveNavWidth(newNavWidth);
-        });
+            setNoMove(false);
 
-    };
+            const offsetX = e.pageX - mouseX,
+                nextNavWidth = Valid.range(startWidth + offsetX, navBarWidth);
 
-    toggleNav = e => {
+            setDragging(true);
+            setNavWidth(nextNavWidth);
+            setNavPatientCollapsed(isNavPatientCollapsed(nextNavWidth));
+            setNavPatientFold(false);
 
-        if (!this.noMove) {
-            return;
-        }
+        }, [resizing, mouseX, startWidth, navBarWidth]),
 
-        e.stopPropagation();
+        /**
+         * 处理鼠标拖拽结束
+         * @type {Function}
+         */
+        handleMouseUp = useCallback(() => {
 
-        const {navWidth} = this.state,
-            isFold = navWidth !== this.navBarWidth;
+            setResizing(false);
 
-        this.setState({
-            navWidth: isFold ? this.navBarWidth : this.defaultWidth,
-            isNavPatientCollapsed: isFold,
-            isNavPatientFold: isFold
-        });
+            const isFold = isNavPatientFold(navWidth),
+                nextNavWidth = isFold ? navBarWidth : (navWidth < defaultWidth ? defaultWidth : navWidth);
 
-    };
+            setDragging(false);
+            setNavWidth(nextNavWidth);
+            setNavPatientCollapsed(isNavPatientCollapsed(nextNavWidth) || isFold);
+            setNavPatientFold(isFold);
+            saveNavWidth(nextNavWidth);
 
-    componentDidMount() {
-        Event.addEvent(document, 'mousemove', this.mouseMoveHandler);
-        Event.addEvent(document, 'mouseup', this.mouseUpHandler);
-    }
+        }, [navWidth, navBarWidth, defaultWidth]),
 
-    componentWillUnmount() {
-        Event.removeEvent(document, 'mousemove', this.mouseMoveHandler);
-        Event.removeEvent(document, 'mouseup', this.mouseUpHandler);
-    }
+        /**
+         * 切换患者栏塌缩折叠
+         * @type {Function}
+         */
+        toggleNav = useCallback(e => {
 
-    render() {
+            if (!noMove) {
+                return;
+            }
 
-        const {isDragging, navWidth, isNavPatientCollapsed, isNavPatientFold} = this.state,
+            e.stopPropagation();
 
-            collapsed = navWidth === this.navBarWidth,
+            const isFold = navWidth !== navBarWidth;
 
-            wrapperClassName = classNames('nav', {
-                dragging: isDragging
-            }),
-            wrapperStyle = {
-                flexBasis: collapsed ? this.navBarWidth : navWidth
-            },
-            innerStyle = {
-                width: collapsed ? this.navBarWidth : navWidth
-            },
-            toggleClassName = classNames('nav-toggle', {
-                collapsed
-            });
+            setNavWidth(isFold ? navBarWidth : defaultWidth);
+            setNavPatientCollapsed(isFold);
+            setNavPatientFold(isFold);
 
-        return (
-            <div className={wrapperClassName}
-                 style={wrapperStyle}>
+        }, [noMove, navWidth, navBarWidth, defaultWidth]);
 
-                <div className="nav-inner"
-                     style={innerStyle}>
+    /**
+     * 绑定/解绑 document 上的鼠标移动事件
+     */
+    useEffect(() => {
+        Event.addEvent(document, 'mousemove', handleMouseMove);
+        return () => Event.removeEvent(document, 'mousemove', handleMouseMove);
+    }, [handleMouseMove]);
 
-                    <NavBar isCollapsed={isNavPatientCollapsed}
-                            isFold={isNavPatientFold}/>
+    /**
+     * 绑定/解绑 document 上的鼠标抬起事件
+     */
+    useEffect(() => {
+        Event.addEvent(document, 'mouseup', handleMouseUp);
+        return () => Event.removeEvent(document, 'mouseup', handleMouseUp);
+    }, [handleMouseUp]);
 
-                    <NavPatient isCollapsed={isNavPatientCollapsed}
-                                isFold={isNavPatientFold}/>
+    return (
+        <div className={classNames('nav', {
+            dragging
+        })}
+             style={{
+                 flexBasis: collapsed ? navBarWidth : navWidth
+             }}>
 
-                    <div className="nav-resize"
-                         onMouseDown={this.toggleMouseDownHandler}
-                         onMouseUp={this.toggleNav}>
-                        <div className={toggleClassName}></div>
-                    </div>
+            <div className="nav-inner"
+                 style={{
+                     width: collapsed ? navBarWidth : navWidth
+                 }}>
 
+                <NavBar isCollapsed={navPatientCollapsed}
+                        isFold={navPatientFold}/>
+
+                <NavPatient isCollapsed={navPatientCollapsed}
+                            isFold={navPatientFold}/>
+
+                <div className="nav-resize"
+                     onMouseDown={startDrag}
+                     onMouseUp={toggleNav}>
+                    <div className={classNames('nav-toggle', {
+                        collapsed
+                    })}></div>
                 </div>
 
             </div>
-        );
-    }
-}
+
+        </div>
+    );
+
+};
 
 export default Nav;

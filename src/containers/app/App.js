@@ -1,4 +1,8 @@
-import React, {Component} from 'react';
+/**
+ * @file App.js
+ */
+
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -6,58 +10,52 @@ import {renderRoutes} from 'react-router-config';
 
 import * as actions from 'reduxes/actions';
 
+// Components
 import Nav from './nav/Nav';
 import NavTitle from './nav/title/NavTitle';
 import PageLoading from 'alcedo-ui/PageLoading';
 
+// Vendors
 import Dom from 'vendors/Dom';
 
+// Styles
 import 'scss/containers/app/App.scss';
 
-class App extends Component {
+const App = ({
+    route, componentLoading,
+    getGroups, getSensoryBlocks, getPatients
+}) => {
 
-    constructor(props) {
-        super(props);
-    }
-
-    componentDidMount() {
+    useEffect(() => {
 
         Dom.removeClass(document.querySelector('html'), 'full-size');
 
-        const {getGroups, getSensoryBlocks, getPatients} = this.props;
+        getGroups?.();
+        getSensoryBlocks?.();
+        getPatients?.();
 
-        getGroups();
-        getSensoryBlocks();
-        getPatients();
+    }, []);
 
-    }
+    return (
+        <div className="app">
 
-    render() {
+            <Nav/>
 
-        const {route, componentLoading} = this.props;
+            <div className="app-content">
 
-        return (
-            <div className="app">
+                <PageLoading visible={componentLoading}
+                             showStripes={false}/>
 
-                <Nav/>
+                <NavTitle/>
 
-                <div ref="appContent"
-                     className="app-content">
-
-                    <PageLoading visible={componentLoading}
-                                 showStripes={false}/>
-
-                    <NavTitle/>
-
-                    {renderRoutes(route.routes)}
-
-                </div>
+                {renderRoutes(route.routes)}
 
             </div>
-        );
 
-    }
-}
+        </div>
+    );
+
+};
 
 App.propTypes = {
 
