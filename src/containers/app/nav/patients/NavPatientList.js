@@ -1,79 +1,53 @@
-import React, {Component} from 'react';
+/**
+ * @file NavPatientList.js
+ */
+
+import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 
-import * as actions from 'reduxes/actions';
+// Components
+import NavPatientListItem from './NavPatientListItem';
 
-import FlatButton from 'alcedo-ui/FlatButton';
-
+// Vendors
 import Event from 'vendors/Event';
 
+// Styles
 import 'scss/containers/app/nav/patients/NavPatientList.scss';
 
-class NavPatientList extends Component {
+const NavPatientList = ({
+    patientList, data
+}) => {
 
-    constructor(props) {
-        super(props);
-    }
+    const
 
-    render() {
-
-        const {groupList, patientList, data, routerPush} = this.props,
-            listData = data || patientList;
-
-        return (
-            <div className="nav-patient-list"
-                 onWheel={e => {
-                     Event.preventContainerScroll(e);
-                 }}>
-
-                {
-                    listData && listData.map((patient, index) => {
-
-                        const patientId = patient.id,
-                            groupName = groupList.find(item => item.id === patient.groupId).name;
-
-                        return (
-                            <FlatButton key={index}
-                                        className="patient"
-                                        onClick={() => {
-                                            routerPush(`/app/patient/info/${patientId}`);
-                                        }}>
-
-                                <div className="patient-info">
-                                    <span className="patient-name">{patient.name}</span>
-                                </div>
-
-                                <div className="patient-desc">
-                                    {`${patientId}  ·  ${groupName}`}
-                                </div>
-
-                            </FlatButton>
-                        );
-
-                    })
-                }
-
-            </div>
+        /**
+         * 列表的数据
+         */
+        listData = useMemo(() =>
+            data || patientList,
+            [data, patientList]
         );
 
-    }
-}
-
-NavPatientList.propTypes = {
-
-    groupList: PropTypes.array,
-    patientList: PropTypes.array,
-    data: PropTypes.array,
-
-    routerPush: PropTypes.func
+    return (
+        <div className="nav-patient-list"
+             onWheel={Event.preventContainerScroll}>
+            {
+                listData?.map((patient, index) =>
+                    <NavPatientListItem key={index}
+                                        patient={patient}/>
+                )
+            }
+        </div>
+    );
 
 };
 
+NavPatientList.propTypes = {
+    patientList: PropTypes.array,
+    data: PropTypes.array
+};
+
 export default connect(state => ({
-    groupList: state.group.list,
     patientList: state.patients.list
-}), dispatch => bindActionCreators({
-    routerPush: actions.routerPush
-}, dispatch))(NavPatientList);
+}))(NavPatientList);
