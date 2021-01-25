@@ -1,50 +1,52 @@
-import React, {Component} from 'react';
+/**
+ * @file NavPatientListWrapper.js
+ */
+
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import * as actions from 'reduxes/actions';
 
+// Components
 import FlatButton from 'alcedo-ui/FlatButton';
 import PatientList from './NavPatientList';
 
+// Styles
 import 'scss/containers/app/nav/patients/NavPatientListWrapper.scss';
 
-class NavPatientListWrapper extends Component {
+const NavPatientListWrapper = ({
+    patientList,
+    routerPush
+}) => {
 
-    constructor(props) {
+    const
 
-        super(props);
+        /**
+         * 跳转到列表页
+         * @type {function(): *}
+         */
+        goToList = useCallback(() => routerPush?.('/app/patient-list'), [routerPush]);
 
-        this.goToList = ::this.goToList;
+    return (
+        <div className="nav-patient-list-wrapper">
 
-    }
+            <FlatButton className="all-patients-button"
+                        value="All Patients"
+                        iconCls="icon-list"
+                        onClick={goToList}>
+                <span className="patients-count">
+                    [{patientList?.length || 0}]
+                </span>
+            </FlatButton>
 
-    goToList() {
-        this.props.routerPush('/app/patient-list');
-    }
+            <PatientList/>
 
-    render() {
+        </div>
+    );
 
-        const {patientList} = this.props;
-
-        return (
-            <div className="nav-patient-list-wrapper">
-
-                <FlatButton className="all-patients-button"
-                            value="All Patients"
-                            iconCls="icon-list"
-                            onClick={this.goToList}>
-                    <span className="patients-count">{`[${patientList.length}]`}</span>
-                </FlatButton>
-
-                <PatientList/>
-
-            </div>
-        );
-
-    }
-}
+};
 
 NavPatientListWrapper.propTypes = {
     patientList: PropTypes.array,
