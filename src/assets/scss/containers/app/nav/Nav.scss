@@ -1,3 +1,6 @@
+/**
+ * @file Nav.scss
+ */
 @import '../../../common.scss';
 
 .nav {
@@ -70,6 +73,7 @@
                     &::before {
                         transform: rotate(40deg);
                     }
+
                     &::after {
                         transform: rotate(-40deg);
                     }
@@ -78,6 +82,7 @@
                         &::before {
                             transform: rotate(-40deg);
                         }
+
                         &::after {
                             transform: rotate(40deg);
                         }
