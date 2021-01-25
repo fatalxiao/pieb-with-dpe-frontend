@@ -52,7 +52,7 @@ const NavPatientListItem = ({
         );
 
     return (
-        <FlatButton className="patient"
+        <FlatButton className="nav-patient-list-item"
                     onClick={handleClick}>
 
             <div className="patient-info">
