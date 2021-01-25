@@ -1,86 +1,112 @@
-import React, {Component, createRef} from 'react';
+/**
+ * @file NavPatientsPopover.js
+ */
+
+import React, {useRef, useState, useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
-import {findDOMNode} from 'react-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import * as actions from 'reduxes/actions';
 
+// Components
 import IconButton from 'alcedo-ui/IconButton';
 import Popover from 'alcedo-ui/Popover';
 import PatientList from './NavPatientList';
 
+// Vendors
+import {findDOMNode} from 'react-dom';
+
+// Styles
 import 'scss/containers/app/nav/patients/NavPatientPopover.scss';
 
-class NavPatientsPopover extends Component {
+const NavPatientsPopover = ({
+    isFold,
+    routerPush
+}) => {
 
-    constructor(props) {
+    const
 
-        super(props);
+        /**
+         * all Patient Button 的 ref
+         * @type {React.MutableRefObject<undefined>}
+         */
+        allPatientButtonRef = useRef(),
 
-        this.state = {
-            popVisible: false
-        };
+        /**
+         * 是否显示 pop 的标志
+         * @type {React.MutableRefObject<undefined>}
+         */
+        [popVisible, setPopVisible] = useState(false),
 
-        this.allPatientButtonRef = createRef();
+        /**
+         * all Patient Button 的 element
+         * @type {null}
+         */
+        allPatientButtonEl = useMemo(() =>
+                findDOMNode(allPatientButtonRef?.current),
+            [allPatientButtonRef]
+        ),
 
-        this.allPatientMouseHandler = ::this.allPatientMouseHandler;
-        this.goToList = ::this.goToList;
+        /**
+         * 显示 pop
+         * @type {function(): void}
+         */
+        showPop = useCallback(() =>
+                setPopVisible(true),
+            []
+        ),
 
-    }
+        /**
+         * 隐藏 pop
+         * @type {function(): void}
+         */
+        hidePop = useCallback(() =>
+                setPopVisible(false),
+            []
+        ),
 
-    allPatientMouseHandler(popVisible) {
-        this.setState({
-            popVisible
-        });
-    }
-
-    goToList() {
-        this.props.routerPush('/app/patient-list');
-    }
-
-    componentDidMount() {
-        this.allPatientButtonEl = findDOMNode(this.allPatientButtonRef?.current);
-    }
-
-    render() {
-
-        const {isFold} = this.props,
-            {popVisible} = this.state;
-
-        return (
-            <div className="nav-patient-popover-wrapper">
-
-                <IconButton ref={this.allPatientButtonRef}
-                            className="nav-patient-popover-item"
-                            iconCls="icon-list"
-                            onMouseOver={() => {
-                                this.allPatientMouseHandler(true);
-                            }}
-                            onClick={this.goToList}/>
-
-                <Popover className="nav-patient-popover"
-                         visible={isFold && popVisible}
-                         triggerEl={this.allPatientButtonEl}
-                         position={Popover.Position.RIGHT_TOP}
-                         hasTriangle={false}
-                         isTriggerPositionFixed={true}
-                         onRequestClose={() => {
-                             this.allPatientMouseHandler(false);
-                         }}>
-                    <PatientList/>
-                </Popover>
-
-            </div>
+        /**
+         * 跳转到列表页
+         * @type {function(): *}
+         */
+        goToList = useCallback(() =>
+                routerPush?.('/app/patient-list'),
+            [routerPush]
         );
-    }
-}
 
-NavPatientsPopover.propTypes = {
-    isFold: PropTypes.bool,
-    routerPush: PropTypes.func
+    return (
+        <div className="nav-patient-popover-wrapper">
+
+            <IconButton ref={allPatientButtonRef}
+                        className="nav-patient-popover-item"
+                        iconCls="icon-list"
+                        onMouseOver={showPop}
+                        onClick={goToList}/>
+
+            <Popover className="nav-patient-popover"
+                     visible={isFold && popVisible}
+                     triggerEl={allPatientButtonEl}
+                     position={Popover.Position.RIGHT_TOP}
+                     hasTriangle={false}
+                     isTriggerPositionFixed={true}
+                     onRequestClose={hidePop}>
+                <PatientList/>
+            </Popover>
+
+        </div>
+    );
+
 };
 
-export default connect(state => ({}), dispatch => bindActionCreators({
+NavPatientsPopover.propTypes = {
+
+    isFold: PropTypes.bool,
+
+    routerPush: PropTypes.func
+
+};
+
+export default connect(null, dispatch => bindActionCreators({
     routerPush: actions.routerPush
 }, dispatch))(NavPatientsPopover);

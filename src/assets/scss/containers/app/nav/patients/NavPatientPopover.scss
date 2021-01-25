@@ -1,3 +1,6 @@
+/**
+ * @file NavPatientsPopover.scss
+ */
 @import '../../../../common.scss';
 
 .nav-patient-popover-wrapper {
@@ -17,13 +20,9 @@
             background: transparentize(#000, .9);
         }
     }
-
 }
 
-.nav-patient-popover {
-
-    .popover-content {
-        max-height: 480px;
-        overflow-y: auto;
-    }
+.nav-patient-popover .popover-content {
+    max-height: 480px;
+    overflow-y: auto;
 }
