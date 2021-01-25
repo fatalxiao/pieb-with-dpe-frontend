@@ -1,56 +1,54 @@
-import React, {Component} from 'react';
+/**
+ * @file NavNoPatient.js
+ */
 
+import React, {useState, useCallback} from 'react';
+
+// Components
 import AddPatientDialog from 'containers/app/modules/editPatient/patientBaseInfo/AddPatientDialog';
 
+// Styles
 import 'scss/containers/app/nav/patients/NavNoPatient.scss';
 
-class NavNoPatient extends Component {
+const NavNoPatient = () => {
 
-    constructor(props) {
+    const
 
-        super(props);
+        /**
+         * 是否显示 dialog 的标志
+         */
+        [addPatientDialogVisible, setAddPatientDialogVisible] = useState(false),
 
-        this.state = {
-            addPatientDialogVisible: false
-        };
+        /**
+         * 显示 dialog
+         * @type {function(): void}
+         */
+        showAddPatientDialog = useCallback(() => setAddPatientDialogVisible(true), []),
 
-        this.showAddPatient = ::this.showAddPatient;
-        this.hideAddPatient = ::this.hideAddPatient;
+        /**
+         * 隐藏 dialog
+         * @type {function(): void}
+         */
+        hideAddPatientDialog = useCallback(() => setAddPatientDialogVisible(false), []);
 
-    }
+    return (
+        <div className="nav-no-patient">
 
-    showAddPatient() {
-        this.setState({
-            addPatientDialogVisible: true
-        });
-    }
+            <i className="icon-plus add-patient-icon"
+               onClick={showAddPatientDialog}></i>
 
-    hideAddPatient() {
-        this.setState({
-            addPatientDialogVisible: false
-        });
-    }
+            You have no patient now.<br/>
+            Would you
+            <span className="add-patient-button"
+                  onClick={showAddPatientDialog}>Create new Patient</span>
+            ?
 
-    render() {
+            <AddPatientDialog visible={addPatientDialogVisible}
+                              onRequestClose={hideAddPatientDialog}/>
 
-        const {addPatientDialogVisible} = this.state;
+        </div>
+    );
 
-        return (
-            <div className="nav-no-patient">
-
-                <i className="icon-plus add-patient-icon"
-                   onClick={this.showAddPatient}></i>
-
-                You have no patient now.<br/>
-                Would you <span className="add-patient-button"
-                                onClick={this.showAddPatient}>Create new Patient</span> ?
-
-                <AddPatientDialog visible={addPatientDialogVisible}
-                                  onRequestClose={this.hideAddPatient}/>
-
-            </div>
-        );
-    }
-}
+};
 
 export default NavNoPatient;
