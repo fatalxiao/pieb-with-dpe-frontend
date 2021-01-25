@@ -21,42 +21,12 @@ const Nav = () => {
     const
 
         /**
-         * 工具栏宽度
-         * @type {number}
-         */
-        navBarWidth = useMemo(() => 64, []),
-
-        /**
-         * 患者栏宽度
-         * @type {number}
-         */
-        navPatientWidth = useMemo(() => 240, []),
-
-        /**
-         * 整个导航栏的默认宽度
-         * @type {number}
-         */
-        defaultWidth = useMemo(() =>
-            navBarWidth + navPatientWidth,
-            [navBarWidth, navPatientWidth]
-        ),
-
-        /**
-         * 导航栏的默认宽度（ 如果 Local Storage 有值的话优先使用 ）
-         * @type {number}
-         */
-        defaultNavWidth = useMemo(() =>
-            parseInt(localStorage.getItem('navWidth')) || defaultWidth,
-            [defaultWidth]
-        ),
-
-        /**
          * 患者栏是否塌缩
          * @type {function(*): boolean}
          */
         isNavPatientCollapsed = useCallback(navWidth =>
-            navWidth < navBarWidth * 2,
-            [navBarWidth]
+            navWidth < Nav.NAV_BAR_WIDTH * 2,
+            []
         ),
 
         /**
@@ -64,8 +34,8 @@ const Nav = () => {
          * @type {function(*): boolean}
          */
         isNavPatientFold = useCallback(navWidth =>
-            navWidth < navBarWidth + navPatientWidth / 3,
-            [navBarWidth, navPatientWidth]
+            navWidth < Nav.NAV_BAR_WIDTH + Nav.NAV_PATIENT_WIDTH / 3,
+            []
         ),
 
         /**
@@ -102,14 +72,14 @@ const Nav = () => {
          * 当前导航栏的宽度
          * @type {number}
          */
-        [navWidth, setNavWidth] = useState(defaultNavWidth),
+        [navWidth, setNavWidth] = useState(Nav.INIT_WIDTH),
 
         /**
          * 当前患者栏是否塌缩
          * @type {number}
          */
         [navPatientCollapsed, setNavPatientCollapsed] = useState(
-            isNavPatientCollapsed(defaultNavWidth) || isNavPatientFold(navWidth)
+            isNavPatientCollapsed(Nav.INIT_WIDTH) || isNavPatientFold(navWidth)
         ),
 
         /**
@@ -122,7 +92,7 @@ const Nav = () => {
          * 当前导航栏是否折叠
          * @type {boolean}
          */
-        collapsed = useMemo(() => navWidth === navBarWidth, [navWidth, navBarWidth]),
+        collapsed = useMemo(() => navWidth === Nav.NAV_BAR_WIDTH, [navWidth]),
 
         /**
          * 更新导航栏宽度到 local storage
@@ -160,14 +130,14 @@ const Nav = () => {
             setNoMove(false);
 
             const offsetX = e.pageX - mouseX,
-                nextNavWidth = Valid.range(startWidth + offsetX, navBarWidth);
+                nextNavWidth = Valid.range(startWidth + offsetX, Nav.NAV_BAR_WIDTH);
 
             setDragging(true);
             setNavWidth(nextNavWidth);
             setNavPatientCollapsed(isNavPatientCollapsed(nextNavWidth));
             setNavPatientFold(false);
 
-        }, [resizing, mouseX, startWidth, navBarWidth]),
+        }, [resizing, mouseX, startWidth]),
 
         /**
          * 处理鼠标拖拽结束
@@ -178,7 +148,10 @@ const Nav = () => {
             setResizing(false);
 
             const isFold = isNavPatientFold(navWidth),
-                nextNavWidth = isFold ? navBarWidth : (navWidth < defaultWidth ? defaultWidth : navWidth);
+                nextNavWidth = isFold ?
+                    Nav.NAV_BAR_WIDTH
+                    :
+                    (navWidth < Nav.DEFAULT_WIDTH ? Nav.DEFAULT_WIDTH : navWidth);
 
             setDragging(false);
             setNavWidth(nextNavWidth);
@@ -186,13 +159,13 @@ const Nav = () => {
             setNavPatientFold(isFold);
             saveNavWidth(nextNavWidth);
 
-        }, [navWidth, navBarWidth, defaultWidth]),
+        }, [navWidth]),
 
         /**
-         * 切换患者栏塌缩折叠
+         * 切换患者栏显示/塌缩
          * @type {Function}
          */
-        toggleNav = useCallback(e => {
+        toggleNavPatient = useCallback(e => {
 
             if (!noMove) {
                 return;
@@ -200,13 +173,16 @@ const Nav = () => {
 
             e.stopPropagation();
 
-            const isFold = navWidth !== navBarWidth;
+            setResizing(false);
+            setDragging(false);
 
-            setNavWidth(isFold ? navBarWidth : defaultWidth);
-            setNavPatientCollapsed(isFold);
-            setNavPatientFold(isFold);
+            const isCollapsed = navWidth === Nav.NAV_BAR_WIDTH;
 
-        }, [noMove, navWidth, navBarWidth, defaultWidth]);
+            setNavWidth(isCollapsed ? Nav.DEFAULT_WIDTH : Nav.NAV_BAR_WIDTH);
+            setNavPatientCollapsed(!isCollapsed);
+            setNavPatientFold(!isCollapsed);
+
+        }, [noMove, navWidth]);
 
     /**
      * 绑定/解绑 document 上的鼠标移动事件
@@ -229,12 +205,12 @@ const Nav = () => {
             dragging
         })}
              style={{
-                 flexBasis: collapsed ? navBarWidth : navWidth
+                 flexBasis: collapsed ? Nav.NAV_BAR_WIDTH : navWidth
              }}>
 
             <div className="nav-inner"
                  style={{
-                     width: collapsed ? navBarWidth : navWidth
+                     width: collapsed ? Nav.NAV_BAR_WIDTH : navWidth
                  }}>
 
                 <NavBar isCollapsed={navPatientCollapsed}
@@ -245,7 +221,7 @@ const Nav = () => {
 
                 <div className="nav-resize"
                      onMouseDown={startDrag}
-                     onMouseUp={toggleNav}>
+                     onMouseUp={toggleNavPatient}>
                     <div className={classNames('nav-toggle', {
                         collapsed
                     })}></div>
@@ -257,5 +233,29 @@ const Nav = () => {
     );
 
 };
+
+/**
+ * 工具栏宽度
+ * @type {number}
+ */
+Nav.NAV_BAR_WIDTH = 64;
+
+/**
+ * 患者栏宽度
+ * @type {number}
+ */
+Nav.NAV_PATIENT_WIDTH = 240;
+
+/**
+ * 整个导航栏的默认宽度
+ * @type {number}
+ */
+Nav.DEFAULT_WIDTH = Nav.NAV_BAR_WIDTH + Nav.NAV_PATIENT_WIDTH;
+
+/**
+ * 初始化宽度
+ * @type {number}
+ */
+Nav.INIT_WIDTH = parseInt(localStorage.getItem('navWidth')) || Nav.DEFAULT_WIDTH;
 
 export default Nav;
