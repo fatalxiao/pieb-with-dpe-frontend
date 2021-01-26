@@ -1,42 +1,48 @@
-import React, {Component} from 'react';
+/**
+ * @file CustomizedMaterialCheckbox.js
+ */
+
+import React from 'react';
 import PropTypes from 'prop-types';
 
+// Components
 import MaterialProvider from 'alcedo-ui/MaterialProvider';
 import Checkbox from 'alcedo-ui/Checkbox';
+
+// Statics
 import Theme from 'alcedo-ui/Theme';
 
-class CustomizedMaterialCheckbox extends Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-
-        const {className, label, ...restProps} = this.props;
-
-        return (
-            <MaterialProvider className={className}
-                              label={label}
-                              isLabelAnimate={false}
-                              useSeparator={false}>
-                <Checkbox {...restProps}/>
-            </MaterialProvider>
-        );
-    }
-
-}
+const CustomizedMaterialCheckbox = ({
+    className, label, isLabelAnimate, useSeparator,
+    ...restProps
+}) => (
+    <MaterialProvider className={className}
+                      label={label}
+                      isLabelAnimate={isLabelAnimate}
+                      useSeparator={useSeparator}>
+        <Checkbox {...restProps}/>
+    </MaterialProvider>
+);
 
 CustomizedMaterialCheckbox.propTypes = {
-    theme: PropTypes.any,
+
+    className: PropTypes.string,
+
+    label: PropTypes.string,
+
     isLabelAnimate: PropTypes.bool,
-    clearButtonVisible: PropTypes.bool
+    useSeparator: PropTypes.bool
+
 };
 
 CustomizedMaterialCheckbox.defaultProps = {
+
     theme: Theme.HIGHLIGHT,
+
     isLabelAnimate: false,
-    clearButtonVisible: false
+    clearButtonVisible: false,
+    useSeparator: false
+
 };
 
 export default CustomizedMaterialCheckbox;

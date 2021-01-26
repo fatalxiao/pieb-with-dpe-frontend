@@ -1,33 +1,26 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+/**
+ * @file CustomizedMaterialTimePicker.js
+ */
 
+import React from 'react';
+
+// Components
 import MaterialTimePicker from 'alcedo-ui/MaterialTimePicker';
+
+// Statics
 import Theme from 'alcedo-ui/Theme';
 
-class CustomizedMaterialTimePicker extends Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <MaterialTimePicker {...this.props}/>
-        );
-    }
-
-}
-
-CustomizedMaterialTimePicker.propTypes = {
-    theme: PropTypes.any,
-    isLabelAnimate: PropTypes.bool,
-    clearButtonVisible: PropTypes.bool
-};
+const CustomizedMaterialTimePicker = props => (
+    <MaterialTimePicker {...props}/>
+);
 
 CustomizedMaterialTimePicker.defaultProps = {
+
     theme: Theme.HIGHLIGHT,
+
     isLabelAnimate: false,
     clearButtonVisible: false
+
 };
 
 export default CustomizedMaterialTimePicker;

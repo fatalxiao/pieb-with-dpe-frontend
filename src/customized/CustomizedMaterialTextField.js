@@ -1,33 +1,26 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+/**
+ * @file CustomizedMaterialTextField.js
+ */
 
+import React from 'react';
+
+// Components
 import MaterialTextField from 'alcedo-ui/MaterialTextField';
+
+// Statics
 import Theme from 'alcedo-ui/Theme';
 
-class CustomizedMaterialTextField extends Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <MaterialTextField {...this.props}/>
-        );
-    }
-
-}
-
-CustomizedMaterialTextField.propTypes = {
-    theme: PropTypes.any,
-    isLabelAnimate: PropTypes.bool,
-    clearButtonVisible: PropTypes.bool
-};
+const CustomizedMaterialTextField = props => (
+    <MaterialTextField {...props}/>
+);
 
 CustomizedMaterialTextField.defaultProps = {
+
     theme: Theme.HIGHLIGHT,
+
     isLabelAnimate: false,
     clearButtonVisible: false
+
 };
 
 export default CustomizedMaterialTextField;

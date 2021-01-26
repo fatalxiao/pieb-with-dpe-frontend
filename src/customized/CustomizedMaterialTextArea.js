@@ -1,35 +1,27 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+/**
+ * @file CustomizedMaterialTextArea.js
+ */
 
+import React from 'react';
+
+// Components
 import MaterialTextArea from 'alcedo-ui/MaterialTextArea';
+
+// Statics
 import Theme from 'alcedo-ui/Theme';
 
-class CustomizedMaterialTextArea extends Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <MaterialTextArea {...this.props}/>
-        );
-    }
-
-}
-
-CustomizedMaterialTextArea.propTypes = {
-    theme: PropTypes.any,
-    isLabelAnimate: PropTypes.bool,
-    clearButtonVisible: PropTypes.bool,
-    autoHeight: PropTypes.bool
-};
+const CustomizedMaterialTextArea = props => (
+    <MaterialTextArea {...props}/>
+);
 
 CustomizedMaterialTextArea.defaultProps = {
+
     theme: Theme.HIGHLIGHT,
+
     isLabelAnimate: false,
     clearButtonVisible: false,
     autoHeight: true
+
 };
 
 export default CustomizedMaterialTextArea;

@@ -1,33 +1,26 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+/**
+ * @file CustomizedMaterialDateTimePicker.js
+ */
 
+import React from 'react';
+
+// Components
 import MaterialDateTimePicker from 'alcedo-ui/MaterialDateTimePicker';
+
+// Statics
 import Theme from 'alcedo-ui/Theme';
 
-class CustomizedMaterialDateTimePicker extends Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <MaterialDateTimePicker {...this.props}/>
-        );
-    }
-
-}
-
-CustomizedMaterialDateTimePicker.propTypes = {
-    theme: PropTypes.any,
-    isLabelAnimate: PropTypes.bool,
-    clearButtonVisible: PropTypes.bool
-};
+const CustomizedMaterialDateTimePicker = props => (
+    <MaterialDateTimePicker {...props}/>
+);
 
 CustomizedMaterialDateTimePicker.defaultProps = {
+
     theme: Theme.HIGHLIGHT,
+
     isLabelAnimate: false,
     clearButtonVisible: false
+
 };
 
 export default CustomizedMaterialDateTimePicker;
