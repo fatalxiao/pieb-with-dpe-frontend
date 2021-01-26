@@ -1,21 +1,35 @@
-import React, {Component} from 'react';
+/**
+ * @file ModuleLoading.js
+ */
 
+import React from 'react';
+import PropTypes from 'prop-types';
+
+// Components
 import CircularLoading from 'alcedo-ui/CircularLoading';
 
+// Vendors
+import classNames from 'classnames';
+
+// Styles
 import 'scss/components/ModuleLoading.scss';
 
-class ModuleLoading extends Component {
+const ModuleLoading = ({
+    className,
+    ...restProps
+}) => (
+    <CircularLoading {...restProps}
+                     className={classNames('module-loading', {
+                         [className]: className
+                     })}/>
+);
 
-    constructor(props) {
-        super(props);
-    }
+ModuleLoading.propTypes = {
+    className: PropTypes.string
+};
 
-    render() {
-        return (
-            <CircularLoading className="module-loading"
-                             size={CircularLoading.Size.LARGE}/>
-        );
-    }
-}
+ModuleLoading.defaultProps = {
+    size: CircularLoading.Size.LARGE
+};
 
 export default ModuleLoading;

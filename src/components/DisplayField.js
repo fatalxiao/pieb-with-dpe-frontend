@@ -1,52 +1,43 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+/**
+ * @file DisplayField.js
+ */
 
+import React from 'react';
+import PropTypes from 'prop-types';
+
+// Components
 import MaterialProvider from 'alcedo-ui/MaterialProvider';
 
+// Vendors
+import classNames from 'classnames';
+
+// Styles
 import 'scss/components/DisplayField.scss';
 
-class DisplayField extends Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-
-        const {className, label, children, ...restProps} = this.props,
-
-            fieldClassName = classNames('display-field', {
-                [className]: className
-            });
-
-        return (
-            <MaterialProvider {...restProps}
-                              className={fieldClassName}
-                              label={label}
-                              isLabelAnimate={false}
-                              useSeparator={false}>
-                <div className="display-field-content">
-                    {children}
-                </div>
-            </MaterialProvider>
-        );
-    }
-}
+const DisplayField = ({
+    children,
+    className, label,
+    ...restProps
+}) => (
+    <MaterialProvider {...restProps}
+                      className={classNames('display-field', {
+                          [className]: className
+                      })}
+                      label={label}
+                      isLabelAnimate={false}
+                      useSeparator={false}>
+        <div className="display-field-content">
+            {children}
+        </div>
+    </MaterialProvider>
+);
 
 DisplayField.propTypes = {
 
+    children: PropTypes.any,
+
     className: PropTypes.string,
-
     label: PropTypes.string
-
-};
-
-DisplayField.defaultProps = {
-
-    className: null,
-
-    label: ''
 
 };
 

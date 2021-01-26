@@ -1,36 +1,44 @@
-import React, {Component} from 'react';
+/**
+ * @file FieldSet.js
+ */
+
+import React from 'react';
 import PropTypes from 'prop-types';
+
+// Vendors
 import classNames from 'classnames';
 
+// Styles
 import 'scss/components/FieldSet.scss';
 
-export default class FieldSet extends Component {
+const FieldSet = ({
+    children,
+    className, title,
+    ...restProps
+}) => (
+    <div {...restProps}
+         className={classNames('field-set', {
+             [className]: className
+         })}>
 
-    constructor(props) {
-        super(props);
-    }
+        <h3 className="field-set-title">
+            {title}
+        </h3>
 
-    render() {
+        <div className="field-set-content">
+            {children}
+        </div>
 
-        const {children, className, title, ...restProps} = this.props,
+    </div>
+);
 
-            wrapperClassName = classNames('field-set', {
-                [className]: className
-            });
+FieldSet.propTypes = {
 
-        return (
-            <div {...restProps}
-                 className={wrapperClassName}>
+    children: PropTypes.any,
 
-                <h3 className="field-set-title">
-                    {title}
-                </h3>
+    className: PropTypes.string,
+    title: PropTypes.any
 
-                <div className="field-set-content">
-                    {children}
-                </div>
+};
 
-            </div>
-        );
-    }
-}
+export default FieldSet;
