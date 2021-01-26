@@ -5,12 +5,12 @@
 
 .material-time-picker {
 
-    .material-date-picker-text-field-label {
-        color: $theme-field !important;
+    .material-provider-label {
+        color: $theme-label !important;
     }
 
     &.focused {
-        .material-date-picker-text-field-label {
+        .material-provider-label {
             color: $theme-highlight !important;
         }
     }

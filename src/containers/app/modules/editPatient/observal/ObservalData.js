@@ -1,4 +1,8 @@
-import React, {Component} from 'react';
+/**
+ * @file ObservalData.js
+ */
+
+import React, {useMemo, useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -6,88 +10,91 @@ import {bindActionCreators} from 'redux';
 import * as actions from 'reduxes/actions';
 import * as actionTypes from 'reduxes/actionTypes';
 
+// Components
 import ModuleLoading from 'components/ModuleLoading';
 import StepAction from 'components/StepAction';
 import ObservalForm from './ObservalForm';
 
-import 'scss/containers/app/modules/editPatient/observalData/ObservalData.scss';
+const ObservalData = ({
+    match, getActionType,
+    routerPush, updatePatientStep,
+    getPatientInfo, getObservalData, createOrUpdateObservalData
+}) => {
 
-class ObservalData extends Component {
+    const
 
-    constructor(props) {
+        /**
+         * 从路由 params 获取 patient ID
+         */
+        patientId = useMemo(() => match.params.patientId, [match]),
 
-        super(props);
+        /**
+         * 加载数据
+         * @type {Function}
+         */
+        loadData = useCallback(() => {
 
-        this.patientId = null;
+            if (!patientId) {
+                routerPush?.('/app/patient-list');
+            }
 
-        this.loadData = ::this.loadData;
-        this.prevStep = ::this.prevStep;
-        this.save = ::this.save;
+            getPatientInfo?.(patientId);
+            getObservalData?.(patientId);
 
-    }
+        }, [
+            patientId,
+            routerPush, getPatientInfo, getObservalData
+        ]),
 
-    loadData(props = this.props) {
+        /**
+         * 返回上一步
+         * @type {function(): *}
+         */
+        prevStep = useCallback(() =>
+                routerPush?.(`/app/patient/analgesia/${patientId}`),
+            [patientId, routerPush]
+        ),
 
-        const {match, getPatientInfo, getObservalData} = props;
+        /**
+         * 提交到后端
+         * @type {function(): *}
+         */
+        save = useCallback(() => createOrUpdateObservalData(patientId, () =>
+            routerPush?.(`/app/patient-list`)
+        ), [
+            patientId,
+            routerPush, createOrUpdateObservalData
+        ]);
 
-        if (match && match.params && match.params.patientId) {
+    /**
+     * 初始化
+     */
+    useEffect(() => {
+        updatePatientStep?.(2);
+        loadData();
+    }, []);
 
-            this.patientId = match.params.patientId;
+    return (
+        <div className="observal-data">
+            {
+                getActionType !== actionTypes.GET_OBSERVAL_SUCCESS ?
+                    <ModuleLoading/>
+                    :
+                    <div>
+                        <ObservalForm patientId={patientId}/>
+                        <StepAction isLast={true}
+                                    onPrev={prevStep}
+                                    onNext={save}/>
+                    </div>
+            }
+        </div>
+    );
 
-            getPatientInfo(this.patientId);
-            getObservalData(this.patientId);
-
-        } else {
-            routerPush('/app/patient-list');
-        }
-
-    }
-
-    prevStep() {
-        const {routerPush} = this.props;
-        routerPush(`/app/patient/analgesia/${this.patientId}`);
-    }
-
-    save() {
-        const {createOrUpdateObservalData, routerPush} = this.props;
-        createOrUpdateObservalData(this.patientId, () => {
-            routerPush(`/app/patient-list`);
-        });
-    }
-
-    componentDidMount() {
-
-        const {updatePatientStep} = this.props;
-        updatePatientStep(2);
-
-        this.loadData();
-
-    }
-
-    render() {
-
-        const {getActionType} = this.props;
-
-        return (
-            <div className="observal-data">
-                {
-                    getActionType !== actionTypes.GET_OBSERVAL_SUCCESS ?
-                        <ModuleLoading/>
-                        :
-                        <div>
-                            <ObservalForm patientId={this.patientId}/>
-                            <StepAction isLast={true}
-                                        onPrev={this.prevStep}
-                                        onNext={this.save}/>
-                        </div>
-                }
-            </div>
-        );
-    }
-}
+};
 
 ObservalData.propTypes = {
 
+    match: PropTypes.object,
     getActionType: PropTypes.string,
 
     routerPush: PropTypes.func,
