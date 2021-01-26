@@ -1,8 +1,22 @@
+/**
+ * @file MaterialTextArea.scss
+ */
 @import '../common.scss';
 
 .material-text-area {
+
+    .material-provider-label {
+        color: $theme-label !important;
+    }
+
     .text-area-input {
         font-size: inherit !important;
         width: 100% !important;
+    }
+
+    &.focused {
+        .material-provider-label {
+            color: $theme-highlight !important;
+        }
     }
 }
