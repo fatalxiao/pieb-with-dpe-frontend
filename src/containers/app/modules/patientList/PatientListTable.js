@@ -1,100 +1,124 @@
-import React, {Component} from 'react';
+/**
+ * @file PatientListTable.js
+ */
+
+import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {NavLink} from 'react-router-dom';
-import debounce from 'lodash/debounce';
 
 import * as actions from 'reduxes/actions';
 
+// Components
+import {NavLink} from 'react-router-dom';
 import Table from 'alcedo-ui/Table';
 import Switcher from 'alcedo-ui/Switcher';
 import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
 import TextField from 'customized/CustomizedMaterialTextField';
 
+// Vendors
+import debounce from 'lodash/debounce';
+
+// Styles
 import 'scss/containers/app/modules/patientList/PatientListTable.scss';
 
-class PatientListTable extends Component {
+const PatientListTable = ({
+    groupList, data,
+    updatePatientName, updatePatientGroup, enablePatient, disablePatient
+}) => {
 
-    constructor(props) {
-
-        super(props);
-
-        this.nameChangeHandler = ::this.nameChangeHandler;
-        this.groupChangeHandler = ::this.groupChangeHandler;
-        this.statusChangeHandler = ::this.statusChangeHandler;
-
-    }
-
-    nameChangeHandler = debounce((id, value) => {
-        this.props.updatePatientName(id, value);
-    }, 250);
-
-    groupChangeHandler(id, value) {
-        this.props.updatePatientGroup(id, value);
-    }
-
-    statusChangeHandler(id, value) {
-        const {enablePatient, disablePatient} = this.props;
-        value ? enablePatient(id) : disablePatient(id);
-    }
-
-    render() {
-
-        const {groupList, data} = this.props;
-
-        return data && data.length > 0 ?
-            <Table className="patient-list-table"
-                   data={data}
-                   columns={[{
-                       header: 'ID',
-                       sortable: true,
-                       sortProp: 'id',
-                       renderer: rowData =>
-                           <NavLink className="id-link"
-                                    to={`/app/patient/info/${rowData.id}`}>
-                               {rowData.id}
-                           </NavLink>
-                   }, {
-                       header: 'Name',
-                       sortable: true,
-                       sortProp: 'name',
-                       renderer: rowData =>
-                           <TextField className="hover-activated name-field"
-                                      value={rowData.name}
-                                      onChange={value => {
-                                          this.nameChangeHandler(rowData.id, value);
-                                      }}/>
-                   }, {
-                       header: 'Group',
-                       sortable: true,
-                       sortProp: 'groupId',
-                       renderer: rowData =>
-                           <DropdownSelect className="hover-activated group-select"
-                                           data={groupList}
-                                           valueField="id"
-                                           displayField="name"
-                                           value={rowData.group}
-                                           onChange={value => {
-                                               this.groupChangeHandler(rowData.id, value);
-                                           }}/>
-                   }, {
-                       header: 'Status',
-                       sortable: true,
-                       sortProp: 'status',
-                       renderer: rowData =>
-                           <Switcher value={rowData.status === 1}
-                                     size={Switcher.Size.SMALL}
-                                     onChange={value => {
-                                         this.statusChangeHandler(rowData.id, value);
-                                     }}/>
-                   }]}/>
-            :
+    // data 为空时显示 no patient
+    if (!data || data.length < 1) {
+        return (
             <div className="no-patient-found">
                 No Patient Found
-            </div>;
+            </div>
+        );
     }
-}
+
+    const
+
+        /**
+         * 处理 patient name 的变更
+         * @type {debounced}
+         */
+        handleNameChange = useCallback(debounce((id, value) =>
+                updatePatientName?.(id, value),
+            400
+        ), [updatePatientName]),
+
+        /**
+         * 处理 patient group 的变更
+         * @type {function(*=, *=): *}
+         */
+        handleGroupChange = useCallback((id, value) =>
+                updatePatientGroup?.(id, value),
+            [updatePatientGroup]
+        ),
+
+        /**
+         * 处理 patient status 的变更
+         * @type {function(*=, *): *}
+         */
+        handleStatusChange = useCallback((id, value) => value ?
+            enablePatient?.(id)
+            :
+            disablePatient?.(id),
+            [enablePatient, disablePatient]
+        ),
+
+        /**
+         * 所有 columns 的配置
+         * @type {*[]}
+         */
+        columns = useMemo(() => [{
+            headRenderer: 'ID',
+            bodyRenderer: rowData =>
+                <NavLink className="id-link"
+                         to={`/app/patient/info/${rowData.id}`}>
+                    {rowData.id}
+                </NavLink>,
+            sortable: true,
+            sortingProp: 'id'
+        }, {
+            headRenderer: 'Name',
+            bodyRenderer: rowData =>
+                <TextField className="hover-activated name-field"
+                           value={rowData.name}
+                           onChange={value => handleNameChange(rowData.id, value)}/>,
+            sortable: true,
+            sortingProp: 'name'
+        }, {
+            headRenderer: 'Group',
+            bodyRenderer: rowData =>
+                <DropdownSelect className="hover-activated group-select"
+                                data={groupList}
+                                valueField="id"
+                                displayField="name"
+                                value={rowData.group}
+                                onChange={value => handleGroupChange(rowData.id, value)}/>,
+            sortable: true,
+            sortingProp: 'groupId'
+        }, {
+            headRenderer: 'Status',
+            bodyRenderer: rowData =>
+                <Switcher value={rowData.status === 1}
+                          size={Switcher.Size.SMALL}
+                          onChange={value => handleStatusChange(rowData.id, value)}/>,
+            sortable: true,
+            sortingProp: 'status'
+        }], [
+            groupList,
+            handleNameChange, handleGroupChange, handleStatusChange
+        ]);
+
+    return (
+        <Table className="patient-list-table"
+               data={data}
+               columns={columns}/>
+    );
+
+};
 
 PatientListTable.propTypes = {
 
