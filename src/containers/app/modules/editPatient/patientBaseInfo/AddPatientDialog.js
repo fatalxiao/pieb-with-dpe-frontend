@@ -1,132 +1,137 @@
-import React, {Component} from 'react';
+/**
+ * @file AddPatientDialog.js
+ */
+
+import React, {useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import * as actions from 'reduxes/actions/index';
+import * as actions from 'reduxes/actions';
 
+// Components
 import Dialog from 'alcedo-ui/Dialog';
 import TextField from 'customized/CustomizedMaterialTextField';
 import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
 import FieldSet from 'components/FieldSet';
 import Msg from 'components/Msg';
 
-import Util from 'vendors/Util';
+// Vendors
+import {formatString} from 'vendors/Util';
 
+// Styles
 import 'scss/containers/app/nav/bar/AddPatientDialog.scss';
 
-const format = Util.formatString;
+const AddPatientDialog = ({
+    groupList, form, visible,
+    onRequestClose, updatePatientBaseInfoField, createPatient, routerPush
+}) => {
 
-class AddPatientDialog extends Component {
+    const
 
-    constructor(props) {
+        /**
+         * 当前 form 的错误消息
+         */
+        [errorMsg, setErrorMsg] = useState(''),
 
-        super(props);
+        /**
+         * 更新值
+         * @type {Function}
+         */
+        updateField = useCallback((fieldName, fieldValue) => {
 
-        this.state = {
-            errorMsg: ''
-        };
+            if (errorMsg) {
+                setErrorMsg('');
+            }
 
-        this.updateField = ::this.updateField;
-        this.save = ::this.save;
+            updatePatientBaseInfoField?.(fieldName, fieldValue);
 
-    }
+        }, [errorMsg, updatePatientBaseInfoField]),
 
-    updateField(fieldName, fieldValue) {
+        /**
+         * 提交新值到后端
+         * @type {Function}
+         */
+        save = useCallback(() => {
 
-        this.state.errorMsg && this.setState({
-            errorMsg: ''
-        });
+            const error = [];
 
-        const {updatePatientBaseInfoField} = this.props;
-        updatePatientBaseInfoField(fieldName, fieldValue);
+            // 校验值
+            if (!form.id) {
+                error.push('ID');
+            }
+            if (!form.name) {
+                error.push('Name');
+            }
+            if (!form.group) {
+                error.push('Group');
+            }
 
-    }
+            // 如果有 error 中断提交
+            if (error.length > 0) {
+                setErrorMsg(`${error.join(', ')} is required!`);
+                return;
+            }
 
-    save() {
-
-        const {form, createPatient, onRequestClose, routerPush} = this.props,
-            error = [];
-
-        if (!form.id) {
-            error.push('ID');
-        }
-        if (!form.name) {
-            error.push('Name');
-        }
-        if (!form.group) {
-            error.push('Group');
-        }
-
-        if (error.length > 0) {
-            this.setState({
-                errorMsg: `${error.join(', ')} is required!`
+            createPatient?.(() => {
+                onRequestClose();
+                routerPush(`/app/patient/info/${form.id}`);
             });
-            return;
-        }
 
-        createPatient(() => {
-            onRequestClose();
-            routerPush(`/app/patient/info/${form.id}`);
-        });
+        }, [
+            form,
+            createPatient, onRequestClose, routerPush
+        ]);
 
-    }
+    return (
+        <Dialog className="add-patient-dialog"
+                visible={visible}
+                title="Create Patient"
+                okButtonText="Create"
+                onOKButtonClick={save}
+                onRequestClose={onRequestClose}>
 
-    render() {
+            <FieldSet title="1. Patient Basic Information">
+                <div className="row">
+                    <TextField className="col-6"
+                               label="ID"
+                               value={formatString(form.id)}
+                               required={true}
+                               onChange={value => updateField('id', value)}/>
+                    <TextField className="col-6"
+                               label="Name"
+                               value={formatString(form.name)}
+                               required={true}
+                               onChange={value => updateField('name', value)}/>
+                </div>
+            </FieldSet>
 
-        const {groupList, form, visible, onRequestClose} = this.props,
-            {errorMsg} = this.state;
+            <FieldSet title="2. Select Patient Group">
+                <div className="row">
+                    <DropdownSelect className="col-12"
+                                    label="Group"
+                                    data={groupList}
+                                    valueField="id"
+                                    displayField="name"
+                                    value={form.group}
+                                    required={true}
+                                    onChange={value => updateField('group', value)}/>
+                </div>
+            </FieldSet>
 
-        return (
-            <Dialog className="add-patient-dialog"
-                    visible={visible}
-                    title="Create Patient"
-                    okButtonText="Create"
-                    onOKButtonClick={this.save}
-                    onRequestClose={onRequestClose}>
+            {
+                errorMsg ?
+                    <Msg type={Msg.Type.ERROR}>
+                        {errorMsg}
+                    </Msg>
+                    :
+                    null
+            }
 
-                <FieldSet title="1. Patient Basic Information">
-                    <div className="row">
-                        <TextField className="col-6"
-                                   label="ID"
-                                   value={format(form.id)}
-                                   required={true}
-                                   onChange={value => this.updateField('id', value)}/>
-                        <TextField className="col-6"
-                                   label="Name"
-                                   value={format(form.name)}
-                                   required={true}
-                                   onChange={value => this.updateField('name', value)}/>
-                    </div>
-                </FieldSet>
+        </Dialog>
+    );
 
-                <FieldSet title="2. Select Patient Group">
-                    <div className="row">
-                        <DropdownSelect className="col-12"
-                                        label="Group"
-                                        data={groupList}
-                                        valueField="id"
-                                        displayField="name"
-                                        value={form.group}
-                                        required={true}
-                                        onChange={value => this.updateField('group', value)}/>
-                    </div>
-                </FieldSet>
-
-                {
-                    errorMsg ?
-                        <Msg type={Msg.Type.ERROR}>
-                            {errorMsg}
-                        </Msg>
-                        :
-                        null
-                }
-
-            </Dialog>
-        );
-
-    }
-}
+};
 
 AddPatientDialog.propTypes = {
 
