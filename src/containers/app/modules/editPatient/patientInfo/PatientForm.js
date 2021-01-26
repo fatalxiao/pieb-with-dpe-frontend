@@ -1,143 +1,142 @@
-import React, {Component} from 'react';
+/**
+ * @file PatientForm.js
+ */
+
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import debounce from 'lodash/debounce';
 
 import * as actions from 'reduxes/actions/index';
 
+// Components
 import Checkbox from 'customized/CustomizedMaterialCheckbox';
 import TextField from 'customized/CustomizedMaterialTextField';
 import TextArea from 'customized/CustomizedMaterialTextArea';
 import FieldSet from 'components/FieldSet';
 
-import Util from 'vendors/Util';
+// Vendors
+import debounce from 'lodash/debounce';
+import {formatString} from 'vendors/Util';
 
+// Styles
 import 'scss/containers/app/modules/editPatient/patientInfo/PatientForm.scss';
 
-const format = Util.formatString;
+const PatientForm = ({
+    form, patientId,
+    updatePatientInfoField, updatePatientInfo
+}) => {
 
-class PatientForm extends Component {
+    const
 
-    constructor(props) {
+        /**
+         * 提交 field 新值到后端
+         * @type {debounced}
+         */
+        save = useCallback(debounce(() =>
+            patientId && updatePatientInfo(patientId, undefined, true),
+            400
+        ), [patientId, updatePatientInfo]),
 
-        super(props);
+        /**
+         * 更新 field 新值到 reducer
+         * @type {Function}
+         */
+        updateField = useCallback((fieldName, fieldValue) => {
+            updatePatientInfoField?.(fieldName, fieldValue);
+            setTimeout(() => save(), 0);
+        }, [updatePatientInfoField, save]);
 
-        this.updateField = ::this.updateField;
-        this.save = ::this.save;
+    return (
+        <div className="patient-form">
 
-    }
+            <FieldSet title="1. Patient Information">
+                <div className="row">
+                    <TextField className="col-3"
+                               label="Age"
+                               value={formatString(form.age)}
+                               onChange={value => updateField('age', value)}/>
+                    <TextField className="col-3 unit-weeks"
+                               label="Gestational Days"
+                               rightIconCls="unit"
+                               value={formatString(form.gestationalDaysWeeks)}
+                               onChange={value => updateField('gestationalDaysWeeks', value)}/>
+                    <TextField className="col-3 unit-days gestational-days"
+                               rightIconCls="unit"
+                               value={formatString(form.gestationalDaysDays)}
+                               onChange={value => updateField('gestationalDaysDays', value)}/>
+                </div>
+                <div className="row">
+                    <TextField className="col-3 unit-cm"
+                               label="Height"
+                               rightIconCls="unit"
+                               value={formatString(form.height)}
+                               onChange={value => updateField('height', value)}/>
+                    <TextField className="col-3 unit-kg"
+                               label="Weight"
+                               rightIconCls="unit"
+                               value={formatString(form.weight)}
+                               onChange={value => updateField('weight', value)}/>
+                    <TextField className="col-3"
+                               label="Heart Rate"
+                               value={formatString(form.heartRate)}
+                               onChange={value => updateField('heartRate', value)}/>
+                </div>
+                <div className="row">
+                    <TextField className="col-3"
+                               label="Initial Vas Score"
+                               value={formatString(form.initialVasScore)}
+                               onChange={value => updateField('initialVasScore', value)}/>
+                    <TextField className="col-3"
+                               label="Systolic Blood Pressure"
+                               value={formatString(form.systolicBloodPressure)}
+                               onChange={value => updateField('systolicBloodPressure', value)}/>
+                    <TextField className="col-3"
+                               label="Diastolic Blood Pressure"
+                               value={formatString(form.diastolicBloodPressure)}
+                               onChange={value => updateField('diastolicBloodPressure', value)}/>
+                </div>
+                <div className="row">
+                    <TextField className="col-3"
+                               label="Fetal Heart Rate"
+                               value={formatString(form.fetalHeartRate)}
+                               onChange={value => updateField('fetalHeartRate', value)}/>
+                    <TextField className="col-3"
+                               label="Pulse Oxygen Saturation"
+                               value={formatString(form.pulseOxygenSaturation)}
+                               onChange={value => updateField('pulseOxygenSaturation', value)}/>
+                    <Checkbox className="col-6"
+                              label="Induction"
+                              checked={!!form.hasInduction}
+                              onChange={value => updateField('hasInduction', value)}/>
+                </div>
+                <div className="row">
+                    <TextField className="col-6"
+                               label="Cervical Dilation At Time Of EA"
+                               value={formatString(form.cervicalDilationAtTimeOfEA)}
+                               onChange={value => updateField('cervicalDilationAtTimeOfEA', value)}/>
+                    <Checkbox className="col-6"
+                              label="Oxytocin At Time Of EA"
+                              checked={!!form.hasOxytocinAtTimeOfEA}
+                              onChange={value => updateField('hasOxytocinAtTimeOfEA', value)}/>
+                </div>
+            </FieldSet>
 
-    updateField(fieldName, fieldValue) {
+            <FieldSet title="2. Others">
+                <div className="row">
+                    <TextArea className="col-12"
+                              label="Description"
+                              maxLength={1000}
+                              wordCountVisible={true}
+                              value={formatString(form.description)}
+                              onChange={value => updateField('description', value)}/>
+                </div>
+            </FieldSet>
 
-        const {updatePatientInfoField} = this.props;
-        updatePatientInfoField(fieldName, fieldValue);
+        </div>
+    );
 
-        setTimeout(() => {
-            this.save();
-        }, 0);
-
-    }
-
-    save = debounce(() => {
-        const {patientId, updatePatientInfo} = this.props;
-        patientId && updatePatientInfo(patientId, undefined, true);
-    }, 250);
-
-    render() {
-
-        const {form} = this.props;
-
-        return (
-            <div className="patient-form">
-
-                <FieldSet title="1. Patient Information">
-                    <div className="row">
-                        <TextField className="col-3"
-                                   label="Age"
-                                   value={format(form.age)}
-                                   onChange={value => this.updateField('age', value)}/>
-                        <TextField className="col-3 unit-weeks"
-                                   label="Gestational Days"
-                                   rightIconCls="unit"
-                                   value={format(form.gestationalDaysWeeks)}
-                                   onChange={value => this.updateField('gestationalDaysWeeks', value)}/>
-                        <TextField className="col-3 unit-days gestational-days"
-                                   rightIconCls="unit"
-                                   value={format(form.gestationalDaysDays)}
-                                   onChange={value => this.updateField('gestationalDaysDays', value)}/>
-                    </div>
-                    <div className="row">
-                        <TextField className="col-3 unit-cm"
-                                   label="Height"
-                                   rightIconCls="unit"
-                                   value={format(form.height)}
-                                   onChange={value => this.updateField('height', value)}/>
-                        <TextField className="col-3 unit-kg"
-                                   label="Weight"
-                                   rightIconCls="unit"
-                                   value={format(form.weight)}
-                                   onChange={value => this.updateField('weight', value)}/>
-                        <TextField className="col-3"
-                                   label="Heart Rate"
-                                   value={format(form.heartRate)}
-                                   onChange={value => this.updateField('heartRate', value)}/>
-                    </div>
-                    <div className="row">
-                        <TextField className="col-3"
-                                   label="Initial Vas Score"
-                                   value={format(form.initialVasScore)}
-                                   onChange={value => this.updateField('initialVasScore', value)}/>
-                        <TextField className="col-3"
-                                   label="Systolic Blood Pressure"
-                                   value={format(form.systolicBloodPressure)}
-                                   onChange={value => this.updateField('systolicBloodPressure', value)}/>
-                        <TextField className="col-3"
-                                   label="Diastolic Blood Pressure"
-                                   value={format(form.diastolicBloodPressure)}
-                                   onChange={value => this.updateField('diastolicBloodPressure', value)}/>
-                    </div>
-                    <div className="row">
-                        <TextField className="col-3"
-                                   label="Fetal Heart Rate"
-                                   value={format(form.fetalHeartRate)}
-                                   onChange={value => this.updateField('fetalHeartRate', value)}/>
-                        <TextField className="col-3"
-                                   label="Pulse Oxygen Saturation"
-                                   value={format(form.pulseOxygenSaturation)}
-                                   onChange={value => this.updateField('pulseOxygenSaturation', value)}/>
-                        <Checkbox className="col-6"
-                                  label="Induction"
-                                  checked={!!form.hasInduction}
-                                  onChange={value => this.updateField('hasInduction', value)}/>
-                    </div>
-                    <div className="row">
-                        <TextField className="col-6"
-                                   label="Cervical Dilation At Time Of EA"
-                                   value={format(form.cervicalDilationAtTimeOfEA)}
-                                   onChange={value => this.updateField('cervicalDilationAtTimeOfEA', value)}/>
-                        <Checkbox className="col-6"
-                                  label="Oxytocin At Time Of EA"
-                                  checked={!!form.hasOxytocinAtTimeOfEA}
-                                  onChange={value => this.updateField('hasOxytocinAtTimeOfEA', value)}/>
-                    </div>
-                </FieldSet>
-
-                <FieldSet title="2. Others">
-                    <div className="row">
-                        <TextArea className="col-12"
-                                  label="Description"
-                                  maxLength={1000}
-                                  wordCountVisible={true}
-                                  value={format(form.description)}
-                                  onChange={value => this.updateField('description', value)}/>
-                    </div>
-                </FieldSet>
-
-            </div>
-        );
-    }
-}
+};
 
 PatientForm.propTypes = {
 

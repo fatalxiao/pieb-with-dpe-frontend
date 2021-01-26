@@ -3,7 +3,7 @@ import moment from 'moment';
 import DEFAULT_MENU from 'src/config.menu';
 import Valid from './Valid';
 
-function getOffset(el) {
+export function getOffset(el) {
 
     if (!el) {
         return null;
@@ -23,7 +23,7 @@ function getOffset(el) {
 
 }
 
-function isEnableLocalStorage() {
+export function isEnableLocalStorage() {
     try {
         return 'localStorage' in window && window['localStorage'] !== null;
     } catch (e) {
@@ -31,7 +31,7 @@ function isEnableLocalStorage() {
     }
 }
 
-function isEnableSessionStorage() {
+export function isEnableSessionStorage() {
     try {
         return 'sessionStorage' in window && window['sessionStorage'] !== null;
     } catch (e) {
@@ -39,7 +39,7 @@ function isEnableSessionStorage() {
     }
 }
 
-function isEnableCookieAndStorage() {
+export function isEnableCookieAndStorage() {
     return navigator.cookieEnabled && isEnableLocalStorage() && isEnableSessionStorage();
 }
 
@@ -59,11 +59,11 @@ function isEnableCookieAndStorage() {
 //
 // }
 
-function formatCapitalize(value) {
+export function formatCapitalize(value) {
     return value ? value.charAt(0).toUpperCase() + value.substring(1).toLowerCase() : value;
 }
 
-function value2Timestamp(value, format) {
+export function value2Timestamp(value, format) {
 
     const defaultValue = new Date().getTime();
 
@@ -81,7 +81,7 @@ function value2Timestamp(value, format) {
 
 }
 
-function value2Moment(value, format) {
+export function value2Moment(value, format) {
 
     const defaultValue = moment();
 
@@ -95,7 +95,7 @@ function value2Moment(value, format) {
 
 }
 
-function preOrderTraverse(node, callback, deep = 0, parentNode = null) {
+export function preOrderTraverse(node, callback, deep = 0, parentNode = null) {
 
     if (callback(node, parentNode, deep) === false) {
         return;
@@ -109,9 +109,9 @@ function preOrderTraverse(node, callback, deep = 0, parentNode = null) {
 
 }
 
-const rootSymbol = null;
+export const rootSymbol = null;
 
-function getActivatedMenu(menu = DEFAULT_MENU, value = location.pathname) {
+export function getActivatedMenu(menu = DEFAULT_MENU, value = location.pathname) {
 
     let activatedMenu, activatedMenuParent;
 
@@ -130,11 +130,11 @@ function getActivatedMenu(menu = DEFAULT_MENU, value = location.pathname) {
 
 }
 
-function enumerateValue(enumerate) {
+export function enumerateValue(enumerate) {
     return Object.keys(enumerate).map(key => enumerate[key]);
 }
 
-function resetAriValue(data) {
+export function resetAriValue(data) {
     let value = [];
     if (data && data.length > 0) {
         for (let i = 0; i < data.length; i++) {
@@ -144,7 +144,7 @@ function resetAriValue(data) {
     return value;
 }
 
-function resetAriCurrencyValue(data) {
+export function resetAriCurrencyValue(data) {
     let value = [];
     if (data && data.length > 0) {
         for (let i = 0; i < data.length; i++) {
@@ -157,7 +157,7 @@ function resetAriCurrencyValue(data) {
     return value;
 }
 
-function recoverAriValue(valueData, baseData) {
+export function recoverAriValue(valueData, baseData) {
     let value = [];
     if (valueData && valueData.length > 0) {
         for (let i = 0; i < valueData.length; i++) {
@@ -171,7 +171,7 @@ function recoverAriValue(valueData, baseData) {
     return value;
 }
 
-function macthObjectByValue(data, value, valueField) {
+export function macthObjectByValue(data, value, valueField) {
     for (let i = 0; i < data.length; i++) {
         if (data[i][valueField] === value) {
             return data[i];
@@ -179,7 +179,7 @@ function macthObjectByValue(data, value, valueField) {
     }
 }
 
-function days2weeksDays(days) {
+export function days2weeksDays(days) {
 
     if (!days || !Valid.isInteger(days)) {
         return {
@@ -195,7 +195,7 @@ function days2weeksDays(days) {
 
 }
 
-function formatString(value) {
+export function formatString(value) {
     return value === null || value === undefined ? '' : value;
 }
 

@@ -17,11 +17,6 @@ export function configureRoutes(store) {
                 /* webpackChunkName: "App" */
                 'containers/app/App'), store),
             routes: [{
-                path: '/app/dashboard',
-                component: ac(() => import(
-                    /* webpackChunkName: "Dashboard" */
-                    'containers/app/modules/dashboard/Dashboard'), store)
-            }, {
                 path: '/app/patient-list',
                 component: ac(() => import(
                     /* webpackChunkName: "PatientList" */
@@ -52,4 +47,4 @@ export function configureRoutes(store) {
     }];
 }
 
-export const DEFAULT_ROUTE = '/app/dashboard';
+export const DEFAULT_ROUTE = '/app/patient-list';
