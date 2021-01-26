@@ -1,11 +1,11 @@
+/**
+ * @file PatientList.scss
+ */
 @import '../../../../common.scss';
 
-.patient-list {
-
-    .nav-no-patient {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
+.patient-list .nav-no-patient {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }

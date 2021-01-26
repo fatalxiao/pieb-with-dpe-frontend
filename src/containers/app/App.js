@@ -15,9 +15,6 @@ import Nav from './nav/Nav';
 import NavTitle from './nav/title/NavTitle';
 import PageLoading from 'alcedo-ui/PageLoading';
 
-// Vendors
-import Dom from 'vendors/Dom';
-
 // Styles
 import 'scss/containers/app/App.scss';
 
@@ -26,14 +23,13 @@ const App = ({
     getGroups, getSensoryBlocks, getPatients
 }) => {
 
+    /**
+     * init
+     */
     useEffect(() => {
-
-        Dom.removeClass(document.querySelector('html'), 'full-size');
-
         getGroups?.();
         getSensoryBlocks?.();
         getPatients?.();
-
     }, []);
 
     return (
