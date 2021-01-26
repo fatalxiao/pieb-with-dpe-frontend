@@ -30,7 +30,7 @@ const AnalgesiaData = ({
         /**
          * 从路由 params 中取出的 patient ID
          */
-        patientId = useMemo(() => match.params.patientId, [match]),
+        patientId = useMemo(() => match.params.patientId, [match.params.patientId]),
 
         /**
          * 加载数据

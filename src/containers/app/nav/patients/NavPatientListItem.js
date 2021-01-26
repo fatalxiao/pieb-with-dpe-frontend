@@ -29,10 +29,7 @@ const NavPatientListItem = ({
         /**
          * 当前 patient 的 ID
          */
-        patientId = useMemo(() =>
-                patient.id,
-            [patient]
-        ),
+        patientId = useMemo(() => patient.id, [patient]),
 
         /**
          * 当前 patient 所属 group 的 name

@@ -25,7 +25,7 @@ const PatientInfo = ({
         /**
          * 从路由 params 中取出 patientId
          */
-        patientId = useMemo(() => match.params.id, [match]),
+        patientId = useMemo(() => match.params.id, [match.params.id]),
 
         /**
          * 获取数据

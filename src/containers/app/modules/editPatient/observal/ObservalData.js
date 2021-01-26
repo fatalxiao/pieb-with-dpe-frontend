@@ -26,7 +26,7 @@ const ObservalData = ({
         /**
          * 从路由 params 获取 patient ID
          */
-        patientId = useMemo(() => match.params.patientId, [match]),
+        patientId = useMemo(() => match.params.patientId, [match.params.patientId]),
 
         /**
          * 加载数据
