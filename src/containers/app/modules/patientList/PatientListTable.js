@@ -72,6 +72,7 @@ const PatientListTable = ({
          * @type {*[]}
          */
         columns = useMemo(() => [{
+            key: 'id',
             headRenderer: 'ID',
             bodyRenderer: rowData =>
                 <NavLink className="id-link"
@@ -81,6 +82,7 @@ const PatientListTable = ({
             sortable: true,
             sortingProp: 'id'
         }, {
+            key: 'name',
             headRenderer: 'Name',
             bodyRenderer: rowData =>
                 <TextField className="hover-activated name-field"
@@ -89,6 +91,7 @@ const PatientListTable = ({
             sortable: true,
             sortingProp: 'name'
         }, {
+            key: 'group',
             headRenderer: 'Group',
             bodyRenderer: rowData =>
                 <DropdownSelect className="hover-activated group-select"
@@ -100,6 +103,7 @@ const PatientListTable = ({
             sortable: true,
             sortingProp: 'groupId'
         }, {
+            key: 'status',
             headRenderer: 'Status',
             bodyRenderer: rowData =>
                 <Switcher value={rowData.status === 1}

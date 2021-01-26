@@ -1,144 +1,168 @@
-import React, {Component} from 'react';
+/**
+ * @file AnalgesiaTable.js
+ */
+
+import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import debounce from 'lodash/debounce';
 
 import * as actions from 'reduxes/actions/index';
 
+// Components
 import Table from 'alcedo-ui/Table';
 import Checkbox from 'alcedo-ui/Checkbox';
 import TextField from 'customized/CustomizedMaterialTextField';
 import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
 
-import Util from 'vendors/Util';
+// Vendors
+import debounce from 'lodash/debounce';
+import {formatString} from 'vendors/Util';
 
+// Styles
 import 'scss/containers/app/modules/editPatient/analgesiaData/AnalgesiaTable.scss';
 
-const format = Util.formatString;
+const AnalgesiaTable = ({
+    patientId, thoracicList, sacralList, analgesiaData,
+    updateAnalgesiaDataField, createOrUpdateAnalgesiaData
+}) => {
 
-class AnalgesiaTable extends Component {
+    const
 
-    constructor(props) {
+        /**
+         * 提交到后端
+         * @type {debounced}
+         */
+        save = useCallback(debounce(() =>
+            patientId && createOrUpdateAnalgesiaData(patientId, undefined, true),
+            400
+        ), [patientId, createOrUpdateAnalgesiaData]),
 
-        super(props);
+        /**
+         * 处理值变更
+         * @type {Function}
+         */
+        updateField = useCallback((timePoint, fieldName, fieldValue) => {
+            updateAnalgesiaDataField?.(timePoint, fieldName, fieldValue);
+            setTimeout(() => save(), 0);
+        }, [updateAnalgesiaDataField, save]),
 
-        this.updateField = ::this.updateField;
-        this.save = ::this.save;
+        /**
+         * 所有 columns 的配置
+         * @type {*[]}
+         */
+        columns = useMemo(() => [{
+            key: 'timePoint',
+            headRenderer: 'Time',
+            bodyRenderer: rowData => rowData.timePoint <= 60 ?
+                `${rowData.timePoint} min`
+                :
+                `${rowData.timePoint / 60} h`
+        }, {
+            key: 'hasContraction',
+            align: Table.Align.CENTER,
+            headRenderer: 'Contraction',
+            bodyRenderer: rowData =>
+                <Checkbox checked={rowData.hasContraction}
+                          onChange={v => updateField(rowData.timePoint, 'hasContraction', v)}/>
+        }, {
+            key: 'vasScore',
+            headRenderer: 'Vas',
+            bodyRenderer: rowData =>
+                <TextField value={formatString(rowData.vasScore)}
+                           onChange={v => updateField(rowData.timePoint, 'vasScore', v)}/>
+        }, {
+            key: 'thoracicSensoryBlock',
+            width: 200,
+            noWrap: true,
+            headRenderer: 'TSB',
+            bodyRenderer: rowData =>
+                <div>
+                    <label>L: </label>
+                    <DropdownSelect data={thoracicList}
+                                    value={rowData.thoracicSensoryBlockLeft}
+                                    valueField="value"
+                                    displayField="name"
+                                    onChange={v => updateField(rowData.timePoint, 'thoracicSensoryBlockLeft', v)}/>
+                    <label>, R: </label>
+                    <DropdownSelect data={thoracicList}
+                                    value={rowData.thoracicSensoryBlockRight}
+                                    valueField="value"
+                                    displayField="name"
+                                    onChange={v => updateField(rowData.timePoint, 'thoracicSensoryBlockRight', v)}/>
+                </div>
+        }, {
+            key: 'sacralSensoryBlock',
+            width: 200,
+            noWrap: true,
+            headRenderer: 'SSB',
+            bodyRenderer: rowData =>
+                <div>
+                    <label>L: </label>
+                    <DropdownSelect data={sacralList}
+                                    value={rowData.sacralSensoryBlockLeft}
+                                    valueField="value"
+                                    displayField="name"
+                                    onChange={v => updateField(rowData.timePoint, 'sacralSensoryBlockLeft', v)}/>
+                    <label>, R: </label>
+                    <DropdownSelect data={sacralList}
+                                    value={rowData.sacralSensoryBlockRight}
+                                    valueField="value"
+                                    displayField="name"
+                                    onChange={v => updateField(rowData.timePoint, 'sacralSensoryBlockRight', v)}/>
+                </div>
+        }, {
+            key: 'bromageScore',
+            headRenderer: 'Bromage',
+            bodyRenderer: rowData =>
+                <TextField value={formatString(rowData.bromageScore)}
+                           onChange={v => updateField(rowData.timePoint, 'bromageScore', v)}/>
+        }, {
+            key: 'systolicBloodPressure',
+            headRenderer: 'SBP',
+            bodyRenderer: rowData =>
+                <TextField value={formatString(rowData.systolicBloodPressure)}
+                           onChange={v => updateField(rowData.timePoint, 'systolicBloodPressure', v)}/>
+        }, {
+            key: 'diastolicBloodPressure',
+            headRenderer: 'DBP',
+            bodyRenderer: rowData =>
+                <TextField value={formatString(rowData.diastolicBloodPressure)}
+                           onChange={v => updateField(rowData.timePoint, 'diastolicBloodPressure', v)}/>
+        }, {
+            key: 'heartRate',
+            headRenderer: 'Heart Rate',
+            bodyRenderer: rowData =>
+                <TextField value={formatString(rowData.heartRate)}
+                           onChange={v => updateField(rowData.timePoint, 'heartRate', v)}/>
+        }, {
+            key: 'pulseOxygenSaturation',
+            headRenderer: 'SPO2',
+            bodyRenderer: rowData =>
+                <TextField value={formatString(rowData.pulseOxygenSaturation)}
+                           onChange={v => updateField(rowData.timePoint, 'pulseOxygenSaturation', v)}/>
+        }, {
+            key: 'fetalHeartRate',
+            headRenderer: 'FHR',
+            bodyRenderer: rowData =>
+                <TextField value={formatString(rowData.fetalHeartRate)}
+                           onChange={v => updateField(rowData.timePoint, 'fetalHeartRate', v)}/>
+        }], [
+            thoracicList, sacralList,
+            updateField
+        ]);
 
-    }
+    return (
+        <div className="analgesia-data-table-scroller">
+            <Table className="analgesia-data-table"
+                   columns={columns}
+                   data={analgesiaData}
+                   idField="timePoint"
+                   isPaginated={false}/>
+        </div>
+    );
 
-    updateField(timePoint, fieldName, fieldValue) {
-
-        const {updateAnalgesiaDataField} = this.props;
-        updateAnalgesiaDataField(timePoint, fieldName, fieldValue);
-
-        setTimeout(() => {
-            this.save();
-        }, 0);
-
-    }
-
-    save = debounce(() => {
-        const {patientId, createOrUpdateAnalgesiaData} = this.props;
-        patientId && createOrUpdateAnalgesiaData(patientId, undefined, true);
-    }, 250);
-
-    render() {
-
-        const {thoracicList, sacralList, analgesiaData} = this.props;
-
-        return (
-            <div className="analgesia-data-table-scroller">
-                <Table className="analgesia-data-table"
-                       columns={[{
-                           header: 'Time',
-                           renderer: rowData => rowData.timePoint <= 60 ?
-                               `${rowData.timePoint} min`
-                               :
-                               `${rowData.timePoint / 60} h`
-                       }, {
-                           header: 'Contraction',
-                           renderer: rowData =>
-                               <Checkbox checked={rowData.hasContraction}
-                                         onChange={value => this.updateField(rowData.timePoint, 'hasContraction', value)}/>
-                       }, {
-                           header: 'Vas',
-                           renderer: rowData =>
-                               <TextField value={format(rowData.vasScore)}
-                                          onChange={value => this.updateField(rowData.timePoint, 'vasScore', value)}/>
-                       }, {
-                           header: 'TSB',
-                           renderer: rowData =>
-                               <div>
-                                   <label>L: </label>
-                                   <DropdownSelect data={thoracicList}
-                                                   value={rowData.thoracicSensoryBlockLeft}
-                                                   valueField="value"
-                                                   displayField="name"
-                                                   onChange={value => this.updateField(rowData.timePoint, 'thoracicSensoryBlockLeft', value)}/>
-                                   <label>, R: </label>
-                                   <DropdownSelect data={thoracicList}
-                                                   value={rowData.thoracicSensoryBlockRight}
-                                                   valueField="value"
-                                                   displayField="name"
-                                                   onChange={value => this.updateField(rowData.timePoint, 'thoracicSensoryBlockRight', value)}/>
-                               </div>
-                       }, {
-                           header: 'SSB',
-                           renderer: rowData =>
-                               <div>
-                                   <label>L: </label>
-                                   <DropdownSelect data={sacralList}
-                                                   value={rowData.sacralSensoryBlockLeft}
-                                                   valueField="value"
-                                                   displayField="name"
-                                                   onChange={value => this.updateField(rowData.timePoint, 'sacralSensoryBlockLeft', value)}/>
-                                   <label>, R: </label>
-                                   <DropdownSelect data={sacralList}
-                                                   value={rowData.sacralSensoryBlockRight}
-                                                   valueField="value"
-                                                   displayField="name"
-                                                   onChange={value => this.updateField(rowData.timePoint, 'sacralSensoryBlockRight', value)}/>
-                               </div>
-                       }, {
-                           header: 'Bromage',
-                           renderer: rowData =>
-                               <TextField value={format(rowData.bromageScore)}
-                                          onChange={value => this.updateField(rowData.timePoint, 'bromageScore', value)}/>
-                       }, {
-                           header: 'SBP',
-                           renderer: rowData =>
-                               <TextField value={format(rowData.systolicBloodPressure)}
-                                          onChange={value => this.updateField(rowData.timePoint, 'systolicBloodPressure', value)}/>
-                       }, {
-                           header: 'DBP',
-                           renderer: rowData =>
-                               <TextField value={format(rowData.diastolicBloodPressure)}
-                                          onChange={value => this.updateField(rowData.timePoint, 'diastolicBloodPressure', value)}/>
-                       }, {
-                           header: 'Heart Rate',
-                           renderer: rowData =>
-                               <TextField value={format(rowData.heartRate)}
-                                          onChange={value => this.updateField(rowData.timePoint, 'heartRate', value)}/>
-                       }, {
-                           header: 'SPO2',
-                           renderer: rowData =>
-                               <TextField value={format(rowData.pulseOxygenSaturation)}
-                                          onChange={value => this.updateField(rowData.timePoint, 'pulseOxygenSaturation', value)}/>
-                       }, {
-                           header: 'FHR',
-                           renderer: rowData =>
-                               <TextField value={format(rowData.fetalHeartRate)}
-                                          onChange={value => this.updateField(rowData.timePoint, 'fetalHeartRate', value)}/>
-                       }]}
-                       data={analgesiaData}
-                       idProp="timePoint"
-                       isPagging={false}/>
-            </div>
-        );
-    }
-}
+};
 
 AnalgesiaTable.propTypes = {
 
