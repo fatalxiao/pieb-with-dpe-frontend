@@ -1,97 +1,117 @@
-import React, {Component} from 'react';
+/**
+ * @file PatientListFilter.js
+ */
+
+import React, {useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import * as actions from 'reduxes/actions';
 
+// Components
 import TextField from 'customized/CustomizedMaterialTextField';
 import RaisedButton from 'alcedo-ui/RaisedButton';
 import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
 import AddPatientDialog from 'containers/app/modules/editPatient/patientBaseInfo/AddPatientDialog';
 
+// Styles
 import 'scss/containers/app/modules/patientList/PatientListFilter.scss';
 
-class PatientListFilter extends Component {
+const PatientListFilter = ({
+    filterValue, groupList, filterGroup, statusList, filterStatus,
+    resetPatientBaseInfo, onFilterChange
+}) => {
 
-    constructor(props) {
+    const
 
-        super(props);
+        /**
+         * add patient dialog 是否显示的标志
+         */
+        [addPatientDialogVisible, setAddPatientDialogVisible] = useState(false),
 
-        this.state = {
-            addPatientDialogVisible: false
-        };
+        /**
+         * 处理 patient filter 的变更
+         * @type {Function}
+         */
+        handlePatientFilterChange = useCallback(value => {
+            onFilterChange?.(value, filterGroup, filterStatus);
+        }, [filterGroup, filterStatus, onFilterChange]),
 
-        this.showAddPatient = ::this.showAddPatient;
-        this.hideAddPatient = ::this.hideAddPatient;
+        /**
+         * 处理 group filter 的变更
+         * @type {Function}
+         */
+        handleGroupFilterChange = useCallback(value => {
+            onFilterChange?.(filterValue, value, filterStatus);
+        }, [filterValue, filterStatus, onFilterChange]),
 
-    }
+        /**
+         * 处理 status filter 的变更
+         * @type {Function}
+         */
+        handleStatusFilterChange = useCallback(value => {
+            onFilterChange?.(filterValue, filterGroup, value);
+        }, [filterValue, filterGroup, onFilterChange]),
 
-    showAddPatient() {
-        this.setState({
-            addPatientDialogVisible: true
-        }, () => {
-            this.props.resetPatientBaseInfo();
-        });
-    }
+        /**
+         * 显示 add patient dialog
+         * @type {Function}
+         */
+        showAddPatientDialog = useCallback(() => {
+            setAddPatientDialogVisible(true);
+            resetPatientBaseInfo?.();
+        }, [resetPatientBaseInfo]),
 
-    hideAddPatient() {
-        this.setState({
-            addPatientDialogVisible: false
-        });
-    }
+        /**
+         * 隐藏 add patient dialog
+         * @type {Function}
+         */
+        hideAddPatientDialog = useCallback(() =>
+                setAddPatientDialogVisible(false),
+            []
+        );
 
-    render() {
+    return (
+        <div className="patient-list-filter">
 
-        const {filterValue, groupList, filterGroup, statusList, filterStatus, onFilterChange} = this.props,
-            {addPatientDialogVisible} = this.state;
+            <div className="patient-filter-wrapper">
 
-        return (
-            <div className="patient-list-filter">
+                <TextField className="patient-filter"
+                           value={filterValue}
+                           placeholder="Search"
+                           rightIconCls="icon-magnifying-glass"
+                           onChange={handlePatientFilterChange}/>
 
-                <div className="patient-filter-wrapper">
+                <DropdownSelect className="group-select"
+                                data={groupList}
+                                valueField="id"
+                                displayField="name"
+                                value={filterGroup}
+                                onChange={handleGroupFilterChange}/>
 
-                    <TextField className="patient-filter"
-                               value={filterValue}
-                               placeholder="Search"
-                               rightIconCls="icon-magnifying-glass"
-                               onChange={value => {
-                                   onFilterChange(value, filterGroup, filterStatus);
-                               }}/>
-
-                    <DropdownSelect className="group-select"
-                                    data={groupList}
-                                    valueField="id"
-                                    displayField="name"
-                                    value={filterGroup}
-                                    onChange={value => {
-                                        onFilterChange(filterValue, value, filterStatus);
-                                    }}/>
-
-                    <DropdownSelect className="group-select"
-                                    data={statusList}
-                                    valueField="id"
-                                    displayField="name"
-                                    value={filterStatus}
-                                    onChange={value => {
-                                        onFilterChange(filterValue, filterGroup, value);
-                                    }}/>
-
-                </div>
-
-                <RaisedButton className="create-patient-button"
-                              theme={RaisedButton.Theme.PRIMARY}
-                              iconCls="icon-plus"
-                              value="Create Patient"
-                              onClick={this.showAddPatient}/>
-
-                <AddPatientDialog visible={addPatientDialogVisible}
-                                  onRequestClose={this.hideAddPatient}/>
+                <DropdownSelect className="status-select"
+                                data={statusList}
+                                valueField="id"
+                                displayField="name"
+                                value={filterStatus}
+                                onChange={handleStatusFilterChange}/>
 
             </div>
-        );
-    }
-}
+
+            <RaisedButton className="create-patient-button"
+                          theme={RaisedButton.Theme.PRIMARY}
+                          iconCls="icon-plus"
+                          value="Create Patient"
+                          onClick={showAddPatientDialog}/>
+
+            <AddPatientDialog visible={addPatientDialogVisible}
+                              onRequestClose={hideAddPatientDialog}/>
+
+        </div>
+    );
+
+};
 
 PatientListFilter.propTypes = {
 
@@ -106,6 +126,6 @@ PatientListFilter.propTypes = {
 
 };
 
-export default connect(state => ({}), dispatch => bindActionCreators({
+export default connect(null, dispatch => bindActionCreators({
     resetPatientBaseInfo: actions.resetPatientBaseInfo
 }, dispatch))(PatientListFilter);
