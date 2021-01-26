@@ -1,84 +1,86 @@
-import React, {Component} from 'react';
+/**
+ * @file EditPatient.js
+ */
+
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {renderRoutes} from 'react-router-config';
-import {Redirect} from 'react-router-dom';
 
 import * as actions from 'reduxes/actions/index';
 
+// Components
+import {Redirect} from 'react-router-dom';
 import PointStep from 'alcedo-ui/PointStep';
 
+// Styles
 import 'scss/containers/app/modules/editPatient/EditPatient.scss';
 
-class EditPatient extends Component {
+const EditPatient = ({
+    route, form, steps, activatedStep,
+    routerPush
+}) => {
 
-    constructor(props) {
+    const
 
-        super(props);
+        /**
+         * 处理 step 变更
+         * @type {Function}
+         */
+        handleStepChange = useCallback(({activatedStep}) => {
+            routerPush?.(steps?.[activatedStep]?.route);
+        }, [steps, activatedStep, routerPush]);
 
-        this.stepChangeHandler = ::this.stepChangeHandler;
+    return (
+        <div className="edit-patient">
 
-    }
+            <PointStep className="edit-patient-stepper"
+                       steps={steps}
+                       activatedStep={activatedStep}
+                       finishedStep={steps?.length - 1}
+                       onChange={handleStepChange}/>
 
-    stepChangeHandler({activatedStep}) {
-        const {steps, routerPush} = this.props;
-        routerPush(steps[activatedStep].route);
-    }
+            <div className="edit-patient-content">
 
-    render() {
-
-        const {route, form, steps, activatedStep} = this.props;
-
-        return (
-            <div className="patient">
-
-                <PointStep className="patient-stepper"
-                           steps={steps}
-                           activatedStep={activatedStep}
-                           finishedStep={steps.length - 1}
-                           onChange={this.stepChangeHandler}/>
-
-                <div className="patient-content">
-
-                    {
-                        form && form.name ?
-                            <div>
-                                <div className="patient-base-info">
-                                    <h1 className="patient-name">{form.name}</h1>
-                                    <div className="patient-desc">
-                                        {`${form.id}  ·  ${form.group && form.group.name}`}
-                                    </div>
+                {
+                    form?.name ?
+                        <div>
+                            <div className="edit-patient-base-info">
+                                <h1 className="edit-patient-name">{form.name}</h1>
+                                <div className="edit-patient-desc">
+                                    {`${form.id}  ·  ${form.group && form.group?.name}`}
                                 </div>
-                                {
-                                    activatedStep >= 0 ?
-                                        <h2 className="patient-content-title">
-                                            {`Step ${activatedStep + 1}. ${steps[activatedStep].title}`}
-                                        </h2>
-                                        :
-                                        null
-                                }
                             </div>
-                            :
-                            null
-                    }
+                            {
+                                activatedStep >= 0 ?
+                                    <h2 className="edit-patient-content-title">
+                                        {`Step ${activatedStep + 1}. ${steps?.[activatedStep].title}`}
+                                    </h2>
+                                    :
+                                    null
+                            }
+                        </div>
+                        :
+                        null
+                }
 
-                    {renderRoutes(route.routes)}
+                {renderRoutes(route?.routes)}
 
-                    {
-                        location.pathname === '/app/patient' ?
-                            <Redirect from="/app/patient"
-                                      to="/app/patient-list"/>
-                            :
-                            null
-                    }
-
-                </div>
+                {
+                    location?.pathname === '/app/patient' ?
+                        <Redirect from="/app/patient"
+                                  to="/app/patient-list"/>
+                        :
+                        null
+                }
 
             </div>
-        );
-    }
-}
+
+        </div>
+    );
+
+};
 
 EditPatient.propTypes = {
 

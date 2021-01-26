@@ -1,29 +1,32 @@
+/**
+ * @file EditPatient.scss
+ */
 @import '../../../../common.scss';
 
-.patient {
+.edit-patient {
     position: relative;
 
-    .patient-stepper {
+    .edit-patient-stepper {
         margin-bottom: 56px;
     }
 
-    .patient-base-info {
+    .edit-patient-base-info {
         padding-bottom: 16px;
         border-bottom: 1px solid $theme-border;
 
-        .patient-name {
+        .edit-patient-name {
             margin: 0;
         }
 
-        .patient-desc {
+        .edit-patient-desc {
             opacity: .5;
         }
     }
 
-    .patient-content {
+    .edit-patient-content {
         overflow: hidden;
 
-        .patient-content-title {
+        .edit-patient-content-title {
             margin-bottom: 64px;
         }
     }
