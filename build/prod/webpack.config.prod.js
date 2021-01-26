@@ -48,11 +48,21 @@ module.exports = merge(baseWebpackConfig, {
             }
         }),
 
-        new CopyPlugin([{
-            from: path.resolve(__dirname, '../../static'),
-            to: config.assetsSubDirectory,
-            ignore: ['.*']
-        }]),
+        // new CopyPlugin([{
+        //     from: path.resolve(__dirname, '../../static'),
+        //     to: config.assetsSubDirectory,
+        //     ignore: ['.*']
+        // }]),
+
+        new CopyPlugin({
+            patterns: [{
+                from: path.resolve(__dirname, '../../static'),
+                to: config.assetsSubDirectory,
+                globOptions: {
+                    ignore: ['.*']
+                }
+            }]
+        }),
 
         new webpack.DllReferencePlugin({
             context: __dirname,
@@ -95,11 +105,7 @@ module.exports = merge(baseWebpackConfig, {
 
         new CompressionPlugin({
             test: new RegExp('\\.(' + config.productionGzipExtensions.join('|') + ')$'),
-            cache: true,
-            filename: '[path].gz[query]',
-            algorithm: 'gzip',
-            threshold: 1,
-            minRatio: 0.8
+            filename: '[path][base].gz[query]'
         })
 
     ]

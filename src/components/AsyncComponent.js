@@ -1,71 +1,74 @@
-import React, {Component} from 'react';
+/**
+ * @file AsyncComponent.js
+ */
 
-import * as types from 'reduxes/actionTypes';
+import React, {useState, useCallback, useEffect} from 'react';
 
-function asyncComponent(getComponent, store) {
+import * as actionTypes from 'reduxes/actionTypes';
 
-    return class AsyncComponent extends Component {
+export default (getComponent, store) => props => {
 
-        constructor(props) {
+    const
 
-            super(props);
+        /**
+         * 用于最终渲染用的 React Component
+         */
+        [Component, setComponent] = useState(null),
 
-            this.state = {
-                Component: null
-            };
+        /**
+         * 开始加载组件
+         * @type {function(): number}
+         */
+        startLoadComponent = useCallback(() => setTimeout(() => store.dispatch({
+            type: actionTypes.LOAD_COMPONENT_START
+        }), 0), [store]),
 
-        }
+        /**
+         * 加载组件完毕
+         * @type {function(): number}
+         */
+        finishLoadComponent = useCallback(() => setTimeout(() => store.dispatch({
+            type: actionTypes.LOAD_COMPONENT_COMPLETE
+        }), 0), [store]),
 
-        loadStartCallback = () => {
-            setTimeout(() => store.dispatch({type: types.LOAD_COMPONENT_START}), 0);
-        };
+        /**
+         * 加载组件
+         * @type {Function}
+         */
+        loadComponent = useCallback(async callback => {
 
-        loadCompleteCallback = () => {
-            setTimeout(() => store.dispatch({type: types.LOAD_COMPONENT_COMPLETE}), 0);
-        };
-
-        loadComponent = callback => {
-
+            // 如果在开发环境中如果使用异步加载，每次热更新后，所有异步加载的组件会重新加载，严重影响性能
+            // 所以在开发环境中使用 babel-plugin-transform-import-sync 同步加载组件
+            // 在这里有别于其他环境，调用 getComponent 后会直接得到 Component
             if (process.env.NODE_ENV === 'development') {
-                this.setState({
-                    Component: getComponent()
-                }, () => {
-                    callback && callback();
-                });
+                setComponent(getComponent());
+                callback?.();
                 return;
             }
 
-            getComponent().then(component => {
-                this.setState({
-                    Component: component.default || component
-                }, () => {
-                    callback && callback();
-                });
-            });
+            // 非开发环境中组件加载是异步的，所以调用 getComponent 后会得到 Promise 实例
+            const component = await getComponent?.();
+            setComponent(component?.default || component);
+            callback?.();
 
-        };
+        }, [getComponent]);
 
-        componentDidMount() {
-            if (!this.state.Component) {
-                this.loadStartCallback();
-                this.loadComponent(this.loadCompleteCallback);
-            }
+    /**
+     * 如果 Component 为空的时候，加载 component
+     */
+    useEffect(() => {
+        if (!Component) {
+            startLoadComponent();
+            loadComponent(finishLoadComponent);
         }
+    }, [
+        Component,
+        startLoadComponent, loadComponent, finishLoadComponent
+    ]);
 
-        render() {
+    return Component ?
+        <Component {...props}/>
+        :
+        null;
 
-            const {Component} = this.state;
-
-            if (Component) {
-                return <Component {...this.props}/>;
-            }
-
-            return null;
-
-        }
-
-    };
-
-}
-
-export default asyncComponent;
+};

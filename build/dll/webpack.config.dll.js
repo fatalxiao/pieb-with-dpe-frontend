@@ -16,7 +16,7 @@ module.exports = {
         'polyfill': ['@babel/polyfill'],
         'moment': ['moment'],
         'react': ['react', 'react-dom', 'react-redux', 'react-router', 'react-router-config', 'react-router-dom',
-            'connected-react-router', 'redux', 'redux-thunk', 'react-transition-group'],
+                  'connected-react-router', 'redux', 'redux-thunk', 'react-transition-group'],
         'tools': ['classnames', 'history', 'js-cookie']
     },
 
@@ -28,6 +28,9 @@ module.exports = {
     },
 
     plugins: [
+
+        // 排除moment的locale文件夹下的语言包
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
         new webpack.DllPlugin({
             context: __dirname,
@@ -42,11 +45,7 @@ module.exports = {
 
         new CompressionPlugin({
             test: new RegExp('\\.(' + config.productionGzipExtensions.join('|') + ')$'),
-            cache: true,
-            filename: '[path].gz[query]',
-            algorithm: 'gzip',
-            threshold: 1,
-            minRatio: 0.8
+            filename: '[path][base].gz[query]'
         })
 
     ]
