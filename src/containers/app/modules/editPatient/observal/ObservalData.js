@@ -11,7 +11,7 @@ import * as actions from 'reduxes/actions';
 import * as actionTypes from 'reduxes/actionTypes';
 
 // Components
-import ModuleLoading from 'components/module/ModuleLoading';
+import ModuleLoading from 'components/module/loading/ModuleLoading';
 import StepAction from 'components/StepAction';
 import ObservalForm from './ObservalForm';
 

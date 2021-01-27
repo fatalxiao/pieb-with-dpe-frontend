@@ -12,7 +12,7 @@ import CircularLoading from 'alcedo-ui/CircularLoading';
 import classNames from 'classnames';
 
 // Styles
-import 'scss/components/ModuleLoading.scss';
+import 'components/module/loading/ModuleLoading/index.scss';
 
 const ModuleLoading = ({
     className,
