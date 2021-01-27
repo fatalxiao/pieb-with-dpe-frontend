@@ -16,14 +16,14 @@
     font-size: 24px;
     box-shadow: 0 0 16px transparentize(#000, .94) !important;
 
-    .nav-patient-popover-wrapper {
+    .nav-patients-popover-wrapper {
         position: relative;
         left: -99999px;
         transition: left 0s;
     }
 
     &.fold {
-        .nav-patient-popover-wrapper {
+        .nav-patients-popover-wrapper {
             left: 0;
             transition: left 0s $theme-transition-duration;
 
