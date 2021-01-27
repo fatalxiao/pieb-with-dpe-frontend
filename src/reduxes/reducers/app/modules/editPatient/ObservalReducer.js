@@ -3,22 +3,13 @@ import * as actionTypes from 'reduxes/actionTypes/index';
 
 const DEFAULT_FORM = {
         initialTime: '',
-        testDose: '3',
         initialDose: '8',
         pumpConsumption: '',
         bolus: '',
-        hasCarbetocin: false,
-        hasHemabate: false,
         pcaCount: '',
         manualBolusCount: '',
         firstPcaTime: '',
         firstManualBolusTime: '',
-        durationOfFirstStageOfLabor: '',
-        durationOfFirstStageOfLaborHours: '',
-        durationOfFirstStageOfLaborMinutes: '',
-        durationOfSecondStageOfLabor: '',
-        durationOfSecondStageOfLaborHours: '',
-        durationOfSecondStageOfLaborMinutes: '',
         hasEpiduralCatheterAdjuestment: false,
         hasEpiduralCatheterReplacement: false,
         hasPrenatalFever: false,
@@ -36,7 +27,6 @@ const DEFAULT_FORM = {
         hasPostduralPunctureHeadache: false,
         hasBackPain: false,
         hasParesthesia: false,
-        bloodLose: '',
         patientSatisfactionScore: '',
         hasAccidentalDuralPunture: false,
         lateralEpisiotomyVasScore: '',
@@ -93,24 +83,11 @@ function observal(state = initialState, action) {
             };
         }
         case actionTypes.GET_OBSERVAL_SUCCESS: {
-
-            const form = action.responseData || cloneDeep(DEFAULT_FORM);
-
-            if (form.durationOfFirstStageOfLabor && !isNaN(form.durationOfFirstStageOfLabor)) {
-                form.durationOfFirstStageOfLaborHours = ~~(form.durationOfFirstStageOfLabor / 60);
-                form.durationOfFirstStageOfLaborMinutes = form.durationOfFirstStageOfLabor % 60;
-            }
-            if (form.durationOfSecondStageOfLabor && !isNaN(form.durationOfSecondStageOfLabor)) {
-                form.durationOfSecondStageOfLaborHours = ~~(form.durationOfSecondStageOfLabor / 60);
-                form.durationOfSecondStageOfLaborMinutes = form.durationOfSecondStageOfLabor % 60;
-            }
-
             return {
                 ...state,
-                form,
-                getActionType: actionTypes.GET_OBSERVAL_SUCCESS
+                getActionType: actionTypes.GET_OBSERVAL_SUCCESS,
+                form: action.responseData || cloneDeep(DEFAULT_FORM)
             };
-
         }
         case actionTypes.GET_OBSERVAL_FAILURE: {
             return {

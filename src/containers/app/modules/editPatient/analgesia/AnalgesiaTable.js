@@ -59,13 +59,6 @@ const AnalgesiaTable = ({
                 :
                 `${rowData.timePoint / 60} h`
         }, {
-            key: 'hasContraction',
-            align: Table.Align.CENTER,
-            headRenderer: 'Contraction',
-            bodyRenderer: rowData =>
-                <Checkbox checked={rowData.hasContraction}
-                          onChange={v => updateField(rowData.timePoint, 'hasContraction', v)}/>
-        }, {
             key: 'vasScore',
             headRenderer: 'Vas',
             bodyRenderer: rowData =>
@@ -135,12 +128,6 @@ const AnalgesiaTable = ({
             bodyRenderer: rowData =>
                 <TextField value={formatString(rowData.heartRate)}
                            onChange={v => updateField(rowData.timePoint, 'heartRate', v)}/>
-        }, {
-            key: 'pulseOxygenSaturation',
-            headRenderer: 'SPO2',
-            bodyRenderer: rowData =>
-                <TextField value={formatString(rowData.pulseOxygenSaturation)}
-                           onChange={v => updateField(rowData.timePoint, 'pulseOxygenSaturation', v)}/>
         }, {
             key: 'fetalHeartRate',
             headRenderer: 'FHR',

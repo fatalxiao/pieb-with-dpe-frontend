@@ -64,11 +64,7 @@ export const createOrUpdateObservalData = (patientId, callback, successResMsgDis
             api: ObservalApi.createOrUpdateObservalData,
             params: {
                 patientId,
-                observalData: {
-                    ...observalData,
-                    durationOfFirstStageOfLabor: durationHandler(observalData, 'durationOfFirstStageOfLabor'),
-                    durationOfSecondStageOfLabor: durationHandler(observalData, 'durationOfSecondStageOfLabor')
-                }
+                observalData
             },
             successResMsgDisabled,
             failureResMsgDisabled,

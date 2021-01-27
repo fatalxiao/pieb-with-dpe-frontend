@@ -2,7 +2,6 @@ import cloneDeep from 'lodash/cloneDeep';
 import * as actionTypes from 'reduxes/actionTypes/index';
 
 const BASE_DATA = {
-        hasContraction: false,
         vasScore: '',
         thoracicSensoryBlockLeft: null,
         thoracicSensoryBlockRight: null,
@@ -12,11 +11,12 @@ const BASE_DATA = {
         systolicBloodPressure: '',
         diastolicBloodPressure: '',
         heartRate: '',
-        pulseOxygenSaturation: '',
         fetalHeartRate: ''
     },
-    DEFAULT_TIMEPOINTS = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18,
-        20, 30, 2 * 60, 3.5 * 60, 5 * 60, 6.5 * 60, 8 * 60];
+    DEFAULT_TIMEPOINTS = [
+        0, 2, 4, 6, 8, 10, 12, 14, 16, 18,
+        20, 30, 2 * 60, 3.5 * 60, 5 * 60, 6.5 * 60, 8 * 60
+    ];
 
 function getDefaultData(timePoints = DEFAULT_TIMEPOINTS) {
     return timePoints.map(timePoint => ({

@@ -1,4 +1,10 @@
+/**
+ * @file PatientAction.js
+ */
+
 import * as actionTypes from 'reduxes/actionTypes';
+
+// Apis
 import PatientApi from 'apis/app/common/PatientApi';
 
 export const getPatients = () => dispatch => {

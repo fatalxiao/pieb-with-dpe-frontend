@@ -23,13 +23,11 @@ function AnalgesiaDataHandler(data, {BASE_DATA}) {
 
         const result = {
             timePoint: item.timePoint,
-            hasContraction: item.hasContraction,
             vasScore: item.vasScore,
             bromageScore: item.bromageScore,
             systolicBloodPressure: item.systolicBloodPressure,
             diastolicBloodPressure: item.diastolicBloodPressure,
             heartRate: item.heartRate,
-            pulseOxygenSaturation: item.pulseOxygenSaturation,
             fetalHeartRate: item.fetalHeartRate
         };
 

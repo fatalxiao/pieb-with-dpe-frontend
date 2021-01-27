@@ -98,11 +98,6 @@ const ObservalForm = ({
             <FieldSet title="2. Medication use">
                 <div className="row">
                     <TextField className="col-3 unit-ml"
-                               label="Test Dose"
-                               rightIconCls="unit"
-                               value={formatString(form.testDose)}
-                               onChange={v => updateField('testDose', v)}/>
-                    <TextField className="col-3 unit-ml"
                                label="Initial Dose"
                                rightIconCls="unit"
                                value={formatString(form.initialDose)}
@@ -117,16 +112,6 @@ const ObservalForm = ({
                                rightIconCls="unit"
                                value={formatString(form.bolus)}
                                onChange={v => updateField('bolus', v)}/>
-                </div>
-                <div className="row">
-                    <Checkbox className="col-3"
-                              label="Carbetocin"
-                              checked={form.hasCarbetocin}
-                              onChange={v => updateField('hasCarbetocin', v)}/>
-                    <Checkbox className="col-3"
-                              label="Hemabate"
-                              checked={form.hasHemabate}
-                              onChange={v => updateField('hasHemabate', v)}/>
                 </div>
             </FieldSet>
 
@@ -191,30 +176,6 @@ const ObservalForm = ({
 
             <FieldSet title="6. Labor">
                 <div className="row">
-                    <TextField className="col-3 unit-hours"
-                               label="First Stage Of Labor"
-                               rightIconCls="unit"
-                               value={formatString(form.durationOfFirstStageOfLaborHours)}
-                               onChange={v => updateField('durationOfFirstStageOfLaborHours', v)}/>
-                    <TextField className="col-3 unit-minutes"
-                               rightIconCls="unit"
-                               value={formatString(form.durationOfFirstStageOfLaborMinutes)}
-                               onChange={v => updateField('durationOfFirstStageOfLaborMinutes', v)}/>
-                    <TextField className="col-3 unit-hours"
-                               label="Second Stage Of Labor"
-                               rightIconCls="unit"
-                               value={formatString(form.durationOfSecondStageOfLaborHours)}
-                               onChange={v => updateField('durationOfSecondStageOfLaborHours', v)}/>
-                    <TextField className="col-3 unit-minutes"
-                               rightIconCls="unit"
-                               value={formatString(form.durationOfSecondStageOfLaborMinutes)}
-                               onChange={v => updateField('durationOfSecondStageOfLaborMinutes', v)}/>
-                </div>
-                <div className="row">
-                    <TextField className="col-6"
-                               label="Blood Lose"
-                               value={formatString(form.bloodLose)}
-                               onChange={v => updateField('bloodLose', v)}/>
                     <TextField className="col-6"
                                label="Patient Satisfaction Score"
                                value={formatString(form.patientSatisfactionScore)}
