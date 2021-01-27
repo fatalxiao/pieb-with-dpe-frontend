@@ -4,31 +4,420 @@
 @import '../common.scss';
 
 .table {
-    border: none !important;
+    border: none;
+    border-radius: 0;
 
-    .thead {
-        tr {
-            border-bottom: 2px solid $theme-border;
+    .table-content {
 
-            .table-header {
-                border: none !important;
+        .scroll-table-body {
+            background: #fff;
+        }
 
-                .table-header-inner {
-                    padding: 0 8px !important;
-                    color: $theme-description !important;
-                    font-weight: 700 !important;
+        // 向左 fixed 的列背景色变灰
+        table {
+            thead tr th,
+            tbody tr td,
+            tfoot tr td {
+                &.fixed-left {
+                    background: #fafafa;
+                    z-index: 2;
+                }
+            }
+        }
 
-                    .table-header-sort-icon-wrapper {
-                        top: 0;
+        table {
+            min-width: 100%;
+
+            thead {
+
+                th {
+                    position: relative;
+                    padding: 0;
+                    background: linear-gradient(180deg, $theme-light-grey, $theme-dark-grey) !important;
+                    filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr=#fafafa, endColorStr=#f4f4f4) !important;
+                    border: 1px solid $theme-border;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+
+                    .th-column {
+                        box-sizing: border-box;
+                        height: 48px;
+                        font-weight: 600;
+                        line-height: 48px;
+                        padding: 0 8px;
+                        text-overflow: ellipsis;
+
+                        .th-column-title {
+                            height: inherit;
+                            text-align: inherit;
+                            white-space: initial;
+
+                            .table-head {
+                                height: inherit;
+                            }
+                        }
+
+                        .th-sorting-icon-wrapper {
+                            position: absolute;
+                            right: 8px;
+                            top: 50%;
+                            transform: translate(0, -50%);
+
+                            i {
+                                width: 12px;
+                                height: 8px;
+                                line-height: 8px;
+                                font-size: 14px;
+                                color: #ddd;
+                            }
+                        }
+                    }
+
+                    &.table-select-th .th-column {
+                        width: 40px;
+                        padding: 0;
+                    }
+
+                    &.sortable {
+                        .th-column {
+                            padding: 0 28px 0 8px;
+
+                            .th-sorting-icon-wrapper {
+
+                                &.asc {
+                                    i {
+                                        color: #ddd;
+
+                                        &:first-child {
+                                            color: #9b9a9b;
+                                        }
+                                    }
+                                }
+
+                                &.desc {
+                                    i {
+                                        color: #9b9a9b;
+
+                                        &:first-child {
+                                            color: #ddd;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        &.align-center .th-column {
+                            padding: 0 28px;
+                        }
+                    }
+
+                    &.resizable-th {
+
+                        &::before {
+                            content: "";
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            display: block;
+                            height: 100%;
+                        }
+
+                        &:hover {
+                            &::before {
+                                border-right: 1px solid #eee;
+                            }
+
+                            .react-resizable-handle {
+                                &::after {
+                                    border-right: 1px solid #eee;
+                                }
+
+                                &:hover::after {
+                                    border-right: 1px solid #ccc;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            tbody {
+                tr {
+                    background: $theme-field-bg;
+
+                    td {
+                        box-sizing: border-box;
+                        height: 48px;
+                        padding: 0 8px;
+                        background: transparent;
+                        border: 1px solid $theme-border;
+                        word-wrap: normal;
+                        word-break: normal;
+
+                        .td-column {
+                            display: block;
+                        }
+
+                        .expand-button {
+                            vertical-align: middle;
+                            transform: rotate(-90deg);
+                            transition: transform $theme-transition-duration ease-in-out;
+                        }
+
+                        &.table-select-td {
+                            padding: 0;
+
+                            .table-select {
+                                width: 40px;
+                            }
+                        }
+
+                        &.empty {
+                            text-align: center !important;
+                            color: $theme-description !important;
+                        }
+
+                        &.measure-td {
+                            height: 0px !important;
+                            padding: 0px !important;
+                            border: 0px !important;
+                        }
+                    }
+
+                    &:hover td {
+                        background: #eaf9fe !important;
+                    }
+
+                    &.expanded {
+                        td {
+                            .expand-button {
+                                transform: rotate(0);
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            tfoot {
+                tr {
+                    background: #f7f7f7;
+
+                    td {
+                        box-sizing: border-box;
+                        background: transparent;
+                        border: 1px solid $theme-border;
                     }
                 }
             }
         }
     }
 
-    .table-row {
-        td {
-            padding: 8px;
+    .table-no-data {
+        border: 1px solid $theme-border;
+        border-top: none;
+    }
+
+    &.horizontal-scroll .table-content {
+        box-sizing: border-box;
+        border-left: 1px solid $theme-border;
+        border-right: 1px solid $theme-border;
+
+        table {
+            thead tr th,
+            tbody tr td,
+            tfoot tr td {
+                &:first-child {
+                    border-left: none !important;
+                }
+
+                &:last-child {
+                    border-right: none !important;
+                }
+            }
+        }
+    }
+
+    // Click 中自定义的表头菜单样式的渲染
+    &.use-head-menu .table-content {
+        table thead tr th {
+
+            .th-column {
+                width: 100%;
+                line-height: unset !important;
+                padding: 0 !important;
+
+                .th-column-title {
+                    flex-grow: 1;
+
+                    .table-head {
+                        padding: 0 24px 0 8px;
+
+                        .table-head-content {
+                            @include text-nowrap;
+                        }
+
+                        .table-head-menu {
+                            position: absolute;
+                            right: 6px;
+                            top: 50%;
+                            border-radius: 0;
+                            transform: translateY(-50%);
+                            z-index: 1;
+                            display: none;
+
+                            &.activated {
+                                display: block;
+                            }
+                        }
+                    }
+                }
+
+                & > .th-sorting-icon-wrapper {
+                    display: none;
+                }
+
+                &:hover .table-head .table-head-menu {
+                    display: block;
+                }
+            }
+
+            &.align-center .th-column .table-head {
+                justify-content: center;
+                padding: 0 24px;
+
+                .table-head-content {
+                    text-align: center;
+                }
+            }
+
+            &.align-right {
+                .th-column .table-head {
+                    justify-content: flex-end;
+                    padding: 0 8px 0 24px;
+
+                    .table-head-content {
+                        text-align: right;
+                    }
+                }
+
+                &.head-menu-activated,
+                &:hover {
+                    .th-column .table-head {
+                        padding: 0 24px 0 8px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.pagination {
+    height: auto;
+    padding: 20px 8px 0;
+    border-top: none;
+
+    .pagination-left {
+        .pagination-total {
+            line-height: 24px;
+            color: $theme-label;
+        }
+    }
+
+    .pagination-right {
+
+        .pagination-size {
+            float: right;
+
+            label {
+                display: none;
+            }
+
+            .pagination-size-select {
+                width: 98px;
+                height: 24px;
+
+                .dropdown {
+                    height: 24px;
+                    line-height: 24px;
+
+                    .dropdown-trigger {
+                        box-shadow: none;
+                        border: none;
+                        border-bottom: 1px solid $theme-border;
+                        border-radius: 0 !important;
+                        color: #666;
+
+                        .dropdown-trigger-icon {
+                            height: 24px;
+                            line-height: 24px;
+                            color: #ccc;
+                            font-size: 12px;
+                        }
+
+                    }
+                }
+            }
+        }
+
+        .pagination-page {
+            float: right;
+            box-sizing: border-box;
+            padding: 1px;
+
+            .base-button {
+                box-sizing: border-box;
+                width: auto;
+                min-width: 24px;
+                height: 22px;
+                padding: 0 4px;
+                border: 1px solid $theme-border;
+                border-radius: $theme-border-radius;
+                margin: 0 4px;
+
+                .base-button-value {
+                    display: inline-block;
+                    text-align: center;
+                    line-height: 20px;
+                }
+
+                .touch-ripple {
+                    border-radius: $theme-border-radius;
+                }
+
+                &.ctrl {
+                    line-height: normal;
+
+                    &:first-child,
+                    &:last-child {
+                        display: none;
+                    }
+                }
+            }
+
+            .pages {
+                .base-button.page {
+
+                    &:first-child,
+                    &:last-child {
+                        margin: 0 4px;
+                    }
+
+                    &[disabled] {
+                        color: #fff;
+                        background: #05779d;
+                        border: none;
+                    }
+                }
+            }
+
+            .apostrophe {
+                width: 26px;
+                height: 22px;
+                line-height: 16px;
+                margin: 0 4px;
+                color: #999;
+            }
         }
     }
 }

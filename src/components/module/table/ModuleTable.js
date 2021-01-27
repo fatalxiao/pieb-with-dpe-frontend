@@ -4,7 +4,6 @@
 
 import React, {Component, isValidElement, cloneElement, createRef} from 'react';
 import PropTypes from 'prop-types';
-import {findDOMNode} from 'react-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -17,7 +16,6 @@ import TableRowSize from './TableRowSize';
 
 // Vendors
 import classNames from 'classnames';
-import hasClass from 'dom-helpers/hasClass';
 import debounce from 'lodash/debounce';
 import Event from 'vendors/Event';
 import {enumerateValue} from 'vendors/Util';
@@ -53,12 +51,8 @@ class ModuleTable extends Component {
 
     componentDidMount() {
 
-        this.initTableEl();
-
         // resize 时更新 scrollHeight
         Event.addEvent(window, 'resize', this.debounceUpdateFullScreenScrollHeight);
-        Event.addEvent(document, 'scroll', this.handleScrollStart);
-        Event.addEvent(this.tableEl?.querySelector('.scroll-table-body'), 'scroll', this.handleScrollStart);
 
     }
 
@@ -71,71 +65,7 @@ class ModuleTable extends Component {
 
     componentWillUnmount() {
         Event.removeEvent(window, 'resize', this.debounceUpdateFullScreenScrollHeight);
-        Event.removeEvent(document, 'scroll', this.handleScrollStart);
-        Event.removeEvent(this.tableEl?.querySelector('.scroll-table-body'), 'scroll', this.handleScrollStart);
     }
-
-    /**
-     * 初始化 table el，并返回上层
-     */
-    initTableEl = () => {
-
-        const tableWrapperEl = this.table?.current && findDOMNode(this.table.current);
-
-        // 如果 tableWrapperEl 有 table 的 class，那么它就是 table element
-        // 不然向下寻找
-        this.tableEl = tableWrapperEl ?
-            hasClass(tableWrapperEl, 'table') ?
-                tableWrapperEl
-                :
-                tableWrapperEl.querySelector('.table')
-            :
-            null;
-
-        this.props.onGetTableEl?.(this.tableEl);
-
-    };
-
-    /**
-     * 重置 Table 的高度
-     */
-    resetHeight = () => {
-
-        // 如果是初始状态时不重置高度
-        if (!this.tableEl || !this.props.autoFitHeight) {
-            return;
-        }
-
-        // 如果 tableHeight 没有变化不更新 state
-        const {isFullScreen} = this.props,
-            headEl = this.tableEl.querySelector('.scroll-table-head .base-table'),
-            bodyEl = this.tableEl.querySelector('.scroll-table-body'),
-            noDataEl = this.tableEl.querySelector('.table-no-data'),
-
-            headHeight = headEl?.offsetHeight || 0,
-            bodyHeight = bodyEl?.offsetHeight || 0,
-            noDataHeight = noDataEl?.offsetHeight || 0,
-            tableHeight = headHeight + bodyHeight + noDataHeight + (isFullScreen ? 8 : 0);
-
-        if (this.state.tableHeight === tableHeight) {
-            return;
-        }
-
-        // 重置高度为 raw table 的高度
-        this.setState({
-            tableHeight
-        });
-
-    };
-
-    resetHeightAsync = () => {
-        setTimeout(() => this.resetHeight(), 0);
-    };
-
-    handleResetHeightAsync = callback => (data, ...args) => {
-        data?.length > 0 && this.resetHeightAsync();
-        callback?.(data, ...args);
-    };
 
     /**
      * 使用 function children 的调用形式，
@@ -200,7 +130,7 @@ class ModuleTable extends Component {
     getColumns = (columns, tableProps) => {
 
         // 在 ModuleTableColumnsSelector 中勾选的列配置
-        const {userProfile, name, activatedColumns, filterValue} = this.props,
+        const {userProfile, name, activatedColumns} = this.props,
             {footData} = tableProps,
 
             // 根据当前需要显示的 activatedColumns 配置，mapping 出最终真实显示的 columns
@@ -260,21 +190,9 @@ class ModuleTable extends Component {
                     )
                 ),
 
-                resizable: column.resizable || true,
-
-                // 当使用 HeadMenu 并且 isFilterDisabled = false 时才判断
-                hasFilter: tableProps?.isUsingHeadMenu && !column?.isFilterDisabled && filterValue ?
-                    filterValue.some(item =>
-                        item && item.name && (column?.filterValue || column?.value)
-                        && item.name === (column?.filterValue || column?.value)
-                        && item.value?.length > 0
-                    )
-                    :
-                    false
+                resizable: column.resizable || true
 
             })) || [];
-
-        tableProps?.onActivatedColumnsChange?.(result);
 
         return result;
 
@@ -357,16 +275,6 @@ class ModuleTable extends Component {
     };
 
     /**
-     * 处理 table 请求配置 filter
-     * @param callback
-     * @returns {function(...[*]=)}
-     */
-    handleRequestColumnFilter = callback => column => {
-        this.props.onRequestColumnFilter?.(column);
-        callback?.(column);
-    };
-
-    /**
      * 对表格冻结列持久化
      * @param frozenColumns
      */
@@ -446,13 +354,8 @@ class ModuleTable extends Component {
             isClickSorting: tableProps?.isClickSorting || false,
             frozenColumns: this.frozenColumns,
             noDataText: hasFinishedLoading ? 'No data found.' : null,
-            onDataUpdate: this.handleResetHeightAsync(tableProps?.onDataUpdate),
-            onScrollStart: this.handleScrollStart,
-            onRequestColumnFilter: this.handleRequestColumnFilter(tableProps?.onRequestColumnFilter),
             onFrozenChange: this.handleFrozenChange,
-            onColumnsWidthChange: this.handleColumnsWidthChange,
-            onExpand: this.handleResetHeightAsync(tableProps?.onExpand),
-            onCollapse: this.handleResetHeightAsync(tableProps?.onCollapse)
+            onColumnsWidthChange: this.handleColumnsWidthChange
         });
 
     };
@@ -523,23 +426,8 @@ ModuleTable.propTypes = {
      */
     rowSize: PropTypes.oneOf(enumerateValue(TableRowSize)),
 
-    /**
-     * filter
-     */
-    filterValue: PropTypes.arrayOf(PropTypes.shape({
-        includeType: PropTypes.string,
-        name: PropTypes.string,
-        value: PropTypes.array
-    })),
-
     defaultTableHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    autoFitHeight: PropTypes.bool,
-
-    /**
-     * callbacks
-     */
-    onGetTableEl: PropTypes.func,
-    onRequestColumnFilter: PropTypes.func
+    autoFitHeight: PropTypes.bool
 
 };
 
@@ -555,5 +443,5 @@ ModuleTable.defaultProps = {
 };
 
 export default connect(state => ({
-    isFullScreen: state.fullScreen.isFullScreen,
+    isFullScreen: state.fullScreen.isFullScreen
 }), dispatch => bindActionCreators({}, dispatch), null, {forwardRef: true})(ModuleTable);

@@ -11,11 +11,11 @@ import * as actions from 'reduxes/actions';
 
 // Components
 import {NavLink} from 'react-router-dom';
-import Table from 'alcedo-ui/Table';
 import Switcher from 'alcedo-ui/Switcher';
 import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
 import TextField from 'customized/CustomizedMaterialTextField';
 import ModuleTableCard from 'components/module/table/ModuleTableCard';
+import Table from 'customized/CustomizedTable';
 
 // Vendors
 import debounce from 'lodash/debounce';

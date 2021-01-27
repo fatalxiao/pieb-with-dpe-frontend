@@ -1,0 +1,15 @@
+/**
+ * @file TableHeadMenu.scss
+ */
+@import 'scss/common.scss';
+
+.base-button.extra-list-menu-icon.table-head-menu {
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+}
+
+.trigger-pop.table-head-menu-pop {
+    width: 160px;
+    transform: translate(16px, 6px);
+}

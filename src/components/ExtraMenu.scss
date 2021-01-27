@@ -1,0 +1,27 @@
+/**
+ * @file ExtraMenu.scss
+ */
+@import 'scss/common.scss';
+
+.icon-button.extra-menu-icon {
+    color: $theme-highlight !important;
+    font-size: 16px;
+}
+
+.portal {
+
+    .trigger-pop.extra-menu-pop {
+
+        .popup-content {
+            border: 1px solid $theme-border;
+        }
+
+        &.trigger-pop-bottom-left .customized-popup-triangle {
+            left: 6px;
+        }
+
+        &.trigger-pop-bottom-right .customized-popup-triangle {
+            right: 6px;
+        }
+    }
+}

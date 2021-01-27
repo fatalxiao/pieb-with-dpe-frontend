@@ -1,0 +1,36 @@
+/**
+ * @file ExtraListMenu.scss
+ */
+@import 'scss/common.scss';
+
+.portal {
+
+    .trigger-pop.extra-list-menu-pop .extra-list-menu-list .list-item {
+        color: #2d2d2d;
+        padding: 0 8px;
+        border-bottom: 1px solid $theme-border;
+        font-size: 12px;
+
+        .button-icon {
+            color: $theme-label;
+            font-size: 16px;
+            margin-right: 8px;
+        }
+
+        a {
+            position: absolute;
+            left: 0;
+            box-sizing: border-box;
+            display: block;
+            width: 100%;
+            color: #2d2d2d;
+            text-decoration: none;
+            padding: 0 8px;
+            z-index: 1;
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+}

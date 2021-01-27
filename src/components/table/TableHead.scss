@@ -1,0 +1,38 @@
+/**
+ * @file TableHead.scss
+ */
+@import 'scss/common.scss';
+
+.table-head {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    .table-head-content {
+        flex-grow: 0;
+    }
+
+    .th-sorting-icon-wrapper {
+        position: relative !important;
+        right: 0 !important;
+        top: 0 !important;
+        transform: none !important;
+
+        .th-sorting-icon {
+            width: 16px !important;
+            margin: 0 !important;
+        }
+    }
+
+    .table-head-icon {
+        display: inline-block;
+        line-height: 16px;
+        color: $theme-label;
+        vertical-align: top;
+        margin-left: 6px;
+    }
+
+    .table-head-menu {
+        vertical-align: top;
+    }
+}

@@ -38,6 +38,18 @@ i, cite, em, var, address, dfn {
     display: inline-block;
 }
 
+.float-fix {
+    @include float-fix;
+}
+
+.invisible {
+    @include invisible;
+}
+
+.text-nowrap {
+    @include text-nowrap;
+}
+
 body {
     font-family: "helvetica neue", "hiragino sans gb", "stheiti",
     "microsoft yahei", \5FAE\8F6F\96C5\9ED1, tahoma, sans-serif !important;

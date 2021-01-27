@@ -113,8 +113,7 @@ const ModuleTableCard = forwardRef(({
                        name={name}
                        wrapperEl={cardEl}
                        rowSize={rowSize}
-                       hasFinishedLoading={hasFinishedLoading}
-                       onRequestColumnFilter={handleRequestColumnFilter}>
+                       hasFinishedLoading={hasFinishedLoading}>
                     {children}
                 </Table>
 
