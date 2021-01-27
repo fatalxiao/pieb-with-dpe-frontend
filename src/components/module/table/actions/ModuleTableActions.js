@@ -7,11 +7,10 @@ import PropTypes from 'prop-types';
 
 // Components
 import FullScreen from './ModuleTableFullScreen';
-import ColumnsSelector from './ModuleTableColumnsSelector';
 import RowSizeSelector from './ModuleTableRowSizeSelector';
 
 // Statics
-import TableRowSize from 'statics/TableRowSize';
+import TableRowSize from '../TableRowSize';
 
 // Vendors
 import {enumerateValue} from 'vendors/Util';
@@ -28,8 +27,8 @@ class ModuleTableActions extends Component {
     render() {
 
         const {
-            allColumns, activatedColumns, rowSize, extraActions,
-            onFullScreenChange, onActivatedColumnsChange, onRowSizeChange
+            rowSize, extraActions,
+            onFullScreenChange, onRowSizeChange
         } = this.props;
 
         return (
@@ -47,15 +46,6 @@ class ModuleTableActions extends Component {
 
                 <FullScreen onChange={onFullScreenChange}/>
 
-                {
-                    allColumns && allColumns.length > 0 ?
-                        <ColumnsSelector data={allColumns}
-                                         value={activatedColumns}
-                                         onChange={onActivatedColumnsChange}/>
-                        :
-                        null
-                }
-
                 <RowSizeSelector value={rowSize}
                                  onChange={onRowSizeChange}/>
 
@@ -67,13 +57,10 @@ class ModuleTableActions extends Component {
 
 ModuleTableActions.propTypes = {
 
-    allColumns: PropTypes.array,
-    activatedColumns: PropTypes.array,
     rowSize: PropTypes.oneOf(enumerateValue(TableRowSize)),
     extraActions: PropTypes.any,
 
     onFullScreenChange: PropTypes.func,
-    onActivatedColumnsChange: PropTypes.func,
     onRowSizeChange: PropTypes.func
 
 };

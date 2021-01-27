@@ -19,6 +19,13 @@ $theme-warning-bg: #fff7e6;
 $theme-warning-border: #f7dfad;
 $theme-label: lighten($theme-field, 16%);
 $theme-label-disabled: grayscale(lighten($theme-label, 32%));
+$theme-table-head: #666;
+$theme-modal: transparentize(#08161e, .2);
+
+
+$theme-dark-grey: #f4f4f4;
+$theme-light-grey: #fafafa;
+$theme-light-bg: #f2f7fa;
 
 // z-index
 $root-loading-z-index: 99;

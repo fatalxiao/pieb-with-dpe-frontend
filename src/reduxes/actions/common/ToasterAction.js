@@ -1,3 +1,7 @@
+/**
+ * @file ToasterAction.js
+ */
+
 import Toaster from 'alcedo-ui/Toaster';
 import * as types from 'reduxes/actionTypes';
 

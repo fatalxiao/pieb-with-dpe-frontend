@@ -1,3 +1,7 @@
+/**
+ * @file ResMsgAction.js
+ */
+
 import {addSuccessToaste, addErrorToaste} from 'reduxes/actions/common/ToasterAction';
 import {addWarningNotifier} from 'reduxes/actions/common/NotifierAction';
 

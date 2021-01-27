@@ -15,6 +15,7 @@ import Table from 'alcedo-ui/Table';
 import Switcher from 'alcedo-ui/Switcher';
 import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
 import TextField from 'customized/CustomizedMaterialTextField';
+import ModuleTableCard from 'components/module/table/ModuleTableCard';
 
 // Vendors
 import debounce from 'lodash/debounce';
@@ -117,9 +118,11 @@ const PatientListTable = ({
         ]);
 
     return (
-        <Table className="patient-list-table"
-               data={data}
-               columns={columns}/>
+        <ModuleTableCard>
+            <Table className="patient-list-table"
+                   data={data}
+                   columns={columns}/>
+        </ModuleTableCard>
     );
 
 };

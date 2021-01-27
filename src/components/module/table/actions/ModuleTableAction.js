@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 // Components
 import TipProvider from 'alcedo-ui/TipProvider';
-import IconButton from 'customized/CustomizedIconButton';
+import IconButton from 'alcedo-ui/IconButton';
 
 // Vendors
 import classNames from 'classnames';

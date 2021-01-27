@@ -8,6 +8,7 @@ import {connectRouter} from 'connected-react-router';
 import loadComponent from './common/LoadComponentReducer';
 import appToaster from './common/ToasterReducer';
 import appNotifier from './common/NotifierReducer';
+import fullScreen from './common/FullScreenReducer';
 
 import group from './app/common/GroupReducer';
 import patients from './app/common/PatientsReducer';
@@ -25,6 +26,7 @@ export default history => combineReducers({
     loadComponent,
     appToaster,
     appNotifier,
+    fullScreen,
 
     group,
     patients,

@@ -61,13 +61,16 @@ const PatientList = ({
             {
                 patientList?.length > 0 ?
                     <Fragment>
+
                         <PatientListFilter filterValue={filterValue}
                                            groupList={[PatientList.ALL_GROUP, ...groupList]}
                                            filterGroup={filterGroup}
                                            statusList={PatientList.STATUS_LIST}
                                            filterStatus={filterStatus}
                                            onFilterChange={handleFilterChange}/>
+
                         <PatientListTable data={tableData}/>
+
                     </Fragment>
                     :
                     <NavNoPatient/>

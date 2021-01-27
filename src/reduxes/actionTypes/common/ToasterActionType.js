@@ -1,3 +1,7 @@
+/**
+ * @file ToasterActionType.js
+ */
+
 export const ADD_TOASTE = 'ADD_TOASTE';
 
 export const UPDATE_TOASTES = 'UPDATE_TOASTES';

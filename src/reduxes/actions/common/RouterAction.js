@@ -1,3 +1,7 @@
+/**
+ * @file RouterAction.js
+ */
+
 import {push, replace, go, goBack, goForward} from 'connected-react-router';
 
 export const routerPush = route => dispatch => {

@@ -7,11 +7,11 @@ import PropTypes from 'prop-types';
 
 // Components
 import Action from './ModuleTableAction';
-import PopupProvider from 'customized/CustomizedPopupProvider';
-import List from 'customized/CustomizedList';
+import PopupProvider from 'alcedo-ui/PopupProvider';
+import List from 'alcedo-ui/List';
 
 // Statics
-import TableRowSize from 'statics/TableRowSize';
+import TableRowSize from '../TableRowSize';
 
 // Vendors
 import ComponentUtil from 'vendors/ComponentUtil';

@@ -1,8 +1,13 @@
+/**
+ * @file index.js
+ */
+
 export * from './common/ToasterActionType';
 export * from './common/NotifierActionType';
 export * from './common/ApiActionType';
 export * from './common/CommonActionType';
 export * from './common/LoadComponentActionType';
+export * from './common/FullScreenActionType';
 
 export * from './app/common/GroupActionType';
 export * from './app/common/PatientActionType';

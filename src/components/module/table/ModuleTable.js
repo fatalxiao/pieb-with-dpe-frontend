@@ -10,10 +10,10 @@ import {bindActionCreators} from 'redux';
 
 // Components
 import Table from 'alcedo-ui/Table';
-import CircularLoading from 'customized/CustomizedCircularLoading';
+import CircularLoading from 'alcedo-ui/CircularLoading';
 
 // Statics
-import TableRowSize from 'statics/TableRowSize';
+import TableRowSize from './TableRowSize';
 
 // Vendors
 import classNames from 'classnames';
@@ -21,7 +21,6 @@ import hasClass from 'dom-helpers/hasClass';
 import debounce from 'lodash/debounce';
 import Event from 'vendors/Event';
 import {enumerateValue} from 'vendors/Util';
-import Subscription from 'vendors/Subscription';
 import FrozenColumns from 'vendors/persistence/FrozenColumns';
 import ResizableColumnsWidth from 'vendors/persistence/ResizableColumnsWidth';
 
@@ -358,13 +357,6 @@ class ModuleTable extends Component {
     };
 
     /**
-     * 当 table 滚动时，隐藏 table 中的 pop
-     */
-    handleScrollStart = () => {
-        Subscription.publish(Subscription.HIDE_MODULE_TABLE_POP, this.tableEl);
-    };
-
-    /**
      * 处理 table 请求配置 filter
      * @param callback
      * @returns {function(...[*]=)}
@@ -564,5 +556,4 @@ ModuleTable.defaultProps = {
 
 export default connect(state => ({
     isFullScreen: state.fullScreen.isFullScreen,
-    userProfile: state.user.profile
 }), dispatch => bindActionCreators({}, dispatch), null, {forwardRef: true})(ModuleTable);

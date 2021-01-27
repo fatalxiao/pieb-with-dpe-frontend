@@ -1,3 +1,7 @@
+/**
+ * @file NotifierAction.js
+ */
+
 import Notifier from 'alcedo-ui/Notifier';
 import * as types from 'reduxes/actionTypes';
 
