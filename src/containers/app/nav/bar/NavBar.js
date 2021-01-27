@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 // Components
 import NavBarTop from './NavBarTop';
-import NavBarBottom from './NavBarBottom';
+// import NavBarBottom from './NavBarBottom';
 import NavPatientMenu from '../patients/NavPatientsPopover';
 
 // Vendors
@@ -25,7 +25,7 @@ const NavBar = ({isFold}) => (
 
         <NavPatientMenu isFold={isFold}/>
 
-        <NavBarBottom/>
+        {/*<NavBarBottom/>*/}
 
     </div>
 );

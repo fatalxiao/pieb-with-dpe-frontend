@@ -28,7 +28,7 @@
     }
 
     &.fold {
-        top: 160px+25px;
+        top: 208px + 25px;
         right: -99999px;
         transition: top $theme-transition-duration ease-in-out, right 0s $theme-transition-duration;
     }
