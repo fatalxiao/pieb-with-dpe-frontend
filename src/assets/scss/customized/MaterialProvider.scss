@@ -4,10 +4,18 @@
 @import '../common.scss';
 
 .material-provider {
+    background: transparent !important;
+
     .material-provider-label {
         display: inline-block;
         color: $theme-label;
         height: 16px;
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    .material-provider-field {
+        font-size: 16px;
     }
 
     &[disabled] {

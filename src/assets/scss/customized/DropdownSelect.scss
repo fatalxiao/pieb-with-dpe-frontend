@@ -8,6 +8,10 @@
     border-radius: $theme-border-radius !important;
     margin-top: 2px !important;
 
+    .list-item {
+        font-size: 16px;
+    }
+
     &.above {
         margin-top: -2px !important;
     }

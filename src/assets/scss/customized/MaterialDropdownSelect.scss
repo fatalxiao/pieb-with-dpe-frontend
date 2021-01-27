@@ -6,8 +6,12 @@
 .material-dropdown-select {
     background: transparent !important;
 
+    .material-provider-label {
+        color: $theme-label !important;
+    }
+
     &.focused {
-        .material-dropdown-select-label {
+        .material-provider-label {
             color: $theme-highlight !important;
         }
     }
