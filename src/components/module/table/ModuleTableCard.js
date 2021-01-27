@@ -74,13 +74,9 @@ class ModuleTableCard extends Component {
      * @param rowSize
      */
     handleRowSizeChange = rowSize => {
-
-        this.hidePopInTable();
-
         this.setState({
             rowSize
         }, () => this.props.onRowSizeChange?.(rowSize));
-
     };
 
     render() {
