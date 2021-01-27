@@ -22,8 +22,13 @@ $theme-label-disabled: grayscale(lighten($theme-label, 32%));
 
 // z-index
 $root-loading-z-index: 99;
-$nav-menu-z-index: 90;
-$nav-bar-z-index: 80;
+$tip-z-index: 99;
+$toast-z-index: 98;
+$dialog-z-index: 95;
+$pop-z-index: 92;
+$full-screen-z-index: 91;
+$menu-z-index: 90;
+$nav-z-index: 89;
 
 // size
 $minWidth: 320px;
