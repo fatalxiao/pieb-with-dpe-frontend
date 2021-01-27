@@ -1,0 +1,12 @@
+/**
+ * @file ModuleCard.scss
+ * @author liangxiaojun(liangxiaojun@derbysoft.com)
+ */
+@import 'scss/common.scss';
+
+.module-card {
+    border: 1px solid #e5e5e5;
+    border-radius: $theme-border-radius;
+    box-shadow: 1px 1px 4px transparentize(#ccc, .5);
+    overflow: hidden;
+}

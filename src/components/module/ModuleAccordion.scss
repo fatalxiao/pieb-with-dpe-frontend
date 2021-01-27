@@ -1,0 +1,53 @@
+/**
+ * @file ModuleAccordion.scss
+ * @author liangxiaojun(liangxiaojun@derbysoft.com)
+ */
+@import 'scss/common.scss';
+
+.accordion.module-accordion {
+
+    .accordion-title {
+        height: 51px;
+        padding: 0 40px;
+        background: #fff;
+        border: none;
+        font-size: 14px;
+        font-weight: 600;
+        color: $theme-field;
+
+        .button-icon-right {
+            position: absolute;
+            left: 16px;
+            top: 18px;
+            width: 16px;
+            height: 16px;
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: $theme-field;
+            transform: rotate(0deg);
+        }
+
+        .help-tip-icon {
+            position: relative;
+            z-index: 1;
+        }
+    }
+
+    .accordion-content {
+        padding: 8px 40px 40px;
+        overflow: hidden;
+        transition: height $theme-transition-duration ease-in-out,
+        padding $theme-transition-duration ease-in-out;
+    }
+
+    &.collapsed {
+        .accordion-title .button-icon-right {
+            transform: rotate(-90deg);
+        }
+
+        .accordion-content {
+            padding: 0 40px;
+        }
+    }
+}
