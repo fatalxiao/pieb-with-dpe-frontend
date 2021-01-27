@@ -41,7 +41,7 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['.js'],
+        extensions: ['.js', '.scss'],
         alias: {
             'src': resolve('src'),
             'apis': resolve('src/apis'),
