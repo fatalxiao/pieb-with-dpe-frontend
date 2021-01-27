@@ -2,11 +2,10 @@
  * @file ModuleTableCard.js
  */
 
-import React, {Component, Fragment, createRef} from 'react';
+import React, {Fragment, useRef, useState, useCallback, useEffect, forwardRef} from 'react';
 import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 
 // Components
 import Card from 'components/module/ModuleCard';
@@ -23,126 +22,108 @@ import {enumerateValue} from 'vendors/Util';
 // Styles
 import './ModuleTableCard.scss';
 
-class ModuleTableCard extends Component {
+const ModuleTableCard = forwardRef(({
 
-    constructor(props) {
+    name, children, className,
 
-        super(props);
+    rowSize: propsRowSize, isFullScreen, hasFinishedLoading, useAdvancedMetricFilter, extraActions,
 
-        this.card = createRef();
-        this.table = createRef();
+    onFullScreenChange, onRowSizeChange,
 
-        this.state = {
-            cardEl: null,
-            rowSize: props.rowSize
-        };
+    ...restProps
 
-    }
+}, cardRef) => {
 
-    componentDidMount() {
-        this.updateCardEl();
-    }
+    const
+
+        /**
+         * table 的 reference
+         */
+        tableRef = useRef(),
+
+        /**
+         * 当前 card 的 element
+         */
+        [cardEl, setCardEl] = useState(null),
+
+        /**
+         * 当前的 row size 的值
+         */
+        [rowSize, setRowSize] = useState(propsRowSize),
+
+        /**
+         * 重置高度
+         */
+        resetHeight = useCallback(() => tableRef?.current?.resetHeight?.(), [tableRef]),
+
+        /**
+         * 重置高度
+         */
+        resetHeightAsync = useCallback(() => tableRef?.current?.resetHeightAsync?.(), [tableRef]),
+
+        /**
+         * 更新 card 的 element
+         */
+        updateCardEl = useCallback(() => {
+            const nextCardEl = findDOMNode(cardRef?.current);
+            if (nextCardEl) {
+                setCardEl(nextCardEl);
+            }
+        }, [cardRef]),
+
+        /**
+         * 处理 row size 的变更
+         */
+        handleRowSizeChange = useCallback(nextRowSize => {
+            setRowSize(nextRowSize);
+            onRowSizeChange?.(nextRowSize);
+        }, [onRowSizeChange]);
 
     /**
-     * 重置 Table 的高度
+     * 初始化
      */
-    resetHeight = () => {
-        this.table?.current?.resetHeight?.();
-    };
+    useEffect(() => updateCardEl(), []);
 
-    /**
-     * 重置 Table 的高度（异步）
-     */
-    resetHeightAsync = () => {
-        this.table?.current?.resetHeightAsync?.();
-    };
+    return (
+        <Fragment>
 
-    /**
-     * 更新 card 的 element 到 state，传递到 ModuleTable 中计算滚动高度
-     */
-    updateCardEl = () => {
-        const cardEl = this.card?.current && findDOMNode(this.card?.current);
-        if (cardEl) {
-            this.setState({
-                cardEl
-            });
-        }
-    };
+            {/** 全屏时的模态框 */}
+            {
+                isFullScreen ?
+                    <div className="module-table-card-modal"></div>
+                    :
+                    null
+            }
 
-    /**
-     * 处理 row size 变更事件
-     * @param rowSize
-     */
-    handleRowSizeChange = rowSize => {
-        this.setState({
-            rowSize
-        }, () => this.props.onRowSizeChange?.(rowSize));
-    };
+            {/** 主体 Card */}
+            <Card {...restProps}
+                  ref={cardRef}
+                  className={classNames('module-table-card', {
+                      [className]: className,
+                      'full-screen': isFullScreen
+                  })}>
 
-    render() {
+                {/** Table 上方的工具条 */}
+                <Actions rowSize={rowSize}
+                         extraActions={extraActions}
+                         onFullScreenChange={onFullScreenChange}
+                         onRowSizeChange={handleRowSizeChange}/>
 
-        const {
+                <Table ref={tableRef}
+                       name={name}
+                       wrapperEl={cardEl}
+                       rowSize={rowSize}
+                       hasFinishedLoading={hasFinishedLoading}
+                       onRequestColumnFilter={handleRequestColumnFilter}>
+                    {children}
+                </Table>
 
-                name, children, className,
+            </Card>
 
-                allColumns, isFullScreen, hasFinishedLoading, useAdvancedMetricFilter, extraActions,
+        </Fragment>
+    );
 
-                onFullScreenChange, onFilterValidate,
-
-                // not passing down these props
-                userProfile, rowSize: rs, filters, filterData, filterValue,
-                defaultMetricColumnField, onActivatedColumnsChange, onRowSizeChange, onFilterChange,
-
-                ...restProps
-
-            } = this.props,
-            {cardEl, rowSize} = this.state;
-
-        return (
-            <Fragment>
-
-                {/** 全屏时的模态框 */}
-                {
-                    isFullScreen ?
-                        <div className="module-table-card-modal"></div>
-                        :
-                        null
-                }
-
-                {/** 主体 Card */}
-                <Card {...restProps}
-                      ref={this.card}
-                      className={classNames('module-table-card', {
-                          [className]: className,
-                          'full-screen': isFullScreen
-                      })}>
-
-                    {/** Table 上方的工具条 */}
-                    <Actions allColumns={allColumns}
-                             rowSize={rowSize}
-                             extraActions={extraActions}
-                             onFullScreenChange={onFullScreenChange}
-                             onActivatedColumnsChange={this.handleActivatedColumnsChange}
-                             onRowSizeChange={this.handleRowSizeChange}/>
-
-                    <Table ref={this.table}
-                           name={name}
-                           wrapperEl={cardEl}
-                           rowSize={rowSize}
-                           hasFinishedLoading={hasFinishedLoading}
-                           filterValue={filterValue}
-                           onGetTableEl={this.handleGetTableEl}
-                           onRequestColumnFilter={this.handleRequestColumnFilter}>
-                        {children}
-                    </Table>
-
-                </Card>
-
-            </Fragment>
-        );
-
-    }
-}
+});
 
 ModuleTableCard.propTypes = {
 
@@ -151,13 +132,6 @@ ModuleTableCard.propTypes = {
 
     className: PropTypes.string,
     style: PropTypes.object,
-
-    /**
-     * 用户配置
-     */
-    userProfile: PropTypes.shape({
-        id: PropTypes.number
-    }),
 
     /**
      * row size
@@ -175,11 +149,6 @@ ModuleTableCard.propTypes = {
     hasFinishedLoading: PropTypes.bool,
 
     /**
-     * 默认的 metric 列的 field
-     */
-    defaultMetricColumnField: PropTypes.string,
-
-    /**
      * 额外的 actions
      */
     extraActions: PropTypes.any,
@@ -188,10 +157,7 @@ ModuleTableCard.propTypes = {
      * callbacks
      */
     onFullScreenChange: PropTypes.func,
-    onActivatedColumnsChange: PropTypes.func,
-    onRowSizeChange: PropTypes.func,
-    onFilterValidate: PropTypes.func,
-    onFilterChange: PropTypes.func
+    onRowSizeChange: PropTypes.func
 
 };
 
@@ -203,11 +169,10 @@ ModuleTableCard.defaultProps = {
     /**
      * filter 配置参数
      */
-    useAdvancedMetricFilter: false,
-    defaultMetricColumnField: 'defaultMetrics'
+    useAdvancedMetricFilter: false
 
 };
 
 export default connect(state => ({
     isFullScreen: state.fullScreen.isFullScreen
-}), dispatch => bindActionCreators({}, dispatch), null, {forwardRef: true})(ModuleTableCard);
+}), null, null, {forwardRef: true})(ModuleTableCard);
