@@ -1,0 +1,28 @@
+/**
+ * @file ModuleTableChart.scss
+ */
+@import 'scss/common.scss';
+
+.module-table-card {
+    position: relative;
+    padding: 8px 8px 16px;
+
+    &.full-screen {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        bottom: 32px;
+        z-index: $full-screen-z-index;
+    }
+}
+
+.module-table-card-modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: $full-screen-z-index;
+    background: $theme-modal;
+}

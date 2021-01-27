@@ -1,6 +1,5 @@
 /**
  * @file ModuleAccordion.js
- * @author liangxiaojun(liangxiaojun@derbysoft.com)
  */
 
 import React, {useRef, useCallback} from 'react';

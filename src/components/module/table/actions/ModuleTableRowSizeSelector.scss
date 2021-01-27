@@ -1,0 +1,22 @@
+/**
+ * @file ModuleTableRowSizeSelector.scss
+ */
+@import 'scss/common.scss';
+
+.module-table-row-size-selector-pop {
+    z-index: $dialog-z-index + 1;
+
+    .popup-content {
+        border: 1px solid $theme-border;
+
+        .list .list-item {
+            padding: 0 8px;
+
+            .button-icon-left {
+                font-size: 16px;
+                margin-right: 8px;
+                color: $theme-label;
+            }
+        }
+    }
+}

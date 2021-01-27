@@ -1,0 +1,24 @@
+/**
+ * @file ModuleTableAction.scss
+ */
+@import 'scss/common.scss';
+
+.module-table-action-tip {
+    transform: translate(1px, -4px);
+}
+
+.icon-button.module-table-action {
+    width: auto;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 6px;
+
+    .button-icon {
+        font-size: 20px;
+    }
+
+    .base-button-value {
+        padding: 0 12px;
+        font-weight: 600;
+    }
+}

@@ -1,0 +1,18 @@
+/**
+ * @file ModuleTableActions.scss
+ */
+@import 'scss/common.scss';
+
+.module-table-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 32px;
+    margin-bottom: 8px;
+
+    .module-table-actions-extra-separator {
+        height: 16px;
+        border-right: 1px solid $theme-border;
+        margin: 0 8px;
+    }
+}
