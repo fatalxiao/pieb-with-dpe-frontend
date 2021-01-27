@@ -161,62 +161,18 @@ const ObservalForm = ({
                 </div>
             </FieldSet>
 
-            <FieldSet title="5. Epidural Catheter">
-                <div className="row">
-                    <Checkbox className="col-6"
-                              label="Epidural Catheter Adjuestment"
-                              checked={form.hasEpiduralCatheterAdjuestment}
-                              onChange={v => updateField('hasEpiduralCatheterAdjuestment', v)}/>
-                    <Checkbox className="col-6"
-                              label="Epidural Catheter Replacement"
-                              checked={form.hasEpiduralCatheterReplacement}
-                              onChange={v => updateField('hasEpiduralCatheterReplacement', v)}/>
-                </div>
-            </FieldSet>
-
             <FieldSet title="6. Labor">
                 <div className="row">
-                    <TextField className="col-6"
-                               label="Patient Satisfaction Score"
-                               value={formatString(form.patientSatisfactionScore)}
-                               onChange={v => updateField('patientSatisfactionScore', v)}/>
-                </div>
-                <div className="row">
-                    <Checkbox className="col-3"
-                              label="Prenatal Fever"
-                              checked={form.hasPrenatalFever}
-                              onChange={v => updateField('hasPrenatalFever', v)}/>
-                    <TextField className="col-3"
-                               label="Prenatal Fever Temperature"
-                               value={formatString(form.prenatalFeverTemperature)}
-                               disabled={!form.hasPrenatalFever}
-                               onChange={v => updateField('prenatalFeverTemperature', v)}/>
                     <Checkbox className="col-3"
                               label="Vasoactive Agent"
                               checked={form.hasVasoactiveAgent}
                               onChange={v => updateField('hasVasoactiveAgent', v)}/>
-                    <Checkbox className="col-3"
-                              label="Nausea"
-                              checked={form.hasNausea}
-                              onChange={v => updateField('hasNausea', v)}/>
                 </div>
                 <div className="row">
-                    <Checkbox className="col-3"
-                              label="Vomit"
-                              checked={form.hasVomit}
-                              onChange={v => updateField('hasVomit', v)}/>
-                    <Checkbox className="col-3"
-                              label="Pruritus"
-                              checked={form.hasPruritus}
-                              onChange={v => updateField('hasPruritus', v)}/>
                     <Checkbox className="col-3"
                               label="Hypotension"
                               checked={form.hasHypotension}
                               onChange={v => updateField('hasHypotension', v)}/>
-                    <Checkbox className="col-3"
-                              label="Unabled To Puncture Dura"
-                              checked={form.isUnabledToPunctureDura}
-                              onChange={v => updateField('isUnabledToPunctureDura', v)}/>
                 </div>
                 <div className="row">
                     <Checkbox className="col-3"
@@ -227,34 +183,6 @@ const ObservalForm = ({
                               label="Instrumental"
                               checked={form.hasInstrumental}
                               onChange={v => updateField('hasInstrumental', v)}/>
-                    <Checkbox className="col-6"
-                              label="Postdural Puncture Headache"
-                              checked={form.hasPostduralPunctureHeadache}
-                              onChange={v => updateField('hasPostduralPunctureHeadache', v)}/>
-                </div>
-                <div className="row">
-                    <Checkbox className="col-3"
-                              label="Back Pain"
-                              checked={form.hasBackPain}
-                              onChange={v => updateField('hasBackPain', v)}/>
-                    <Checkbox className="col-3"
-                              label="Paresthesia"
-                              checked={form.hasParesthesia}
-                              onChange={v => updateField('hasParesthesia', v)}/>
-                    <Checkbox className="col-6"
-                              label="Accidental Dural Punture"
-                              checked={form.hasAccidentalDuralPunture}
-                              onChange={v => updateField('hasAccidentalDuralPunture', v)}/>
-                </div>
-                <div className="row">
-                    <Checkbox className="col-6"
-                              label="IV Epidural Catheter Insertion"
-                              checked={form.isIVEpiduralCatheterInsertion}
-                              onChange={v => updateField('isIVEpiduralCatheterInsertion', v)}/>
-                    <Checkbox className="col-6"
-                              label="Intrathecal Epidural Catheter Insertion"
-                              checked={form.isIntrathecalEpiduralCatheterInsertion}
-                              onChange={v => updateField('isIntrathecalEpiduralCatheterInsertion', v)}/>
                 </div>
             </FieldSet>
 
@@ -264,36 +192,11 @@ const ObservalForm = ({
                               label="Lateral Episiotomy"
                               checked={form.hasLateralEpisiotomy}
                               onChange={v => updateField('hasLateralEpisiotomy', v)}/>
-                    <TextField className="col-6"
-                               label="Lateral Episiotomy VAS Score"
-                               value={formatString(form.lateralEpisiotomyVasScore)}
-                               disabled={!form.hasLateralEpisiotomy}
-                               onChange={v => updateField('lateralEpisiotomyVasScore', v)}/>
-                </div>
-            </FieldSet>
-
-            <FieldSet title="8. NICU">
-                <div className="row">
-                    <Checkbox className="col-3"
-                              label="NICU"
-                              checked={form.hasNicu}
-                              onChange={v => updateField('hasNicu', v)}/>
-                    <TextArea className="col-9"
-                              label="NICU Reason"
-                              value={formatString(form.nicuReason)}
-                              disabled={!form.hasNicu}
-                              onChange={v => updateField('nicuReason', v)}/>
                 </div>
             </FieldSet>
 
             <FieldSet title="9. Foetal">
                 <div className="row">
-                    <RadioGroup className="col-3"
-                                label="Foetal Gender"
-                                name="foetalGender"
-                                data={ObservalForm.GENDER_LIST}
-                                value={formatString(form.foetalGender)}
-                                onChange={v => updateField('foetalGender', v)}/>
                     <DateTimePicker className="col-3"
                                     label="Birth Time"
                                     value={formatString(form.birthTime)}
@@ -308,11 +211,6 @@ const ObservalForm = ({
                     }
                 </div>
                 <div className="row">
-                    <TextField className="col-3 unit-cm"
-                               label="Foetal Height"
-                               rightIconCls="unit"
-                               value={formatString(form.foetalHeight)}
-                               onChange={v => updateField('foetalHeight', v)}/>
                     <TextField className="col-3 unit-g"
                                label="Foetal Weight"
                                rightIconCls="unit"
@@ -326,24 +224,6 @@ const ObservalForm = ({
                                label="5min Apgar Score"
                                value={formatString(form.fiveMinuteApgarScore)}
                                onChange={v => updateField('fiveMinuteApgarScore', v)}/>
-                </div>
-                <div className="row">
-                    <TextField className="col-3"
-                               label="Arterial PH"
-                               value={formatString(form.arterialPh)}
-                               onChange={v => updateField('arterialPh', v)}/>
-                    <TextField className="col-3"
-                               label="Arterial BE"
-                               value={formatString(form.arterialBe)}
-                               onChange={v => updateField('arterialBe', v)}/>
-                    <TextField className="col-3"
-                               label="Venous PH"
-                               value={formatString(form.venousPh)}
-                               onChange={v => updateField('venousPh', v)}/>
-                    <TextField className="col-3"
-                               label="Venous BE"
-                               value={formatString(form.venousBe)}
-                               onChange={v => updateField('venousBe', v)}/>
                 </div>
             </FieldSet>
 
