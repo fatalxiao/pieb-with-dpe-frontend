@@ -17,7 +17,7 @@ import StepAction from 'components/StepAction';
 import AnalgesiaTable from './AnalgesiaTable';
 
 // Styles
-import 'scss/containers/app/modules/editPatient/analgesiaData/AnalgesiaData.scss';
+import './AnalgesiaData.scss';
 
 const AnalgesiaData = ({
     match, getActionType,

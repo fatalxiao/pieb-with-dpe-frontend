@@ -20,7 +20,7 @@ import debounce from 'lodash/debounce';
 import {formatString} from 'vendors/Util';
 
 // Styles
-import 'scss/containers/app/modules/editPatient/patientInfo/PatientForm.scss';
+import './PatientForm.scss';
 
 const PatientForm = ({
     form, patientId,

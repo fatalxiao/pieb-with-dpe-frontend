@@ -24,7 +24,7 @@ import {formatString} from 'vendors/Util';
 import Time from 'vendors/Time';
 
 // Styles
-import 'scss/containers/app/modules/editPatient/observalData/ObservalForm.scss';
+import './ObservalForm.scss';
 
 const ObservalForm = ({
     patientId, form,

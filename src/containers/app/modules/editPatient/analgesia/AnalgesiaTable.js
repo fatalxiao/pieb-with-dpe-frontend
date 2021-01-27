@@ -20,7 +20,7 @@ import debounce from 'lodash/debounce';
 import {formatString} from 'vendors/Util';
 
 // Styles
-import 'scss/containers/app/modules/editPatient/analgesiaData/AnalgesiaTable.scss';
+import './AnalgesiaTable.scss';
 
 const AnalgesiaTable = ({
     patientId, thoracicList, sacralList, analgesiaData,
