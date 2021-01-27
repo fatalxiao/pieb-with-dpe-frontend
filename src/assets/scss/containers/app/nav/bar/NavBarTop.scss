@@ -38,12 +38,12 @@
             }
 
             .logo {
-                background-image: url("../../../../../../assets/images/logo-white.png");
+                background-image: url("../../../../../../assets/images/logo.png");
             }
 
             .logo-animated {
                 opacity: 0;
-                background-image: url("../../../../../../assets/images/logo-white-animated.png");
+                background-image: url("../../../../../../assets/images/logo-animated.png");
                 animation: logo-spin 1s linear infinite;
             }
 
@@ -70,24 +70,6 @@
         &:hover {
             color: inherit;
             background: transparentize(#000, .9);
-        }
-    }
-
-    &.fold,
-    &.search-drawer-visible {
-
-        .nav-bar-logo-button {
-            .logo {
-                background-image: url("../../../../../../assets/images/logo.png");
-            }
-
-            .logo-animated {
-                background-image: url("../../../../../../assets/images/logo-animated.png");
-            }
-        }
-
-        .nav-bar-search-button {
-            color: $theme-primary;
         }
     }
 }

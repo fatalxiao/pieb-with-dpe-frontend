@@ -8,9 +8,10 @@
     width: 64px;
     height: 100%;
     padding: 16px 0;
-    color: #fff;
-    background: $theme-primary;
+    color: $theme-primary;
+    background: #fff;
     font-size: 24px;
+    box-shadow: 0 0 16px transparentize(#000, .94) !important;
 
     .nav-patient-popover-wrapper {
         position: relative;
@@ -19,9 +20,6 @@
     }
 
     &.fold {
-        color: $theme-primary;
-        background: $theme-secondary;
-
         .nav-patient-popover-wrapper {
             left: 0;
             transition: left 0s $theme-transition-duration;

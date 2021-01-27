@@ -12,7 +12,7 @@ import * as actionTypes from 'reduxes/actionTypes';
 
 // Components
 import AnchorButton from 'alcedo-ui/AnchorButton';
-import ModuleLoading from 'components/ModuleLoading';
+import ModuleLoading from 'components/module/ModuleLoading';
 import StepAction from 'components/StepAction';
 import AnalgesiaTable from './AnalgesiaTable';
 
