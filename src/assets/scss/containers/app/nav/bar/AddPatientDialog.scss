@@ -4,15 +4,35 @@
 @import '../../../../common.scss';
 
 .paper.dialog.add-patient-dialog {
-    width: 640px;
+    width: 720px;
+    border-radius: 24px;
 
     .dialog-title {
-        height: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        height: 80px;
+        padding: 24px 32px 0 40px;
+        background: $theme-field-bg;
+        border: none;
+        font-size: 24px;
+
+        .dialog-title-close-button {
+            position: relative;
+            right: 0;
+            top: 0;
+            background: $theme-secondary;
+
+            .button-icon {
+                font-size: 24px;
+            }
+        }
     }
 
     .dialog-content {
         height: auto;
-        padding: 36px 48px;
+        padding: 16px 56px 32px;
 
         .field-set {
             margin: 0;
@@ -22,6 +42,18 @@
         .material-text-field,
         .material-dropdown-select {
             margin-bottom: 24px;
+        }
+    }
+
+    .dialog-buttons {
+        padding: 24px 40px;
+
+        .ok-button,
+        .cancel-button {
+
+            .base-button-value {
+                font-size: 16px;
+            }
         }
     }
 }

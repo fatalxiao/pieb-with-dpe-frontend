@@ -9,8 +9,8 @@ export function configureRoutes(store) {
     return [{
         path: '/',
         component: ac(() => import(
-            /* webpackChunkName: "AppRoot" */
-            'containers/AppRoot'), store),
+            /* webpackChunkName: "Root" */
+            'containers/Root'), store),
         routes: [{
             path: '/app',
             component: ac(() => import(

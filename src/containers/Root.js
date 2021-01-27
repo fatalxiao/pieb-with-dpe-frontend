@@ -1,5 +1,5 @@
 /**
- * @file AppRoot.js
+ * @file Root.js
  */
 
 import React from 'react';
@@ -19,17 +19,12 @@ import Notifier from 'alcedo-ui/Notifier';
 import {DEFAULT_ROUTE} from 'src/config.routes';
 
 // Styles
-import 'assets/bootstrap/bootstrap-grid.min.css';
-import 'assets/font-awesome/css/fontawesome-all.min.css';
-import 'assets/icomoon/style.css';
-import 'scss/customized/index.scss';
-import 'scss/global.scss';
-import 'scss/containers/AppRoot.scss';
+import 'scss/containers/Root.scss';
 
-const AppRoot = ({
+const Root = ({
     toastes, notifiers, route, location, clearToaste, clearNotifier
 }) => (
-    <div className="app-root">
+    <div className="root">
 
         <Toaster toasts={toastes}
                  position={Toaster.Position.TOP}
@@ -52,7 +47,7 @@ const AppRoot = ({
     </div>
 );
 
-AppRoot.propTypes = {
+Root.propTypes = {
 
     toastes: PropTypes.array,
     notifiers: PropTypes.array,
@@ -68,4 +63,4 @@ export default connect(state => ({
 }), dispatch => bindActionCreators({
     clearToaste: actions.clearToaste,
     clearNotifier: actions.clearNotifier
-}, dispatch))(AppRoot);
+}, dispatch))(Root);

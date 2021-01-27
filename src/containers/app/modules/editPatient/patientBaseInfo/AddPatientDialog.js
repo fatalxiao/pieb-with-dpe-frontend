@@ -88,6 +88,7 @@ const AddPatientDialog = ({
                 visible={visible}
                 title="Create Patient"
                 okButtonText="Create"
+                closeIconCls="fal fa-times"
                 onOKButtonClick={save}
                 onRequestClose={onRequestClose}>
 

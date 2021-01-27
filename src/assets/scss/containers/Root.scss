@@ -1,11 +1,14 @@
+/**
+ * @file Root.scss
+ */
 @import '../common.scss';
 
-.app-root {
+.root {
     min-width: $minWidth;
     overflow-x: hidden;
     transition: none;
     color: $theme-field;
-    background: #fff;
+    background: $theme-bg;
 
     .root-loading {
         position: fixed;
