@@ -47,8 +47,8 @@ function getVerticalTarget() {
     return {
         hover(props, monitor, component) {
 
-            const dragIndex = monitor.getItem().StepAction;
-            const hoverIndex = props.StepAction;
+            const dragIndex = monitor.getItem().index;
+            const hoverIndex = props.index;
 
             // Don't replace items with themselves
             if (dragIndex === hoverIndex) {
@@ -98,8 +98,8 @@ function getHorizontalTarget() {
     return {
         hover(props, monitor, component) {
 
-            const dragIndex = monitor.getItem().StepAction;
-            const hoverIndex = props.StepAction;
+            const dragIndex = monitor.getItem().index;
+            const hoverIndex = props.index;
 
             // Don't replace items with themselves
             if (dragIndex === hoverIndex) {
