@@ -1,7 +1,7 @@
 /**
  * @file Msg.scss
  */
-@import '../../assets/scss/common';
+@import '../assets/scss/common';
 
 @mixin msg-theme($bg-color, $border-color, $icon-color) {
     background-color: $bg-color;

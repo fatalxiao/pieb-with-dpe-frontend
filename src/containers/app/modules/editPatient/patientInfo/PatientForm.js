@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import * as actions from 'reduxes/actions/index';
+import * as actions from 'reduxes/actions';
 
 // Components
 import Checkbox from 'customized/CustomizedMaterialCheckbox';

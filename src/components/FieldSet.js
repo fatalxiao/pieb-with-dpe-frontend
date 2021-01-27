@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 // Styles
-import 'components/FieldSet/index.scss';
+import './FieldSet.scss';
 
 const FieldSet = ({
     children,

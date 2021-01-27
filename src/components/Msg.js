@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import Util from 'vendors/Util';
 
 // Styles
-import 'components/Msg/index.scss';
+import './Msg.scss';
 
 const Msg = ({
     children,

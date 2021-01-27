@@ -19,7 +19,7 @@ import Notifier from 'alcedo-ui/Notifier';
 import {DEFAULT_ROUTE} from 'src/config.routes';
 
 // Styles
-import 'scss/containers/Root.scss';
+import './Root.scss';
 
 const Root = ({
     toastes, notifiers, route, location, clearToaste, clearNotifier

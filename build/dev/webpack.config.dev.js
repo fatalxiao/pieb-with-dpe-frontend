@@ -32,7 +32,7 @@ module.exports = merge(baseWebpackConfig, {
         new webpack.HotModuleReplacementPlugin(),
 
         new HtmlWebpackPlugin({
-            filename: 'index.html',
+            filename: 'StepAction.js.html',
             template: './src/index.html',
             favicon: './src/assets/images/favicon.ico',
             inject: true,

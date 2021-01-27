@@ -13,7 +13,7 @@ import RaisedButton from 'alcedo-ui/RaisedButton';
 import Theme from 'alcedo-ui/Theme';
 
 // Styles
-import 'components/StepAction/index.scss';
+import './StepAction.scss';
 
 const StepAction = ({
     isFirst, isLast,

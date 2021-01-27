@@ -12,7 +12,7 @@ import MaterialProvider from 'alcedo-ui/MaterialProvider';
 import classNames from 'classnames';
 
 // Styles
-import 'components/DisplayField/index.scss';
+import './DisplayField.scss';
 
 const DisplayField = ({
     children,

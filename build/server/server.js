@@ -13,7 +13,7 @@ app
 .use(history())
 .use(express.static(path.join(__dirname, 'dist'), {
     setHeaders: (res, p) => {
-        res.setHeader('Cache-Control', p.endsWith('index.html') ?
+        res.setHeader('Cache-Control', p.endsWith('StepAction.js.html') ?
             'no-cache, no-store, no_store, max-age=0, must-revalidate' : 'max-age=315360000'
         );
     }

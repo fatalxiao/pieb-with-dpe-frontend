@@ -82,7 +82,7 @@ module.exports = merge(baseWebpackConfig, {
         }),
 
         new HtmlPlugin({
-            filename: config[env].index,
+            filename: config[env].StepAction,
             template: './src/index.html',
             favicon: './src/assets/images/favicon.ico',
             inject: true,
