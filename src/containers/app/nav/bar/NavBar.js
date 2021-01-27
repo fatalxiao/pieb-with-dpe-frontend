@@ -7,14 +7,13 @@ import PropTypes from 'prop-types';
 
 // Components
 import NavBarTop from './NavBarTop';
-// import NavBarBottom from './NavBarBottom';
 import NavPatientMenu from '../patients/NavPatientsPopover';
 
 // Vendors
 import classNames from 'classnames';
 
 // Styles
-import 'scss/containers/app/nav/bar/NavBar.scss';
+import './NavBar.scss';
 
 const NavBar = ({isFold}) => (
     <div className={classNames('nav-bar', {
@@ -24,8 +23,6 @@ const NavBar = ({isFold}) => (
         <NavBarTop isFold={isFold}/>
 
         <NavPatientMenu isFold={isFold}/>
-
-        {/*<NavBarBottom/>*/}
 
     </div>
 );

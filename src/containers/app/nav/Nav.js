@@ -14,7 +14,7 @@ import Event from 'vendors/Event';
 import Valid from 'vendors/Valid';
 
 // Styles
-import 'scss/containers/app/nav/Nav.scss';
+import './Nav.scss';
 
 const Nav = () => {
 

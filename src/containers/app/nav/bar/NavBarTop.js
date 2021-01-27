@@ -23,7 +23,7 @@ import {DEFAULT_ROUTE} from 'src/config.routes';
 import classNames from 'classnames';
 
 // Styles
-import 'scss/containers/app/nav/bar/NavBarTop.scss';
+import './NavBarTop.scss';
 
 const NavBarTop = ({
     children, isFold,

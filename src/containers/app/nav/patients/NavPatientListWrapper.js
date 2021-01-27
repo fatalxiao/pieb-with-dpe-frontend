@@ -14,7 +14,7 @@ import FlatButton from 'alcedo-ui/FlatButton';
 import PatientList from './NavPatientList';
 
 // Styles
-import 'scss/containers/app/nav/patients/NavPatientListWrapper.scss';
+import './NavPatientListWrapper.scss';
 
 const NavPatientListWrapper = ({
     patientList,

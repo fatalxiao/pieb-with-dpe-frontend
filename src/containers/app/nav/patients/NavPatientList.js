@@ -13,7 +13,7 @@ import NavPatientListItem from './NavPatientListItem';
 import Event from 'vendors/Event';
 
 // Styles
-import 'scss/containers/app/nav/patients/NavPatientList.scss';
+import './NavPatientList.scss';
 
 const NavPatientList = ({
     patientList, data

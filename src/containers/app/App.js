@@ -16,7 +16,7 @@ import NavTitle from './nav/title/NavTitle';
 import PageLoading from 'alcedo-ui/PageLoading';
 
 // Styles
-import 'scss/containers/app/App.scss';
+import './App.scss';
 
 const App = ({
     route, componentLoading,

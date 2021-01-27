@@ -15,7 +15,7 @@ import NavPatientList from 'containers/app/nav/patients/NavPatientList';
 import classNames from 'classnames';
 
 // Styles
-import 'scss/containers/app/nav/bar/NavSearch.scss';
+import './NavSearch.scss';
 
 const NavSearch = ({
     visible, patientList,

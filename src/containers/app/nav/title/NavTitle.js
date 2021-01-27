@@ -14,7 +14,7 @@ import Crumbs from 'alcedo-ui/Crumbs';
 import {getPath} from 'src/config.sitemap';
 
 // Styles
-import 'scss/containers/app/nav/title/NavTitle.scss';
+import './NavTitle.scss';
 
 const NavTitle = ({state}) => {
 

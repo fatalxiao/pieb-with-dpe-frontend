@@ -13,7 +13,7 @@ import * as actions from 'reduxes/actions';
 import FlatButton from 'alcedo-ui/FlatButton';
 
 // Styles
-import 'scss/containers/app/nav/patients/NavPatientListItem.scss';
+import './NavPatientListItem.scss';
 
 const NavPatientListItem = ({
     groupList, patient,

@@ -18,7 +18,7 @@ import PatientListWrapper from './NavPatientListWrapper';
 import classNames from 'classnames';
 
 // Styles
-import 'scss/containers/app/nav/patients/NavPatient.scss';
+import './NavPatients.scss';
 
 const NavPatient = ({
     isCollapsed, isFold, groupListActionType, patientList, patientListActionType
@@ -36,7 +36,7 @@ const NavPatient = ({
         );
 
     return (
-        <div className={classNames('nav-patient', {
+        <div className={classNames('nav-patients', {
             'no-patient': noPatient,
             collapsed: isCollapsed,
             fold: isFold

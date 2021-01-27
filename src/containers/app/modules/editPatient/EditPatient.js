@@ -15,7 +15,7 @@ import {Redirect} from 'react-router-dom';
 import PointStep from 'alcedo-ui/PointStep';
 
 // Styles
-import 'scss/containers/app/modules/editPatient/EditPatient.scss';
+import './EditPatient.scss';
 
 const EditPatient = ({
     route, form, steps, activatedStep,

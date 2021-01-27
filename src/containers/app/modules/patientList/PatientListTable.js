@@ -20,7 +20,7 @@ import TextField from 'customized/CustomizedMaterialTextField';
 import debounce from 'lodash/debounce';
 
 // Styles
-import 'scss/containers/app/modules/patientList/PatientListTable.scss';
+import './PatientListTable.scss';
 
 const PatientListTable = ({
     groupList, data,

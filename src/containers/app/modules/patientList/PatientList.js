@@ -12,7 +12,7 @@ import PatientListTable from './PatientListTable';
 import NavNoPatient from 'containers/app/nav/patients/NavNoPatient';
 
 // Styles
-import 'scss/containers/app/modules/patientList/PatientList.scss';
+import './PatientList.scss';
 
 const PatientList = ({
     groupList, patientList

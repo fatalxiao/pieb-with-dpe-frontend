@@ -8,7 +8,7 @@ import React, {useState, useCallback} from 'react';
 import AddPatientDialog from 'containers/app/modules/editPatient/patientBaseInfo/AddPatientDialog';
 
 // Styles
-import 'scss/containers/app/nav/patients/NavNoPatient.scss';
+import './NavNoPatient.scss';
 
 const NavNoPatient = () => {
 

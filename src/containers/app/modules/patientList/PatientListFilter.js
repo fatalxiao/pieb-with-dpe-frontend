@@ -16,7 +16,7 @@ import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
 import AddPatientDialog from 'containers/app/modules/editPatient/patientBaseInfo/AddPatientDialog';
 
 // Styles
-import 'scss/containers/app/modules/patientList/PatientListFilter.scss';
+import './PatientListFilter.scss';
 
 const PatientListFilter = ({
     filterValue, groupList, filterGroup, statusList, filterStatus,

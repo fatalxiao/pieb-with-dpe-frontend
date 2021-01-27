@@ -16,7 +16,7 @@ import PopoverProvider from 'alcedo-ui/PopoverProvider';
 import PatientList from './NavPatientList';
 
 // Styles
-import 'scss/containers/app/nav/patients/NavPatientPopover.scss';
+import './NavPatientsPopover.scss';
 
 const NavPatientsPopover = ({
     routerPush
@@ -34,14 +34,14 @@ const NavPatientsPopover = ({
         );
 
     return (
-        <div className="nav-patient-popover-wrapper">
-            <PopoverProvider className="nav-patient-popover"
+        <div className="nav-patients-popover-wrapper">
+            <PopoverProvider className="nav-patients-popover"
                              popoverContent={
                                  <PatientList/>
                              }
                              position={Popover.Position.RIGHT_TOP}
                              hasTriangle={false}>
-                <IconButton className="nav-patient-popover-item"
+                <IconButton className="nav-patients-popover-item"
                             iconCls="icon-list"
                             onClick={goToList}/>
             </PopoverProvider>

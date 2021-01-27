@@ -1,15 +1,14 @@
 /**
  * @file NavPatientsPopover.scss
  */
-@import '../../../../common.scss';
+@import '../../../../assets/scss/common.scss';
 
-.nav-patient-popover-wrapper {
+.nav-patients-popover-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    //background: $theme-secondary;
 
-    .icon-button.nav-patient-popover-item {
+    .icon-button.nav-patients-popover-item {
         border-radius: $theme-border-radius;
         width: 48px;
         height: 48px;
@@ -22,7 +21,7 @@
     }
 }
 
-.nav-patient-popover .popover-content {
+.nav-patients-popover .popover-content {
     max-height: 480px;
     overflow-y: auto;
 }

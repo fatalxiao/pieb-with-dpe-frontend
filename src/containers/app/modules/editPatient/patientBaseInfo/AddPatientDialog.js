@@ -20,7 +20,7 @@ import Msg from 'components/Msg';
 import {formatString} from 'vendors/Util';
 
 // Styles
-import 'scss/containers/app/nav/bar/AddPatientDialog.scss';
+import './AddPatientDialog.scss';
 
 const AddPatientDialog = ({
     groupList, form, visible,
