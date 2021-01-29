@@ -19,15 +19,15 @@ import PageLoading from 'alcedo-ui/PageLoading';
 import './App.scss';
 
 const App = ({
-    route, componentLoading,
-    getGroups, getSensoryBlocks, getPatients
-}) => {
+                 route, componentLoading,
+                 getPatientGroups, getSensoryBlocks, getPatients
+             }) => {
 
     /**
      * init
      */
     useEffect(() => {
-        getGroups?.();
+        getPatientGroups?.();
         getSensoryBlocks?.();
         getPatients?.();
     }, []);
@@ -57,7 +57,7 @@ App.propTypes = {
 
     componentLoading: PropTypes.bool,
 
-    getGroups: PropTypes.func,
+    getPatientGroups: PropTypes.func,
     getSensoryBlocks: PropTypes.func,
     getPatients: PropTypes.func
 
@@ -66,7 +66,7 @@ App.propTypes = {
 export default connect(state => ({
     componentLoading: state.loadComponent.loading
 }), dispatch => bindActionCreators({
-    getGroups: actions.getGroups,
+    getPatientGroups: actions.getPatientGroups,
     getSensoryBlocks: actions.getSensoryBlocks,
     getPatients: actions.getPatients
 }, dispatch))(App);

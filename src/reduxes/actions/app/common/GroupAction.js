@@ -1,7 +1,7 @@
 import * as actionTypes from 'reduxes/actionTypes';
-import GroupApi from 'apis/app/common/GroupApi';
+import GroupApi from 'apis/app/common/PatientGroupApi';
 
-export const getGroups = () => dispatch => {
+export const getPatientGroups = () => dispatch => {
     return dispatch({
         [actionTypes.CALL_API]: {
             types: [
@@ -9,7 +9,7 @@ export const getGroups = () => dispatch => {
                 actionTypes.GET_GROUPS_SUCCESS,
                 actionTypes.GET_GROUPS_FAILURE
             ],
-            api: GroupApi.getGroups,
+            api: GroupApi.getPatientGroups,
             successResMsgDisabled: true
         }
     });

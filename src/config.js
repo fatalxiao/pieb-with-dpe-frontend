@@ -10,6 +10,6 @@ export default {
      * Api base url prefix
      */
     baseUrl: 'http://localhost:4100',
-    appBaseUrl: '/dpe'
+    appBaseUrl: '/pieb-with-dpe'
 
 };
