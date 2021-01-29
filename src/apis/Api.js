@@ -1,8 +1,13 @@
+/**
+ * @file Api.js
+ */
+
+// Vendors
 import RequestManagement from './RequestManagement';
 
 function ajax(method, {
     name, url, params, formData, cancelable, header, contentType, isUpload,
-    successCallback, failureCallback, errorCallback
+    successCallback, failureCallback
 }) {
 
     const xhr = new XMLHttpRequest();
@@ -34,21 +39,21 @@ function ajax(method, {
             let response = xhr.responseText;
 
             if (xhr.status === 500) {
-                failureCallback && failureCallback(xhr, response);
+                failureCallback?.(xhr, response);
                 return;
             }
 
             try {
                 response = JSON.parse(response);
             } catch (e) {
-                failureCallback && failureCallback(xhr);
+                failureCallback?.(xhr);
                 return;
             }
 
             if (parseInt(+response.code / 1000) === 2) {
-                successCallback && successCallback(xhr, response, response.data);
+                successCallback?.(xhr, response, response.data);
             } else {
-                failureCallback && failureCallback(xhr, response, response.data);
+                failureCallback?.(xhr, response, response.data);
             }
 
         }

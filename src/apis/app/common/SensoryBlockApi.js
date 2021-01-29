@@ -1,12 +1,25 @@
-import config from 'src/config';
+/**
+ * @file SensoryBlockApi.js
+ */
+
+// Statics
+import {appBaseUrl} from 'src/config';
+
+// Vendors
 import Api from 'apis/Api';
 
 export default {
+
+    /**
+     * 获取所有的 Sensory Block 数据
+     * @param options
+     */
     getSensoryBlocks(options) {
         Api.get({
             ...options,
-            url: `${config.appBaseUrl}/sensoryBlock/getSensoryBlocks`,
+            url: `${appBaseUrl}/sensoryBlock/getSensoryBlocks`,
             cancelable: false
         });
     }
+
 };

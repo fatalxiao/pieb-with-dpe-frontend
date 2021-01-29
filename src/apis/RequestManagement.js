@@ -1,12 +1,32 @@
-const CANCEL_FLAG = 'CANCEL_FLAG';
+/**
+ * @file RequestManagement.js
+ */
 
+/**
+ *
+ * @type {string}
+ */
+export const CANCEL_FLAG = 'CANCEL_FLAG';
+
+/**
+ * 缓存的所有 request
+ * @type {*[]}
+ */
 let requests = [];
 
-function add(item) {
+/**
+ * 添加 request
+ * @param item
+ */
+export function add(item) {
     item && requests.push(item);
 }
 
-function cancelByName(name) {
+/**
+ * 取消所有 name 的 request
+ * @param name
+ */
+export function cancelByName(name) {
     requests = requests.filter(item => {
         if (item && item.name && item.name === name) {
             item.xhr && item.xhr.abort();
@@ -17,7 +37,11 @@ function cancelByName(name) {
     });
 }
 
-function cancelOthersByName(name) {
+/**
+ * 取消所有不是 name 的 request
+ * @param name
+ */
+export function cancelOthersByName(name) {
     requests = requests.filter(item => {
         if (item && item.name !== name) {
             if (item.xhr) {
@@ -31,7 +55,10 @@ function cancelOthersByName(name) {
     });
 }
 
-function cancelAll() {
+/**
+ * 取消所有 request
+ */
+export function cancelAll() {
     for (let item of requests) {
         item.xhr.abort();
     }
