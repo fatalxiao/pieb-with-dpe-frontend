@@ -1,6 +1,11 @@
-import screenfull from 'screenfull';
+/**
+ * @file FullScreenReducer.js
+ */
 
 import * as actionTypes from 'reduxes/actionTypes';
+
+// Vendors
+import screenfull from 'screenfull';
 
 const initialState = {
     isFullScreen: screenfull ? screenfull.isFullscreen : false,

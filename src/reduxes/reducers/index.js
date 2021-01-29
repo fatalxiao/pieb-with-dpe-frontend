@@ -10,11 +10,10 @@ import appToaster from './common/ToasterReducer';
 import appNotifier from './common/NotifierReducer';
 import fullScreen from './common/FullScreenReducer';
 
-import group from './app/common/GroupReducer';
+import patientGroup from './app/common/PatientGroupReducer';
 import patients from './app/common/PatientsReducer';
 import sensoryBlock from './app/common/SensoryBlockReducer';
 
-import patientList from './app/modules/PatientListReducer';
 import editPatient from './app/modules/editPatient/EditPatientReducer';
 import patientBaseInfo from './app/modules/editPatient/PatientBaseInfoReducer';
 import patientInfo from './app/modules/editPatient/PatientInfoReducer';
@@ -28,11 +27,10 @@ export default history => combineReducers({
     appNotifier,
     fullScreen,
 
-    group,
+    patientGroup,
     patients,
     sensoryBlock,
 
-    patientList,
     editPatient,
     patientBaseInfo,
     patientInfo,

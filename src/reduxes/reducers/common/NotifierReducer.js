@@ -1,4 +1,8 @@
-import * as types from 'reduxes/actionTypes/index';
+/**
+ * @file NotifierReducer.js
+ */
+
+import * as actionTypes from 'reduxes/actionTypes';
 
 const initialState = {
     notifiers: []
@@ -8,7 +12,7 @@ function appNotifier(state = initialState, action) {
 
     switch (action.type) {
 
-        case types.ADD_NOTIFIER: {
+        case actionTypes.ADD_NOTIFIER: {
 
             if (!action.notifier) {
                 return state;
@@ -23,13 +27,13 @@ function appNotifier(state = initialState, action) {
 
         }
 
-        case types.UPDATE_NOTIFIERS: {
+        case actionTypes.UPDATE_NOTIFIERS: {
             return {
                 notifiers: action.notifiers
             };
         }
 
-        case types.CLEAR_NOTIFIER: {
+        case actionTypes.CLEAR_NOTIFIER: {
             return {
                 notifiers: []
             };

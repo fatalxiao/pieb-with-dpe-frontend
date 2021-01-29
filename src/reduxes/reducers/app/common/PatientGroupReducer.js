@@ -1,20 +1,25 @@
+/**
+ * @file PatientGroupReducer.js
+ */
+
 import * as actionTypes from 'reduxes/actionTypes';
 
 const initialState = {
     list: []
 };
 
-function group(state = initialState, action) {
+function patientGroup(state = initialState, action) {
     switch (action.type) {
 
-        // get group list
+        /**
+         * 获取 patient groups 数据
+         */
         case actionTypes.GET_GROUPS_REQUEST: {
             return {
                 ...state,
                 actionType: actionTypes.GET_GROUPS_REQUEST
             };
         }
-
         case actionTypes.GET_GROUPS_SUCCESS: {
             return {
                 ...state,
@@ -22,7 +27,6 @@ function group(state = initialState, action) {
                 actionType: actionTypes.GET_GROUPS_SUCCESS
             };
         }
-
         case actionTypes.GET_GROUPS_FAILURE: {
             return {
                 ...state,
@@ -37,4 +41,4 @@ function group(state = initialState, action) {
     }
 }
 
-export default group;
+export default patientGroup;

@@ -1,19 +1,51 @@
-import cloneDeep from 'lodash/cloneDeep';
+/**
+ * @file PatientsReducer.js
+ */
 
 import * as actionTypes from 'reduxes/actionTypes';
 
+// Vendors
+import cloneDeep from 'lodash/cloneDeep';
+
 const initialState = {
+
     list: [],
+
     getActionType: '',
     getFullActionType: '',
     enableActionType: '',
     disableActionType: ''
+
 };
+
+function updatePatient(list, id, data) {
+
+    if (!list || !id) {
+        return;
+    }
+
+    const result = [...list],
+        index = list.findIndex(item => item?.id === id);
+
+    if (index === -1) {
+        return;
+    }
+
+    result[index] = {
+        ...result[index],
+        ...data
+    };
+
+    return result
+
+}
 
 function patients(state = initialState, action) {
     switch (action.type) {
 
-        // get patient list
+        /**
+         * 获取用于表格的 patients 数据
+         */
         case actionTypes.GET_PATIENTS_REQUEST: {
             return {
                 ...state,
@@ -35,7 +67,9 @@ function patients(state = initialState, action) {
             };
         }
 
-        // get full patient list
+        /**
+         * 获取完整的 patients 数据
+         */
         case actionTypes.GET_FULL_PATIENTS_REQUEST: {
             return {
                 ...state,
@@ -55,7 +89,9 @@ function patients(state = initialState, action) {
             };
         }
 
-        // update patient name
+        /**
+         * 更新 patient name
+         */
         case actionTypes.UPDATE_PATIENT_NAME_REQUEST: {
             return {
                 ...state,
@@ -64,14 +100,26 @@ function patients(state = initialState, action) {
         }
         case actionTypes.UPDATE_PATIENT_NAME_SUCCESS: {
 
-            const list = cloneDeep(state.list);
+            const nextState = {
+                    ...state,
+                    getActionType: actionTypes.UPDATE_PATIENT_NAME_SUCCESS
+                },
 
-            list.find(item => item.id === action.id).name = action.name;
+                list = [...state.list],
+                index = list.findIndex(item => item.id === action.id);
+
+            if (index === -1) {
+                return nextState;
+            }
+
+            list[index] = {
+                ...list[index],
+                name: action.name
+            };
 
             return {
-                ...state,
-                list,
-                getActionType: actionTypes.UPDATE_PATIENT_NAME_SUCCESS
+                ...nextState,
+                list
             };
 
         }
@@ -82,7 +130,9 @@ function patients(state = initialState, action) {
             };
         }
 
-        // update patient name
+        /**
+         * 更新 patient group
+         */
         case actionTypes.UPDATE_PATIENT_GROUP_REQUEST: {
             return {
                 ...state,
@@ -91,16 +141,27 @@ function patients(state = initialState, action) {
         }
         case actionTypes.UPDATE_PATIENT_GROUP_SUCCESS: {
 
-            const list = cloneDeep(state.list),
-                item = list.find(item => item.id === action.id);
+            const nextState = {
+                    ...state,
+                    getActionType: actionTypes.UPDATE_PATIENT_GROUP_SUCCESS
+                },
 
-            item.group = action.group;
-            item.groupId = action.group.id;
+                list = [...state.list],
+                index = list.findIndex(item => item?.id === action.id);
+
+            if (index === -1) {
+                return nextState;
+            }
+
+            list[index] = {
+                ...list[index],
+                group: action.group,
+                groupId: action.group.id
+            };
 
             return {
-                ...state,
-                list,
-                getActionType: actionTypes.UPDATE_PATIENT_GROUP_SUCCESS
+                ...nextState,
+                list
             };
 
         }
@@ -111,7 +172,9 @@ function patients(state = initialState, action) {
             };
         }
 
-        // enable patient
+        /**
+         * 启用 patient
+         */
         case actionTypes.ENABLE_PATIENT_REQUEST: {
             return {
                 ...state,
@@ -137,7 +200,9 @@ function patients(state = initialState, action) {
             };
         }
 
-        // disable patient
+        /**
+         * 禁用 patient
+         */
         case actionTypes.DISABLE_PATIENT_REQUEST: {
             return {
                 ...state,

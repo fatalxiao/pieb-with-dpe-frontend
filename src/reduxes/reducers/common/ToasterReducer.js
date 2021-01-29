@@ -1,4 +1,8 @@
-import * as types from 'reduxes/actionTypes/index';
+/**
+ * @file ToasterReducer.js
+ */
+
+import * as actionTypes from 'reduxes/actionTypes';
 
 const initialState = {
     toastes: []
@@ -8,7 +12,7 @@ function appToaster(state = initialState, action) {
 
     switch (action.type) {
 
-        case types.ADD_TOASTE: {
+        case actionTypes.ADD_TOASTE: {
 
             if (!action.toaste) {
                 return state;
@@ -23,13 +27,13 @@ function appToaster(state = initialState, action) {
 
         }
 
-        case types.UPDATE_TOASTES: {
+        case actionTypes.UPDATE_TOASTES: {
             return {
                 toastes: action.toastes
             };
         }
 
-        case types.CLEAR_TOASTE: {
+        case actionTypes.CLEAR_TOASTE: {
             return {
                 toastes: []
             };

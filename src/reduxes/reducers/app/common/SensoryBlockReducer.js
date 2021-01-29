@@ -1,3 +1,7 @@
+/**
+ * @file SensoryBlockReducer.js
+ */
+
 import * as actionTypes from 'reduxes/actionTypes';
 
 const initialState = {
@@ -9,7 +13,9 @@ const initialState = {
 function sensoryBlock(state = initialState, action) {
     switch (action.type) {
 
-        // get group list
+        /**
+         * 获取所有 sensory blocks 数据
+         */
         case actionTypes.GET_SENSORY_BLOCKS_REQUEST: {
             return {
                 ...state,
@@ -19,7 +25,6 @@ function sensoryBlock(state = initialState, action) {
                 actionType: actionTypes.GET_SENSORY_BLOCKS_REQUEST
             };
         }
-
         case actionTypes.GET_SENSORY_BLOCKS_SUCCESS: {
 
             const list = action.responseData,
@@ -38,7 +43,6 @@ function sensoryBlock(state = initialState, action) {
             };
 
         }
-
         case actionTypes.GET_SENSORY_BLOCKS_FAILURE: {
             return {
                 ...state,
