@@ -2,14 +2,13 @@
  * @file config.js
  */
 
+/**
+ * api 请求 的前缀
+ */
+export const baseUrl = 'http://localhost:4100';
+export const appBaseUrl = '/pieb-with-dpe';
+
 export default {
-
-    desktopMinWidth: 768,
-
-    /**
-     * Api base url prefix
-     */
-    baseUrl: 'http://localhost:4100',
-    appBaseUrl: '/pieb-with-dpe'
-
+    baseUrl,
+    appBaseUrl
 };

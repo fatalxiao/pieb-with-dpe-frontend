@@ -40,7 +40,7 @@ class ModuleTable extends Component {
         this.table = createRef();
         this.tableEl = null;
 
-        this.frozenColumns = FrozenColumns.getConfig(props.userProfile?.id, props.name) || [];
+        this.frozenColumns = FrozenColumns.getConfig(props.name) || [];
 
         this.state = {
             tableHeight: props.defaultTableHeight,
@@ -150,7 +150,7 @@ class ModuleTable extends Component {
             }) || [],
 
             // columns 宽度
-            columnsWidth = ResizableColumnsWidth.getConfig(userProfile?.id, name) || {},
+            columnsWidth = ResizableColumnsWidth.getConfig(name) || {},
 
             // dimension columns 的个数
             dimensionColumnCount = tableColumns?.filter?.(column => column?.dataType !== 'metric')?.length,
@@ -286,7 +286,7 @@ class ModuleTable extends Component {
             return;
         }
 
-        FrozenColumns.setConfig(userProfile?.id, name, frozenColumns);
+        FrozenColumns.setConfig(name, frozenColumns);
 
     };
 
@@ -303,10 +303,10 @@ class ModuleTable extends Component {
             return;
         }
 
-        const columnsWidth = ResizableColumnsWidth.getConfig(userProfile?.id, name) || {};
+        const columnsWidth = ResizableColumnsWidth.getConfig(name) || {};
         columnsWidth[resizingColumn.value] = width;
 
-        ResizableColumnsWidth.setConfig(userProfile?.id, name, columnsWidth);
+        ResizableColumnsWidth.setConfig(name, columnsWidth);
 
     }, 150);
 

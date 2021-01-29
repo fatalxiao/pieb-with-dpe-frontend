@@ -1,4 +1,8 @@
-function addEvent(el, type, cb) {
+/**
+ * @file Event.js
+ */
+
+export function addEvent(el, type, cb) {
     if (typeof window.addEventListener === 'function') {
         el.addEventListener(type, cb, false);
     } else if (typeof document.attachEvent === 'function') {
@@ -8,7 +12,7 @@ function addEvent(el, type, cb) {
     }
 }
 
-function removeEvent(el, type, cb) {
+export function removeEvent(el, type, cb) {
     if (typeof window.removeEventListener === 'function') {
         el.removeEventListener(type, cb, false);
     } else if (typeof document.detachEvent === 'function') {
@@ -18,7 +22,7 @@ function removeEvent(el, type, cb) {
     }
 }
 
-function triggerPopupEventHandle(el, triggerEl, popupEl, currentVisible) {
+export function triggerPopupEventHandle(el, triggerEl, popupEl, currentVisible) {
 
     let flag = true;
 
@@ -37,7 +41,7 @@ function triggerPopupEventHandle(el, triggerEl, popupEl, currentVisible) {
 
 }
 
-function preventContainerScroll(e) {
+export function preventContainerScroll(e) {
 
     const {currentTarget, deltaX, deltaY} = e,
         {

@@ -1,6 +1,12 @@
-import moment from 'moment';
+/**
+ * @file Util.js
+ */
 
+// Statics
 import DEFAULT_MENU from 'src/config.menu';
+
+// Vendors
+import moment from 'moment';
 import Valid from './Valid';
 
 export function getOffset(el) {

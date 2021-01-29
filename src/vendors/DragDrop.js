@@ -1,11 +1,11 @@
 /**
- * @file DragDrop vendor
-
+ * @file DragDrop.js
  */
 
+// Vendors
 import {findDOMNode} from 'react-dom';
 
-function getSource() {
+export function getSource() {
     return {
         beginDrag(props, monitor, component) {
 
@@ -43,7 +43,7 @@ function getSource() {
     };
 }
 
-function getVerticalTarget() {
+export function getVerticalTarget() {
     return {
         hover(props, monitor, component) {
 
@@ -94,7 +94,7 @@ function getVerticalTarget() {
     };
 }
 
-function getHorizontalTarget() {
+export function getHorizontalTarget() {
     return {
         hover(props, monitor, component) {
 

@@ -1,9 +1,8 @@
 /**
- * @file Dom vendor
-
+ * @file Dom.js
  */
 
-function getOffset(el) {
+export function getOffset(el) {
 
     if (!el) {
         return null;
@@ -34,11 +33,11 @@ function getOffset(el) {
 
 }
 
-function getScrollHeight() {
+export function getScrollHeight() {
     return document.body.scrollHeight || document.documentElement.scrollHeight;
 }
 
-function getScrollLeft() {
+export function getScrollLeft() {
 
     if (window.SCROLL_EL && window.SCROLL_EL.scrollLeft) {
         return SCROLL_EL.scrollLeft;
@@ -48,7 +47,7 @@ function getScrollLeft() {
 
 }
 
-function getScrollTop() {
+export function getScrollTop() {
 
     if (window.SCROLL_EL && window.SCROLL_EL.scrollTop) {
         return SCROLL_EL.scrollTop;
@@ -58,7 +57,7 @@ function getScrollTop() {
 
 }
 
-function hasClass(el, className) {
+export function hasClass(el, className) {
 
     if (!el || !className) {
         return false;
@@ -76,7 +75,7 @@ function hasClass(el, className) {
 
 }
 
-function addClass(el, className) {
+export function addClass(el, className) {
 
     if (!el || !className) {
         return;
@@ -101,7 +100,7 @@ function addClass(el, className) {
 
 }
 
-function removeClass(el, className) {
+export function removeClass(el, className) {
 
     if (!el || !className) {
         return;
@@ -125,14 +124,14 @@ function removeClass(el, className) {
 
 }
 
-function toggleClass(el, className, bool) {
+export function toggleClass(el, className, bool) {
     bool ?
         addClass(el, className)
         :
         removeClass(el, className);
 }
 
-function findParentByClassName(el, className) {
+export function findParentByClassName(el, className) {
 
     if (!el || !className) {
         return;

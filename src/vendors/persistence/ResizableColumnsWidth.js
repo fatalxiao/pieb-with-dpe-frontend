@@ -9,23 +9,21 @@ const STORAGE_KEY = 'RESIZABLE_COLUMNS_WIDTH';
 
 /**
  * 获取配置
- * @param userId
  * @param tableName
  * @returns {*}
  */
-export function getConfig(userId, tableName) {
-    return LSP.getConfig(STORAGE_KEY, userId, tableName);
+export function getConfig(tableName) {
+    return LSP.getConfig(STORAGE_KEY, tableName);
 }
 
 /**
  * 保存配置
- * @param userId
  * @param tableName
  * @param data
  * @returns {*}
  */
-export function setConfig(userId, tableName, data) {
-    return LSP.setConfig(STORAGE_KEY, userId, tableName, data);
+export function setConfig(tableName, data) {
+    return LSP.setConfig(STORAGE_KEY, tableName, data);
 }
 
 export default {

@@ -1,6 +1,11 @@
+/**
+ * @file Util.js
+ */
+
+// Vendors
 import moment from 'moment';
 
-function formatDate(timeStamp) {
+export function formatDate(timeStamp) {
 
     if (!timeStamp) {
         return '';
@@ -10,7 +15,7 @@ function formatDate(timeStamp) {
 
 }
 
-function duration(t1, t2, format = 'YYYY-MM-DD HH:mm:ss') {
+export function duration(t1, t2, format = 'YYYY-MM-DD HH:mm:ss') {
 
     if (!t1 || !t2) {
         return -1;
