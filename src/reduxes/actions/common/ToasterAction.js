@@ -2,49 +2,66 @@
  * @file ToasterAction.js
  */
 
-import Toaster from 'alcedo-ui/Toaster';
 import * as types from 'reduxes/actionTypes';
 
-export const addToaste = toaste => dispatch => {
-    dispatch({
-        type: types.ADD_TOASTE,
-        toaste
-    });
-};
+// Statics
+import MsgType from 'alcedo-ui/_statics/MsgType';
 
-export const addSuccessToaste = message => dispatch => {
-    dispatch({
-        type: types.ADD_TOASTE,
-        toaste: {
-            title: '',
-            message,
-            iconCls: 'icon-check success',
-            type: Toaster.Type.SUCCESS
-        }
-    });
-};
+/**
+ * 创建一条 Toaste
+ * @param toaste
+ * @returns {function(*): *}
+ */
+export const addToaste = toaste => dispatch => dispatch({
+    type: types.ADD_TOASTE,
+    toaste
+});
 
-export const addErrorToaste = message => dispatch => {
-    dispatch({
-        type: types.ADD_TOASTE,
-        toaste: {
-            title: '',
-            message,
-            iconCls: 'icon-circle-with-cross error',
-            type: Toaster.Type.ERROR
-        }
-    });
-};
+/**
+ * 创建一条 Success 类型的 Toaste
+ * @param message
+ * @returns {function(*): *}
+ */
+export const addSuccessToaste = message => dispatch => dispatch({
+    type: types.ADD_TOASTE,
+    toaste: {
+        title: '',
+        message,
+        iconCls: 'icon-check success',
+        type: MsgType.SUCCESS
+    }
+});
 
-export const updateToastes = toastes => dispatch => {
-    dispatch({
-        type: types.UPDATE_TOASTES,
-        toastes
-    });
-};
+/**
+ * 创建一条 Error 类型的 Toaste
+ * @param message
+ * @returns {function(*): *}
+ */
+export const addErrorToaste = message => dispatch => dispatch({
+    type: types.ADD_TOASTE,
+    toaste: {
+        title: '',
+        message,
+        iconCls: 'icon-circle-with-cross error',
+        type: MsgType.ERROR
+    }
+});
 
-export const clearToaste = toastes => dispatch => {
-    dispatch({
-        type: types.CLEAR_TOASTE
-    });
-};
+/**
+ * 更新 Toastes
+ * @param toastes
+ * @returns {function(*): *}
+ */
+export const updateToastes = toastes => dispatch => dispatch({
+    type: types.UPDATE_TOASTES,
+    toastes
+});
+
+/**
+ * 清除 Toastes
+ * @param toastes
+ * @returns {function(*): *}
+ */
+export const clearToaste = toastes => dispatch => dispatch({
+    type: types.CLEAR_TOASTE
+});

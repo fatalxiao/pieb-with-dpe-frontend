@@ -1,30 +1,29 @@
-import * as actionTypes from 'reduxes/actionTypes/index';
+/**
+ * @file ObservalAction.js
+ */
+
+import * as actionTypes from 'reduxes/actionTypes';
+
+// Apis
 import ObservalApi from 'apis/app/modules/patient/ObservalApi';
 
-function durationHandler(data, key) {
-
-    const hoursKey = `${key}Hours`,
-        minutesKey = `${key}Minutes`;
-    let result = 0;
-
-    if (data[hoursKey] && !isNaN(data[hoursKey])) {
-        result += +data[hoursKey] * 60;
-    }
-
-    if (data[minutesKey] && !isNaN(data[minutesKey])) {
-        result += +data[minutesKey];
-    }
-
-    return result;
-
-}
-
+/**
+ * 更新 Observal 数据的某个字段
+ * @param fieldName
+ * @param fieldValue
+ * @returns {{fieldName: *, type: string, fieldValue: *}}
+ */
 export const updateObservalDataField = (fieldName, fieldValue) => ({
     type: actionTypes.UPDATE_OBSERVAL_FIELD,
     fieldName,
     fieldValue
 });
 
+/**
+ * 获取某个 patientId 的 Observal 数据
+ * @param patientId
+ * @returns {function(*): *}
+ */
 export const getObservalData = patientId => dispatch => {
 
     if (!patientId) {
@@ -46,7 +45,17 @@ export const getObservalData = patientId => dispatch => {
 
 };
 
-export const createOrUpdateObservalData = (patientId, callback, successResMsgDisabled, failureResMsgDisabled = false) => (dispatch, getState) => {
+/**
+ * 创建或更新 Observal 数据
+ * @param patientId
+ * @param callback
+ * @param successResMsgDisabled
+ * @param failureResMsgDisabled
+ * @returns {function(*, *): *}
+ */
+export const createOrUpdateObservalData = (
+    patientId, callback, successResMsgDisabled, failureResMsgDisabled = false
+) => (dispatch, getState) => {
 
     const observalData = getState().observal.form;
 
@@ -69,7 +78,7 @@ export const createOrUpdateObservalData = (patientId, callback, successResMsgDis
             successResMsgDisabled,
             failureResMsgDisabled,
             successCallback() {
-                callback && callback();
+                callback?.();
             }
         }
     });

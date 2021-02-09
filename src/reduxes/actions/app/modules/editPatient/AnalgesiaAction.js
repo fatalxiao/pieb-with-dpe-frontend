@@ -1,53 +1,78 @@
-import * as actionTypes from 'reduxes/actionTypes/index';
+/**
+ * @file AnalgesiaAction.js
+ */
+
+import * as actionTypes from 'reduxes/actionTypes';
+
+// Apis
 import AnalgesiaApi from 'apis/app/modules/patient/AnalgesiaApi';
 
-function sensoryBlockHandler(keys, item, result) {
+/**
+ * 格式化 Sensory Block
+ * @param keys
+ * @param item
+ * @param result
+ */
+export function formatSensoryBlock(keys, item, result) {
     for (let key of keys) {
         result[`${key}Value`] = item[key] ? item[key].value : null;
     }
 }
 
-function AnalgesiaDataHandler(data, {BASE_DATA}) {
+/**
+ * 格式化 Analgesia 数据
+ * @param data
+ * @param baseData
+ * @returns {*}
+ */
+export const formatAnalgesiaData = (data, baseData) => data.filter(item => {
 
-    return data.filter(item => {
+    if (!item) {
+        return false;
+    }
 
-        if (!item) {
-            return false;
-        }
+    const {timePoint, ...restItem} = item;
 
-        const {timePoint, ...restItem} = item;
+    return JSON.stringify(restItem) !== JSON.stringify(baseData);
 
-        return JSON.stringify(restItem) !== JSON.stringify(BASE_DATA);
+}).map(item => {
 
-    }).map(item => {
+    const result = {
+        timePoint: item.timePoint,
+        vasScore: item.vasScore,
+        bromageScore: item.bromageScore,
+        systolicBloodPressure: item.systolicBloodPressure,
+        diastolicBloodPressure: item.diastolicBloodPressure,
+        heartRate: item.heartRate,
+        fetalHeartRate: item.fetalHeartRate
+    };
 
-        const result = {
-            timePoint: item.timePoint,
-            vasScore: item.vasScore,
-            bromageScore: item.bromageScore,
-            systolicBloodPressure: item.systolicBloodPressure,
-            diastolicBloodPressure: item.diastolicBloodPressure,
-            heartRate: item.heartRate,
-            fetalHeartRate: item.fetalHeartRate
-        };
+    formatSensoryBlock([
+        'thoracicSensoryBlockLeft',
+        'thoracicSensoryBlockRight',
+        'sacralSensoryBlockLeft',
+        'sacralSensoryBlockRight'
+    ], item, result);
 
-        sensoryBlockHandler([
-            'thoracicSensoryBlockLeft',
-            'thoracicSensoryBlockRight',
-            'sacralSensoryBlockLeft',
-            'sacralSensoryBlockRight'
-        ], item, result);
+    return result;
 
-        return result;
+});
 
-    });
-
-}
-
+/**
+ * 追加新的时间节点
+ * @returns {{type: string}}
+ */
 export const appendTimePoint = () => ({
     type: actionTypes.APPEND_TIME_POINT
 });
 
+/**
+ * 更新 Analgesia 数据某个时间节点的某个字段
+ * @param timePoint
+ * @param fieldName
+ * @param fieldValue
+ * @returns {{fieldName: *, timePoint: *, type: string, fieldValue: *}}
+ */
 export const updateAnalgesiaDataField = (timePoint, fieldName, fieldValue) => ({
     type: actionTypes.UPDATE_ANALGESIA_FIELD,
     timePoint,
@@ -55,6 +80,11 @@ export const updateAnalgesiaDataField = (timePoint, fieldName, fieldValue) => ({
     fieldValue
 });
 
+/**
+ * 获取某个 patientId 的 Analgesia 数据
+ * @param patientId
+ * @returns {function(*): *}
+ */
 export const getAnalgesiaData = patientId => dispatch => {
 
     if (!patientId) {
@@ -76,9 +106,17 @@ export const getAnalgesiaData = patientId => dispatch => {
 
 };
 
+/**
+ * 创建或更新 Analgesia 数据
+ * @param patientId
+ * @param callback
+ * @param successResMsgDisabled
+ * @returns {function(*, *): *}
+ */
 export const createOrUpdateAnalgesiaData = (patientId, callback, successResMsgDisabled) => (dispatch, getState) => {
 
-    const {data} = getState().analgesia;
+    const {analgesia} = getState(),
+        {data} = analgesia;
 
     if (!patientId || !data) {
         return;
@@ -94,11 +132,11 @@ export const createOrUpdateAnalgesiaData = (patientId, callback, successResMsgDi
             api: AnalgesiaApi.createOrUpdateAnalgesiaData,
             params: {
                 patientId,
-                analgesiaData: AnalgesiaDataHandler(data, getState().analgesia)
+                analgesiaData: formatAnalgesiaData(data, analgesia.BASE_DATA)
             },
             successResMsgDisabled,
             successCallback() {
-                callback && callback();
+                callback?.();
             }
         }
     });

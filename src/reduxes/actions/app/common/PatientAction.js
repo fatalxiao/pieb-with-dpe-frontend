@@ -7,34 +7,44 @@ import * as actionTypes from 'reduxes/actionTypes';
 // Apis
 import PatientApi from 'apis/app/common/PatientApi';
 
-export const getPatients = () => dispatch => {
-    return dispatch({
-        [actionTypes.CALL_API]: {
-            types: [
-                actionTypes.GET_PATIENTS_REQUEST,
-                actionTypes.GET_PATIENTS_SUCCESS,
-                actionTypes.GET_PATIENTS_FAILURE
-            ],
-            api: PatientApi.getPatients,
-            successResMsgDisabled: true
-        }
-    });
-};
+/**
+ * 获取用于列表的 patients 数据
+ * @returns {function(*): *}
+ */
+export const getPatients = () => dispatch => dispatch({
+    [actionTypes.CALL_API]: {
+        types: [
+            actionTypes.GET_PATIENTS_REQUEST,
+            actionTypes.GET_PATIENTS_SUCCESS,
+            actionTypes.GET_PATIENTS_FAILURE
+        ],
+        api: PatientApi.getPatients,
+        successResMsgDisabled: true
+    }
+});
 
-export const getFullPatients = () => dispatch => {
-    return dispatch({
-        [actionTypes.CALL_API]: {
-            types: [
-                actionTypes.GET_FULL_PATIENTS_REQUEST,
-                actionTypes.GET_FULL_PATIENTS_SUCCESS,
-                actionTypes.GET_FULL_PATIENTS_FAILURE
-            ],
-            api: PatientApi.getFullPatients,
-            successResMsgDisabled: true
-        }
-    });
-};
+/**
+ * 获取完整的 patients 数据
+ * @returns {function(*): *}
+ */
+export const getFullPatients = () => dispatch => dispatch({
+    [actionTypes.CALL_API]: {
+        types: [
+            actionTypes.GET_FULL_PATIENTS_REQUEST,
+            actionTypes.GET_FULL_PATIENTS_SUCCESS,
+            actionTypes.GET_FULL_PATIENTS_FAILURE
+        ],
+        api: PatientApi.getFullPatients,
+        successResMsgDisabled: true
+    }
+});
 
+/**
+ * 更新某个 id 的 patient name
+ * @param id
+ * @param name
+ * @returns {function(*): *}
+ */
 export const updatePatientName = (id, name) => dispatch => {
 
     if (!id || !name) {
@@ -61,6 +71,12 @@ export const updatePatientName = (id, name) => dispatch => {
 
 };
 
+/**
+ * 更新某个 id 的 patient group
+ * @param id
+ * @param group
+ * @returns {function(*): *}
+ */
 export const updatePatientGroup = (id, group) => dispatch => {
 
     if (!id || !group) {
@@ -87,6 +103,11 @@ export const updatePatientGroup = (id, group) => dispatch => {
 
 };
 
+/**
+ * 启用 patient
+ * @param id
+ * @returns {function(*): *}
+ */
 export const enablePatient = id => dispatch => {
 
     if (!id) {
@@ -111,6 +132,11 @@ export const enablePatient = id => dispatch => {
 
 };
 
+/**
+ * 禁用 patient
+ * @param id
+ * @returns {function(*): *}
+ */
 export const disablePatient = id => dispatch => {
 
     if (!id) {

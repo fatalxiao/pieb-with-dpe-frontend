@@ -1,29 +1,53 @@
-import * as actionTypes from 'reduxes/actionTypes/index';
+/**
+ * @file PatientInfoAction.js
+ */
+
+import * as actionTypes from 'reduxes/actionTypes';
+
+// Apis
 import PatientApi from 'apis/app/modules/patient/PatientApi';
+
+// Actions
 import {resetPatientData} from 'reduxes/actions/app/modules/editPatient/EditPatientAction';
 
-function gestationalDaysHandler(data) {
+/**
+ * 获取妊娠天数
+ * @param data
+ * @returns {number}
+ */
+export function getGestationalDays(weeks, days) {
 
     let result = 0;
 
-    if (data.gestationalDaysWeeks && !isNaN(data.gestationalDaysWeeks)) {
-        result += +data.gestationalDaysWeeks * 7;
+    if (weeks && !isNaN(weeks)) {
+        result += +weeks * 7;
     }
 
-    if (data.gestationalDaysDays && !isNaN(data.gestationalDaysDays)) {
-        result += +data.gestationalDaysDays;
+    if (days && !isNaN(days)) {
+        result += +days;
     }
 
     return result;
 
 }
 
+/**
+ * 更新 Patient 信息中某个字段的值
+ * @param fieldName
+ * @param fieldValue
+ * @returns {{fieldName: *, type: string, fieldValue: *}}
+ */
 export const updatePatientInfoField = (fieldName, fieldValue) => ({
     type: actionTypes.UPDATE_PATIENT_INFO_FIELD,
     fieldName,
     fieldValue
 });
 
+/**
+ * 获取 Patient 信息
+ * @param id
+ * @returns {function(*=): *}
+ */
 export const getPatientInfo = id => dispatch => {
 
     if (!id) {
@@ -47,6 +71,13 @@ export const getPatientInfo = id => dispatch => {
 
 };
 
+/**
+ * 更新 Patient 信息
+ * @param id
+ * @param callback
+ * @param successResMsgDisabled
+ * @returns {function(*, *): *}
+ */
 export const updatePatientInfo = (id, callback, successResMsgDisabled) => (dispatch, getState) => {
 
     const data = getState().patientInfo.form;
@@ -66,7 +97,7 @@ export const updatePatientInfo = (id, callback, successResMsgDisabled) => (dispa
             params: {
                 id,
                 age: data.age,
-                gestationalDays: gestationalDaysHandler(data),
+                gestationalDays: getGestationalDays(data.gestationalDaysWeeks, data.gestationalDaysDays),
                 height: data.height,
                 weight: data.weight,
                 heartRate: data.heartRate,
@@ -82,7 +113,7 @@ export const updatePatientInfo = (id, callback, successResMsgDisabled) => (dispa
             },
             successResMsgDisabled,
             successCallback() {
-                callback && callback();
+                callback?.();
             }
         }
     });
