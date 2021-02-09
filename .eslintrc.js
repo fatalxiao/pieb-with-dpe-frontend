@@ -58,7 +58,7 @@ module.exports = {
         // 禁止在条件中使用常量表达式
         // if (false) {
         // doSomethingUnfinished();
-        // } //cuowu
+        // }
         'no-constant-condition': 2,
         // 禁止在正则表达式中使用控制字符 ：new RegExp("\x1f")
         'no-control-regex': 2,
@@ -112,7 +112,7 @@ module.exports = {
         // 强制使用有效的 JSDoc 注释
         // 'valid-jsdoc': 0,
         // 强制 typeof 表达式与有效的字符串进行比较
-        // typeof foo === "undefimed" 错误
+        // typeof foo === "undefined" 错误
         'valid-typeof': 2,
 
         /**

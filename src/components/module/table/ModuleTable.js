@@ -5,7 +5,6 @@
 import React, {Component, isValidElement, cloneElement, createRef} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 
 // Components
 import Table from 'alcedo-ui/Table';
@@ -54,13 +53,6 @@ class ModuleTable extends Component {
         // resize 时更新 scrollHeight
         Event.addEvent(window, 'resize', this.debounceUpdateFullScreenScrollHeight);
 
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.hasFinishedLoading
-            || this.props.isFullScreen !== prevProps.isFullScreen) {
-            this.resetHeightAsync();
-        }
     }
 
     componentWillUnmount() {
@@ -444,4 +436,4 @@ ModuleTable.defaultProps = {
 
 export default connect(state => ({
     isFullScreen: state.fullScreen.isFullScreen
-}), dispatch => bindActionCreators({}, dispatch), null, {forwardRef: true})(ModuleTable);
+}), null, null, {forwardRef: true})(ModuleTable);

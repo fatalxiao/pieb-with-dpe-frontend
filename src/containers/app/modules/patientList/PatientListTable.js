@@ -41,37 +41,41 @@ const PatientListTable = ({
 
         /**
          * 处理 patient name 的变更
-         * @type {debounced}
+         * @type {*}
          */
+            // eslint-disable-next-line react-hooks/rules-of-hooks
         handleNameChange = useCallback(debounce((id, value) =>
-                updatePatientName?.(id, value),
-            400
-        ), [updatePatientName]),
+            updatePatientName?.(id, value), 400), [
+            updatePatientName
+        ]),
 
         /**
          * 处理 patient group 的变更
          * @type {function(*=, *=): *}
          */
+            // eslint-disable-next-line react-hooks/rules-of-hooks
         handleGroupChange = useCallback((id, value) =>
-                updatePatientGroup?.(id, value),
-            [updatePatientGroup]
-        ),
+            updatePatientGroup?.(id, value), [
+            updatePatientGroup
+        ]),
 
         /**
          * 处理 patient status 的变更
          * @type {function(*=, *): *}
          */
+            // eslint-disable-next-line react-hooks/rules-of-hooks
         handleStatusChange = useCallback((id, value) => value ?
             enablePatient?.(id)
             :
-            disablePatient?.(id),
-            [enablePatient, disablePatient]
-        ),
+            disablePatient?.(id), [
+            enablePatient, disablePatient
+        ]),
 
         /**
          * 所有 columns 的配置
          * @type {*[]}
          */
+            // eslint-disable-next-line react-hooks/rules-of-hooks
         columns = useMemo(() => [{
             key: 'id',
             headRenderer: 'ID',
@@ -118,7 +122,7 @@ const PatientListTable = ({
         ]);
 
     return (
-        <ModuleTableCard>
+        <ModuleTableCard hasFinishedLoading={true}>
             <Table className="patient-list-table"
                    data={data}
                    columns={columns}/>

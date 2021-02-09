@@ -26,7 +26,7 @@ const ModuleTableCard = forwardRef(({
 
     name, children, className,
 
-    rowSize: propsRowSize, isFullScreen, hasFinishedLoading, useAdvancedMetricFilter, extraActions,
+    rowSize: propsRowSize, isFullScreen, hasFinishedLoading, extraActions,
 
     onFullScreenChange, onRowSizeChange,
 
@@ -52,16 +52,6 @@ const ModuleTableCard = forwardRef(({
         [rowSize, setRowSize] = useState(propsRowSize),
 
         /**
-         * 重置高度
-         */
-        resetHeight = useCallback(() => tableRef?.current?.resetHeight?.(), [tableRef]),
-
-        /**
-         * 重置高度
-         */
-        resetHeightAsync = useCallback(() => tableRef?.current?.resetHeightAsync?.(), [tableRef]),
-
-        /**
          * 更新 card 的 element
          */
         updateCardEl = useCallback(() => {
@@ -82,7 +72,7 @@ const ModuleTableCard = forwardRef(({
     /**
      * 初始化
      */
-    useEffect(() => updateCardEl(), []);
+    useEffect(() => updateCardEl(), [updateCardEl]);
 
     return (
         <Fragment>
@@ -90,7 +80,7 @@ const ModuleTableCard = forwardRef(({
             {/** 全屏时的模态框 */}
             {
                 isFullScreen ?
-                    <div className="module-table-card-modal"></div>
+                    <div className="module-table-card-modal"/>
                     :
                     null
             }
@@ -161,15 +151,8 @@ ModuleTableCard.propTypes = {
 };
 
 ModuleTableCard.defaultProps = {
-
     isFullScreen: false,
-    hasFinishedLoading: false,
-
-    /**
-     * filter 配置参数
-     */
-    useAdvancedMetricFilter: false
-
+    hasFinishedLoading: false
 };
 
 export default connect(state => ({
