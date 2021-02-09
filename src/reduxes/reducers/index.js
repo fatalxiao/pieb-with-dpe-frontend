@@ -2,18 +2,22 @@
  * @file index.js
  */
 
+// Vendors
 import {combineReducers} from 'redux';
 import {connectRouter} from 'connected-react-router';
 
+// App Reducers
 import loadComponent from './common/LoadComponentReducer';
 import appToaster from './common/ToasterReducer';
 import appNotifier from './common/NotifierReducer';
 import fullScreen from './common/FullScreenReducer';
 
+// common Reducers
 import patientGroup from './app/common/PatientGroupReducer';
 import patients from './app/common/PatientsReducer';
 import sensoryBlock from './app/common/SensoryBlockReducer';
 
+// module Reducers
 import editPatient from './app/modules/editPatient/EditPatientReducer';
 import patientBaseInfo from './app/modules/editPatient/PatientBaseInfoReducer';
 import patientInfo from './app/modules/editPatient/PatientInfoReducer';

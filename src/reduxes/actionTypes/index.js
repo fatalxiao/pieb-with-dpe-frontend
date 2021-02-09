@@ -16,7 +16,6 @@ export * from './app/common/PatientActionType';
 export * from './app/common/SensoryBlockActionType';
 
 // module Action Types
-export * from './app/modules/patientList/PatientListActionType';
 export * from './app/modules/editPatient/EditPatientActionType';
 export * from './app/modules/editPatient/PatientBaseInfoActionType';
 export * from './app/modules/editPatient/PatientInfoActionType';
