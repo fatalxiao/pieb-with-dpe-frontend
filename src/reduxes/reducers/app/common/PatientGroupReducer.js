@@ -14,24 +14,24 @@ function patientGroup(state = initialState, action) {
         /**
          * 获取 patient groups 数据
          */
-        case actionTypes.GET_GROUPS_REQUEST: {
+        case actionTypes.GET_PATIENT_GROUPS_REQUEST: {
             return {
                 ...state,
-                actionType: actionTypes.GET_GROUPS_REQUEST
+                actionType: actionTypes.GET_PATIENT_GROUPS_REQUEST
             };
         }
-        case actionTypes.GET_GROUPS_SUCCESS: {
+        case actionTypes.GET_PATIENT_GROUPS_SUCCESS: {
             return {
                 ...state,
                 list: action.responseData,
-                actionType: actionTypes.GET_GROUPS_SUCCESS
+                actionType: actionTypes.GET_PATIENT_GROUPS_SUCCESS
             };
         }
-        case actionTypes.GET_GROUPS_FAILURE: {
+        case actionTypes.GET_PATIENT_GROUPS_FAILURE: {
             return {
                 ...state,
                 list: [],
-                actionType: actionTypes.GET_GROUPS_FAILURE
+                actionType: actionTypes.GET_PATIENT_GROUPS_FAILURE
             };
         }
 

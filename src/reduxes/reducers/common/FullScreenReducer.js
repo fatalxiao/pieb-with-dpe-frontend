@@ -79,7 +79,7 @@ function fullScreen(state = initialState, action) {
         }
 
         /**
-         * 更新全屏
+         * 更新全屏状态
          */
         case actionTypes.UPDATE_FULL_SCREEN: {
 

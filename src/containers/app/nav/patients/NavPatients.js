@@ -43,7 +43,7 @@ const NavPatient = ({
             fold: isFold
         })}>
             {
-                groupListActionType === actionTypes.GET_GROUPS_REQUEST
+                groupListActionType === actionTypes.GET_PATIENT_GROUPS_REQUEST
                 || patientListActionType === actionTypes.GET_PATIENTS_REQUEST ?
                     <CircularLoading/>
                     :
