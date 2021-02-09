@@ -149,7 +149,7 @@ AddPatientDialog.propTypes = {
 };
 
 export default connect(state => ({
-    groupList: state.group.list,
+    groupList: state.patientGroup.list,
     form: state.patientBaseInfo.form
 }), dispatch => bindActionCreators({
     routerPush: actions.routerPush,

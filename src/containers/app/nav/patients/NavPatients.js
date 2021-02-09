@@ -19,6 +19,7 @@ import classNames from 'classnames';
 
 // Styles
 import './NavPatients.scss';
+import patientGroup from '../../../../reduxes/reducers/app/common/PatientGroupReducer';
 
 const NavPatient = ({
     isCollapsed, isFold, groupListActionType, patientList, patientListActionType
@@ -68,7 +69,7 @@ NavPatient.propTypes = {
 };
 
 export default connect(state => ({
-    groupListActionType: state.group.actionType,
+    groupListActionType: state.patientGroup.actionType,
     patientList: state.patients.list,
     patientListActionType: state.patients.getActionType
 }))(NavPatient);

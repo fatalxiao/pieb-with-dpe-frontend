@@ -140,7 +140,7 @@ PatientListTable.propTypes = {
 };
 
 export default connect(state => ({
-    groupList: state.group.list
+    groupList: state.patientGroup.list
 }), dispatch => bindActionCreators({
     updatePatientName: actions.updatePatientName,
     updatePatientGroup: actions.updatePatientGroup,

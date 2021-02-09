@@ -104,6 +104,6 @@ PatientList.propTypes = {
 };
 
 export default connect(state => ({
-    groupList: state.group.list,
+    groupList: state.patientGroup.list,
     patientList: state.patients.list
 }))(PatientList);

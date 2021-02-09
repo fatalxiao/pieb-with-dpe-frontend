@@ -14,7 +14,7 @@ module.exports = {
         assetsVirtualRoot: path.posix.join('/', 'static'),
         assetsRoot: path.resolve(__dirname, '../dist'),
         proxyTable: {
-            '/dpe': 'http://localhost:4100'
+            '/pieb-with-dpe': 'http://localhost:4100'
         }
     },
 
@@ -23,7 +23,7 @@ module.exports = {
         index: path.resolve(__dirname, '../dist/index.html'),
         assetsRoot: path.resolve(__dirname, '../dist'),
         proxyTable: {
-            '/dpe': 'http://localhost:4100'
+            '/pieb-with-dpe': 'http://localhost:4100'
         }
     }
 
