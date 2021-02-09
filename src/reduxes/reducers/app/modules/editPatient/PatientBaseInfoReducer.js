@@ -1,7 +1,19 @@
-import cloneDeep from 'lodash/cloneDeep';
-import * as actionTypes from 'reduxes/actionTypes/index';
+/**
+ * @file PatientBaseInfoReducer.js
+ */
 
-const DEFAULT_FORM = {
+import * as actionTypes from 'reduxes/actionTypes';
+
+// Vendors
+import cloneDeep from 'lodash/cloneDeep';
+
+const
+
+    /**
+     * 默认的表单数据
+     * @type {{name: string, id: string, group: null}}
+     */
+    DEFAULT_FORM = {
         group: null,
         id: '',
         name: ''
@@ -15,6 +27,9 @@ const DEFAULT_FORM = {
 function patientBaseInfo(state = initialState, action) {
     switch (action.type) {
 
+        /**
+         * 重置 Patient 基础信息
+         */
         case actionTypes.RESET_PATIENT_BASE_INFO: {
             return {
                 ...state,
@@ -22,6 +37,9 @@ function patientBaseInfo(state = initialState, action) {
             };
         }
 
+        /**
+         * 更新 Patient 基础信息中某个字段的值
+         */
         case actionTypes.UPDATE_PATIENT_BASE_INFO_FIELD: {
 
             const form = cloneDeep(state.form);
@@ -35,7 +53,9 @@ function patientBaseInfo(state = initialState, action) {
 
         }
 
-        // create patient
+        /**
+         * 创建 patient
+         */
         case actionTypes.CREATE_PATIENT_REQUEST: {
             return {
                 ...state,

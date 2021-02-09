@@ -9,9 +9,11 @@ const initialState = {
 };
 
 function appToaster(state = initialState, action) {
-
     switch (action.type) {
 
+        /**
+         * 创建一条 Toaste
+         */
         case actionTypes.ADD_TOASTE: {
 
             if (!action.toaste) {
@@ -27,12 +29,18 @@ function appToaster(state = initialState, action) {
 
         }
 
+        /**
+         * 更新 Toastes
+         */
         case actionTypes.UPDATE_TOASTES: {
             return {
                 toastes: action.toastes
             };
         }
 
+        /**
+         * 清除 Toastes
+         */
         case actionTypes.CLEAR_TOASTE: {
             return {
                 toastes: []

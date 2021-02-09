@@ -9,9 +9,11 @@ const initialState = {
 };
 
 function appNotifier(state = initialState, action) {
-
     switch (action.type) {
 
+        /**
+         * 新增一个 Notifier
+         */
         case actionTypes.ADD_NOTIFIER: {
 
             if (!action.notifier) {
@@ -27,12 +29,18 @@ function appNotifier(state = initialState, action) {
 
         }
 
+        /**
+         * 更新 Notifiers
+         */
         case actionTypes.UPDATE_NOTIFIERS: {
             return {
                 notifiers: action.notifiers
             };
         }
 
+        /**
+         * 清除 Notifiers
+         */
         case actionTypes.CLEAR_NOTIFIER: {
             return {
                 notifiers: []

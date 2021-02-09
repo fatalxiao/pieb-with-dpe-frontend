@@ -35,5 +35,5 @@ export const updatePatientStep = activatedStep => dispatch => dispatch({
  * @returns {function(*): *}
  */
 export const resetPatientData = () => dispatch => dispatch({
-    type: actionTypes.RESET_PATIENT_DATA
+    type: actionTypes.RESET_DATA
 });

@@ -11,6 +11,9 @@ const initialState = {
 function loadComponent(state = initialState, action) {
     switch (action.type) {
 
+        /**
+         * 开始加载 component
+         */
         case actionTypes.LOAD_COMPONENT_START: {
             return {
                 ...state,
@@ -18,6 +21,9 @@ function loadComponent(state = initialState, action) {
             };
         }
 
+        /**
+         * 加载 component 完毕
+         */
         case actionTypes.LOAD_COMPONENT_COMPLETE: {
             return {
                 ...state,

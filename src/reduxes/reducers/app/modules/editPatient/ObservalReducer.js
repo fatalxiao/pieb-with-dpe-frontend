@@ -1,7 +1,19 @@
-import cloneDeep from 'lodash/cloneDeep';
-import * as actionTypes from 'reduxes/actionTypes/index';
+/**
+ * @file ObservalReducer.js
+ */
 
-const DEFAULT_FORM = {
+import * as actionTypes from 'reduxes/actionTypes';
+
+// Vendors
+import cloneDeep from 'lodash/cloneDeep';
+
+const
+
+    /**
+     * 默认的表单数据
+     * @type {{hasLateralEpisiotomy: boolean, bolus: string, firstManualBolusTime: string, description: string, pumpConsumption: string, birthTime: string, hasVasoactiveAgent: boolean, oneMinuteApgarScore: string, foetalWeight: string, hasHypotension: boolean, initialTime: string, fiveMinuteApgarScore: string, manualBolusCount: string, pcaCount: string, hasCaesareanSection: boolean, firstPcaTime: string, hasInstrumental: boolean, initialDose: string}}
+     */
+    DEFAULT_FORM = {
         initialTime: '',
         initialDose: '8',
         pumpConsumption: '',
@@ -21,6 +33,7 @@ const DEFAULT_FORM = {
         fiveMinuteApgarScore: '',
         description: ''
     },
+
     initialState = {
 
         form: cloneDeep(DEFAULT_FORM),
@@ -33,13 +46,19 @@ const DEFAULT_FORM = {
 function observal(state = initialState, action) {
     switch (action.type) {
 
-        case actionTypes.RESET_PATIENT_DATA: {
+        /**
+         * 重置数据
+         */
+        case actionTypes.RESET_DATA: {
             return {
                 ...state,
                 form: cloneDeep(DEFAULT_FORM)
             };
         }
 
+        /**
+         * 更新 Observal 数据的某个字段
+         */
         case actionTypes.UPDATE_OBSERVAL_FIELD: {
 
             const form = cloneDeep(state.form);
@@ -52,7 +71,9 @@ function observal(state = initialState, action) {
 
         }
 
-        // get observal data
+        /**
+         * 获取某个 patientId 的 Observal 数据
+         */
         case actionTypes.GET_OBSERVAL_REQUEST: {
             return {
                 ...state,
@@ -73,7 +94,9 @@ function observal(state = initialState, action) {
             };
         }
 
-        // update observal data
+        /**
+         * 创建或更新 Observal 数据
+         */
         case actionTypes.UPDATE_OBSERVAL_REQUEST: {
             return {
                 ...state,

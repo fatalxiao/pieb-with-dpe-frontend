@@ -18,28 +18,6 @@ const initialState = {
 
 };
 
-function updatePatient(list, id, data) {
-
-    if (!list || !id) {
-        return;
-    }
-
-    const result = [...list],
-        index = list.findIndex(item => item?.id === id);
-
-    if (index === -1) {
-        return;
-    }
-
-    result[index] = {
-        ...result[index],
-        ...data
-    };
-
-    return result
-
-}
-
 function patients(state = initialState, action) {
     switch (action.type) {
 

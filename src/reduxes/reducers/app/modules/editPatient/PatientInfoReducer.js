@@ -1,7 +1,19 @@
-import cloneDeep from 'lodash/cloneDeep';
-import * as actionTypes from 'reduxes/actionTypes/index';
+/**
+ * @file PatientBaseInfoReducer.js
+ */
 
-const DEFAULT_FORM = {
+import * as actionTypes from 'reduxes/actionTypes';
+
+// Vendors
+import cloneDeep from 'lodash/cloneDeep';
+
+const
+
+    /**
+     * 默认的表单信息
+     * @type {{pulseOxygenSaturation: string, hasOxytocinAtTimeOfEA: boolean, cervicalDilationAtTimeOfEA: string, initialVasScore: string, diastolicBloodPressure: string, weight: string, description: string, systolicBloodPressure: string, fetalHeartRate: string, gestationalDaysDays: string, hasInduction: boolean, heartRate: string, gestationalDaysWeeks: string, name: string, id: string, age: string, group: null, height: string, status: number}}
+     */
+    DEFAULT_FORM = {
         group: null,
         id: '',
         name: '',
@@ -32,13 +44,19 @@ const DEFAULT_FORM = {
 function patientInfo(state = initialState, action) {
     switch (action.type) {
 
-        case actionTypes.RESET_PATIENT_DATA: {
+        /**
+         * 重置数据
+         */
+        case actionTypes.RESET_DATA: {
             return {
                 ...state,
                 form: cloneDeep(DEFAULT_FORM)
             };
         }
 
+        /**
+         * 更新 Patient 信息中某个字段的值
+         */
         case actionTypes.UPDATE_PATIENT_INFO_FIELD: {
 
             const form = cloneDeep(state.form);
@@ -52,7 +70,9 @@ function patientInfo(state = initialState, action) {
 
         }
 
-        // get patient information
+        /**
+         * 获取 Patient 信息
+         */
         case actionTypes.GET_PATIENT_INFO_REQUEST: {
             return {
                 ...state,
@@ -82,7 +102,9 @@ function patientInfo(state = initialState, action) {
             };
         }
 
-        // update patient
+        /**
+         * 更新 Patient 信息
+         */
         case actionTypes.UPDATE_PATIENT_INFO_REQUEST: {
             return {
                 ...state,

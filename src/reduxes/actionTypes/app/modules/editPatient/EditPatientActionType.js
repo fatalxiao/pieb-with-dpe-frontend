@@ -20,4 +20,4 @@ export const PATIENT_STEP_UPDATE = 'PATIENT_STEP_UPDATE';
 /**
  * 重置数据
  */
-export const RESET_PATIENT_DATA = 'RESET_PATIENT_DATA';
+export const RESET_DATA = 'RESET_DATA';

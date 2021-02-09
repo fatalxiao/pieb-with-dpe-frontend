@@ -1,7 +1,19 @@
-import cloneDeep from 'lodash/cloneDeep';
-import * as actionTypes from 'reduxes/actionTypes/index';
+/**
+ * @file AnalgesiaReducer.js
+ */
 
-const BASE_DATA = {
+import * as actionTypes from 'reduxes/actionTypes';
+
+// Vendors
+import cloneDeep from 'lodash/cloneDeep';
+
+const
+
+    /**
+     * 每一行的默认数据
+     * @type {{thoracicSensoryBlockLeft: null, bromageScore: string, fetalHeartRate: string, sacralSensoryBlockRight: null, heartRate: string, thoracicSensoryBlockRight: null, sacralSensoryBlockLeft: null, diastolicBloodPressure: string, systolicBloodPressure: string, vasScore: string}}
+     */
+    BASE_DATA = {
         vasScore: '',
         thoracicSensoryBlockLeft: null,
         thoracicSensoryBlockRight: null,
@@ -13,11 +25,21 @@ const BASE_DATA = {
         heartRate: '',
         fetalHeartRate: ''
     },
+
+    /**
+     * 默认的时间节点
+     * @type {number[]}
+     */
     DEFAULT_TIMEPOINTS = [
         0, 2, 4, 6, 8, 10, 12, 14, 16, 18,
         20, 30, 2 * 60, 3.5 * 60, 5 * 60, 6.5 * 60, 8 * 60
     ];
 
+/**
+ * 获取默认的数据
+ * @param timePoints
+ * @returns {({thoracicSensoryBlockLeft: null, bromageScore: string, fetalHeartRate: string, sacralSensoryBlockRight: null, heartRate: string, thoracicSensoryBlockRight: null, sacralSensoryBlockLeft: null, diastolicBloodPressure: string, systolicBloodPressure: string, vasScore: string}&{timePoint: number})[]}
+ */
 function getDefaultData(timePoints = DEFAULT_TIMEPOINTS) {
     return timePoints.map(timePoint => ({
         ...BASE_DATA,
@@ -39,13 +61,19 @@ const initialState = {
 function analgesia(state = initialState, action) {
     switch (action.type) {
 
-        case actionTypes.RESET_PATIENT_DATA: {
+        /**
+         * 重置数据
+         */
+        case actionTypes.RESET_DATA: {
             return {
                 ...state,
                 data: getDefaultData()
             };
         }
 
+        /**
+         * 追加新的时间节点
+         */
         case actionTypes.APPEND_TIME_POINT: {
 
             const data = cloneDeep(state.data);
@@ -60,6 +88,9 @@ function analgesia(state = initialState, action) {
             };
         }
 
+        /**
+         * 更新 Analgesia 数据某个时间节点的某个字段
+         */
         case actionTypes.UPDATE_ANALGESIA_FIELD: {
 
             const data = cloneDeep(state.data),
@@ -92,7 +123,9 @@ function analgesia(state = initialState, action) {
 
         }
 
-        // get analgesia data
+        /**
+         * 获取某个 patientId 的 Analgesia 数据
+         */
         case actionTypes.GET_ANALGESIA_REQUEST: {
             return {
                 ...state,
@@ -146,7 +179,9 @@ function analgesia(state = initialState, action) {
             };
         }
 
-        // update analgesia data
+        /**
+         * 创建或更新 Analgesia 数据
+         */
         case actionTypes.UPDATE_ANALGESIA_REQUEST: {
             return {
                 ...state,
