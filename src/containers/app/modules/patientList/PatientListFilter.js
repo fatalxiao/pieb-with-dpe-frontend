@@ -75,13 +75,16 @@ const PatientListFilter = ({
     return (
         <div className="patient-list-filter">
 
-            <div className="patient-filter-wrapper">
+            <RaisedButton className="create-patient-button"
+                          theme={RaisedButton.Theme.HIGHLIGHT}
+                          iconCls="icon-plus"
+                          value="Create Patient"
+                          onClick={showAddPatientDialog}/>
 
-                <TextField className="patient-filter"
-                           value={filterValue}
-                           placeholder="Search"
-                           rightIconCls="icon-magnifying-glass"
-                           onChange={handlePatientFilterChange}/>
+            <AddPatientDialog visible={addPatientDialogVisible}
+                              onRequestClose={hideAddPatientDialog}/>
+
+            <div className="patient-filter-wrapper">
 
                 <DropdownSelect className="group-select"
                                 data={groupList}
@@ -97,16 +100,13 @@ const PatientListFilter = ({
                                 value={filterStatus}
                                 onChange={handleStatusFilterChange}/>
 
+                <TextField className="patient-filter"
+                           value={filterValue}
+                           placeholder="Search"
+                           rightIconCls="icon-magnifying-glass"
+                           onChange={handlePatientFilterChange}/>
+
             </div>
-
-            <RaisedButton className="create-patient-button"
-                          theme={RaisedButton.Theme.PRIMARY}
-                          iconCls="icon-plus"
-                          value="Create Patient"
-                          onClick={showAddPatientDialog}/>
-
-            <AddPatientDialog visible={addPatientDialogVisible}
-                              onRequestClose={hideAddPatientDialog}/>
 
         </div>
     );

@@ -19,9 +19,9 @@ import PageLoading from 'alcedo-ui/PageLoading';
 import './App.scss';
 
 const App = ({
-                 route, componentLoading,
-                 getPatientGroups, getSensoryBlocks, getPatients
-             }) => {
+    route, componentLoading,
+    getPatientGroups, getSensoryBlocks, getPatients
+}) => {
 
     /**
      * init
@@ -44,7 +44,9 @@ const App = ({
 
                 <NavTitle/>
 
-                {renderRoutes(route.routes)}
+                <div className="app-content-content">
+                    {renderRoutes(route.routes)}
+                </div>
 
             </div>
 
@@ -54,6 +56,8 @@ const App = ({
 };
 
 App.propTypes = {
+
+    route: PropTypes.object,
 
     componentLoading: PropTypes.bool,
 

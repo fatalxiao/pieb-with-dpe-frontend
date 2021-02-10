@@ -2,7 +2,7 @@
  * @file PatientForm.js
  */
 
-import React, {useCallback} from 'react';
+import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -31,12 +31,18 @@ const PatientForm = ({
 
         /**
          * 提交 field 新值到后端
-         * @type {debounced}
+         * @type {Function}
          */
-        save = useCallback(debounce(() =>
-            patientId && updatePatientInfo(patientId, undefined, true),
-            400
-        ), [patientId, updatePatientInfo]),
+        save = useCallback(() =>
+            patientId && updatePatientInfo(patientId, undefined, true), [
+            patientId, updatePatientInfo
+        ]),
+
+        /**
+         * 提交 field 新值到后端
+         * @type {Function}
+         */
+        debounceSave = useMemo(() => debounce(save, 1000), [save]),
 
         /**
          * 更新 field 新值到 reducer
@@ -44,8 +50,8 @@ const PatientForm = ({
          */
         updateField = useCallback((fieldName, fieldValue) => {
             updatePatientInfoField?.(fieldName, fieldValue);
-            setTimeout(() => save(), 0);
-        }, [updatePatientInfoField, save]);
+            setTimeout(() => debounceSave(), 0);
+        }, [updatePatientInfoField, debounceSave]);
 
     return (
         <div className="patient-form">

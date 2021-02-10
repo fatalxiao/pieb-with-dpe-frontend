@@ -122,7 +122,8 @@ const PatientListTable = ({
         ]);
 
     return (
-        <ModuleTableCard hasFinishedLoading={true}>
+        <ModuleTableCard className="patient-list-table-card"
+                         hasFinishedLoading={true}>
             <Table className="patient-list-table"
                    data={data}
                    columns={columns}/>

@@ -9,9 +9,11 @@
     .app-content {
         flex: 1;
         position: relative;
+        display: flex;
+        flex-direction: column;
         box-sizing: border-box;
         min-height: 100vh;
-        padding: 24px 48px 64px;
+        padding: 24px 24px 32px;
         overflow-x: auto;
         overflow-y: hidden;
 
@@ -32,6 +34,10 @@
             right: 0;
             top: 0;
             bottom: 0;
+        }
+
+        .app-content-content {
+            flex: 1;
         }
     }
 }

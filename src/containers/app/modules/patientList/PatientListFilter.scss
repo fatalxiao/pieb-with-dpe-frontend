@@ -4,17 +4,42 @@
 @import 'scss/common.scss';
 
 .patient-list-filter {
-    @include float-fix;
-    margin-bottom: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8px;
+    margin-bottom: 24px;
+
+    .create-patient-button {
+        width: auto;
+        height: 48px;
+        padding: 0 16px 0 8px;
+
+        .button-icon,
+        .base-button-value {
+            vertical-align: middle;
+        }
+
+        .button-icon {
+            line-height: 24px;
+            font-size: 24px;
+            margin-right: 4px;
+        }
+
+        .base-button-value {
+            line-height: 24px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+    }
 
     .patient-filter-wrapper {
-        @include float-fix;
-        float: left;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
 
         .patient-filter {
-            float: left;
             width: 200px;
-            margin-right: 20px;
 
             .material-provider-label-wrapper {
                 display: none;
@@ -30,29 +55,12 @@
 
         .group-select,
         .status-select {
-            float: left;
-            width: 120px;
+            width: 160px;
             margin-right: 20px;
 
             .material-provider-label-wrapper {
                 display: none;
             }
-        }
-    }
-
-    .create-patient-button {
-        float: right;
-        width: auto;
-        padding: 0 12px 0 8px;
-
-        .button-icon,
-        .base-button-value {
-            vertical-align: middle;
-        }
-
-        .button-icon {
-            font-size: 20px;
-            margin-right: 4px;
         }
     }
 }

@@ -3,9 +3,15 @@
  */
 @import 'scss/common.scss';
 
-.patient-list .nav-no-patient {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+.patient-list {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .nav-no-patient {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
