@@ -51,7 +51,8 @@ ModuleTableAction.propTypes = {
 };
 
 ModuleTableAction.defaultProps = {
-    theme: IconButton.Theme.HIGHLIGHT
+    theme: IconButton.Theme.PRIMARY,
+    isCircular: false
 };
 
 export default ModuleTableAction;

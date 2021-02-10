@@ -6,6 +6,7 @@
 .list.button-radio-group.module-table-action-button-radio-group {
     width: auto;
     border-radius: 8px;
+    margin-left: 16px;
     transition: background $theme-transition-duration ease-in-out;
 
     .list-item {
@@ -22,7 +23,7 @@
             float: none;
             margin: 0;
             color: $theme-primary;
-            font-size: 16px;
+            font-size: 20px;
         }
 
         &:hover {
