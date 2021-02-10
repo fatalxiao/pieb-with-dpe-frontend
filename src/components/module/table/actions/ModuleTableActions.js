@@ -2,7 +2,7 @@
  * @file ModuleTableActions.js
  */
 
-import React, {Component, Fragment} from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 
 // Components
@@ -18,42 +18,29 @@ import {enumerateValue} from 'vendors/Util';
 // Styles
 import './ModuleTableActions.scss';
 
-class ModuleTableActions extends Component {
+const ModuleTableActions = ({
+    rowSize, extraActions,
+    onFullScreenChange, onRowSizeChange
+}) => (
+    <div className="module-table-actions">
 
-    constructor(props) {
-        super(props);
-    }
+        {
+            extraActions ?
+                <Fragment>
+                    {extraActions}
+                    <div className="module-table-actions-extra-separator"></div>
+                </Fragment>
+                :
+                null
+        }
 
-    render() {
+        <FullScreen onChange={onFullScreenChange}/>
 
-        const {
-            rowSize, extraActions,
-            onFullScreenChange, onRowSizeChange
-        } = this.props;
+        <RowSizeSelector value={rowSize}
+                         onChange={onRowSizeChange}/>
 
-        return (
-            <div className="module-table-actions">
-
-                {
-                    extraActions ?
-                        <Fragment>
-                            {extraActions}
-                            <div className="module-table-actions-extra-separator"></div>
-                        </Fragment>
-                        :
-                        null
-                }
-
-                <FullScreen onChange={onFullScreenChange}/>
-
-                <RowSizeSelector value={rowSize}
-                                 onChange={onRowSizeChange}/>
-
-            </div>
-        );
-
-    }
-}
+    </div>
+);
 
 ModuleTableActions.propTypes = {
 

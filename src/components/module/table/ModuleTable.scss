@@ -5,8 +5,13 @@
 
 .module-table-wrapper {
     position: relative;
+    flex: 1;
 
     .table.customized-table.module-table {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100% !important;
         transition: height $theme-transition-duration ease-in-out;
 
         .table-content {

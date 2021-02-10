@@ -42,7 +42,6 @@ class ModuleTable extends Component {
         this.frozenColumns = FrozenColumns.getConfig(props.name) || [];
 
         this.state = {
-            tableHeight: props.defaultTableHeight,
             scrollHeight: props.isFullScreen ? this.getFullScreenScrollHeight() : null
         };
 
@@ -314,7 +313,7 @@ class ModuleTable extends Component {
         }
 
         const {rowSize, isFullScreen, hasFinishedLoading} = this.props,
-            {tableHeight, scrollHeight} = this.state,
+            {scrollHeight} = this.state,
             {props: tableProps} = children,
             columns = this.getColumns(tableProps?.columns, tableProps);
 
@@ -326,10 +325,7 @@ class ModuleTable extends Component {
                 [`row-size-${rowSize}`]: rowSize,
                 [tableProps?.className]: tableProps?.className
             }),
-            style: {
-                ...tableProps?.style,
-                height: tableHeight
-            },
+            style: tableProps?.style,
             pageSizePopupClassName: classNames('module-table-page-size-pop', {
                 'full-screen': isFullScreen,
                 [tableProps?.pageSizePopupClassName]: tableProps?.pageSizePopupClassName
@@ -418,7 +414,6 @@ ModuleTable.propTypes = {
      */
     rowSize: PropTypes.oneOf(enumerateValue(TableRowSize)),
 
-    defaultTableHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     autoFitHeight: PropTypes.bool
 
 };
@@ -429,7 +424,6 @@ ModuleTable.defaultProps = {
 
     hasFinishedLoading: false,
 
-    defaultTableHeight: 546,
     autoFitHeight: true
 
 };

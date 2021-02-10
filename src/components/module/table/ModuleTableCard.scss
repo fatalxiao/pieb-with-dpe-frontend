@@ -5,7 +5,9 @@
 
 .module-table-card {
     position: relative;
-    padding: 8px 8px 16px;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
 
     &.full-screen {
         position: fixed;
