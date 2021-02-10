@@ -56,15 +56,15 @@ const ModuleTableRowSizeSelector = ({
 ModuleTableRowSizeSelector.Sizes = [{
     value: TableRowSize.COMFORTABLE,
     text: 'Comfortable',
-    iconCls: 'fas fa-align-left'
+    iconCls: 'fas fa-align-justify'
 }, {
     value: TableRowSize.DEFAULT,
     text: 'Default',
-    iconCls: 'far fa-align-left'
+    iconCls: 'far fa-align-justify'
 }, {
     value: TableRowSize.COMPACT,
     text: 'Compact',
-    iconCls: 'fal fa-align-left'
+    iconCls: 'fal fa-align-justify'
 }];
 
 ModuleTableRowSizeSelector.propTypes = {

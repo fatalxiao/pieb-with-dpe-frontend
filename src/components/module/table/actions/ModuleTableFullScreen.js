@@ -29,7 +29,7 @@ const ModuleTableFullScreen = ({
         ]);
 
     return (
-        <Action iconCls={`fal fa-${isFullScreen ? 'compress' : 'expand'}`}
+        <Action iconCls={`far fa-${isFullScreen ? 'compress' : 'expand'}`}
                 tip={isFullScreen ? 'Exit fullscreen' : 'Fullscreen'}
                 onClick={toggle}/>
     );

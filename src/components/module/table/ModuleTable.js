@@ -121,7 +121,7 @@ class ModuleTable extends Component {
     getColumns = (columns, tableProps) => {
 
         // 在 ModuleTableColumnsSelector 中勾选的列配置
-        const {userProfile, name, activatedColumns} = this.props,
+        const {name, activatedColumns} = this.props,
             {footData} = tableProps,
 
             // 根据当前需要显示的 activatedColumns 配置，mapping 出最终真实显示的 columns
@@ -271,7 +271,7 @@ class ModuleTable extends Component {
      */
     handleFrozenChange = frozenColumns => {
 
-        const {name, userProfile} = this.props;
+        const {name} = this.props;
 
         if (!name) {
             return;
@@ -288,7 +288,7 @@ class ModuleTable extends Component {
      */
     handleColumnsWidthChange = debounce((resizingColumn, width) => {
 
-        const {name, userProfile} = this.props;
+        const {name} = this.props;
 
         if (!resizingColumn?.value || !name) {
             return;
@@ -414,7 +414,7 @@ ModuleTable.propTypes = {
      */
     rowSize: PropTypes.oneOf(enumerateValue(TableRowSize)),
 
-    autoFitHeight: PropTypes.bool
+    isUsingHeadMenu: PropTypes.bool
 
 };
 
@@ -423,8 +423,7 @@ ModuleTable.defaultProps = {
     rowSize: TableRowSize.DEFAULT,
 
     hasFinishedLoading: false,
-
-    autoFitHeight: true
+    isUsingHeadMenu: true
 
 };
 

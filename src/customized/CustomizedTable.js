@@ -1,7 +1,5 @@
 /**
  * @file CustomizedTable.js
- *
- * Click 中的自定义 Table 组件
  */
 
 import React, {Component, createRef} from 'react';
@@ -322,10 +320,12 @@ class CustomizedTable extends Component {
                 paginationPageVisible, paginationPageSizeVisible, isHorizontalScroll,
 
                 // not passing down these props
+                /* eslint-disable no-unused-vars */
                 freezeType, frozenColumns,
                 isHeadMenuSortingAscDisabled, isHeadMenuSortingDescDisabled,
                 isHeadMenuFreezeColumnDisabled, isHeadMenuFilterDisabled,
                 onFrozenChange, onRequestColumnFilter, onActivatedColumnsChange,
+                /* eslint-enable no-unused-vars */
 
                 ...restProps
 
@@ -468,9 +468,9 @@ CustomizedTable.defaultProps = {
 
     columnKeyField: 'value',
 
-    sortingAscIconCls: 'dsicon dsicon-arrow-up-sd',
-    sortingDescIconCls: 'dsicon dsicon-arrow-down-sd',
-    expandIconCls: 'dsicon dsicon-arrow-down',
+    sortingAscIconCls: 'fas fa-caret-up',
+    sortingDescIconCls: 'fas fa-caret-down',
+    expandIconCls: 'fal fa-chevron-down',
 
     selectColumn: {
         width: 48
@@ -498,9 +498,9 @@ CustomizedTable.defaultProps = {
             :
             `Total ${total} items, current ${total > 0 ? page * pageSize + 1 : 0} - ${(page + 1) * pageSize}`,
     useFullPagination: true,
-    paginationPageSizeRightIconCls: 'dsicon dsicon-arrow-down',
-    paginationPrevIconCls: 'dsicon dsicon-arrow-left',
-    paginationNextIconCls: 'dsicon dsicon-arrow-right',
+    paginationPageSizeRightIconCls: 'fal fa-chevron-down',
+    paginationPrevIconCls: 'fal fa-chevron-left',
+    paginationNextIconCls: 'fal fa-chevron-right',
 
     noDataText: 'No data found.',
 

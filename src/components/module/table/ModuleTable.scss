@@ -1,6 +1,7 @@
 /**
  * @file ModuleTable.scss
  */
+
 @import 'scss/common.scss';
 
 .module-table-wrapper {
@@ -20,8 +21,7 @@
             table {
                 thead tr th {
                     border: none;
-                    //background: linear-gradient(180deg, $theme-light-grey, $theme-dark-grey) !important;
-                    filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr=#fafafa, endColorStr=#f4f4f4) !important;
+                    background: #f1f3f6 !important;
                     white-space: pre-wrap;
 
                     .th-column {
@@ -30,6 +30,7 @@
                         font-weight: 600;
                         color: $theme-table-head;
                         text-align: inherit;
+                        border: none;
 
                         .table-head .table-head-content {
                             white-space: normal;
@@ -54,19 +55,48 @@
                         }
                     }
 
-                    &:hover {
-                        background: linear-gradient(180deg, $theme-dark-grey, $theme-light-grey) !important;
-                        filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr=#f4f4f4, endColorStr=#fafafa) !important;
+                    &:first-child {
+                        border-top-left-radius: 8px;
+                        border-bottom-left-radius: 8px;
                     }
+
+                    &:last-child {
+                        border-top-right-radius: 8px;
+                        border-bottom-right-radius: 8px;
+                    }
+
+                    //&:hover {
+                    //    background: linear-gradient(180deg, $theme-dark-grey, $theme-light-grey) !important;
+                    //}
                 }
 
-                tbody tr td {
-                    border: none;
-                    border-bottom: 1px solid $theme-border;
+                tbody tr {
+                    td {
+                        border: none;
+                        background: transparent !important;
 
-                    .td-column {
-                        height: 48px;
-                        line-height: 48px;
+                        .td-column {
+                            height: 48px;
+                            line-height: 48px;
+                        }
+
+                        &:first-child {
+                            border-top-left-radius: 8px;
+                            border-bottom-left-radius: 8px;
+                        }
+
+                        &:last-child {
+                            border-top-right-radius: 8px;
+                            border-bottom-right-radius: 8px;
+                        }
+                    }
+
+                    &:nth-child(even) {
+                        background: #fafbfc;
+                    }
+
+                    &:hover {
+                        background: #ebeef2;
                     }
                 }
 
@@ -124,11 +154,33 @@
 
         & ~ .pagination,
         .pagination {
-            padding-top: 16px;
+            padding: 16px 8px 0;
 
             .pagination-total {
-                font-weight: 600;
+                line-height: 32px;
+                font-size: 16px;
                 color: $theme-label;
+            }
+
+            .pagination-size-select {
+                width: 120px;
+                height: 32px;
+
+                .dropdown-trigger {
+                    height: 32px;
+                }
+            }
+
+            .pagination-page {
+                .ctrl {
+                    min-width: 32px;
+                    height: 32px;
+                }
+
+                .page {
+                    min-width: 32px;
+                    height: 32px;
+                }
             }
         }
 

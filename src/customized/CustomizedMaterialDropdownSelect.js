@@ -17,6 +17,7 @@ const CustomizedMaterialDropdownSelect = (props) => (
 CustomizedMaterialDropdownSelect.defaultProps = {
 
     theme: Theme.HIGHLIGHT,
+    rightIconCls: 'fal fa-chevron-down',
 
     isLabelAnimate: false
 
