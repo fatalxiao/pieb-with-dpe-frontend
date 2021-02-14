@@ -24,9 +24,9 @@ import debounce from 'lodash/debounce';
 import './PatientListTable.scss';
 
 const PatientListTable = ({
-    groupList, data,
-    updatePatientName, updatePatientGroup, enablePatient, disablePatient
-}) => {
+                              groupList, data,
+                              updatePatientName, updatePatientGroup, enablePatient, disablePatient
+                          }) => {
 
     // data 为空时显示 no patient
     if (!data || data.length < 1) {
@@ -110,6 +110,7 @@ const PatientListTable = ({
         }, {
             key: 'status',
             headRenderer: 'Status',
+            bodyClassName: 'status-td',
             bodyRenderer: rowData =>
                 <Switcher value={rowData.status === 1}
                           size={Switcher.Size.SMALL}

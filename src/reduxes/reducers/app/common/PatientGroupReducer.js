@@ -8,6 +8,7 @@ const initialState = {
     list: []
 };
 
+// eslint-disable-next-line require-jsdoc
 function patientGroup(state = initialState, action) {
     switch (action.type) {
 

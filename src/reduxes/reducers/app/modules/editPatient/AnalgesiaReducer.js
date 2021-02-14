@@ -30,7 +30,7 @@ const
      * 默认的时间节点
      * @type {number[]}
      */
-    DEFAULT_TIMEPOINTS = [
+    DEFAULT_TIME_POINTS = [
         0, 2, 4, 6, 8, 10, 12, 14, 16, 18,
         20, 30, 2 * 60, 3.5 * 60, 5 * 60, 6.5 * 60, 8 * 60
     ];
@@ -40,7 +40,7 @@ const
  * @param timePoints
  * @returns {({thoracicSensoryBlockLeft: null, bromageScore: string, fetalHeartRate: string, sacralSensoryBlockRight: null, heartRate: string, thoracicSensoryBlockRight: null, sacralSensoryBlockLeft: null, diastolicBloodPressure: string, systolicBloodPressure: string, vasScore: string}&{timePoint: number})[]}
  */
-function getDefaultData(timePoints = DEFAULT_TIMEPOINTS) {
+function getDefaultData(timePoints = DEFAULT_TIME_POINTS) {
     return timePoints.map(timePoint => ({
         ...BASE_DATA,
         timePoint
@@ -58,6 +58,7 @@ const initialState = {
 
 };
 
+// eslint-disable-next-line complexity,require-jsdoc
 function analgesia(state = initialState, action) {
     switch (action.type) {
 
@@ -146,7 +147,7 @@ function analgesia(state = initialState, action) {
                         Object.assign(item, resItem);
                     } else {
 
-                        let timePoint = DEFAULT_TIMEPOINTS[DEFAULT_TIMEPOINTS.length - 1];
+                        let timePoint = DEFAULT_TIME_POINTS[DEFAULT_TIME_POINTS.length - 1];
 
                         while (timePoint < resItem.timePoint) {
 
@@ -155,11 +156,13 @@ function analgesia(state = initialState, action) {
                             if (timePoint >= resItem.timePoint) {
                                 data.push(Object.assign({...BASE_DATA, timePoint}, resItem));
                             } else {
-                                const i = data.findIndex(a => a.timePoint === timePoint);
+                                // eslint-disable-next-line no-loop-func
+                                const i = data.findIndex(a => a?.timePoint === timePoint);
                                 if (i < 0) {
                                     data.push({...BASE_DATA, timePoint});
                                 }
                             }
+
                         }
                     }
                 }

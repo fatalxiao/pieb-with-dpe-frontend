@@ -9,6 +9,12 @@
 
 .patient-list-table {
 
+    .td-column {
+        display: flex !important;
+        align-items: center;
+        overflow: visible !important;
+    }
+
     .id-link {
         color: $theme-field;
         text-decoration: none !important;
@@ -17,6 +23,10 @@
             color: $theme-highlight;
             text-decoration: underline !important;
         }
+    }
+
+    .material-provider-field {
+        line-height: 40px;
     }
 
     .name-field {

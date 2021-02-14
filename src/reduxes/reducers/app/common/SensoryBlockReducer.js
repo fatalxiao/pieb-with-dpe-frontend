@@ -10,6 +10,7 @@ const initialState = {
     sacralList: []
 };
 
+// eslint-disable-next-line require-jsdoc
 function sensoryBlock(state = initialState, action) {
     switch (action.type) {
 

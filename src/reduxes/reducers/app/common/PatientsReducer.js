@@ -18,6 +18,7 @@ const initialState = {
 
 };
 
+// eslint-disable-next-line complexity,require-jsdoc
 function patients(state = initialState, action) {
     switch (action.type) {
 
