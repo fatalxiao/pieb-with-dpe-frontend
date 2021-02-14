@@ -7,11 +7,11 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import * as actions from 'reduxes/actions/index';
+import * as actions from 'reduxes/actions';
 
 // Components
-import Table from 'alcedo-ui/Table';
-import Checkbox from 'alcedo-ui/Checkbox';
+import ModuleTableCard from 'components/module/table/ModuleTableCard';
+import Table from 'customized/CustomizedTable';
 import TextField from 'customized/CustomizedMaterialTextField';
 import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
 
@@ -66,7 +66,7 @@ const AnalgesiaTable = ({
                            onChange={v => updateField(rowData.timePoint, 'vasScore', v)}/>
         }, {
             key: 'thoracicSensoryBlock',
-            width: 200,
+            width: 166,
             noWrap: true,
             headRenderer: 'TSB',
             bodyRenderer: rowData =>
@@ -86,7 +86,7 @@ const AnalgesiaTable = ({
                 </div>
         }, {
             key: 'sacralSensoryBlock',
-            width: 200,
+            width: 166,
             noWrap: true,
             headRenderer: 'SSB',
             bodyRenderer: rowData =>
@@ -140,13 +140,14 @@ const AnalgesiaTable = ({
         ]);
 
     return (
-        <div className="analgesia-data-table-scroller">
+        <ModuleTableCard className="analgesia-data-table-card"
+                         hasFinishedLoading={true}>
             <Table className="analgesia-data-table"
                    columns={columns}
                    data={analgesiaData}
                    idField="timePoint"
                    isPaginated={false}/>
-        </div>
+        </ModuleTableCard>
     );
 
 };

@@ -36,9 +36,9 @@ export function getDerivedColumns(props, state) {
 
     return props.columns.map(column => {
 
-        const index = state.columns.findIndex(col => col?.value === column?.value);
+        const index = state.columns.findIndex(col => col?.key === column?.key);
 
-        if (index < 0 || state.columns[index]?.width == undefined) {
+        if (index < 0 || state.columns[index]?.width === undefined || state.columns[index]?.width === null) {
             return column;
         }
 

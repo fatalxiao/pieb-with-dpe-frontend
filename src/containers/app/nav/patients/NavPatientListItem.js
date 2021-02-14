@@ -20,10 +20,6 @@ const NavPatientListItem = ({
     routerPush
 }) => {
 
-    if (!patient) {
-        return null;
-    }
-
     const
 
         /**
@@ -44,15 +40,15 @@ const NavPatientListItem = ({
          * @type {function(): *}
          */
         handleClick = useCallback(() =>
-                routerPush(`/app/patient/info/${patientId}`),
-            [patientId, routerPush]
-        );
+            routerPush(`/app/patient/info/${patientId}`), [
+            patientId, routerPush
+        ]);
 
-    return (
+    return patient ?
         <FlatButton className="nav-patient-list-item"
                     onClick={handleClick}>
 
-            <div className="patient-info">
+            <div className="nav-patient-list-patient-info">
                 <span className="patient-name">
                     {patient.name}
                 </span>
@@ -63,7 +59,8 @@ const NavPatientListItem = ({
             </div>
 
         </FlatButton>
-    );
+        :
+        null;
 
 };
 

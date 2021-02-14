@@ -86,7 +86,7 @@ const AnalgesiaData = ({
                         <AnchorButton className="append-time-point-button"
                                       value="Append Time Point"
                                       onClick={appendTimePoint}>
-                            <i className="icon-chevron-thin-down down-icon"></i>
+                            <i className="fal fa-chevron-down down-icon"/>
                         </AnchorButton>
                         <StepAction onPrev={prevStep}
                                     onNext={save}/>

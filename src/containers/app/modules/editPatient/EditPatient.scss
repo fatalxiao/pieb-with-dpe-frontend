@@ -28,12 +28,13 @@
     }
 
     .edit-patient-content {
+        position: relative;
         flex: 1;
         padding: 24px;
         overflow: hidden;
 
         .edit-patient-content-title {
-            margin-bottom: 64px;
+            margin-bottom: 0;
         }
     }
 }

@@ -1,10 +1,15 @@
 /**
  * @file PointStep.scss
  */
+
 @import '../common.scss';
 
 .point-step {
     .round {
         cursor: default !important;
+    }
+
+    .bg-round {
+        background: $theme-bg !important;
     }
 }

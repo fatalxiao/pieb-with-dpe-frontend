@@ -27,7 +27,7 @@ const StepAction = ({
                 :
                 <FlatButton className="previous-button"
                             value="Previous"
-                            iconCls="icon-back"
+                            iconCls="fal fa-arrow-left"
                             onClick={onPrev}/>
         }
 

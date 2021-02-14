@@ -106,7 +106,7 @@ class TableHead extends Component {
         const {
             column,
             isHeadMenuSortingAscDisabled, isHeadMenuSortingDescDisabled,
-            isHeadMenuFreezeColumnDisabled, isHeadMenuFilterDisabled
+            isHeadMenuFreezeColumnDisabled
         } = this.props;
 
         if (!column) {
@@ -115,13 +115,12 @@ class TableHead extends Component {
 
         const {
             sortable, isSortingAscDisabled, isSortingDescDisabled,
-            isFreezeColumnDisabled, isFilterDisabled
+            isFreezeColumnDisabled
         } = column;
 
         return (sortable && !isHeadMenuSortingAscDisabled && !isSortingAscDisabled)
             || (sortable && !isHeadMenuSortingDescDisabled && !isSortingDescDisabled)
-            || (!isHeadMenuFreezeColumnDisabled && !isFreezeColumnDisabled)
-            || (!isHeadMenuFilterDisabled && !isFilterDisabled);
+            || (!isHeadMenuFreezeColumnDisabled && !isFreezeColumnDisabled);
 
     };
 
@@ -129,9 +128,8 @@ class TableHead extends Component {
 
         const {
             column, index, isSortingActivated, sorting, isFrozen, shouldFollowScroll, scrollEl,
-            isHeadMenuSortingAscDisabled, isHeadMenuSortingDescDisabled,
-            isHeadMenuFreezeColumnDisabled, isHeadMenuFilterDisabled,
-            onSortChange, onFrozenChange, onRequestColumnFilter
+            isHeadMenuSortingAscDisabled, isHeadMenuSortingDescDisabled, isHeadMenuFreezeColumnDisabled,
+            onSortChange, onFrozenChange
         } = this.props;
 
         if (!column) {
@@ -194,14 +192,12 @@ class TableHead extends Component {
                                        isHeadMenuSortingAscDisabled={isHeadMenuSortingAscDisabled}
                                        isHeadMenuSortingDescDisabled={isHeadMenuSortingDescDisabled}
                                        isHeadMenuFreezeColumnDisabled={isHeadMenuFreezeColumnDisabled}
-                                       isHeadMenuFilterDisabled={isHeadMenuFilterDisabled}
                                        shouldFollowScroll={shouldFollowScroll}
                                        scrollEl={scrollEl}
                                        onRequestOpen={this.handleRequestOpen}
                                        onRequestClose={this.handleRequestClose}
                                        onSortChange={onSortChange}
-                                       onFrozenChange={onFrozenChange}
-                                       onRequestColumnFilter={onRequestColumnFilter}/>
+                                       onFrozenChange={onFrozenChange}/>
                         :
                         null
                 }
@@ -216,7 +212,7 @@ TableHead.propTypes = {
 
     column: PropTypes.shape({
 
-        value: PropTypes.any,
+        key: PropTypes.any,
 
         width: PropTypes.number,
 
@@ -245,12 +241,7 @@ TableHead.propTypes = {
         /**
          * isUsingHeadMenu = true 时，是否隐藏 "Freeze" / "Unfreeze" 下拉菜单
          */
-        isFreezeColumnDisabled: PropTypes.bool,
-
-        /**
-         * isUsingHeadMenu = true 时，是否隐藏 "Add filter" / "Edit filter" 下拉菜单
-         */
-        isFilterDisabled: PropTypes.bool
+        isFreezeColumnDisabled: PropTypes.bool
 
     }),
     index: PropTypes.number,
@@ -286,17 +277,11 @@ TableHead.propTypes = {
      */
     isHeadMenuFreezeColumnDisabled: PropTypes.bool,
 
-    /**
-     * isUsingHeadMenu = true 时，是否隐藏所有列的 "Add filter" / "Edit filter" 下拉菜单
-     */
-    isHeadMenuFilterDisabled: PropTypes.bool,
-
     shouldFollowScroll: PropTypes.bool,
     scrollEl: PropTypes.object,
 
     onSortChange: PropTypes.func,
     onFrozenChange: PropTypes.func,
-    onRequestColumnFilter: PropTypes.func,
     onHeadMenuAvtivated: PropTypes.func,
     onHeadMenuDeavtivated: PropTypes.func
 
@@ -310,8 +295,7 @@ TableHead.defaultProps = {
 
     isHeadMenuSortingAscDisabled: false,
     isHeadMenuSortingDescDisabled: false,
-    isHeadMenuFreezeColumnDisabled: false,
-    isHeadMenuFilterDisabled: false
+    isHeadMenuFreezeColumnDisabled: false
 
 };
 

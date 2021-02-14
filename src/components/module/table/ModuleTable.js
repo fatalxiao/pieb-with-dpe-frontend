@@ -27,7 +27,7 @@ import './ModuleTable.scss';
 class ModuleTable extends Component {
 
     static SELECT_COLUMN_WIDTH = 48;
-    static MIN_COLUMN_WIDTH = 88;
+    static MIN_COLUMN_WIDTH = 48;
     static COLUMN_PADDING_WIDTH = 16; // 8px padding-left + 8px padding-right
     static COLUMN_SORTING_WIDTH = 20;
     static COLUMN_HEAD_MENU_WIDTH = 16;
@@ -84,8 +84,8 @@ class ModuleTable extends Component {
             return ModuleTable.MIN_COLUMN_WIDTH + ModuleTable.COLUMN_PADDING_WIDTH;
         }
 
-        if (column.value && columnsWidth && columnsWidth?.hasOwnProperty(column.value)) {
-            return columnsWidth[column.value];
+        if (column.key && columnsWidth && columnsWidth?.hasOwnProperty(column.key)) {
+            return columnsWidth[column.key];
         }
 
         const align = column.headAlign || column.align || Table.Align.LEFT;
@@ -131,12 +131,12 @@ class ModuleTable extends Component {
                     return false;
                 }
 
-                if (!activatedColumns || activatedColumns.length < 1 || column.value === 'Action') {
+                if (!activatedColumns || activatedColumns.length < 1 || column.key === 'Action') {
                     return true;
                 }
 
                 // 保留 activatedColumns 中的 column
-                return activatedColumns.find(activatedColumn => column.value === activatedColumn?.value);
+                return activatedColumns.find(activatedColumn => column.key === activatedColumn?.key);
 
             }) || [],
 
@@ -290,12 +290,12 @@ class ModuleTable extends Component {
 
         const {name} = this.props;
 
-        if (!resizingColumn?.value || !name) {
+        if (!resizingColumn?.key || !name) {
             return;
         }
 
         const columnsWidth = ResizableColumnsWidth.getConfig(name) || {};
-        columnsWidth[resizingColumn.value] = width;
+        columnsWidth[resizingColumn.key] = width;
 
         ResizableColumnsWidth.setConfig(name, columnsWidth);
 

@@ -40,14 +40,14 @@ class TableHeadMenu extends Component {
      * public
      */
     togglePop = () => {
-        this.menu && this.menu.current && this.menu.current.togglePop && this.menu.current.togglePop();
+        this.menu?.current?.togglePop?.();
     };
 
     /**
      * public
      */
     hidePop = () => {
-        this.menu && this.menu.current && this.menu.current.hidePop && this.menu.current.hidePop();
+        this.menu?.current?.hidePop?.();
     };
 
     /**
@@ -56,10 +56,7 @@ class TableHeadMenu extends Component {
     handleRequestOpen = () => {
         this.setState({
             activated: true
-        }, () => {
-            const {onRequestOpen} = this.props;
-            onRequestOpen && onRequestOpen();
-        });
+        }, () => this.props.onRequestOpen?.());
     };
 
     /**
@@ -68,10 +65,7 @@ class TableHeadMenu extends Component {
     handleRequestClose = () => {
         this.setState({
             activated: false
-        }, () => {
-            const {onRequestClose} = this.props;
-            onRequestClose && onRequestClose();
-        });
+        }, () => this.props.onRequestOpen?.());
     };
 
     /**
@@ -112,16 +106,8 @@ class TableHeadMenu extends Component {
      * @returns {any}
      */
     handleFreezeColumn = () => {
-        const {column, onFrozenChange} = this.props;
-        column && onFrozenChange && onFrozenChange(column);
-    };
-
-    /**
-     * 处理 column filter 点击
-     */
-    handleColumnFilter = () => {
-        const {column, index, onRequestColumnFilter} = this.props;
-        onRequestColumnFilter && onRequestColumnFilter(column, index);
+        const {column} = this.props;
+        column && this.props.onFrozenChange?.(column);
     };
 
     /**
@@ -138,11 +124,11 @@ class TableHeadMenu extends Component {
         const {
                 isFrozen,
                 isHeadMenuSortingAscDisabled, isHeadMenuSortingDescDisabled,
-                isHeadMenuFreezeColumnDisabled, isHeadMenuFilterDisabled
+                isHeadMenuFreezeColumnDisabled
             } = this.props,
             {
-                sortable, hasFilter,
-                isSortingAscDisabled, isSortingDescDisabled, isFreezeColumnDisabled, isFilterDisabled
+                sortable,
+                isSortingAscDisabled, isSortingDescDisabled, isFreezeColumnDisabled
             } = column,
             result = [];
 
@@ -167,14 +153,6 @@ class TableHeadMenu extends Component {
                 text: `${isFrozen ? 'Unfreeze' : 'Freeze'} column`,
                 iconCls: `dsicon ${isFrozen ? 'dsicon-pin' : 'dsicon-pin-fixed-sd'}`,
                 onClick: this.handleFreezeColumn
-            });
-        }
-
-        if (!isHeadMenuFilterDisabled && !isFilterDisabled) {
-            result.push({
-                text: `${hasFilter ? 'Edit' : 'Add'} filter`,
-                iconCls: 'dsicon dsicon-filter',
-                onClick: this.handleColumnFilter
             });
         }
 
@@ -213,7 +191,7 @@ TableHeadMenu.propTypes = {
 
     column: PropTypes.shape({
 
-        value: PropTypes.any,
+        key: PropTypes.any,
         headClassName: PropTypes.string,
         headRenderer: PropTypes.any,
         sortable: PropTypes.bool,
@@ -237,12 +215,7 @@ TableHeadMenu.propTypes = {
         /**
          * isUsingHeadMenu = true 时，是否隐藏 "Freeze" / "Unfreeze" 下拉菜单
          */
-        isFreezeColumnDisabled: PropTypes.bool,
-
-        /**
-         * isUsingHeadMenu = true 时，是否隐藏 "Add filter" / "Edit filter" 下拉菜单
-         */
-        isFilterDisabled: PropTypes.bool
+        isFreezeColumnDisabled: PropTypes.bool
 
     }),
     index: PropTypes.number,
@@ -264,19 +237,13 @@ TableHeadMenu.propTypes = {
      */
     isHeadMenuFreezeColumnDisabled: PropTypes.bool,
 
-    /**
-     * isUsingHeadMenu = true 时，是否隐藏所有列的 "Add filter" / "Edit filter" 下拉菜单
-     */
-    isHeadMenuFilterDisabled: PropTypes.bool,
-
     shouldFollowScroll: PropTypes.bool,
     scrollEl: PropTypes.object,
 
     onRequestOpen: PropTypes.func,
     onRequestClose: PropTypes.func,
     onSortChange: PropTypes.func,
-    onFrozenChange: PropTypes.func,
-    onRequestColumnFilter: PropTypes.func
+    onFrozenChange: PropTypes.func
 
 };
 
@@ -288,8 +255,7 @@ TableHeadMenu.defaultProps = {
 
     isHeadMenuSortingAscDisabled: false,
     isHeadMenuSortingDescDisabled: false,
-    isHeadMenuFreezeColumnDisabled: false,
-    isHeadMenuFilterDisabled: false
+    isHeadMenuFreezeColumnDisabled: false
 
 };
 

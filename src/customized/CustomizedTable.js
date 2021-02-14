@@ -40,7 +40,7 @@ class CustomizedTable extends Component {
 
             // 如果某个 frozenColumn 已经不在 columns 中的话，需要过滤
             frozenColumns: (ComponentUtil.getDerivedState(props, state, 'frozenColumns') || [])
-                .filter(frozenColumn => columns.findIndex(column => column?.value === frozenColumn) !== -1)
+                .filter(frozenColumn => columns.findIndex(column => column?.key === frozenColumn) !== -1)
 
         };
 
@@ -95,21 +95,21 @@ class CustomizedTable extends Component {
 
         // 类似于 Excel 中冻结效果的模式，选中某列冻结后，当前列及左侧的所有列都会向左冻结
         if (freezeType === FreezeType.FREEZE_LEFT) {
-            if (column.value === frozenColumns[0]) {
+            if (column.key === frozenColumns[0]) {
                 frozenColumns = [];
             } else {
                 // 冻结的列为当前列及左侧的所有列，但仅记录最右侧列
-                frozenColumns = [column.value];
+                frozenColumns = [column.key];
             }
         }
         // 默认为自由冻结模式（FREE_FREEZE），可以选中某列向左或向右固定
         else {
 
-            const index = frozenColumns.findIndex(item => item === column.value);
+            const index = frozenColumns.findIndex(item => item === column.key);
 
             // 冻结列
             if (index < 0) {
-                frozenColumns.push(column.value);
+                frozenColumns.push(column.key);
             }
             // 移除冻结
             else {
@@ -160,12 +160,12 @@ class CustomizedTable extends Component {
 
         // FREE FREEZE
         if (freezeType === FreezeType.FREE_FREEZE) {
-            return frozenColumns.findIndex(frozenColumn => frozenColumn === column.value) !== -1;
+            return frozenColumns.findIndex(frozenColumn => frozenColumn === column.key) !== -1;
         }
 
         // FREEZE LEFT
-        const columnIndex = columns.findIndex(col => col?.value === column.value),
-            frozenColumnIndex = columns.findIndex(col => col?.value === frozenColumns[0]);
+        const columnIndex = columns.findIndex(col => col?.key === column.key),
+            frozenColumnIndex = columns.findIndex(col => col?.key === frozenColumns[0]);
 
         return columnIndex !== -1 && columnIndex <= frozenColumnIndex;
 
@@ -191,7 +191,7 @@ class CustomizedTable extends Component {
             return false;
         }
 
-        const index = frozenColumns.findIndex(frozenColumn => frozenColumn === column.value);
+        const index = frozenColumns.findIndex(frozenColumn => frozenColumn === column.key);
 
         if (index === -1) {
             return false;
@@ -211,8 +211,8 @@ class CustomizedTable extends Component {
         const {
                 sorting,
                 isHeadMenuSortingAscDisabled, isHeadMenuSortingDescDisabled,
-                isHeadMenuFreezeColumnDisabled, isHeadMenuFilterDisabled,
-                onSortChange, onRequestColumnFilter
+                isHeadMenuFreezeColumnDisabled,
+                onSortChange
             } = this.props,
             {avtivatedHeadMenuColumnIndex} = this.state;
 
@@ -248,12 +248,10 @@ class CustomizedTable extends Component {
                                    isHeadMenuSortingAscDisabled={isHeadMenuSortingAscDisabled}
                                    isHeadMenuSortingDescDisabled={isHeadMenuSortingDescDisabled}
                                    isHeadMenuFreezeColumnDisabled={isHeadMenuFreezeColumnDisabled}
-                                   isHeadMenuFilterDisabled={isHeadMenuFilterDisabled}
                                    shouldFollowScroll={true}
                                    scrollEl={scrollEl}
                                    onSortChange={onSortChange}
                                    onFrozenChange={this.handleFrozenChange}
-                                   onRequestColumnFilter={onRequestColumnFilter}
                                    onHeadMenuAvtivated={this.handleHeadMenuAvtivated}
                                    onHeadMenuDeavtivated={this.handleHeadMenuDeavtivated}/>,
                     bodyClassName: classNames({
@@ -294,7 +292,7 @@ class CustomizedTable extends Component {
         }
 
         const {columns} = this.state,
-            index = columns.findIndex(column => column?.value === resizingColumn?.value);
+            index = columns.findIndex(column => column?.key === resizingColumn?.key);
 
         if (index < 0) {
             return;
@@ -323,8 +321,8 @@ class CustomizedTable extends Component {
                 /* eslint-disable no-unused-vars */
                 freezeType, frozenColumns,
                 isHeadMenuSortingAscDisabled, isHeadMenuSortingDescDisabled,
-                isHeadMenuFreezeColumnDisabled, isHeadMenuFilterDisabled,
-                onFrozenChange, onRequestColumnFilter, onActivatedColumnsChange,
+                isHeadMenuFreezeColumnDisabled,
+                onFrozenChange, onActivatedColumnsChange,
                 /* eslint-enable no-unused-vars */
 
                 ...restProps
@@ -364,7 +362,7 @@ CustomizedTable.propTypes = {
 
     columns: PropTypes.arrayOf(PropTypes.shape({
 
-        value: PropTypes.any,
+        key: PropTypes.any,
         headClassName: PropTypes.string,
         headRenderer: PropTypes.any,
         headTitle: PropTypes.string,
@@ -389,15 +387,9 @@ CustomizedTable.propTypes = {
         /**
          * isUsingHeadMenu = true 时，是否隐藏 "Freeze" / "Unfreeze" 下拉菜单
          */
-        isFreezeColumnDisabled: PropTypes.bool,
-
-        /**
-         * isUsingHeadMenu = true 时，是否隐藏 "Add filter" / "Edit filter" 下拉菜单
-         */
-        isFilterDisabled: PropTypes.bool
+        isFreezeColumnDisabled: PropTypes.bool
 
     })),
-    columnKeyField: PropTypes.string,
     data: PropTypes.array,
     isPaginated: PropTypes.bool,
     noDataText: PropTypes.string,
@@ -440,11 +432,6 @@ CustomizedTable.propTypes = {
     isHeadMenuFreezeColumnDisabled: PropTypes.bool,
 
     /**
-     * isUsingHeadMenu = true 时，是否隐藏所有列的 "Add filter" / "Edit filter" 下拉菜单
-     */
-    isHeadMenuFilterDisabled: PropTypes.bool,
-
-    /**
      * isUsingHeadMenu = true 时，freeze 的交互类型
      */
     freezeType: PropTypes.oneOf(enumerateValue(FreezeType)),
@@ -457,7 +444,6 @@ CustomizedTable.propTypes = {
     onScrollStart: PropTypes.func,
     onScrollEnd: PropTypes.func,
     onSortChange: PropTypes.func,
-    onRequestColumnFilter: PropTypes.func,
     onFrozenChange: PropTypes.func,
     onColumnsWidthChange: PropTypes.func,
     onActivatedColumnsChange: PropTypes.func
@@ -465,8 +451,6 @@ CustomizedTable.propTypes = {
 };
 
 CustomizedTable.defaultProps = {
-
-    columnKeyField: 'value',
 
     sortingAscIconCls: 'fas fa-caret-up',
     sortingDescIconCls: 'fas fa-caret-down',
@@ -504,21 +488,20 @@ CustomizedTable.defaultProps = {
 
     noDataText: 'No data found.',
 
-    isLayoutFixed: false,
+    isLayoutFixed: true,
     isHorizontalScroll: true,
 
-    isUsingHeadMenu: false,
+    isUsingHeadMenu: true,
     isHeadMenuSortingAscDisabled: false,
     isHeadMenuSortingDescDisabled: false,
     isHeadMenuFreezeColumnDisabled: false,
-    isHeadMenuFilterDisabled: false,
     freezeType: FreezeType.FREE_FREEZE,
     frozenColumns: [],
 
     disableScrollingRender: false,
 
-    defaultColumnWidth: 152,
-    minColumnWidth: 120
+    defaultColumnWidth: 88,
+    minColumnWidth: 48
 
 };
 

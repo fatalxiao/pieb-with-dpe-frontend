@@ -15,6 +15,9 @@ import ModuleLoading from 'components/module/loading/ModuleLoading';
 import PatientForm from './PatientForm';
 import StepAction from 'components/StepAction';
 
+// Styles
+import './PatientInfo.scss';
+
 const PatientInfo = ({
     match, getActionType,
     updatePatientStep, getPatientInfo, updatePatientInfo, routerPush

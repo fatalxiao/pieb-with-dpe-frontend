@@ -1,10 +1,15 @@
 /**
  * @file AnalgesiaTable.scss
  */
+
 @import 'scss/common.scss';
 
-.analgesia-data-table-scroller {
-    overflow-x: auto;
+.analgesia-data-table-card {
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
 
     .analgesia-data-table {
 
