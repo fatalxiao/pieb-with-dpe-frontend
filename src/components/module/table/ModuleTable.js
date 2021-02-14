@@ -27,7 +27,7 @@ import './ModuleTable.scss';
 class ModuleTable extends Component {
 
     static SELECT_COLUMN_WIDTH = 48;
-    static MIN_COLUMN_WIDTH = 48;
+    static MIN_COLUMN_WIDTH = 88;
     static COLUMN_PADDING_WIDTH = 16; // 8px padding-left + 8px padding-right
     static COLUMN_SORTING_WIDTH = 20;
     static COLUMN_HEAD_MENU_WIDTH = 16;

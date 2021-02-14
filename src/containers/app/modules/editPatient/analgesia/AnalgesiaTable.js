@@ -53,6 +53,7 @@ const AnalgesiaTable = ({
          */
         columns = useMemo(() => [{
             key: 'timePoint',
+            width: 48,
             headRenderer: 'Time',
             bodyRenderer: rowData => rowData.timePoint <= 60 ?
                 `${rowData.timePoint} min`
@@ -124,7 +125,7 @@ const AnalgesiaTable = ({
                            onChange={v => updateField(rowData.timePoint, 'diastolicBloodPressure', v)}/>
         }, {
             key: 'heartRate',
-            headRenderer: 'Heart Rate',
+            headRenderer: 'HR',
             bodyRenderer: rowData =>
                 <TextField value={formatString(rowData.heartRate)}
                            onChange={v => updateField(rowData.timePoint, 'heartRate', v)}/>

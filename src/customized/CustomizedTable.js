@@ -500,8 +500,8 @@ CustomizedTable.defaultProps = {
 
     disableScrollingRender: false,
 
-    defaultColumnWidth: 88,
-    minColumnWidth: 48
+    defaultColumnWidth: 120,
+    minColumnWidth: 72
 
 };
 
