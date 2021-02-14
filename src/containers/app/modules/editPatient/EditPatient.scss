@@ -1,13 +1,17 @@
 /**
  * @file EditPatient.scss
  */
+
 @import 'scss/common.scss';
 
 .edit-patient {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
 
     .edit-patient-stepper {
-        margin-bottom: 56px;
+        margin-bottom: 16px;
     }
 
     .edit-patient-base-info {
@@ -24,6 +28,8 @@
     }
 
     .edit-patient-content {
+        flex: 1;
+        padding: 24px;
         overflow: hidden;
 
         .edit-patient-content-title {

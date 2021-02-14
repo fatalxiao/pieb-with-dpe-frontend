@@ -13,6 +13,7 @@ import * as actions from 'reduxes/actions/index';
 // Components
 import {Redirect} from 'react-router-dom';
 import PointStep from 'alcedo-ui/PointStep';
+import ModuleCard from 'components/module/ModuleCard';
 
 // Styles
 import './EditPatient.scss';
@@ -41,7 +42,7 @@ const EditPatient = ({
                        finishedStep={steps?.length - 1}
                        onChange={handleStepChange}/>
 
-            <div className="edit-patient-content">
+            <ModuleCard className="edit-patient-content">
 
                 {
                     form?.name ?
@@ -75,7 +76,7 @@ const EditPatient = ({
                         null
                 }
 
-            </div>
+            </ModuleCard>
 
         </div>
     );
@@ -83,6 +84,8 @@ const EditPatient = ({
 };
 
 EditPatient.propTypes = {
+
+    route: PropTypes.object,
 
     form: PropTypes.object,
     steps: PropTypes.array,

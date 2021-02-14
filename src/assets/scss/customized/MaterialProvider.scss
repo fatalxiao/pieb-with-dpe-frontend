@@ -8,7 +8,7 @@
 
     .material-provider-label {
         display: inline-block;
-        color: $theme-label;
+        color: $theme-label !important;
         height: 16px;
         font-size: 16px;
         margin-bottom: 8px;
@@ -20,7 +20,7 @@
 
     &[disabled] {
         .material-provider-label {
-            color: $theme-label-disabled;
+            color: $theme-label-disabled !important;
         }
     }
 }
