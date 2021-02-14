@@ -87,12 +87,12 @@ const PatientForm = ({
                                label="Heart Rate"
                                value={formatString(form.heartRate)}
                                onChange={value => updateField('heartRate', value)}/>
-                </div>
-                <div className="row">
                     <TextField className="col-3"
                                label="Initial Vas Score"
                                value={formatString(form.initialVasScore)}
                                onChange={value => updateField('initialVasScore', value)}/>
+                </div>
+                <div className="row">
                     <TextField className="col-3"
                                label="Systolic Blood Pressure"
                                value={formatString(form.systolicBloodPressure)}
@@ -101,8 +101,6 @@ const PatientForm = ({
                                label="Diastolic Blood Pressure"
                                value={formatString(form.diastolicBloodPressure)}
                                onChange={value => updateField('diastolicBloodPressure', value)}/>
-                </div>
-                <div className="row">
                     <TextField className="col-3"
                                label="Fetal Heart Rate"
                                value={formatString(form.fetalHeartRate)}
@@ -111,17 +109,17 @@ const PatientForm = ({
                                label="Pulse Oxygen Saturation"
                                value={formatString(form.pulseOxygenSaturation)}
                                onChange={value => updateField('pulseOxygenSaturation', value)}/>
-                    <Checkbox className="col-6"
-                              label="Induction"
-                              checked={!!form.hasInduction}
-                              onChange={value => updateField('hasInduction', value)}/>
                 </div>
                 <div className="row">
                     <TextField className="col-6"
                                label="Cervical Dilation At Time Of EA"
                                value={formatString(form.cervicalDilationAtTimeOfEA)}
                                onChange={value => updateField('cervicalDilationAtTimeOfEA', value)}/>
-                    <Checkbox className="col-6"
+                    <Checkbox className="col-3"
+                              label="Induction"
+                              checked={!!form.hasInduction}
+                              onChange={value => updateField('hasInduction', value)}/>
+                    <Checkbox className="col-3"
                               label="Oxytocin At Time Of EA"
                               checked={!!form.hasOxytocinAtTimeOfEA}
                               onChange={value => updateField('hasOxytocinAtTimeOfEA', value)}/>
