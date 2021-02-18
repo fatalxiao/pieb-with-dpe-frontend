@@ -4,6 +4,11 @@
 
 const rootSymbol = 'root';
 
+/**
+ * 返回 sitemap
+ * @param state
+ * @returns {*}
+ */
 export function sitemap(state) {
     return {
         [rootSymbol]: true,
@@ -31,6 +36,12 @@ export function sitemap(state) {
     };
 }
 
+/**
+ * 根据 path name 获取 sitemap 的下钻路径
+ * @param pathName
+ * @param state
+ * @returns {[*]|*}
+ */
 export function getPath(pathName, state) {
 
     if (!pathName) {
@@ -41,7 +52,14 @@ export function getPath(pathName, state) {
 
 }
 
-export function traverseData(node, pathName) {
+/**
+ * 遍历 sitemap 树
+ * @param node
+ * @param pathName
+ * @param index
+ * @returns {[*]|*|*[]}
+ */
+export function traverseData(node, pathName, index) {
 
     if (!node || node.length < 1 || !pathName) {
         return;
@@ -73,7 +91,5 @@ export function traverseData(node, pathName) {
 
         }
     }
-
-    return;
 
 }

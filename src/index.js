@@ -45,7 +45,7 @@ renderAppContainer();
 /**
  * 开发环境时，添加热替换监听
  */
-if (process.env.NODE_ENV === 'development' && module.hot) {
+if (process.env.NODE_ENV === 'development' && module?.hot) {
     module.hot.accept('src/config.routes.js', renderAppContainer);
     module.hot.accept('reduxes/store', renderAppContainer);
     module.hot.accept('reduxes/reducers', () => {

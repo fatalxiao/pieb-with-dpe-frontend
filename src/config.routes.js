@@ -5,6 +5,11 @@
 // Components
 import ac from 'components/AsyncComponent';
 
+/**
+ * 返回 routes 配置
+ * @param store
+ * @returns {*}
+ */
 export function configureRoutes(store) {
     return [{
         path: '/',
