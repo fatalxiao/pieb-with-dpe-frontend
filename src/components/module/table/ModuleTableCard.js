@@ -30,6 +30,10 @@ const ModuleTableCard = forwardRef(({
 
     onFullScreenChange, onRowSizeChange,
 
+    // not passing down these props
+    // eslint-disable-next-line react/prop-types
+    dispatch,
+
     ...restProps
 
 }, cardRef) => {

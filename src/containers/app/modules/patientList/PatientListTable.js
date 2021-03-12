@@ -24,9 +24,9 @@ import debounce from 'lodash/debounce';
 import './PatientListTable.scss';
 
 const PatientListTable = ({
-                              groupList, data,
-                              updatePatientName, updatePatientGroup, enablePatient, disablePatient
-                          }) => {
+    groupList, data,
+    updatePatientName, updatePatientGroup, enablePatient, disablePatient
+}) => {
 
     // data 为空时显示 no patient
     if (!data || data.length < 1) {
@@ -127,7 +127,8 @@ const PatientListTable = ({
                          hasFinishedLoading={true}>
             <Table className="patient-list-table"
                    data={data}
-                   columns={columns}/>
+                   columns={columns}
+                   isFootHidden={true}/>
         </ModuleTableCard>
     );
 
