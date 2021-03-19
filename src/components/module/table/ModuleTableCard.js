@@ -22,7 +22,7 @@ import {enumerateValue} from 'vendors/Util';
 // Styles
 import './ModuleTableCard.scss';
 
-const ModuleTableCard = forwardRef(({
+const ModuleTableCard = ({
 
     name, children, className,
 
@@ -36,9 +36,14 @@ const ModuleTableCard = forwardRef(({
 
     ...restProps
 
-}, cardRef) => {
+}) => {
 
     const
+
+        /**
+         * card 的 reference
+         */
+        cardRef = useRef(),
 
         /**
          * table 的 reference
@@ -73,7 +78,9 @@ const ModuleTableCard = forwardRef(({
             if (nextCardEl) {
                 setCardEl(nextCardEl);
             }
-        }, [cardRef]),
+        }, [
+            cardRef
+        ]),
 
         /**
          * 处理 row size 的变更
@@ -81,12 +88,17 @@ const ModuleTableCard = forwardRef(({
         handleRowSizeChange = useCallback(nextRowSize => {
             setRowSize(nextRowSize);
             onRowSizeChange?.(nextRowSize);
-        }, [onRowSizeChange]);
+        }, [
+            onRowSizeChange
+        ]);
 
     /**
      * 初始化
      */
-    useEffect(() => updateCardEl(), [updateCardEl]);
+    useEffect(() =>
+        updateCardEl(), [
+        updateCardEl
+    ]);
 
     return (
         <Fragment>
@@ -129,7 +141,7 @@ const ModuleTableCard = forwardRef(({
         </Fragment>
     );
 
-});
+};
 
 ModuleTableCard.propTypes = {
 

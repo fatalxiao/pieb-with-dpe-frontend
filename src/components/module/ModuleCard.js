@@ -2,7 +2,7 @@
  * @file ModuleCard.js
  */
 
-import React from 'react';
+import React, {forwardRef} from 'react';
 import PropTypes from 'prop-types';
 
 // Components
@@ -14,15 +14,16 @@ import classNames from 'classnames';
 // Styles
 import './ModuleCard.scss';
 
-const ModuleCard = ({
+const ModuleCard = forwardRef(({
     className,
     ...restProps
-}) => (
+}, ref) => (
     <Paper {...restProps}
+           ref={ref}
            className={classNames('module-card', {
                [className]: className
            })}/>
-);
+));
 
 ModuleCard.propTypes = {
     className: PropTypes.string
