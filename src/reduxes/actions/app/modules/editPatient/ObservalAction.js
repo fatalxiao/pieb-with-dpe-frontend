@@ -10,13 +10,24 @@ import ObservalApi from 'apis/app/modules/patient/ObservalApi';
 /**
  * 格式化 observalData
  * @param observalData
- * @returns {function(): *&{observalEndPointId, epPlacementPointId}}
+ * @returns {*}
  */
-export const formatObservalData = observalData => () => ({
-    ...observalData,
-    observalEndPointId: observalData?.observalEndPoint?.id || null,
-    epPlacementPointId: observalData?.epPlacementPoint?.id || null
-});
+export const formatObservalData = observalData => () => {
+
+    if (!observalData) {
+        return null;
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    const {observalEndPoint, epPlacementPoint, ...restData} = observalData;
+
+    return {
+        ...restData,
+        observalEndPointId: observalData?.observalEndPoint?.id || null,
+        epPlacementPointId: observalData?.epPlacementPoint?.id || null
+    };
+
+};
 
 /**
  * 更新 Observal 数据的某个字段
