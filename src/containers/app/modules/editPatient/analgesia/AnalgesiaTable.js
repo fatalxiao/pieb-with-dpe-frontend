@@ -21,22 +21,32 @@ import {formatString} from 'vendors/Util';
 
 // Styles
 import './AnalgesiaTable.scss';
+import AnchorButton from 'alcedo-ui/AnchorButton';
 
 const AnalgesiaTable = ({
     patientId, thoracicList, sacralList, analgesiaData,
-    updateAnalgesiaDataField, createOrUpdateAnalgesiaData
+    appendTimePoint, updateAnalgesiaDataField, createOrUpdateAnalgesiaData
 }) => {
 
     const
 
         /**
-         * 提交到后端
-         * @type {debounced}
+         * 将 Analgesia 数据提交到后端
+         * @type {*}
          */
-        save = useCallback(debounce(() =>
-            patientId && createOrUpdateAnalgesiaData(patientId, undefined, true),
-            400
-        ), [patientId, createOrUpdateAnalgesiaData]),
+        save = useCallback(() =>
+            patientId && createOrUpdateAnalgesiaData(patientId, undefined, true), [
+            patientId,
+            createOrUpdateAnalgesiaData
+        ]),
+
+        /**
+         * 将 Analgesia 数据 debounce 提交到后端
+         */
+        debounceSave = useMemo(() =>
+            debounce(save, 400), [
+            save
+        ]),
 
         /**
          * 处理值变更
@@ -44,8 +54,10 @@ const AnalgesiaTable = ({
          */
         updateField = useCallback((timePoint, fieldName, fieldValue) => {
             updateAnalgesiaDataField?.(timePoint, fieldName, fieldValue);
-            setTimeout(() => save(), 0);
-        }, [updateAnalgesiaDataField, save]),
+            setTimeout(() => debounceSave(), 0);
+        }, [
+            updateAnalgesiaDataField, debounceSave
+        ]),
 
         /**
          * 所有 columns 的配置
@@ -143,11 +155,20 @@ const AnalgesiaTable = ({
     return (
         <ModuleTableCard className="analgesia-data-table-card"
                          hasFinishedLoading={true}>
+
             <Table className="analgesia-data-table"
                    columns={columns}
                    data={analgesiaData}
                    idField="timePoint"
-                   isPaginated={false}/>
+                   isPaginated={false}
+                   isFootHidden={true}/>
+
+            <AnchorButton className="append-time-point-button"
+                          value="Append Time Point"
+                          onClick={appendTimePoint}>
+                <i className="fal fa-chevron-down down-icon"/>
+            </AnchorButton>
+
         </ModuleTableCard>
     );
 
@@ -160,6 +181,7 @@ AnalgesiaTable.propTypes = {
     sacralList: PropTypes.array,
     analgesiaData: PropTypes.array,
 
+    appendTimePoint: PropTypes.func,
     updateAnalgesiaDataField: PropTypes.func,
     createOrUpdateAnalgesiaData: PropTypes.func
 
@@ -170,6 +192,7 @@ export default connect(state => ({
     sacralList: state.sensoryBlock.sacralList,
     analgesiaData: state.analgesia.data
 }), dispatch => bindActionCreators({
+    appendTimePoint: actions.appendTimePoint,
     updateAnalgesiaDataField: actions.updateAnalgesiaDataField,
     createOrUpdateAnalgesiaData: actions.createOrUpdateAnalgesiaData
 }, dispatch))(AnalgesiaTable);

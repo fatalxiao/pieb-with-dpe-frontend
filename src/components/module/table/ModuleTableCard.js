@@ -2,7 +2,7 @@
  * @file ModuleTableCard.js
  */
 
-import React, {Fragment, useRef, useState, useCallback, useEffect, forwardRef} from 'react';
+import React, {Fragment, Children, useRef, useState, useMemo, useCallback, useEffect, forwardRef} from 'react';
 import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
 import {connect} from 'react-redux';
@@ -56,6 +56,16 @@ const ModuleTableCard = forwardRef(({
         [rowSize, setRowSize] = useState(propsRowSize),
 
         /**
+         * 默认第一个为 table 组件，会传入 ModuleTable 作为 children
+         * 剩余其他的 children 放在 card 的最后渲染
+         * @type {Array<Exclude<React.ReactNode, boolean | null | undefined>>}
+         */
+        [tableChild, ...restChildren] = useMemo(() =>
+            Children.toArray(children), [
+            children
+        ]),
+
+        /**
          * 更新 card 的 element
          */
         updateCardEl = useCallback(() => {
@@ -94,6 +104,7 @@ const ModuleTableCard = forwardRef(({
                   ref={cardRef}
                   className={classNames('module-table-card', {
                       [className]: className,
+                      'not-full-screen': !isFullScreen,
                       'full-screen': isFullScreen
                   })}>
 
@@ -108,8 +119,10 @@ const ModuleTableCard = forwardRef(({
                        wrapperEl={cardEl}
                        rowSize={rowSize}
                        hasFinishedLoading={hasFinishedLoading}>
-                    {children}
+                    {tableChild}
                 </Table>
+
+                {restChildren}
 
             </Card>
 

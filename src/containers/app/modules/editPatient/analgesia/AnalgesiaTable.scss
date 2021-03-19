@@ -5,11 +5,6 @@
 @import 'scss/common.scss';
 
 .analgesia-data-table-card {
-    padding: 0 !important;
-    border: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    background: transparent !important;
 
     .analgesia-data-table {
 
@@ -33,5 +28,17 @@
         label {
             color: $theme-description;
         }
+    }
+
+    &.not-full-screen {
+        padding: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+
+    &.full-screen {
+        bottom: 20px !important;
     }
 }

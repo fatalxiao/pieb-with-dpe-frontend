@@ -28,32 +28,30 @@ const PatientListTable = ({
     updatePatientName, updatePatientGroup, enablePatient, disablePatient
 }) => {
 
-    // data 为空时显示 no patient
-    if (!data || data.length < 1) {
-        return (
-            <div className="no-patient-found">
-                No Patient Found
-            </div>
-        );
-    }
-
     const
 
         /**
          * 处理 patient name 的变更
          * @type {*}
          */
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-        handleNameChange = useCallback(debounce((id, value) =>
-            updatePatientName?.(id, value), 400), [
+        handleNameChange = useCallback((id, value) =>
+            updatePatientName?.(id, value), [
             updatePatientName
+        ]),
+
+        /**
+         * debounce 处理 patient name 的变更
+         * @type {*}
+         */
+        debounceHandleNameChange = useMemo(() =>
+            debounce(handleNameChange, 400), [
+            handleNameChange
         ]),
 
         /**
          * 处理 patient group 的变更
          * @type {function(*=, *=): *}
          */
-            // eslint-disable-next-line react-hooks/rules-of-hooks
         handleGroupChange = useCallback((id, value) =>
             updatePatientGroup?.(id, value), [
             updatePatientGroup
@@ -63,7 +61,6 @@ const PatientListTable = ({
          * 处理 patient status 的变更
          * @type {function(*=, *): *}
          */
-            // eslint-disable-next-line react-hooks/rules-of-hooks
         handleStatusChange = useCallback((id, value) => value ?
             enablePatient?.(id)
             :
@@ -75,7 +72,6 @@ const PatientListTable = ({
          * 所有 columns 的配置
          * @type {*[]}
          */
-            // eslint-disable-next-line react-hooks/rules-of-hooks
         columns = useMemo(() => [{
             key: 'id',
             headRenderer: 'ID',
@@ -92,7 +88,7 @@ const PatientListTable = ({
             bodyRenderer: rowData =>
                 <TextField className="hover-activated name-field"
                            value={rowData.name}
-                           onChange={value => handleNameChange(rowData.id, value)}/>,
+                           onChange={value => debounceHandleNameChange(rowData.id, value)}/>,
             sortable: true,
             sortingProp: 'name'
         }, {
@@ -119,18 +115,24 @@ const PatientListTable = ({
             sortingProp: 'status'
         }], [
             groupList,
-            handleNameChange, handleGroupChange, handleStatusChange
+            debounceHandleNameChange, handleGroupChange, handleStatusChange
         ]);
 
-    return (
+    /**
+     * data 为空时显示 no patient
+     */
+    return !data || data.length < 1 ?
+        <div className="no-patient-found">
+            No Patient Found
+        </div>
+        :
         <ModuleTableCard className="patient-list-table-card"
                          hasFinishedLoading={true}>
             <Table className="patient-list-table"
                    data={data}
                    columns={columns}
                    isFootHidden={true}/>
-        </ModuleTableCard>
-    );
+        </ModuleTableCard>;
 
 };
 

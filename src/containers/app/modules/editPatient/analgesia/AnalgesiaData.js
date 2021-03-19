@@ -2,7 +2,7 @@
  * @file AnalgesiaData.js
  */
 
-import React, {useMemo, useCallback, useEffect} from 'react';
+import React, {Fragment, useMemo, useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -11,7 +11,6 @@ import * as actions from 'reduxes/actions';
 import * as actionTypes from 'reduxes/actionTypes';
 
 // Components
-import AnchorButton from 'alcedo-ui/AnchorButton';
 import ModuleLoading from 'components/module/loading/ModuleLoading';
 import StepAction from 'components/StepAction';
 import AnalgesiaTable from './AnalgesiaTable';
@@ -22,7 +21,7 @@ import './AnalgesiaData.scss';
 const AnalgesiaData = ({
     match, getActionType,
     routerPush, getPatientInfo, getAnalgesiaData,
-    appendTimePoint, updatePatientStep, createOrUpdateAnalgesiaData
+    updatePatientStep, createOrUpdateAnalgesiaData
 }) => {
 
     const
@@ -81,16 +80,14 @@ const AnalgesiaData = ({
                 getActionType !== actionTypes.GET_ANALGESIA_SUCCESS ?
                     <ModuleLoading/>
                     :
-                    <div>
+                    <Fragment>
+
                         <AnalgesiaTable patientId={patientId}/>
-                        <AnchorButton className="append-time-point-button"
-                                      value="Append Time Point"
-                                      onClick={appendTimePoint}>
-                            <i className="fal fa-chevron-down down-icon"/>
-                        </AnchorButton>
+
                         <StepAction onPrev={prevStep}
                                     onNext={save}/>
-                    </div>
+
+                    </Fragment>
             }
         </div>
     );
@@ -103,7 +100,6 @@ AnalgesiaData.propTypes = {
     getActionType: PropTypes.string,
 
     routerPush: PropTypes.func,
-    appendTimePoint: PropTypes.func,
     updatePatientStep: PropTypes.func,
     getPatientInfo: PropTypes.func,
     getAnalgesiaData: PropTypes.func,
@@ -115,7 +111,6 @@ export default connect(state => ({
     getActionType: state.analgesia.getActionType
 }), dispatch => bindActionCreators({
     routerPush: actions.routerPush,
-    appendTimePoint: actions.appendTimePoint,
     updatePatientStep: actions.updatePatientStep,
     getPatientInfo: actions.getPatientInfo,
     getAnalgesiaData: actions.getAnalgesiaData,
