@@ -76,19 +76,14 @@ const AnalgesiaData = ({
 
     return (
         <div className="analgesia-data">
-            {
-                getActionType !== actionTypes.GET_ANALGESIA_SUCCESS ?
-                    <ModuleLoading/>
-                    :
-                    <Fragment>
+            <ModuleLoading loading={getActionType !== actionTypes.GET_ANALGESIA_SUCCESS}>
 
-                        <AnalgesiaTable patientId={patientId}/>
+                <AnalgesiaTable patientId={patientId}/>
 
-                        <StepAction onPrev={prevStep}
-                                    onNext={save}/>
+                <StepAction onPrev={prevStep}
+                            onNext={save}/>
 
-                    </Fragment>
-            }
+            </ModuleLoading>
         </div>
     );
 

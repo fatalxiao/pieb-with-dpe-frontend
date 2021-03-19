@@ -60,16 +60,14 @@ const PatientInfo = ({
 
     return (
         <div className="patient-info">
-            {
-                getActionType !== actionTypes.GET_PATIENT_INFO_SUCCESS ?
-                    <ModuleLoading/>
-                    :
-                    <div>
-                        <PatientForm patientId={patientId}/>
-                        <StepAction isFirst={true}
-                                    onNext={save}/>
-                    </div>
-            }
+            <ModuleLoading loading={getActionType !== actionTypes.GET_PATIENT_INFO_SUCCESS}>
+
+                <PatientForm patientId={patientId}/>
+
+                <StepAction isFirst={true}
+                            onNext={save}/>
+
+            </ModuleLoading>
         </div>
     );
 

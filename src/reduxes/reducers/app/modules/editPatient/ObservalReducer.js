@@ -4,17 +4,18 @@
 
 import * as actionTypes from 'reduxes/actionTypes';
 
-// Vendors
-import cloneDeep from 'lodash/cloneDeep';
-
 const
 
     /**
      * 默认的表单数据
-     * @type {{hasLateralEpisiotomy: boolean, bolus: string, firstManualBolusTime: string, description: string, pumpConsumption: string, birthTime: string, hasVasoactiveAgent: boolean, oneMinuteApgarScore: string, foetalWeight: string, hasHypotension: boolean, initialTime: string, fiveMinuteApgarScore: string, manualBolusCount: string, pcaCount: string, hasCaesareanSection: boolean, firstPcaTime: string, hasInstrumental: boolean, initialDose: string}}
+     * @type {*}
      */
     DEFAULT_FORM = {
         initialTime: '',
+        observalEndPoint: null,
+        cervixFullyDilatedTime: '',
+        epPlacementPoint: null,
+        cervixDilatation: '',
         initialDose: '8',
         pumpConsumption: '',
         bolus: '',
@@ -36,13 +37,14 @@ const
 
     initialState = {
 
-        form: cloneDeep(DEFAULT_FORM),
+        form: {...DEFAULT_FORM},
 
         getActionType: '',
         updateActionType: ''
 
     };
 
+// eslint-disable-next-line require-jsdoc
 function observal(state = initialState, action) {
     switch (action.type) {
 
@@ -52,7 +54,7 @@ function observal(state = initialState, action) {
         case actionTypes.RESET_DATA: {
             return {
                 ...state,
-                form: cloneDeep(DEFAULT_FORM)
+                form: {...DEFAULT_FORM}
             };
         }
 
@@ -61,7 +63,7 @@ function observal(state = initialState, action) {
          */
         case actionTypes.UPDATE_OBSERVAL_FIELD: {
 
-            const form = cloneDeep(state.form);
+            const form = {...state.form};
             form[action.fieldName] = action.fieldValue;
 
             return {
@@ -84,7 +86,7 @@ function observal(state = initialState, action) {
             return {
                 ...state,
                 getActionType: actionTypes.GET_OBSERVAL_SUCCESS,
-                form: action.responseData || cloneDeep(DEFAULT_FORM)
+                form: action.responseData || {...DEFAULT_FORM}
             };
         }
         case actionTypes.GET_OBSERVAL_FAILURE: {

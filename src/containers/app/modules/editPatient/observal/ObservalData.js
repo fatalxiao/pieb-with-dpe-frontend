@@ -76,17 +76,15 @@ const ObservalData = ({
 
     return (
         <div className="observal-data">
-            {
-                getActionType !== actionTypes.GET_OBSERVAL_SUCCESS ?
-                    <ModuleLoading/>
-                    :
-                    <div>
-                        <ObservalForm patientId={patientId}/>
-                        <StepAction isLast={true}
-                                    onPrev={prevStep}
-                                    onNext={save}/>
-                    </div>
-            }
+            <ModuleLoading loading={getActionType !== actionTypes.GET_OBSERVAL_SUCCESS}>
+
+                <ObservalForm patientId={patientId}/>
+
+                <StepAction isLast={true}
+                            onPrev={prevStep}
+                            onNext={save}/>
+
+            </ModuleLoading>
         </div>
     );
 

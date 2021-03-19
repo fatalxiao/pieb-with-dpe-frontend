@@ -5,7 +5,17 @@
 import * as actionTypes from 'reduxes/actionTypes';
 
 const initialState = {
-    list: []
+
+    /**
+     * patient groups 数据
+     */
+    list: [],
+
+    /**
+     * 获取 patient groups 数据的 action type
+     */
+    actionType: null
+
 };
 
 // eslint-disable-next-line require-jsdoc
@@ -24,15 +34,15 @@ function patientGroup(state = initialState, action) {
         case actionTypes.GET_PATIENT_GROUPS_SUCCESS: {
             return {
                 ...state,
-                list: action.responseData,
-                actionType: actionTypes.GET_PATIENT_GROUPS_SUCCESS
+                actionType: actionTypes.GET_PATIENT_GROUPS_SUCCESS,
+                list: action.responseData
             };
         }
         case actionTypes.GET_PATIENT_GROUPS_FAILURE: {
             return {
                 ...state,
-                list: [],
-                actionType: actionTypes.GET_PATIENT_GROUPS_FAILURE
+                actionType: actionTypes.GET_PATIENT_GROUPS_FAILURE,
+                list: []
             };
         }
 
