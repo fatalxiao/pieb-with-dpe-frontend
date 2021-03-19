@@ -38,7 +38,7 @@ const
 /**
  * 获取默认的数据
  * @param timePoints
- * @returns {({thoracicSensoryBlockLeft: null, bromageScore: string, fetalHeartRate: string, sacralSensoryBlockRight: null, heartRate: string, thoracicSensoryBlockRight: null, sacralSensoryBlockLeft: null, diastolicBloodPressure: string, systolicBloodPressure: string, vasScore: string}&{timePoint: number})[]}
+ * @returns {[]}
  */
 function getDefaultData(timePoints = DEFAULT_TIME_POINTS) {
     return timePoints.map(timePoint => ({

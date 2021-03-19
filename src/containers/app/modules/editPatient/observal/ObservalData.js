@@ -26,7 +26,10 @@ const ObservalData = ({
         /**
          * 从路由 params 获取 patient ID
          */
-        patientId = useMemo(() => match.params.patientId, [match.params.patientId]),
+        patientId = useMemo(() =>
+            match?.params?.patientId, [
+            match?.params?.patientId
+        ]),
 
         /**
          * 加载数据
@@ -51,9 +54,10 @@ const ObservalData = ({
          * @type {function(): *}
          */
         prevStep = useCallback(() =>
-                routerPush?.(`/app/patient/analgesia/${patientId}`),
-            [patientId, routerPush]
-        ),
+            routerPush?.(`/app/patient/analgesia/${patientId}`), [
+            patientId,
+            routerPush
+        ]),
 
         /**
          * 提交到后端
