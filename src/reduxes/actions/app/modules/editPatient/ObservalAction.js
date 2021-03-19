@@ -8,6 +8,17 @@ import * as actionTypes from 'reduxes/actionTypes';
 import ObservalApi from 'apis/app/modules/patient/ObservalApi';
 
 /**
+ * 格式化 observalData
+ * @param observalData
+ * @returns {function(): *&{observalEndPointId, epPlacementPointId}}
+ */
+export const formatObservalData = observalData => () => ({
+    ...observalData,
+    observalEndPointId: observalData?.observalEndPoint?.id || null,
+    epPlacementPointId: observalData?.epPlacementPoint?.id || null
+});
+
+/**
  * 更新 Observal 数据的某个字段
  * @param fieldName
  * @param fieldValue
@@ -73,7 +84,7 @@ export const createOrUpdateObservalData = (
             api: ObservalApi.createOrUpdateObservalData,
             params: {
                 patientId,
-                observalData
+                observalData: formatObservalData(observalData)()
             },
             successResMsgDisabled,
             failureResMsgDisabled,

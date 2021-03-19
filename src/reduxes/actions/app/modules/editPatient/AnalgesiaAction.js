@@ -13,11 +13,11 @@ import AnalgesiaApi from 'apis/app/modules/patient/AnalgesiaApi';
  * @param item
  * @param result
  */
-export function formatSensoryBlock(keys, item, result) {
+export const formatSensoryBlock = (keys, item, result) => () => {
     for (let key of keys) {
         result[`${key}Value`] = item[key] ? item[key].value : null;
     }
-}
+};
 
 /**
  * 格式化 Analgesia 数据
@@ -25,12 +25,13 @@ export function formatSensoryBlock(keys, item, result) {
  * @param baseData
  * @returns {*}
  */
-export const formatAnalgesiaData = (data, baseData) => data.filter(item => {
+export const formatAnalgesiaData = (data, baseData) => () => data.filter(item => {
 
     if (!item) {
         return false;
     }
 
+    // eslint-disable-next-line no-unused-vars
     const {timePoint, ...restItem} = item;
 
     return JSON.stringify(restItem) !== JSON.stringify(baseData);
@@ -52,7 +53,7 @@ export const formatAnalgesiaData = (data, baseData) => data.filter(item => {
         'thoracicSensoryBlockRight',
         'sacralSensoryBlockLeft',
         'sacralSensoryBlockRight'
-    ], item, result);
+    ], item, result)();
 
     return result;
 
@@ -132,7 +133,7 @@ export const createOrUpdateAnalgesiaData = (patientId, callback, successResMsgDi
             api: AnalgesiaApi.createOrUpdateAnalgesiaData,
             params: {
                 patientId,
-                analgesiaData: formatAnalgesiaData(data, analgesia.BASE_DATA)
+                analgesiaData: formatAnalgesiaData(data, analgesia.BASE_DATA)()
             },
             successResMsgDisabled,
             successCallback() {
