@@ -22,7 +22,8 @@ import './App.scss';
 
 const App = ({
     route, componentLoading,
-    getPatientGroups, getSensoryBlocks, getObservalEndPoints, getPatients
+    getPatientGroups, getSensoryBlocks, getObservalEndPoints, getEpPlacementPoints,
+    getPatients
 }) => {
 
     /**
@@ -32,9 +33,11 @@ const App = ({
         getPatientGroups?.();
         getSensoryBlocks?.();
         getObservalEndPoints?.();
+        getEpPlacementPoints?.();
         getPatients?.();
     }, [
-        getObservalEndPoints, getPatientGroups, getPatients, getSensoryBlocks
+        getPatientGroups, getSensoryBlocks, getObservalEndPoints, getEpPlacementPoints,
+        getPatients
     ]);
 
     return (
@@ -69,6 +72,7 @@ App.propTypes = {
     getPatientGroups: PropTypes.func,
     getSensoryBlocks: PropTypes.func,
     getObservalEndPoints: PropTypes.func,
+    getEpPlacementPoints: PropTypes.func,
     getPatients: PropTypes.func
 
 };
@@ -79,5 +83,6 @@ export default connect(state => ({
     getPatientGroups: actions.getPatientGroups,
     getSensoryBlocks: actions.getSensoryBlocks,
     getObservalEndPoints: actions.getObservalEndPoints,
+    getEpPlacementPoints: actions.getEpPlacementPoints,
     getPatients: actions.getPatients
 }, dispatch))(App);

@@ -15,6 +15,7 @@ export * from './app/common/PatientGroupActionType';
 export * from './app/common/PatientActionType';
 export * from './app/common/SensoryBlockActionType';
 export * from './app/common/ObservalEndPointActionType';
+export * from './app/common/EpPlacementPointActionType';
 
 // module Action Types
 export * from './app/modules/editPatient/EditPatientActionType';

@@ -17,6 +17,7 @@ import patientGroup from './app/common/PatientGroupReducer';
 import patients from './app/common/PatientsReducer';
 import sensoryBlock from './app/common/SensoryBlockReducer';
 import observalEndPoint from './app/common/ObservalEndPointReducer';
+import epPlacementPoint from './app/common/EpPlacementPointReducer';
 
 // module Reducers
 import editPatient from './app/modules/editPatient/EditPatientReducer';
@@ -36,6 +37,7 @@ export default history => combineReducers({
     patients,
     sensoryBlock,
     observalEndPoint,
+    epPlacementPoint,
 
     editPatient,
     patientBaseInfo,
