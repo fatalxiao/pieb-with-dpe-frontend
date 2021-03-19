@@ -75,10 +75,12 @@ const ModuleTableCard = ({
             children
         ]),
 
+        /**
+         * 全屏时的固定高度，计算滚动高度时需要排除的高度
+         * @type {*}
+         */
         fullScreenTableFixedHeight = useMemo(() =>
-            restChildrenRef?.current?.clientHeight || 0, [
-            restChildrenRef?.current
-        ]),
+            restChildrenRef?.current?.clientHeight || 0, []),
 
         /**
          * 更新 card 的 element
@@ -200,4 +202,4 @@ ModuleTableCard.defaultProps = {
 
 export default connect(state => ({
     isFullScreen: state.fullScreen.isFullScreen
-}), null, null, {forwardRef: true})(ModuleTableCard);
+}))(ModuleTableCard);
