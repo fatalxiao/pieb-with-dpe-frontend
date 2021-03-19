@@ -76,6 +76,8 @@ class ModuleTable extends Component {
     /**
      * 获取 column 的具体宽度
      * @param column
+     * @param columnsWidth
+     * @param tableProps
      * @returns {number}
      */
     getColumnWidth = (column, columnsWidth, tableProps) => {
@@ -116,6 +118,7 @@ class ModuleTable extends Component {
     /**
      * 过滤后获取 Table 的 columns
      * @param columns 传入 Table 组件中的所有列的 renderer 配置
+     * @param tableProps
      * @returns {*}
      */
     getColumns = (columns, tableProps) => {
@@ -144,48 +147,46 @@ class ModuleTable extends Component {
             columnsWidth = ResizableColumnsWidth.getConfig(name) || {},
 
             // dimension columns 的个数
-            dimensionColumnCount = tableColumns?.filter?.(column => column?.dataType !== 'metric')?.length,
+            dimensionColumnCount = tableColumns?.filter?.(column => column?.dataType !== 'metric')?.length;
 
-            result = tableColumns?.map((column, index) => ({
+        return tableColumns?.map((column, index) => ({
 
-                ...column,
+            ...column,
 
-                width: this.getColumnWidth(column, columnsWidth, tableProps),
-                bodyNoWrap: column.bodyNoWrap || true,
-                footNoWrap: column.footNoWrap || true,
+            width: this.getColumnWidth(column, columnsWidth, tableProps),
+            bodyNoWrap: column.bodyNoWrap || true,
+            footNoWrap: column.footNoWrap || true,
 
-                // Total 列（ 即第一列 ）span 为 dimension 个数
-                footSpan: index === 0 ? dimensionColumnCount : null,
+            // Total 列（ 即第一列 ）span 为 dimension 个数
+            footSpan: index === 0 ? dimensionColumnCount : null,
 
-                // Module Table 表尾 Total 行的渲染
-                //  1、优先使用传入的 footRenderer
-                //  2、metric 列使用当列的 bodyRenderer 作为 footRenderer
-                //  3、第一列（ index === 0 ）需要显示 "Total" 文本
-                //  4、第一行默认为 Filtered Total，第二行默认为 Total
-                //  5、如果只有一行 foot 数据，则显示为 Total
-                footRenderer: column.footRenderer || (
-                    column.dataType === 'metric' ? (
-                        (rowData, rowIndex, colIndex, tableData, footData, bodyRenderer) =>
-                            bodyRenderer(rowData, rowIndex, colIndex)
-                    ) : (
-                        index === 0 ?
-                            (rowData, rowIndex) => footData?.length === 1 ?
-                                'Total'
-                                :
-                                rowIndex === 0 ?
-                                    'Total: Filtered campaigns'
-                                    :
-                                    'Total'
+            // Module Table 表尾 Total 行的渲染
+            //  1、优先使用传入的 footRenderer
+            //  2、metric 列使用当列的 bodyRenderer 作为 footRenderer
+            //  3、第一列（ index === 0 ）需要显示 "Total" 文本
+            //  4、第一行默认为 Filtered Total，第二行默认为 Total
+            //  5、如果只有一行 foot 数据，则显示为 Total
+            footRenderer: column.footRenderer || (
+                column.dataType === 'metric' ? (
+                    (rowData, rowIndex, colIndex, tableData, footData, bodyRenderer) =>
+                        bodyRenderer(rowData, rowIndex, colIndex)
+                ) : (
+                    index === 0 ?
+                        (rowData, rowIndex) => footData?.length === 1 ?
+                            'Total'
                             :
-                            null
-                    )
-                ),
+                            rowIndex === 0 ?
+                                'Total: Filtered campaigns'
+                                :
+                                'Total'
+                        :
+                        null
+                )
+            ),
 
-                resizable: column.resizable || true
+            resizable: column.resizable || true
 
-            })) || [];
-
-        return result;
+        })) || [];
 
     };
 
@@ -213,12 +214,15 @@ class ModuleTable extends Component {
      * @returns {*}
      */
     getFullScreenScrollHeight = () => {
+
         const {wrapperEl} = this.props;
+
         return wrapperEl ?
             // clientHeight - vertical padding - actions height - table head height
             wrapperEl.clientHeight - 24 - 40 - this.getHeadHeight()
             :
             null;
+
     };
 
     /**
@@ -240,13 +244,14 @@ class ModuleTable extends Component {
 
     /**
      * updateFullScreenScrollHeight 的 resize 事件的 debounce
-     * @type {debounced}
+     * @type {*}
      */
     debounceUpdateFullScreenScrollHeight = debounce(this.updateFullScreenScrollHeight, 600);
 
     /**
      * 根据每个列的宽度，计算出整个 table 的宽度
      * @param columns
+     * @param selectMode
      * @returns {null|*}
      */
     getScrollWidth = (columns, selectMode) => {
