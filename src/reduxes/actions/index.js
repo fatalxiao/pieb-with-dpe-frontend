@@ -13,6 +13,7 @@ export * from './common/FullScreenAction';
 export * from './app/common/PatientGroupAction';
 export * from './app/common/PatientAction';
 export * from './app/common/SensoryBlockAction';
+export * from './app/common/ObservalEndPointAction';
 
 // Module Actions
 export * from './app/modules/editPatient/EditPatientAction';

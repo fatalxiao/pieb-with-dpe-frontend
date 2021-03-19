@@ -1,5 +1,5 @@
 /**
- * @file PatientAction.js
+ * @file SensoryBlockAction.js
  */
 
 import * as actionTypes from 'reduxes/actionTypes';

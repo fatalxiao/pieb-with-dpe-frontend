@@ -1,0 +1,10 @@
+/**
+ * @file ObservalEndPointActionType.js
+ */
+
+/**
+ * 获取所有的 Observal End Point
+ */
+export const GET_OBSERVAL_END_POINT_REQUEST = 'GET_OBSERVAL_END_POINT_REQUEST';
+export const GET_OBSERVAL_END_POINT_SUCCESS = 'GET_OBSERVAL_END_POINT_SUCCESS';
+export const GET_OBSERVAL_END_POINT_FAILURE = 'GET_OBSERVAL_END_POINT_FAILURE';

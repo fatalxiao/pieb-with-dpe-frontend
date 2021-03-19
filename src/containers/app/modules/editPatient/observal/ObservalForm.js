@@ -11,12 +11,12 @@ import * as actions from 'reduxes/actions';
 
 // Components
 import Checkbox from 'customized/CustomizedMaterialCheckbox';
-import RadioGroup from 'customized/CustomizedMaterialRadioGroup';
 import TextField from 'customized/CustomizedMaterialTextField';
 import TextArea from 'customized/CustomizedMaterialTextArea';
 import DateTimePicker from 'customized/CustomizedMaterialDateTimePicker';
 import FieldSet from 'components/FieldSet';
 import DisplayField from 'components/DisplayField';
+import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
 
 // Vendors
 import debounce from 'lodash/debounce';
@@ -27,7 +27,7 @@ import Time from 'vendors/Time';
 import './ObservalForm.scss';
 
 const ObservalForm = ({
-    patientId, form,
+    patientId, form, observalEndPoints,
     updateObservalDataField, createOrUpdateObservalData
 }) => {
 
@@ -35,12 +35,22 @@ const ObservalForm = ({
 
         /**
          * 提交到后端
-         * @type {debounced}
+         * @type {*}
          */
-        save = useCallback(debounce(() =>
-            patientId && createOrUpdateObservalData?.(patientId, undefined, true, true),
-            400
-        ), [patientId, createOrUpdateObservalData]),
+        save = useCallback(() =>
+            patientId && createOrUpdateObservalData?.(patientId, undefined, true, true), [
+            patientId,
+            createOrUpdateObservalData
+        ]),
+
+        /**
+         * debounce 提交到后端
+         * @type {*}
+         */
+        debounceSave = useMemo(() =>
+            debounce(save, 400), [
+            save
+        ]),
 
         /**
          * 更新数据到 reducer
@@ -48,8 +58,10 @@ const ObservalForm = ({
          */
         updateField = useCallback((fieldName, fieldValue) => {
             updateObservalDataField?.(fieldName, fieldValue);
-            setTimeout(() => save(), 0);
-        }, [updateObservalDataField, save]),
+            setTimeout(() => debounceSave(), 0);
+        }, [
+            updateObservalDataField, debounceSave
+        ]),
 
         /**
          * 格式化时间区间
@@ -68,20 +80,29 @@ const ObservalForm = ({
 
         }, []),
 
+        /**
+         * PCA 时长
+         */
         pcaDuration = useMemo(() =>
-                formatDuration(Time.duration(form?.initialTime, form?.firstPcaTime)),
-            [form, formatDuration]
-        ),
+            formatDuration(Time.duration(form?.initialTime, form?.firstPcaTime)), [
+            form, formatDuration
+        ]),
 
+        /**
+         * bolus 时长
+         */
         bolusDuration = useMemo(() =>
-                formatDuration(Time.duration(form?.initialTime, form?.firstManualBolusTime)),
-            [form, formatDuration]
-        ),
+            formatDuration(Time.duration(form?.initialTime, form?.firstManualBolusTime)), [
+            form, formatDuration
+        ]),
 
+        /**
+         * birth 时长
+         */
         birthDuration = useMemo(() =>
-                formatDuration(Time.duration(form?.initialTime, form?.birthTime), true),
-            [form, formatDuration]
-        );
+            formatDuration(Time.duration(form?.initialTime, form?.birthTime), true), [
+            form, formatDuration
+        ]);
 
     return (
         <div className="observal-data-form">
@@ -92,6 +113,12 @@ const ObservalForm = ({
                                     label="Initial Time"
                                     value={formatString(form.initialTime)}
                                     onChange={v => updateField('initialTime', v)}/>
+                    <DropdownSelect data={observalEndPoints}
+                                    value={form.observalEndPoint}
+                                    label="Observal End Point"
+                                    valueField="id"
+                                    displayField="name"
+                                    onChange={v => updateField('observalEndPoint', v)}/>
                 </div>
             </FieldSet>
 
@@ -255,6 +282,7 @@ ObservalForm.propTypes = {
 
     patientId: PropTypes.string,
     form: PropTypes.object,
+    observalEndPoints: PropTypes.array,
 
     updateObservalDataField: PropTypes.func,
     createOrUpdateObservalData: PropTypes.func
@@ -262,7 +290,8 @@ ObservalForm.propTypes = {
 };
 
 export default connect(state => ({
-    form: state.observal.form
+    form: state.observal.form,
+    observalEndPoints: state.observalEndPoint.list
 }), dispatch => bindActionCreators({
     updateObservalDataField: actions.updateObservalDataField,
     createOrUpdateObservalData: actions.createOrUpdateObservalData

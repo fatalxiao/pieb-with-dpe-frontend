@@ -14,6 +14,7 @@ export * from './common/FullScreenActionType';
 export * from './app/common/PatientGroupActionType';
 export * from './app/common/PatientActionType';
 export * from './app/common/SensoryBlockActionType';
+export * from './app/common/ObservalEndPointActionType';
 
 // module Action Types
 export * from './app/modules/editPatient/EditPatientActionType';

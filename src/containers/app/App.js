@@ -6,7 +6,6 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {renderRoutes} from 'react-router-config';
 
 import * as actions from 'reduxes/actions';
 
@@ -15,12 +14,15 @@ import Nav from './nav/Nav';
 import NavTitle from './nav/title/NavTitle';
 import PageLoading from 'alcedo-ui/PageLoading';
 
+// Vendors
+import {renderRoutes} from 'react-router-config';
+
 // Styles
 import './App.scss';
 
 const App = ({
     route, componentLoading,
-    getPatientGroups, getSensoryBlocks, getPatients
+    getPatientGroups, getSensoryBlocks, getObservalEndPoints, getPatients
 }) => {
 
     /**
@@ -29,8 +31,11 @@ const App = ({
     useEffect(() => {
         getPatientGroups?.();
         getSensoryBlocks?.();
+        getObservalEndPoints?.();
         getPatients?.();
-    }, []);
+    }, [
+        getObservalEndPoints, getPatientGroups, getPatients, getSensoryBlocks
+    ]);
 
     return (
         <div className="app">
@@ -63,6 +68,7 @@ App.propTypes = {
 
     getPatientGroups: PropTypes.func,
     getSensoryBlocks: PropTypes.func,
+    getObservalEndPoints: PropTypes.func,
     getPatients: PropTypes.func
 
 };
@@ -72,5 +78,6 @@ export default connect(state => ({
 }), dispatch => bindActionCreators({
     getPatientGroups: actions.getPatientGroups,
     getSensoryBlocks: actions.getSensoryBlocks,
+    getObservalEndPoints: actions.getObservalEndPoints,
     getPatients: actions.getPatients
 }, dispatch))(App);
