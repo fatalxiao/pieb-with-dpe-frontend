@@ -2,7 +2,7 @@
  * @file ModuleTableCard.js
  */
 
-import React, {Fragment, Children, useRef, useState, useMemo, useCallback, useEffect, forwardRef} from 'react';
+import React, {Fragment, Children, useRef, useState, useMemo, useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
 import {connect} from 'react-redux';
@@ -51,6 +51,11 @@ const ModuleTableCard = ({
         tableRef = useRef(),
 
         /**
+         * rest children 的 reference
+         */
+        restChildrenRef = useRef(),
+
+        /**
          * 当前 card 的 element
          */
         [cardEl, setCardEl] = useState(null),
@@ -68,6 +73,11 @@ const ModuleTableCard = ({
         [tableChild, ...restChildren] = useMemo(() =>
             Children.toArray(children), [
             children
+        ]),
+
+        fullScreenTableFixedHeight = useMemo(() =>
+            restChildrenRef?.current?.clientHeight || 0, [
+            restChildrenRef?.current
         ]),
 
         /**
@@ -130,11 +140,15 @@ const ModuleTableCard = ({
                        name={name}
                        wrapperEl={cardEl}
                        rowSize={rowSize}
-                       hasFinishedLoading={hasFinishedLoading}>
+                       hasFinishedLoading={hasFinishedLoading}
+                       fullScreenFixedHeight={fullScreenTableFixedHeight}>
                     {tableChild}
                 </Table>
 
-                {restChildren}
+                <div ref={restChildrenRef}
+                     className="module-table-card-rest-children">
+                    {restChildren}
+                </div>
 
             </Card>
 

@@ -215,11 +215,11 @@ class ModuleTable extends Component {
      */
     getFullScreenScrollHeight = () => {
 
-        const {wrapperEl} = this.props;
+        const {wrapperEl, fullScreenFixedHeight} = this.props;
 
         return wrapperEl ?
-            // clientHeight - vertical padding - actions height - table head height
-            wrapperEl.clientHeight - 24 - 40 - this.getHeadHeight()
+            // clientHeight - vertical padding - actions height - table head height - full screen fixed height
+            wrapperEl.clientHeight - 32 - 56 - this.getHeadHeight() - fullScreenFixedHeight
             :
             null;
 
@@ -419,6 +419,11 @@ ModuleTable.propTypes = {
      */
     rowSize: PropTypes.oneOf(enumerateValue(TableRowSize)),
 
+    /**
+     * 全屏时的固定高度，计算滚动高度时需要排除的高度
+     */
+    fullScreenFixedHeight: PropTypes.number,
+
     isUsingHeadMenu: PropTypes.bool
 
 };
@@ -426,6 +431,8 @@ ModuleTable.propTypes = {
 ModuleTable.defaultProps = {
 
     rowSize: TableRowSize.DEFAULT,
+
+    fullScreenFixedHeight: 0,
 
     hasFinishedLoading: false,
     isUsingHeadMenu: true
