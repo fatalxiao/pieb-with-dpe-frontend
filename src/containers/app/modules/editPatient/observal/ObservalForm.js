@@ -210,14 +210,10 @@ const ObservalForm = ({
                               label="Vasoactive Agent"
                               checked={form.hasVasoactiveAgent}
                               onChange={v => updateField('hasVasoactiveAgent', v)}/>
-                </div>
-                <div className="row">
                     <Checkbox className="col-3"
                               label="Hypotension"
                               checked={form.hasHypotension}
                               onChange={v => updateField('hasHypotension', v)}/>
-                </div>
-                <div className="row">
                     <Checkbox className="col-3"
                               label="Caesarean Section"
                               checked={form.hasCaesareanSection}
