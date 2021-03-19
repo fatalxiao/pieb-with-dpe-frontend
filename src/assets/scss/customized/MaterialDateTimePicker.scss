@@ -7,13 +7,16 @@
 .material-date-time-picker {
     height: 64px;
 
-    .material-provider-label {
-        color: $theme-label !important;
-    }
+    .material-provider {
 
-    .text-field-input,
-    .text-field-placeholder {
-        font-size: 14px !important;
+        .material-provider-label {
+            color: $theme-label !important;
+        }
+
+        .text-field-input,
+        .text-field-placeholder {
+            font-size: 14px !important;
+        }
     }
 
     &.focused {
