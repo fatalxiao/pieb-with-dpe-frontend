@@ -1,9 +1,11 @@
 /**
  * @file MaterialDateTimePicker.scss
  */
-@import '../common.scss';
+
+@import 'scss/common.scss';
 
 .material-date-time-picker {
+    height: 64px;
 
     .material-provider-label {
         color: $theme-label !important;
