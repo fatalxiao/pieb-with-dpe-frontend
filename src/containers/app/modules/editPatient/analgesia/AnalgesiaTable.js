@@ -14,6 +14,7 @@ import ModuleTableCard from 'components/module/table/ModuleTableCard';
 import Table from 'customized/CustomizedTable';
 import TextField from 'customized/CustomizedMaterialTextField';
 import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
+import AppendTimePointButton from './AnalgesiaAppendTimePointButton';
 
 // Vendors
 import debounce from 'lodash/debounce';
@@ -21,11 +22,10 @@ import {formatString} from 'vendors/Util';
 
 // Styles
 import './AnalgesiaTable.scss';
-import AnchorButton from 'alcedo-ui/AnchorButton';
 
 const AnalgesiaTable = ({
     patientId, thoracicList, sacralList, analgesiaData,
-    appendTimePoint, updateAnalgesiaDataField, createOrUpdateAnalgesiaData
+    updateAnalgesiaDataField, createOrUpdateAnalgesiaData
 }) => {
 
     const
@@ -163,11 +163,7 @@ const AnalgesiaTable = ({
                    isPaginated={false}
                    isFootHidden={true}/>
 
-            <AnchorButton className="append-time-point-button"
-                          value="Append Time Point"
-                          onClick={appendTimePoint}>
-                <i className="fal fa-chevron-down down-icon"/>
-            </AnchorButton>
+            <AppendTimePointButton/>
 
         </ModuleTableCard>
     );
@@ -181,7 +177,6 @@ AnalgesiaTable.propTypes = {
     sacralList: PropTypes.array,
     analgesiaData: PropTypes.array,
 
-    appendTimePoint: PropTypes.func,
     updateAnalgesiaDataField: PropTypes.func,
     createOrUpdateAnalgesiaData: PropTypes.func
 
@@ -192,7 +187,6 @@ export default connect(state => ({
     sacralList: state.sensoryBlock.sacralList,
     analgesiaData: state.analgesia.data
 }), dispatch => bindActionCreators({
-    appendTimePoint: actions.appendTimePoint,
     updateAnalgesiaDataField: actions.updateAnalgesiaDataField,
     createOrUpdateAnalgesiaData: actions.createOrUpdateAnalgesiaData
 }, dispatch))(AnalgesiaTable);
