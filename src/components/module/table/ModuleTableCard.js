@@ -80,7 +80,11 @@ const ModuleTableCard = ({
          * @type {*}
          */
         fullScreenTableFixedHeight = useMemo(() =>
-            restChildrenRef?.current?.clientHeight || 0, []),
+            restChildrenRef?.current?.clientHeight || 0,
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            [
+                restChildrenRef?.current
+            ]),
 
         /**
          * 更新 card 的 element
