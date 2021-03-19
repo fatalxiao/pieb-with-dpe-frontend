@@ -27,7 +27,7 @@ import Time from 'vendors/Time';
 import './ObservalForm.scss';
 
 const ObservalForm = ({
-    patientId, form, observalEndPoints,
+    patientId, form, observalEndPoints, epPlacementPoints,
     updateObservalDataField, createOrUpdateObservalData
 }) => {
 
@@ -113,12 +113,28 @@ const ObservalForm = ({
                                     label="Initial Time"
                                     value={formatString(form.initialTime)}
                                     onChange={v => updateField('initialTime', v)}/>
-                    <DropdownSelect data={observalEndPoints}
+                    <DropdownSelect className="col-6"
+                                    data={observalEndPoints}
                                     value={form.observalEndPoint}
                                     label="Observal End Point"
                                     valueField="id"
                                     displayField="name"
                                     onChange={v => updateField('observalEndPoint', v)}/>
+                    <DateTimePicker className="col-6"
+                                    label="Cervix Fully Dilated Time"
+                                    value={formatString(form.cervixFullyDilatedTime)}
+                                    onChange={v => updateField('cervixFullyDilatedTime', v)}/>
+                    <DropdownSelect className="col-3"
+                                    data={epPlacementPoints}
+                                    value={form.epPlacementPoint}
+                                    label="EP Placement Point"
+                                    valueField="id"
+                                    displayField="name"
+                                    onChange={v => updateField('epPlacementPoint', v)}/>
+                    <TextField className="col-3"
+                               label="Cervix Dilatation"
+                               value={formatString(form.cervixDilatation)}
+                               onChange={v => updateField('cervixDilatation', v)}/>
                 </div>
             </FieldSet>
 
@@ -188,7 +204,7 @@ const ObservalForm = ({
                 </div>
             </FieldSet>
 
-            <FieldSet title="6. Labor">
+            <FieldSet title="5. Labor">
                 <div className="row">
                     <Checkbox className="col-3"
                               label="Vasoactive Agent"
@@ -213,7 +229,7 @@ const ObservalForm = ({
                 </div>
             </FieldSet>
 
-            <FieldSet title="7. Lateral Episiotomy">
+            <FieldSet title="6. Lateral Episiotomy">
                 <div className="row">
                     <Checkbox className="col-3"
                               label="Lateral Episiotomy"
@@ -222,7 +238,7 @@ const ObservalForm = ({
                 </div>
             </FieldSet>
 
-            <FieldSet title="9. Foetal">
+            <FieldSet title="7. Foetal">
                 <div className="row">
                     <DateTimePicker className="col-3"
                                     label="Birth Time"
@@ -254,7 +270,7 @@ const ObservalForm = ({
                 </div>
             </FieldSet>
 
-            <FieldSet title="10. Others">
+            <FieldSet title="8. Others">
                 <div className="row">
                     <TextArea className="col-12"
                               label="Description"
@@ -283,6 +299,7 @@ ObservalForm.propTypes = {
     patientId: PropTypes.string,
     form: PropTypes.object,
     observalEndPoints: PropTypes.array,
+    epPlacementPoints: PropTypes.array,
 
     updateObservalDataField: PropTypes.func,
     createOrUpdateObservalData: PropTypes.func
@@ -291,7 +308,8 @@ ObservalForm.propTypes = {
 
 export default connect(state => ({
     form: state.observal.form,
-    observalEndPoints: state.observalEndPoint.list
+    observalEndPoints: state.observalEndPoint.list,
+    epPlacementPoints: state.epPlacementPoint.list
 }), dispatch => bindActionCreators({
     updateObservalDataField: actions.updateObservalDataField,
     createOrUpdateObservalData: actions.createOrUpdateObservalData
