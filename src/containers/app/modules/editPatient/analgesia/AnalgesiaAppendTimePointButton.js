@@ -15,7 +15,7 @@ import AnchorButton from 'alcedo-ui/AnchorButton';
 // Styles
 import './AnalgesiaAppendTimePointButton.scss';
 
-const AnalgesiaTable = ({
+const AnalgesiaAppendTimePointButton = ({
     appendTimePoint
 }) => (
     <AnchorButton className="analgesia-append-time-point-button"
@@ -25,10 +25,10 @@ const AnalgesiaTable = ({
     </AnchorButton>
 );
 
-AnalgesiaTable.propTypes = {
+AnalgesiaAppendTimePointButton.propTypes = {
     appendTimePoint: PropTypes.func
 };
 
 export default connect(null, dispatch => bindActionCreators({
     appendTimePoint: actions.appendTimePoint
-}, dispatch))(AnalgesiaTable);
+}, dispatch))(AnalgesiaAppendTimePointButton);
