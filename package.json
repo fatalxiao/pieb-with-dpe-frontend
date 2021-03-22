@@ -1,8 +1,8 @@
 {
-    "name": "dpe-frontend",
+    "name": "pieb-with-dpe-frontend",
     "author": "liangxiaojun",
     "version": "1.0.0",
-    "description": "DPE ReactJs Front-end Project",
+    "description": "PIEB with DPE ReactJs Front-end Project",
     "main": "./src/index.js",
     "scripts": {
         "dev": "cross-env NODE_ENV=development node build/dev/server.js",
@@ -16,7 +16,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/fatalxiao/dpe-frontend"
+        "url": "https://github.com/fatalxiao/pieb-with-dpe-frontend"
     },
     "keywords": [
         "dural-puncture-epidural",
@@ -25,7 +25,7 @@
     ],
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/fatalxiao/dpe-frontend/issues"
+        "url": "https://github.com/fatalxiao/pieb-with-dpe-frontend/issues"
     },
     "dependencies": {
         "alcedo-ui": "2.55.14",
@@ -126,7 +126,7 @@
         "style-loader": "2.0.0",
         "uglifyjs-webpack-plugin": "2.2.0",
         "url-loader": "4.1.1",
-        "webpack": "5.26.3",
+        "webpack": "5.27.1",
         "webpack-dev-middleware": "4.1.0",
         "webpack-hot-middleware": "2.25.0",
         "webpack-merge": "5.7.3"
