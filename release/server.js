@@ -14,7 +14,7 @@ const express = require('express'),
 
 Object.keys(proxyTable).forEach(context => {
 
-    var options = proxyTable[context];
+    let options = proxyTable[context];
 
     if (typeof options === 'string') {
         options = {
@@ -38,23 +38,22 @@ Object.keys(proxyTable).forEach(context => {
 
 });
 
-app
-    .use(compression())
-    .use(history())
-    .use(express.static(path.join(__dirname, 'dist'), {
-        setHeaders: (res, path) => {
-            res.setHeader('Cache-Control', path.endsWith('index.html') ?
-                'no-cache, no-store, no_store, max-age=0, must-revalidate' : 'max-age=2592000'
-            );
-        }
-    }))
-    .listen(port, err => {
+app.use(compression())
+   .use(history())
+   .use(express.static(path.join(__dirname, 'dist'), {
+       setHeaders: (res, path) => {
+           res.setHeader('Cache-Control', path.endsWith('index.html') ?
+               'no-cache, no-store, no_store, max-age=0, must-revalidate' : 'max-age=2592000'
+           );
+       }
+   }))
+   .listen(port, err => {
 
-        if (err) {
-            console.log(err);
-            return;
-        }
+       if (err) {
+           console.log(err);
+           return;
+       }
 
-        console.log('> Listening at ' + uri);
+       console.log('> Listening at ' + uri);
 
-    });
+   });

@@ -41,28 +41,24 @@ Object.keys(proxyTable).forEach(context => {
 
 });
 
-app
-.use(compression())
-.use(history())
-.use(express.static(config[env].assetsRoot, {
-    setHeaders: (res, path) => {
-        res.setHeader('Cache-Control', path.endsWith('index.html') ?
-            'no-cache, no-store, no_store, max-age=0, must-revalidate' : 'max-age=315360000'
-        );
-    }
-}))
-.get('/derby_forever_health/status.ci', (req, res) => {
-    res.sendStatus(200);
-})
-.listen(port, err => {
+app.use(compression())
+   .use(history())
+   .use(express.static(config[env].assetsRoot, {
+       setHeaders: (res, path) => {
+           res.setHeader('Cache-Control', path.endsWith('index.html') ?
+               'no-cache, no-store, no_store, max-age=0, must-revalidate' : 'max-age=315360000'
+           );
+       }
+   }))
+   .listen(port, err => {
 
-    if (err) {
-        console.log(err);
-        return;
-    }
+       if (err) {
+           console.log(err);
+           return;
+       }
 
-    console.log('> Listening at ' + uri);
+       console.log('> Listening at ' + uri);
 
-    opn(uri);
+       opn(uri);
 
-});
+   });
