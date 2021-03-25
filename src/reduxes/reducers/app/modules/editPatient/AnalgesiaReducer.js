@@ -31,8 +31,7 @@ const
      * @type {number[]}
      */
     DEFAULT_TIME_POINTS = [
-        0, 2, 4, 6, 8, 10, 12, 14, 16, 18,
-        20, 30, 2 * 60, 3.5 * 60, 5 * 60, 6.5 * 60, 8 * 60
+        0, 20, 60, 2 * 60, 3 * 60, 4 * 60, 5 * 60, 6 * 60
     ];
 
 /**
@@ -80,7 +79,7 @@ function analgesia(state = initialState, action) {
             const data = cloneDeep(state.data);
             data.push({
                 ...BASE_DATA,
-                timePoint: data[data.length - 1].timePoint + 1.5 * 60
+                timePoint: data[data.length - 1].timePoint + 60
             });
 
             return {
@@ -151,7 +150,7 @@ function analgesia(state = initialState, action) {
 
                         while (timePoint < resItem.timePoint) {
 
-                            timePoint += 1.5 * 60;
+                            timePoint += 60;
 
                             if (timePoint >= resItem.timePoint) {
                                 data.push(Object.assign({...BASE_DATA, timePoint}, resItem));

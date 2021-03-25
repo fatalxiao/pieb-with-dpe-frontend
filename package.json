@@ -28,7 +28,7 @@
         "url": "https://github.com/fatalxiao/pieb-with-dpe-frontend/issues"
     },
     "dependencies": {
-        "alcedo-ui": "2.55.14",
+        "alcedo-ui": "2.55.18",
         "babel-polyfill": "6.26.0",
         "classnames": "2.2.6",
         "connected-react-router": "6.9.1",
@@ -93,9 +93,9 @@
         "copy-webpack-plugin": "8.1.0",
         "core-js": "3.9.1",
         "cross-env": "7.0.3",
-        "css-loader": "5.1.3",
+        "css-loader": "5.2.0",
         "eslint": "7.22.0",
-        "eslint-plugin-react": "7.22.0",
+        "eslint-plugin-react": "7.23.1",
         "eslint-plugin-react-hooks": "4.2.0",
         "eventsource-polyfill": "0.9.6",
         "express": "4.17.1",
@@ -126,7 +126,7 @@
         "style-loader": "2.0.0",
         "uglifyjs-webpack-plugin": "2.2.0",
         "url-loader": "4.1.1",
-        "webpack": "5.27.2",
+        "webpack": "5.28.0",
         "webpack-dev-middleware": "4.1.0",
         "webpack-hot-middleware": "2.25.0",
         "webpack-merge": "5.7.3"
