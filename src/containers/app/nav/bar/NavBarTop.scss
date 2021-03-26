@@ -1,6 +1,7 @@
 /**
  * @file NavBarTop.scss
  */
+
 @import 'scss/common.scss';
 
 .nav-bar-top {
@@ -74,6 +75,10 @@
             color: inherit;
             background: transparentize(#000, .9);
         }
+    }
+
+    .nav-bar-export-button-anchor {
+        color: inherit;
     }
 }
 

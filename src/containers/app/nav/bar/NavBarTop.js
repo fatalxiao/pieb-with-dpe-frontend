@@ -2,7 +2,7 @@
  * @file NavBarTop.js
  */
 
-import React, {useRef, useState, useCallback} from 'react';
+import React, {useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -11,7 +11,6 @@ import * as actions from 'reduxes/actions';
 
 // Components
 import IconButton from 'alcedo-ui/IconButton';
-import DownloadField from 'alcedo-ui/DownloadField';
 import AddPatientDialog from 'containers/app/modules/editPatient/patientBaseInfo/AddPatientDialog';
 import NavSearch from './NavSearch';
 
@@ -31,12 +30,6 @@ const NavBarTop = ({
 }) => {
 
     const
-
-        /**
-         * Download Field 的 Ref
-         * @type {React.MutableRefObject<undefined>}
-         */
-        downloadFieldRef = useRef(),
 
         /**
          * 是否显示查询抽屉
@@ -81,13 +74,7 @@ const NavBarTop = ({
          * 隐藏新建患者对话框
          * @type {function(): void}
          */
-        hideAddPatient = useCallback(() => setAddPatientDialogVisible(false), []),
-
-        /**
-         * 导出 Excel
-         * @type {function(): *}
-         */
-        exportExcel = useCallback(() => downloadFieldRef?.current?.download?.(), [downloadFieldRef]);
+        hideAddPatient = useCallback(() => setAddPatientDialogVisible(false), []);
 
     return (
         <div className={classNames('nav-bar-top', {
@@ -113,20 +100,19 @@ const NavBarTop = ({
                         tipPosition={IconButton.TipPosition.RIGHT}
                         onClick={showAddPatient}/>
 
-            <IconButton className="nav-bar-item nav-bar-export-button"
-                        iconCls="icon-download"
-                        tip="Export"
-                        tipPosition={IconButton.TipPosition.RIGHT}
-                        onClick={exportExcel}/>
+            <a className="nav-bar-export-button-anchor"
+               href={`${config.appBaseUrl}/patient/exportPatients`}>
+                <IconButton className="nav-bar-item nav-bar-export-button"
+                            iconCls="icon-download"
+                            tip="Export"
+                            tipPosition={IconButton.TipPosition.RIGHT}/>
+            </a>
 
             <NavSearch visible={searchDrawerVisible}
                        onRequestClose={hideSearch}/>
 
             <AddPatientDialog visible={addPatientDialogVisible}
                               onRequestClose={hideAddPatient}/>
-
-            <DownloadField ref={downloadFieldRef}
-                           url={`${config.appBaseUrl}/patient/exportPatients`}/>
 
             {children}
 
@@ -136,6 +122,8 @@ const NavBarTop = ({
 };
 
 NavBarTop.propTypes = {
+
+    children: PropTypes.any,
 
     isFold: PropTypes.bool,
 
