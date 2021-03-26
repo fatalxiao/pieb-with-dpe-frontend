@@ -164,14 +164,14 @@ const ObservalForm = ({
                                 label="First PCA Time"
                                 value={formatString(form.firstPcaTime)}
                                 onChange={v => updateField('firstPcaTime', v)}/>
-                    {
-                        pcaDuration ?
-                            <DisplayField className="col-6 duration-tag">
-                                {pcaDuration}
-                            </DisplayField>
-                            :
-                            null
-                    }
+                    {/* { */}
+                    {/*    pcaDuration ?*/}
+                    {/*        <DisplayField className="col-6 duration-tag">*/}
+                    {/*            {pcaDuration}*/}
+                    {/*        </DisplayField>*/}
+                    {/*        :*/}
+                    {/*        null*/}
+                    {/* } */}
                 </div>
                 <div className="row">
                     <TextField className="col-6"
@@ -187,14 +187,14 @@ const ObservalForm = ({
                                 label="First Manual Bolus Time"
                                 value={formatString(form.firstManualBolusTime)}
                                 onChange={v => updateField('firstManualBolusTime', v)}/>
-                    {
-                        bolusDuration ?
-                            <DisplayField className="col-6 duration-tag">
-                                {bolusDuration}
-                            </DisplayField>
-                            :
-                            null
-                    }
+                    {/* { */}
+                    {/*    bolusDuration ?*/}
+                    {/*        <DisplayField className="col-6 duration-tag">*/}
+                    {/*            {bolusDuration}*/}
+                    {/*        </DisplayField>*/}
+                    {/*        :*/}
+                    {/*        null*/}
+                    {/* } */}
                 </div>
                 <div className="row">
                     <TextField className="col-6"
