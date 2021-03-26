@@ -67,7 +67,7 @@ const AnalgesiaTable = ({
             key: 'timePoint',
             width: 48,
             headRenderer: 'Time',
-            bodyRenderer: rowData => rowData.timePoint <= 60 ?
+            bodyRenderer: rowData => rowData.timePoint < 60 ?
                 `${rowData.timePoint} min`
                 :
                 `${rowData.timePoint / 60} h`
