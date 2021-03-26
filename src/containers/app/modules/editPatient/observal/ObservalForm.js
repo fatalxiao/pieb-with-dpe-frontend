@@ -240,14 +240,14 @@ const ObservalForm = ({
                                 label="Birth Time"
                                 value={formatString(form.birthTime)}
                                 onChange={v => updateField('birthTime', v)}/>
-                    {
-                        birthDuration ?
-                            <DisplayField className="col-6 duration-tag">
-                                {birthDuration}
-                            </DisplayField>
-                            :
-                            null
-                    }
+                    {/* { */}
+                    {/*    birthDuration ?*/}
+                    {/*        <DisplayField className="col-6 duration-tag">*/}
+                    {/*            {birthDuration}*/}
+                    {/*        </DisplayField>*/}
+                    {/*        :*/}
+                    {/*        null*/}
+                    {/* } */}
                 </div>
                 <div className="row">
                     <TextField className="col-3 unit-g"
