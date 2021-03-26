@@ -13,7 +13,6 @@ import * as actions from 'reduxes/actions';
 import Checkbox from 'customized/CustomizedMaterialCheckbox';
 import TextField from 'customized/CustomizedMaterialTextField';
 import TextArea from 'customized/CustomizedMaterialTextArea';
-import DateTimePicker from 'customized/CustomizedMaterialDateTimePicker';
 import TimePicker from 'customized/CustomizedMaterialTimePicker';
 import FieldSet from 'components/FieldSet';
 import DisplayField from 'components/DisplayField';
@@ -121,10 +120,10 @@ const ObservalForm = ({
                                     valueField="id"
                                     displayField="name"
                                     onChange={v => updateField('observalEndPoint', v)}/>
-                    <DateTimePicker className="col-6"
-                                    label="Cervix Fully Dilated Time"
-                                    value={formatString(form.cervixFullyDilatedTime)}
-                                    onChange={v => updateField('cervixFullyDilatedTime', v)}/>
+                    <TimePicker className="col-6"
+                                label="Cervix Fully Dilated Time"
+                                value={formatString(form.cervixFullyDilatedTime)}
+                                onChange={v => updateField('cervixFullyDilatedTime', v)}/>
                     <DropdownSelect className="col-3"
                                     data={epPlacementPoints}
                                     value={form.epPlacementPoint}
@@ -161,10 +160,10 @@ const ObservalForm = ({
 
             <FieldSet title="3. PCA">
                 <div className="row">
-                    <DateTimePicker className="col-6"
-                                    label="First PCA Time"
-                                    value={formatString(form.firstPcaTime)}
-                                    onChange={v => updateField('firstPcaTime', v)}/>
+                    <TimePicker className="col-6"
+                                label="First PCA Time"
+                                value={formatString(form.firstPcaTime)}
+                                onChange={v => updateField('firstPcaTime', v)}/>
                     {
                         pcaDuration ?
                             <DisplayField className="col-6 duration-tag">
@@ -184,10 +183,10 @@ const ObservalForm = ({
 
             <FieldSet title="4. Bolus">
                 <div className="row">
-                    <DateTimePicker className="col-6"
-                                    label="First Manual Bolus Time"
-                                    value={formatString(form.firstManualBolusTime)}
-                                    onChange={v => updateField('firstManualBolusTime', v)}/>
+                    <TimePicker className="col-6"
+                                label="First Manual Bolus Time"
+                                value={formatString(form.firstManualBolusTime)}
+                                onChange={v => updateField('firstManualBolusTime', v)}/>
                     {
                         bolusDuration ?
                             <DisplayField className="col-6 duration-tag">
@@ -237,10 +236,10 @@ const ObservalForm = ({
 
             <FieldSet title="7. Foetal">
                 <div className="row">
-                    <DateTimePicker className="col-3"
-                                    label="Birth Time"
-                                    value={formatString(form.birthTime)}
-                                    onChange={v => updateField('birthTime', v)}/>
+                    <TimePicker className="col-3"
+                                label="Birth Time"
+                                value={formatString(form.birthTime)}
+                                onChange={v => updateField('birthTime', v)}/>
                     {
                         birthDuration ?
                             <DisplayField className="col-6 duration-tag">

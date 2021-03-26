@@ -25,3 +25,19 @@
         }
     }
 }
+
+.portal .popup.material-time-picker-popup {
+    width: 200px;
+
+    .calendar {
+        width: 100%;
+
+        .time-items {
+            width: 50% !important;
+
+            &.seconds {
+                display: none;
+            }
+        }
+    }
+}
