@@ -14,6 +14,7 @@ import Checkbox from 'customized/CustomizedMaterialCheckbox';
 import TextField from 'customized/CustomizedMaterialTextField';
 import TextArea from 'customized/CustomizedMaterialTextArea';
 import DateTimePicker from 'customized/CustomizedMaterialDateTimePicker';
+import TimePicker from 'customized/CustomizedMaterialTimePicker';
 import FieldSet from 'components/FieldSet';
 import DisplayField from 'components/DisplayField';
 import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
@@ -109,10 +110,10 @@ const ObservalForm = ({
 
             <FieldSet title="1. Basic Information">
                 <div className="row">
-                    <DateTimePicker className="col-6"
-                                    label="Initial Time"
-                                    value={formatString(form.initialTime)}
-                                    onChange={v => updateField('initialTime', v)}/>
+                    <TimePicker className="col-6"
+                                label="Initial Time"
+                                value={formatString(form.initialTime)}
+                                onChange={v => updateField('initialTime', v)}/>
                     <DropdownSelect className="col-6"
                                     data={observalEndPoints}
                                     value={form.observalEndPoint}
