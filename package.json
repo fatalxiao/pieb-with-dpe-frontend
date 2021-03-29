@@ -28,7 +28,7 @@
         "url": "https://github.com/fatalxiao/pieb-with-dpe-frontend/issues"
     },
     "dependencies": {
-        "alcedo-ui": "2.56.0",
+        "alcedo-ui": "2.56.1",
         "babel-polyfill": "6.26.0",
         "classnames": "2.2.6",
         "connected-react-router": "6.9.1",
