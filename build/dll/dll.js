@@ -1,6 +1,12 @@
-const webpack = require('webpack'),
+/**
+ * @file dll.js
+ */
 
-    webpackConfig = require('./webpack.config.dll.js');
+// Statics
+const webpackConfig = require('./webpack.config.dll.js');
+
+// Vendors
+const webpack = require('webpack');
 
 console.log('WAIT', 'Building DLL...');
 

@@ -1,13 +1,28 @@
-const webpack = require('webpack'),
-    AssetsPlugin = require('assets-webpack-plugin'),
-    CompressionPlugin = require('compression-webpack-plugin'),
+/**
+ * @file webpack.config.dll.js
+ */
 
-    config = require('../config.js'),
-    utils = require('../utils.js'),
+// Statics
+const config = require('../config.js');
+const utils = require('../utils.js');
 
+// Vendors
+const {IgnorePlugin, DllPlugin} = require('webpack');
+const AssetsPlugin = require('assets-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+
+const
+
+    // env
     env = process.env.NODE_ENV,
+
+    // DllPlugin library name
     library = '[name]_lib';
 
+/**
+ * webpack dll config
+ * @type {{}}
+ */
 module.exports = {
 
     mode: 'production',
@@ -23,16 +38,16 @@ module.exports = {
     output: {
         publicPath: './',
         path: config.assetsRoot,
-        filename: utils.assetsSubPath('vendors/[name].[chunkhash].js', env),
+        filename: utils.assetsSubPath('vendors/[name].[chunkhash].js'),
         library
     },
 
     plugins: [
 
-        // 排除moment的locale文件夹下的语言包
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+        // 排除 moment 的 locale 文件夹下的语言包
+        new IgnorePlugin(/^\.\/locale$/, /moment$/),
 
-        new webpack.DllPlugin({
+        new DllPlugin({
             context: __dirname,
             path: utils.assetsVendorsAbsolutePath('[name]-manifest.json', env),
             name: library
@@ -40,7 +55,7 @@ module.exports = {
 
         new AssetsPlugin({
             path: config.assetsRoot,
-            filename: utils.assetsSubPath('vendors/vendors-assets.json', env)
+            filename: utils.assetsSubPath('vendors/vendors-assets.json')
         }),
 
         new CompressionPlugin({

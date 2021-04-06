@@ -8,6 +8,7 @@ const {merge} = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const baseWebpackConfig = require('../webpack.config.base.js');
 
+// env
 const env = process.env.NODE_ENV;
 
 /**
