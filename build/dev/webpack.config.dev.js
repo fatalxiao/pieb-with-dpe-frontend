@@ -1,15 +1,26 @@
-const {DefinePlugin, HotModuleReplacementPlugin} = require('webpack'),
-    {merge} = require('webpack-merge'),
-    HtmlWebpackPlugin = require('html-webpack-plugin'),
+/**
+ * @file webpack.config.dev.js
+ */
 
-    baseWebpackConfig = require('../webpack.config.base.js'),
+// Vendors
+const {DefinePlugin, HotModuleReplacementPlugin} = require('webpack');
+const {merge} = require('webpack-merge');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const baseWebpackConfig = require('../webpack.config.base.js');
 
-    env = process.env.NODE_ENV;
+const env = process.env.NODE_ENV;
 
-Object.keys(baseWebpackConfig.entry).forEach(name => {
-    baseWebpackConfig.entry[name] = ['./build/dev/client'].concat(baseWebpackConfig.entry[name]);
-});
+/**
+ * concat entry
+ */
+Object.keys(baseWebpackConfig.entry).forEach(name =>
+    baseWebpackConfig.entry[name] = ['./build/dev/client'].concat(baseWebpackConfig.entry[name])
+);
 
+/**
+ * webpack dev config
+ * @type {{}}
+ */
 module.exports = merge(baseWebpackConfig, {
 
     mode: 'development',
