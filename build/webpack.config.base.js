@@ -8,7 +8,7 @@ const config = require('./config.js');
 // Vendors
 const os = require('os');
 const HappyPack = require('happypack');
-const {rootPath, assetsSubPath} = require('./utils.js');
+const {resolveRootPath, getAssetsSubPath} = require('./utils.js');
 
 /**
  * css loader 配置
@@ -37,7 +37,7 @@ const cssLoaderConfig = ['style-loader', {
 module.exports = {
 
     entry: {
-        app: rootPath('src/index.js')
+        app: resolveRootPath('src/index.js')
     },
 
     output: {
@@ -49,19 +49,19 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.scss'],
         alias: {
-            'src': rootPath('src'),
-            'apis': rootPath('src/apis'),
-            'assets': rootPath('src/assets'),
-            'scss': rootPath('src/assets/scss'),
-            'images': rootPath('src/assets/images'),
-            'messages': rootPath('src/assets/messages'),
-            'stylesheets': rootPath('src/assets/stylesheets'),
-            'containers': rootPath('src/containers'),
-            'components': rootPath('src/components'),
-            'customized': rootPath('src/customized'),
-            'reduxes': rootPath('src/reduxes'),
-            'statics': rootPath('src/statics'),
-            'vendors': rootPath('src/vendors')
+            'src': resolveRootPath('src'),
+            'apis': resolveRootPath('src/apis'),
+            'assets': resolveRootPath('src/assets'),
+            'scss': resolveRootPath('src/assets/scss'),
+            'images': resolveRootPath('src/assets/images'),
+            'messages': resolveRootPath('src/assets/messages'),
+            'stylesheets': resolveRootPath('src/assets/stylesheets'),
+            'containers': resolveRootPath('src/containers'),
+            'components': resolveRootPath('src/components'),
+            'customized': resolveRootPath('src/customized'),
+            'reduxes': resolveRootPath('src/reduxes'),
+            'statics': resolveRootPath('src/statics'),
+            'vendors': resolveRootPath('src/vendors')
         }
     },
 
@@ -74,14 +74,14 @@ module.exports = {
             loader: 'url-loader',
             options: {
                 limit: 1000,
-                name: assetsSubPath('img/[name].[hash:7].[ext]')
+                name: getAssetsSubPath('img/[name].[hash:7].[ext]')
             }
         }, {
             test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
             loader: 'url-loader',
             options: {
                 limit: 1000,
-                name: assetsSubPath('fonts/[name].[hash:7].[ext]')
+                name: getAssetsSubPath('fonts/[name].[hash:7].[ext]')
             }
         }, {
             test: /\.scss$/,
@@ -89,7 +89,7 @@ module.exports = {
                 loader: 'sass-loader',
                 options: {
                     sassOptions: {
-                        includePaths: [rootPath('src/assets')]
+                        includePaths: [resolveRootPath('src/assets')]
                     }
                 }
             }]

@@ -13,7 +13,7 @@ const path = require('path');
  * @param p
  * @returns {string}
  */
-function rootPath(p) {
+function resolveRootPath(p) {
     return path.posix.join(__dirname, '..', p);
 }
 
@@ -22,7 +22,7 @@ function rootPath(p) {
  * @param p
  * @returns {string}
  */
-function assetsPath(p) {
+function getAssetsPath(p) {
     return path.posix.join(config.assetsDirectory, p);
 }
 
@@ -31,7 +31,7 @@ function assetsPath(p) {
  * @param p
  * @returns {string}
  */
-function assetsSubPath(p) {
+function getAssetsSubPath(p) {
     return path.posix.join(config.assetsSubDirectory, p);
 }
 
@@ -41,11 +41,11 @@ function assetsSubPath(p) {
  * @param env
  * @returns {string}
  */
-function assetsVendorsAbsolutePath(p, env = 'production') {
-    return path.posix.join(config.assetsRoot, assetsSubPath(`vendors/${p}`));
+function getAssetsVendorsAbsolutePath(p, env = 'production') {
+    return path.posix.join(config.assetsRoot, getAssetsSubPath(`vendors/${p}`));
 }
 
-exports.rootPath = rootPath;
-exports.assetsPath = assetsPath;
-exports.assetsSubPath = assetsSubPath;
-exports.assetsVendorsAbsolutePath = assetsVendorsAbsolutePath;
+exports.resolveRootPath = resolveRootPath;
+exports.getAssetsPath = getAssetsPath;
+exports.getAssetsSubPath = getAssetsSubPath;
+exports.getAssetsVendorsAbsolutePath = getAssetsVendorsAbsolutePath;

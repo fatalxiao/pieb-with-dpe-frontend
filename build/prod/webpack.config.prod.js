@@ -13,13 +13,13 @@ const CompressionPlugin = require('compression-webpack-plugin');
 // Statics
 const config = require('../config.js');
 const baseWebpackConfig = require('../webpack.config.base.js');
-const {rootPath, assetsSubPath, assetsVendorsAbsolutePath} = require('../utils.js');
+const {resolveRootPath, getAssetsSubPath, getAssetsVendorsAbsolutePath} = require('../utils.js');
 
 // server env
 const env = process.env.NODE_ENV;
 
 // HtmlIncludeAssetsPlugin Assets
-const vendorsAssets = require(assetsVendorsAbsolutePath('vendors-assets.json', env));
+const vendorsAssets = require(getAssetsVendorsAbsolutePath('vendors-assets.json', env));
 
 /**
  * webpack prod config
@@ -34,8 +34,8 @@ module.exports = merge(baseWebpackConfig, {
     output: {
         publicPath: config.assetsPublicPath,
         path: config.assetsRoot,
-        filename: assetsSubPath('js/[name].[chunkhash].js'),
-        chunkFilename: assetsSubPath('js/[id].[chunkhash].js')
+        filename: getAssetsSubPath('js/[name].[chunkhash].js'),
+        chunkFilename: getAssetsSubPath('js/[id].[chunkhash].js')
     },
 
     optimization: {
@@ -61,7 +61,7 @@ module.exports = merge(baseWebpackConfig, {
 
         new CopyPlugin({
             patterns: [{
-                from: rootPath('static'),
+                from: resolveRootPath('static'),
                 to: config.assetsSubDirectory,
                 globOptions: {
                     ignore: ['.*']
@@ -71,19 +71,19 @@ module.exports = merge(baseWebpackConfig, {
 
         new DllReferencePlugin({
             context: __dirname,
-            manifest: require(assetsVendorsAbsolutePath('polyfill-manifest.json', env))
+            manifest: require(getAssetsVendorsAbsolutePath('polyfill-manifest.json', env))
         }),
         new DllReferencePlugin({
             context: __dirname,
-            manifest: require(assetsVendorsAbsolutePath('moment-manifest.json', env))
+            manifest: require(getAssetsVendorsAbsolutePath('moment-manifest.json', env))
         }),
         new DllReferencePlugin({
             context: __dirname,
-            manifest: require(assetsVendorsAbsolutePath('react-manifest.json', env))
+            manifest: require(getAssetsVendorsAbsolutePath('react-manifest.json', env))
         }),
         new DllReferencePlugin({
             context: __dirname,
-            manifest: require(assetsVendorsAbsolutePath('tools-manifest.json', env))
+            manifest: require(getAssetsVendorsAbsolutePath('tools-manifest.json', env))
         }),
 
         new HtmlPlugin({

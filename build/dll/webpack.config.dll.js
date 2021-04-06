@@ -38,7 +38,7 @@ module.exports = {
     output: {
         publicPath: './',
         path: config.assetsRoot,
-        filename: utils.assetsSubPath('vendors/[name].[chunkhash].js'),
+        filename: utils.getAssetsSubPath('vendors/[name].[chunkhash].js'),
         library
     },
 
@@ -49,13 +49,13 @@ module.exports = {
 
         new DllPlugin({
             context: __dirname,
-            path: utils.assetsVendorsAbsolutePath('[name]-manifest.json', env),
+            path: utils.getAssetsVendorsAbsolutePath('[name]-manifest.json', env),
             name: library
         }),
 
         new AssetsPlugin({
             path: config.assetsRoot,
-            filename: utils.assetsSubPath('vendors/vendors-assets.json')
+            filename: utils.getAssetsSubPath('vendors/vendors-assets.json')
         }),
 
         new CompressionPlugin({
