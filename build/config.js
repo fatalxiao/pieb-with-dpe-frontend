@@ -2,6 +2,7 @@
  * @file config.js
  */
 
+// Vendors
 const path = require('path');
 
 module.exports = {

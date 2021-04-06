@@ -2,37 +2,38 @@
  * @file webpack.config.base.js
  */
 
-const
+// Statics
+const config = require('./config.js');
 
-    os = require('os'),
-    HappyPack = require('happypack'),
+// Vendors
+const os = require('os');
+const HappyPack = require('happypack');
+const {rootPath, assetsSubPath} = require('./utils.js');
 
-    // Statics
-    config = require('./config.js'),
-
-    // Vendors
-    {rootPath, assetsSubPath} = require('./utils.js'),
-
-    /**
-     * css loader 配置
-     * @type {[]}
-     */
-    cssLoaderConfig = ['style-loader', {
-        loader: 'css-loader',
-        options: {
-            importLoaders: 1
+/**
+ * css loader 配置
+ * @type {[]}
+ */
+const cssLoaderConfig = ['style-loader', {
+    loader: 'css-loader',
+    options: {
+        importLoaders: 1
+    }
+}, {
+    loader: 'postcss-loader',
+    options: {
+        postcssOptions: {
+            plugins: [
+                'postcss-preset-env'
+            ]
         }
-    }, {
-        loader: 'postcss-loader',
-        options: {
-            postcssOptions: {
-                plugins: [
-                    'postcss-preset-env'
-                ]
-            }
-        }
-    }];
+    }
+}];
 
+/**
+ * webpack base config
+ * @type {{}}
+ */
 module.exports = {
 
     entry: {

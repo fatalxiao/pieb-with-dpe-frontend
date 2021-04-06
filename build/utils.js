@@ -2,10 +2,11 @@
  * @file utils.js
  */
 
-const path = require('path');
-
 // Statics
 const config = require('./config.js');
+
+// Vendors
+const path = require('path');
 
 /**
  * 处理项目根目录下的路径

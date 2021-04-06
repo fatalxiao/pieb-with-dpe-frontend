@@ -1,68 +1,89 @@
-const opn = require('opn'),
-    webpack = require('webpack'),
-    {createProxyMiddleware} = require('http-proxy-middleware'),
-    history = require('connect-history-api-fallback'),
+/**
+ * @file server.js
+ */
 
-    config = require('../config.js'),
+// Statics
+const config = require('../config.js');
+const webpackConfig = require('./webpack.config.dev.js');
 
+// Vendors
+const express = require('express');
+const opn = require('opn');
+const webpack = require('webpack');
+const {createProxyMiddleware} = require('http-proxy-middleware');
+const history = require('connect-history-api-fallback');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+
+const
+
+    /**
+     * server 端口
+     * @type {string|number}
+     */
     port = process.env.PORT || config.development.port,
-    uri = 'http://localhost:' + port,
 
-    proxyTable = config.development.proxyTable,
+    /**
+     * server url
+     * @type {string}
+     */
+    url = 'http://localhost:' + port,
 
-    express = require('express'),
+    /**
+     * express app
+     * @type {*|Express}
+     */
     app = express(),
 
-    webpackConfig = require('./webpack.config.dev.js'),
-    compiler = webpack(webpackConfig),
+    /**
+     * webpack compiler
+     */
+    compiler = webpack(webpackConfig);
 
-    devMiddleware = require('webpack-dev-middleware')(compiler, {
-        publicPath: webpackConfig.output.publicPath
-    }),
+/**
+ * dev middleware
+ */
+const devMiddleware = webpackDevMiddleware(compiler, {
+    publicPath: webpackConfig.output.publicPath
+});
+devMiddleware.waitUntilValid(() =>
+    console.log('DONE', `Listening At ${url} `)
+);
 
-    hotMiddleware = require('webpack-hot-middleware')(compiler, {
-        log: false
-    });
-
-compiler.hooks.compilation.tap('html-webpack-plugin-after-emit', () => {
-    hotMiddleware.publish({action: 'reload'});
+/**
+ * hot middleware
+ */
+const hotMiddleware = webpackHotMiddleware(compiler, {
+    log: false
 });
 
-// build proxies
-Object.keys(proxyTable).forEach(context => {
+/**
+ * webpack compiler
+ */
+compiler.hooks.compilation.tap('html-webpack-plugin-after-emit', () =>
+    hotMiddleware.publish({
+        action: 'reload'
+    })
+);
 
-    let options = proxyTable[context];
-
-    if (typeof options === 'string') {
-        options = {
-            target: options,
+/**
+ * 配置代理
+ */
+const proxyTable = config.development.proxyTable;
+Object.entries(proxyTable).forEach(([context, target]) =>
+    app.use(
+        createProxyMiddleware(context, {
+            target,
             changeOrigin: true,
             logLevel: 'error'
-        };
-    }
+        })
+    )
+);
 
-    options.onProxyReq = (proxyReq, req) => {
-
-        // add token to header when token in url query
-        if (req.headers && !req.headers.token && req.query && req.query.token) {
-            proxyReq.setHeader('token', req.query.token);
-        }
-
-    };
-
-    app.use(createProxyMiddleware(options.filter || context, options));
-
-});
-
-app
-    .use(history())
-    .use(devMiddleware)
-    .use(hotMiddleware)
-    .use(config.development.assetsVirtualRoot, express.static('./static'));
-
-devMiddleware.waitUntilValid(() => {
-    console.log('DONE', `Listening At ${uri} `);
-});
+app.use(history())
+   .use(devMiddleware)
+   .use(hotMiddleware)
+   .use(config.development.assetsVirtualRoot, express.static('./static'));
 
 module.exports = app.listen(port, err => {
 
@@ -70,6 +91,6 @@ module.exports = app.listen(port, err => {
         return console.error(err);
     }
 
-    opn(uri);
+    opn(url);
 
 });
