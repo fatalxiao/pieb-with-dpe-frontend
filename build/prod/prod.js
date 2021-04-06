@@ -1,6 +1,12 @@
-const webpack = require('webpack'),
+/**
+ * @file prod.js
+ */
 
-    webpackConfig = require('./webpack.config.prod.js');
+// Statics
+const webpackConfig = require('./webpack.config.prod.js');
+
+// Vendors
+const webpack = require('webpack');
 
 console.log('WAIT', 'Building Production...');
 

@@ -1,18 +1,30 @@
-const path = require('path'),
-    webpack = require('webpack'),
-    {merge} = require('webpack-merge'),
-    CopyPlugin = require('copy-webpack-plugin'),
-    HtmlPlugin = require('html-webpack-plugin'),
-    HtmlIncludeAssetsPlugin = require('html-webpack-include-assets-plugin'),
-    CompressionPlugin = require('compression-webpack-plugin'),
+/**
+ * @file webpack.config.prod.js
+ */
 
-    config = require('../config.js'),
-    baseWebpackConfig = require('../webpack.config.base.js'),
-    utils = require('../utils.js'),
+// Vendors
+const {DefinePlugin, DllReferencePlugin} = require('webpack');
+const {merge} = require('webpack-merge');
+const CopyPlugin = require('copy-webpack-plugin');
+const HtmlPlugin = require('html-webpack-plugin');
+const HtmlIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
-    env = process.env.NODE_ENV,
-    vendorsAssets = require(utils.assetsVendorsAbsolutePath('vendors-assets.json', env));
+// Statics
+const config = require('../config.js');
+const baseWebpackConfig = require('../webpack.config.base.js');
+const {rootPath, assetsSubPath, assetsVendorsAbsolutePath} = require('../utils.js');
 
+// server env
+const env = process.env.NODE_ENV;
+
+// HtmlIncludeAssetsPlugin Assets
+const vendorsAssets = require(assetsVendorsAbsolutePath('vendors-assets.json', env));
+
+/**
+ * webpack prod config
+ * @type {{}}
+ */
 module.exports = merge(baseWebpackConfig, {
 
     mode: 'production',
@@ -20,9 +32,10 @@ module.exports = merge(baseWebpackConfig, {
     devtool: false,
 
     output: {
+        publicPath: config.assetsPublicPath,
         path: config.assetsRoot,
-        filename: utils.assetsSubPath('js/[name].[chunkhash].js', env),
-        chunkFilename: utils.assetsSubPath('js/[id].[chunkhash].js', env)
+        filename: assetsSubPath('js/[name].[chunkhash].js'),
+        chunkFilename: assetsSubPath('js/[id].[chunkhash].js')
     },
 
     optimization: {
@@ -42,19 +55,13 @@ module.exports = merge(baseWebpackConfig, {
 
     plugins: [
 
-        new webpack.DefinePlugin({
+        new DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(env)
         }),
 
-        // new CopyPlugin([{
-        //     from: path.resolve(__dirname, '../../static'),
-        //     to: config.assetsSubDirectory,
-        //     ignore: ['.*']
-        // }]),
-
         new CopyPlugin({
             patterns: [{
-                from: path.resolve(__dirname, '../../static'),
+                from: rootPath('static'),
                 to: config.assetsSubDirectory,
                 globOptions: {
                     ignore: ['.*']
@@ -62,21 +69,21 @@ module.exports = merge(baseWebpackConfig, {
             }]
         }),
 
-        new webpack.DllReferencePlugin({
+        new DllReferencePlugin({
             context: __dirname,
-            manifest: require(utils.assetsVendorsAbsolutePath('polyfill-manifest.json', env))
+            manifest: require(assetsVendorsAbsolutePath('polyfill-manifest.json', env))
         }),
-        new webpack.DllReferencePlugin({
+        new DllReferencePlugin({
             context: __dirname,
-            manifest: require(utils.assetsVendorsAbsolutePath('moment-manifest.json', env))
+            manifest: require(assetsVendorsAbsolutePath('moment-manifest.json', env))
         }),
-        new webpack.DllReferencePlugin({
+        new DllReferencePlugin({
             context: __dirname,
-            manifest: require(utils.assetsVendorsAbsolutePath('react-manifest.json', env))
+            manifest: require(assetsVendorsAbsolutePath('react-manifest.json', env))
         }),
-        new webpack.DllReferencePlugin({
+        new DllReferencePlugin({
             context: __dirname,
-            manifest: require(utils.assetsVendorsAbsolutePath('tools-manifest.json', env))
+            manifest: require(assetsVendorsAbsolutePath('tools-manifest.json', env))
         }),
 
         new HtmlPlugin({
@@ -88,7 +95,7 @@ module.exports = merge(baseWebpackConfig, {
                 removeComments: true,
                 collapseWhitespace: true
             },
-            chunksSortMode: 'none'
+            chunksSortMode: 'auto'
         }),
 
         new HtmlIncludeAssetsPlugin({
