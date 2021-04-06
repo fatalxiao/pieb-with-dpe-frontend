@@ -22,7 +22,7 @@ module.exports = {
 
     output: {
         publicPath: './',
-        path: config[env].assetsRoot,
+        path: config.assetsRoot,
         filename: utils.assetsSubPath('vendors/[name].[chunkhash].js', env),
         library
     },
@@ -39,7 +39,7 @@ module.exports = {
         }),
 
         new AssetsPlugin({
-            path: config[env].assetsRoot,
+            path: config.assetsRoot,
             filename: utils.assetsSubPath('vendors/vendors-assets.json', env)
         }),
 

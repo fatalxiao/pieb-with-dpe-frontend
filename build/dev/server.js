@@ -4,7 +4,6 @@ const opn = require('opn'),
     history = require('connect-history-api-fallback'),
 
     config = require('../config.js'),
-    utils = require('../utils.js'),
 
     port = process.env.PORT || config.development.port,
     uri = 'http://localhost:' + port,
@@ -43,10 +42,6 @@ Object.keys(proxyTable).forEach(context => {
     }
 
     options.onProxyReq = (proxyReq, req) => {
-
-        // add ip to header
-        const ip = utils.getClientIp(req);
-        ip && proxyReq.setHeader('ip', utils.ipParse(ip));
 
         // add token to header when token in url query
         if (req.headers && !req.headers.token && req.query && req.query.token) {

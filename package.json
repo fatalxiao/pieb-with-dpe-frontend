@@ -11,8 +11,7 @@
         "package": "cross-env NODE_ENV=production node build/prod/prod.js",
         "build": "npm i && npm run clean && npm run dll && npm run package",
         "run": "cross-env NODE_ENV=production node build/run/server.js",
-        "start": "npm run build && npm run run",
-        "zip": "node build/zip/zip.js"
+        "start": "npm run build && npm run run"
     },
     "repository": {
         "type": "git",

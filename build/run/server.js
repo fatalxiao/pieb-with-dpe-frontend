@@ -26,15 +26,10 @@ Object.keys(proxyTable).forEach(context => {
         };
     }
 
-    options.onProxyReq = (proxyReq, req, res) => {
-
-        const ip = utils.getClientIp(req);
-        ip && proxyReq.setHeader('ip', utils.ipParse(ip));
-
+    options.onProxyReq = (proxyReq, req) => {
         if (req.headers && !req.headers.token && req.query && req.query.token) {
             proxyReq.setHeader('token', req.query.token);
         }
-
     };
 
     app.use(createProxyMiddleware(options.filter || context, options));
@@ -43,7 +38,7 @@ Object.keys(proxyTable).forEach(context => {
 
 app.use(compression())
    .use(history())
-   .use(express.static(config[env].assetsRoot, {
+   .use(express.static(config.assetsRoot, {
        setHeaders: (res, path) => {
            res.setHeader('Cache-Control', path.endsWith('index.html') ?
                'no-cache, no-store, no_store, max-age=0, must-revalidate' : 'max-age=315360000'

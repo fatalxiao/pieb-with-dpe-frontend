@@ -11,7 +11,7 @@ const
     config = require('./config.js'),
 
     // Vendors
-    {resolve, assetsSubPath} = require('./utils.js'),
+    {rootPath, assetsSubPath} = require('./utils.js'),
 
     /**
      * css loader 配置
@@ -36,11 +36,11 @@ const
 module.exports = {
 
     entry: {
-        app: resolve('src/index.js')
+        app: rootPath('src/index.js')
     },
 
     output: {
-        path: config.production.assetsRoot,
+        path: config.assetsRoot,
         filename: '[name].js',
         publicPath: config.assetsPublicPath
     },
@@ -48,19 +48,19 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.scss'],
         alias: {
-            'src': resolve('src'),
-            'apis': resolve('src/apis'),
-            'assets': resolve('src/assets'),
-            'scss': resolve('src/assets/scss'),
-            'images': resolve('src/assets/images'),
-            'messages': resolve('src/assets/messages'),
-            'stylesheets': resolve('src/assets/stylesheets'),
-            'containers': resolve('src/containers'),
-            'components': resolve('src/components'),
-            'customized': resolve('src/customized'),
-            'reduxes': resolve('src/reduxes'),
-            'statics': resolve('src/statics'),
-            'vendors': resolve('src/vendors')
+            'src': rootPath('src'),
+            'apis': rootPath('src/apis'),
+            'assets': rootPath('src/assets'),
+            'scss': rootPath('src/assets/scss'),
+            'images': rootPath('src/assets/images'),
+            'messages': rootPath('src/assets/messages'),
+            'stylesheets': rootPath('src/assets/stylesheets'),
+            'containers': rootPath('src/containers'),
+            'components': rootPath('src/components'),
+            'customized': rootPath('src/customized'),
+            'reduxes': rootPath('src/reduxes'),
+            'statics': rootPath('src/statics'),
+            'vendors': rootPath('src/vendors')
         }
     },
 
@@ -88,7 +88,7 @@ module.exports = {
                 loader: 'sass-loader',
                 options: {
                     sassOptions: {
-                        includePaths: [resolve('src/assets')]
+                        includePaths: [rootPath('src/assets')]
                     }
                 }
             }]

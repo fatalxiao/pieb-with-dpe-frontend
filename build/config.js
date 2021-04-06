@@ -11,12 +11,13 @@ module.exports = {
     assetsSubDirectory: 'static',
     productionGzipExtensions: ['js', 'css'],
 
+    assetsRoot: path.resolve(__dirname, '../dist'),
+
     development: {
         port: 4000,
         srcRoot: path.resolve(__dirname, '../src'),
         index: path.resolve(__dirname, '../src/index.html'),
         assetsVirtualRoot: path.posix.join('/', 'static'),
-        assetsRoot: path.resolve(__dirname, '../dist'),
         proxyTable: {
             '/pieb-with-dpe': 'http://localhost:4100'
         }
@@ -25,7 +26,6 @@ module.exports = {
     production: {
         port: 4002,
         index: path.resolve(__dirname, '../dist/index.html'),
-        assetsRoot: path.resolve(__dirname, '../dist'),
         proxyTable: {
             '/pieb-with-dpe': 'http://localhost:4100'
         }
