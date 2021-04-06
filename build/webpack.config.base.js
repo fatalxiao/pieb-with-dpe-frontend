@@ -1,5 +1,4 @@
 const os = require('os'),
-    path = require('path'),
 
     HappyPack = require('happypack'),
 
@@ -24,10 +23,6 @@ const os = require('os'),
 
     happyThreadPool = HappyPack.ThreadPool({size: os.cpus().length});
 
-function resolve(dir) {
-    return path.join(__dirname, '..', dir);
-}
-
 module.exports = {
 
     entry: {
@@ -43,27 +38,26 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.scss'],
         alias: {
-            'src': resolve('src'),
-            'apis': resolve('src/apis'),
-            'assets': resolve('src/assets'),
-            'scss': resolve('src/assets/scss'),
-            'images': resolve('src/assets/images'),
-            'messages': resolve('src/assets/messages'),
-            'stylesheets': resolve('src/assets/stylesheets'),
-            'containers': resolve('src/containers'),
-            'components': resolve('src/components'),
-            'customized': resolve('src/customized'),
-            'reduxes': resolve('src/reduxes'),
-            'statics': resolve('src/statics'),
-            'vendors': resolve('src/vendors')
+            'src': './src',
+            'apis': './src/apis',
+            'assets': './src/assets',
+            'scss': './src/assets/scss',
+            'images': './src/assets/images',
+            'messages': './src/assets/messages',
+            'stylesheets': './src/assets/stylesheets',
+            'containers': './src/containers',
+            'components': './src/components',
+            'customized': './src/customized',
+            'reduxes': './src/reduxes',
+            'statics': './src/statics',
+            'vendors': './src/vendors'
         }
     },
 
     module: {
         rules: [{
             test: /\.js$/,
-            use: 'happypack/loader?id=js',
-            include: [resolve('src')]
+            use: 'happypack/loader?id=js'
         }, {
             test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
             loader: 'url-loader',
@@ -81,9 +75,11 @@ module.exports = {
         }, {
             test: /\.scss$/,
             use: [...cssLoaderConfig, {
-                loader: 'fast-sass-loader',
+                loader: 'sass-loader',
                 options: {
-                    includePaths: ['./src/assets']
+                    sassOptions: {
+                        includePaths: ['./src/assets']
+                    }
                 }
             }]
         }, {

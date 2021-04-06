@@ -2,7 +2,6 @@ const opn = require('opn'),
     webpack = require('webpack'),
     {createProxyMiddleware} = require('http-proxy-middleware'),
     history = require('connect-history-api-fallback'),
-    log = require('friendly-errors-webpack-plugin/src/output'),
 
     config = require('../config.js'),
     utils = require('../utils.js'),
@@ -67,7 +66,7 @@ app
     .use(config.development.assetsVirtualRoot, express.static('./static'));
 
 devMiddleware.waitUntilValid(() => {
-    log.title('success', 'DONE', `Listening At ${uri} `);
+    console.log('DONE', `Listening At ${uri} `);
 });
 
 module.exports = app.listen(port, err => {

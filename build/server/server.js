@@ -2,7 +2,6 @@ const path = require('path'),
     express = require('express'),
     history = require('connect-history-api-fallback'),
     compression = require('compression'),
-    log = require('friendly-errors-webpack-plugin/src/output'),
 
     port = process.env.port || 4000,
 
@@ -20,10 +19,10 @@ app.use(compression())
    .listen(port, err => {
 
        if (err) {
-           log.title('error', 'ERROR', `${err} `);
+           console.log('ERROR', `${err} `);
            return;
        }
 
-       log.title('success', 'DONE', `Listening At ${port} `);
+       console.log('DONE', `Listening At ${port} `);
 
    });

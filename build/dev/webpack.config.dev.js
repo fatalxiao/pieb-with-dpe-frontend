@@ -1,7 +1,6 @@
-const webpack = require('webpack'),
+const {DefinePlugin, HotModuleReplacementPlugin} = require('webpack'),
     {merge} = require('webpack-merge'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
-    FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin'),
 
     baseWebpackConfig = require('../webpack.config.base.js'),
 
@@ -23,21 +22,19 @@ module.exports = merge(baseWebpackConfig, {
 
     plugins: [
 
-        new webpack.DefinePlugin({
+        new DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(env)
         }),
 
-        new webpack.HotModuleReplacementPlugin(),
+        new HotModuleReplacementPlugin(),
 
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: './src/index.html',
             favicon: './src/assets/images/favicon.ico',
             inject: true,
-            chunksSortMode: 'none'
-        }),
-
-        new FriendlyErrorsPlugin()
+            chunksSortMode: 'auto'
+        })
 
     ]
 
