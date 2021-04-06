@@ -1,10 +1,22 @@
-const os = require('os'),
+/**
+ * @file webpack.config.base.js
+ */
 
+const
+
+    os = require('os'),
     HappyPack = require('happypack'),
 
+    // Statics
     config = require('./config.js'),
-    utils = require('./utils.js'),
 
+    // Vendors
+    {resolve, assetsSubPath} = require('./utils.js'),
+
+    /**
+     * css loader 配置
+     * @type {[]}
+     */
     cssLoaderConfig = ['style-loader', {
         loader: 'css-loader',
         options: {
@@ -19,14 +31,12 @@ const os = require('os'),
                 ]
             }
         }
-    }],
-
-    happyThreadPool = HappyPack.ThreadPool({size: os.cpus().length});
+    }];
 
 module.exports = {
 
     entry: {
-        app: './src/index.js'
+        app: resolve('src/index.js')
     },
 
     output: {
@@ -38,19 +48,19 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.scss'],
         alias: {
-            'src': './src',
-            'apis': './src/apis',
-            'assets': './src/assets',
-            'scss': './src/assets/scss',
-            'images': './src/assets/images',
-            'messages': './src/assets/messages',
-            'stylesheets': './src/assets/stylesheets',
-            'containers': './src/containers',
-            'components': './src/components',
-            'customized': './src/customized',
-            'reduxes': './src/reduxes',
-            'statics': './src/statics',
-            'vendors': './src/vendors'
+            'src': resolve('src'),
+            'apis': resolve('src/apis'),
+            'assets': resolve('src/assets'),
+            'scss': resolve('src/assets/scss'),
+            'images': resolve('src/assets/images'),
+            'messages': resolve('src/assets/messages'),
+            'stylesheets': resolve('src/assets/stylesheets'),
+            'containers': resolve('src/containers'),
+            'components': resolve('src/components'),
+            'customized': resolve('src/customized'),
+            'reduxes': resolve('src/reduxes'),
+            'statics': resolve('src/statics'),
+            'vendors': resolve('src/vendors')
         }
     },
 
@@ -63,14 +73,14 @@ module.exports = {
             loader: 'url-loader',
             options: {
                 limit: 1000,
-                name: utils.assetsSubPath('img/[name].[hash:7].[ext]')
+                name: assetsSubPath('img/[name].[hash:7].[ext]')
             }
         }, {
             test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
             loader: 'url-loader',
             options: {
                 limit: 1000,
-                name: utils.assetsSubPath('fonts/[name].[hash:7].[ext]')
+                name: assetsSubPath('fonts/[name].[hash:7].[ext]')
             }
         }, {
             test: /\.scss$/,
@@ -78,7 +88,7 @@ module.exports = {
                 loader: 'sass-loader',
                 options: {
                     sassOptions: {
-                        includePaths: ['./src/assets']
+                        includePaths: [resolve('src/assets')]
                     }
                 }
             }]
@@ -91,7 +101,7 @@ module.exports = {
     plugins: [
         new HappyPack({
             id: 'js',
-            threadPool: happyThreadPool,
+            threadPool: HappyPack.ThreadPool({size: os.cpus().length}),
             loaders: ['babel-loader?cacheDirectory=true'],
             verbose: false
         })

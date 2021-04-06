@@ -1,8 +1,16 @@
+/**
+ * @file utils.js
+ */
+
 const fs = require('fs'),
     path = require('path'),
     crypto = require('crypto'),
 
     config = require('./config.js');
+
+function resolve(dir) {
+    return path.join(__dirname, '..', dir);
+}
 
 function assetsPath(p) {
     return path.posix.join(config.assetsDirectory, p);
@@ -117,6 +125,7 @@ function calculateSHA256(filePath, callback) {
     });
 }
 
+exports.resolve = resolve;
 exports.assetsPath = assetsPath;
 exports.assetsSubPath = assetsSubPath;
 exports.assetsVendorsAbsolutePath = assetsVendorsAbsolutePath;
