@@ -1,40 +1,55 @@
-const express = require('express'),
-    {createProxyMiddleware} = require('http-proxy-middleware'),
-    history = require('connect-history-api-fallback'),
-    opn = require('opn'),
-    compression = require('compression'),
+/**
+ * @file server.js
+ */
 
-    config = require('../config.js'),
-    utils = require('../utils.js'),
+// Statics
+const config = require('../config.js');
 
+// Vendors
+const express = require('express');
+const {createProxyMiddleware} = require('http-proxy-middleware');
+const history = require('connect-history-api-fallback');
+const opn = require('opn');
+const compression = require('compression');
+
+const
+
+    /**
+     * server env
+     * @type {string}
+     */
     env = process.env.NODE_ENV,
+
+    /**
+     * express app
+     * @type {*|Express}
+     */
     app = express(),
+
+    /**
+     * server port
+     */
     port = config[env].port,
-    uri = 'http://localhost:' + port,
 
-    proxyTable = config[env].proxyTable;
+    /**
+     * server url
+     * @type {string}
+     */
+    url = 'http://localhost:' + port;
 
-Object.keys(proxyTable).forEach(context => {
-
-    let options = proxyTable[context];
-
-    if (typeof options === 'string') {
-        options = {
-            target: options,
+/**
+ * 配置代理
+ */
+const proxyTable = config[env].proxyTable;
+Object.entries(proxyTable).forEach(([context, target]) =>
+    app.use(
+        createProxyMiddleware(context, {
+            target,
             changeOrigin: true,
             logLevel: 'error'
-        };
-    }
-
-    options.onProxyReq = (proxyReq, req) => {
-        if (req.headers && !req.headers.token && req.query && req.query.token) {
-            proxyReq.setHeader('token', req.query.token);
-        }
-    };
-
-    app.use(createProxyMiddleware(options.filter || context, options));
-
-});
+        })
+    )
+);
 
 app.use(compression())
    .use(history())
@@ -52,8 +67,8 @@ app.use(compression())
            return;
        }
 
-       console.log('> Listening at ' + uri);
+       console.log('> Listening at ' + url);
 
-       opn(uri);
+       opn(url);
 
    });
