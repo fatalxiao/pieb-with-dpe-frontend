@@ -78,7 +78,9 @@ class ExtraListMenu extends Component {
 
     /**
      * 处理列表点击事件
-     * @param args
+     * @param item
+     * @param index
+     * @param e
      */
     handleListItemClick = (item, index, e) => {
 
@@ -98,6 +100,7 @@ class ExtraListMenu extends Component {
                 className, popClassName, listClassName, hasTriangle, shouldFollowScroll, scrollEl,
 
                 // not passing down these props
+                // eslint-disable-next-line no-unused-vars
                 activated: propsActivated, onRequestOpen, onRequestClose,
 
                 ...restProps
