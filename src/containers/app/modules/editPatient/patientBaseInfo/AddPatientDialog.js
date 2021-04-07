@@ -46,7 +46,10 @@ const AddPatientDialog = ({
 
             updatePatientBaseInfoField?.(fieldName, fieldValue);
 
-        }, [errorMsg, updatePatientBaseInfoField]),
+        }, [
+            errorMsg,
+            updatePatientBaseInfoField
+        ]),
 
         /**
          * 提交新值到后端

@@ -29,9 +29,12 @@ const EditPatient = ({
          * 处理 step 变更
          * @type {Function}
          */
-        handleStepChange = useCallback(({activatedStep}) => {
-            routerPush?.(steps?.[activatedStep]?.route);
-        }, [steps, activatedStep, routerPush]);
+        handleStepChange = useCallback(({nextActivatedStep}) => {
+            routerPush?.(steps?.[nextActivatedStep]?.route);
+        }, [
+            steps,
+            routerPush
+        ]);
 
     return (
         <div className="edit-patient">

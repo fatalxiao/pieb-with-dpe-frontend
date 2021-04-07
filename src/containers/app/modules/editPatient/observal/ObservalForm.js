@@ -15,13 +15,11 @@ import TextField from 'customized/CustomizedMaterialTextField';
 import TextArea from 'customized/CustomizedMaterialTextArea';
 import TimePicker from 'customized/CustomizedMaterialTimePicker';
 import FieldSet from 'components/FieldSet';
-import DisplayField from 'components/DisplayField';
 import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
 
 // Vendors
 import debounce from 'lodash/debounce';
 import {formatString} from 'vendors/Util';
-import Time from 'vendors/Time';
 
 // Styles
 import './ObservalForm.scss';
@@ -61,47 +59,6 @@ const ObservalForm = ({
             setTimeout(() => debounceSave(), 0);
         }, [
             updateObservalDataField, debounceSave
-        ]),
-
-        /**
-         * 格式化时间区间
-         * @type {Function}
-         */
-        formatDuration = useCallback((timeStamp, isBirthTime) => {
-
-            if (timeStamp < 0) {
-                return '';
-            }
-
-            return isBirthTime ?
-                `Duration of Analgesia: ${~~(timeStamp / 1000 / 60) + 60} min`
-                :
-                `Duration: ${~~(timeStamp / 1000 / 60)} min`;
-
-        }, []),
-
-        /**
-         * PCA 时长
-         */
-        pcaDuration = useMemo(() =>
-            formatDuration(Time.duration(form?.initialTime, form?.firstPcaTime)), [
-            form, formatDuration
-        ]),
-
-        /**
-         * bolus 时长
-         */
-        bolusDuration = useMemo(() =>
-            formatDuration(Time.duration(form?.initialTime, form?.firstManualBolusTime)), [
-            form, formatDuration
-        ]),
-
-        /**
-         * birth 时长
-         */
-        birthDuration = useMemo(() =>
-            formatDuration(Time.duration(form?.initialTime, form?.birthTime), true), [
-            form, formatDuration
         ]);
 
     return (
@@ -164,14 +121,6 @@ const ObservalForm = ({
                                 label="First PCA Time"
                                 value={formatString(form.firstPcaTime)}
                                 onChange={v => updateField('firstPcaTime', v)}/>
-                    {/* { */}
-                    {/*    pcaDuration ?*/}
-                    {/*        <DisplayField className="col-6 duration-tag">*/}
-                    {/*            {pcaDuration}*/}
-                    {/*        </DisplayField>*/}
-                    {/*        :*/}
-                    {/*        null*/}
-                    {/* } */}
                 </div>
                 <div className="row">
                     <TextField className="col-6"
@@ -187,14 +136,6 @@ const ObservalForm = ({
                                 label="First Manual Bolus Time"
                                 value={formatString(form.firstManualBolusTime)}
                                 onChange={v => updateField('firstManualBolusTime', v)}/>
-                    {/* { */}
-                    {/*    bolusDuration ?*/}
-                    {/*        <DisplayField className="col-6 duration-tag">*/}
-                    {/*            {bolusDuration}*/}
-                    {/*        </DisplayField>*/}
-                    {/*        :*/}
-                    {/*        null*/}
-                    {/* } */}
                 </div>
                 <div className="row">
                     <TextField className="col-6"
@@ -240,14 +181,6 @@ const ObservalForm = ({
                                 label="Birth Time"
                                 value={formatString(form.birthTime)}
                                 onChange={v => updateField('birthTime', v)}/>
-                    {/* { */}
-                    {/*    birthDuration ?*/}
-                    {/*        <DisplayField className="col-6 duration-tag">*/}
-                    {/*            {birthDuration}*/}
-                    {/*        </DisplayField>*/}
-                    {/*        :*/}
-                    {/*        null*/}
-                    {/* } */}
                 </div>
                 <div className="row">
                     <TextField className="col-3 unit-g"

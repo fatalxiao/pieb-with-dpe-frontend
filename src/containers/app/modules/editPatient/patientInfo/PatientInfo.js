@@ -28,35 +28,50 @@ const PatientInfo = ({
         /**
          * 从路由 params 中取出 patientId
          */
-        patientId = useMemo(() => match.params.id, [match.params.id]),
+        patientId = useMemo(() =>
+            match.params.id, [
+            match.params.id
+        ]),
 
         /**
          * 获取数据
          * @type {function(): *}
          */
-        loadData = useCallback(() => patientId ?
-            getPatientInfo?.(patientId)
-            :
-            routerPush?.('/app/patient-list'),
-            [patientId, getPatientInfo]
-        ),
+        loadData = useCallback(() =>
+            patientId ?
+                getPatientInfo?.(patientId)
+                :
+                routerPush?.('/app/patient-list'), [
+            patientId, getPatientInfo
+        ]),
 
+        /**
+         * 保存到后端
+         * @type {function(): *}
+         */
         save = useCallback(() =>
-                updatePatientInfo?.(patientId, () =>
-                    routerPush?.(`/app/patient/analgesia/${patientId}`)
-                ),
-            [patientId, updatePatientInfo, routerPush]
-        );
+            updatePatientInfo?.(patientId, () =>
+                routerPush?.(`/app/patient/analgesia/${patientId}`)
+            ), [
+            patientId, updatePatientInfo,
+            routerPush
+        ]);
 
     /**
      * 更新 step
      */
-    useEffect(() => updatePatientStep?.(0), [updatePatientStep]);
+    useEffect(() =>
+        updatePatientStep?.(0), [
+        updatePatientStep
+    ]);
 
     /**
      * patientId 改变时，加载新数据
      */
-    useEffect(() => loadData(), [patientId]);
+    useEffect(() =>
+        loadData(), [
+        patientId
+    ]);
 
     return (
         <div className="patient-info">
