@@ -41,6 +41,7 @@ const
         updateActionType: ''
     };
 
+// eslint-disable-next-line complexity,require-jsdoc
 function patientInfo(state = initialState, action) {
     switch (action.type) {
 

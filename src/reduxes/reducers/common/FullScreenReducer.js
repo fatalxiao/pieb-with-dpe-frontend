@@ -25,7 +25,7 @@ async function request(el, callback) {
     }
 
     await screenfull.request(el || undefined);
-    callback && callback(true);
+    callback?.(true);
 
 }
 
@@ -41,11 +41,12 @@ async function exit(callback) {
     }
 
     await screenfull.exit();
-    callback && callback(false);
+    callback?.(false);
 
 }
 
-function fullScreen(state = initialState, action) {
+// eslint-disable-next-line complexity,require-jsdoc
+async function fullScreen(state = initialState, action) {
     switch (action.type) {
 
         /**
@@ -53,7 +54,7 @@ function fullScreen(state = initialState, action) {
          */
         case actionTypes.REQUEST_FULL_SCREEN: {
 
-            request(action.el, action.callback);
+            await request(action.el, action.callback);
 
             return {
                 ...state,
@@ -68,7 +69,7 @@ function fullScreen(state = initialState, action) {
          */
         case actionTypes.EXIT_FULL_SCREEN: {
 
-            exit(action.callback);
+            await exit(action.callback);
 
             return {
                 ...state,

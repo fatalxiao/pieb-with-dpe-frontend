@@ -8,6 +8,7 @@ const initialState = {
     notifiers: []
 };
 
+// eslint-disable-next-line complexity,require-jsdoc
 function appNotifier(state = initialState, action) {
     switch (action.type) {
 

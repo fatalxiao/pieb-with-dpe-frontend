@@ -24,6 +24,7 @@ const
         actionType: ''
     };
 
+// eslint-disable-next-line complexity,require-jsdoc
 function patientBaseInfo(state = initialState, action) {
     switch (action.type) {
 

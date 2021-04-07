@@ -8,6 +8,7 @@ const initialState = {
     toastes: []
 };
 
+// eslint-disable-next-line complexity,require-jsdoc
 function appToaster(state = initialState, action) {
     switch (action.type) {
 

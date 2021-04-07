@@ -27,6 +27,7 @@ const initialState = {
 
 };
 
+// eslint-disable-next-line complexity,require-jsdoc
 function editPatient(state = initialState, action) {
     switch (action.type) {
 

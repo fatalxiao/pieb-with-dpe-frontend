@@ -8,6 +8,7 @@ const initialState = {
     loading: false
 };
 
+// eslint-disable-next-line complexity,require-jsdoc
 function loadComponent(state = initialState, action) {
     switch (action.type) {
 
