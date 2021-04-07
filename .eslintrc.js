@@ -58,7 +58,7 @@ module.exports = {
         // 禁止在条件中使用常量表达式
         // if (false) {
         // doSomethingUnfinished();
-        // }
+        // } //cuowu
         'no-constant-condition': 2,
         // 禁止在正则表达式中使用控制字符 ：new RegExp("\x1f")
         'no-control-regex': 2,
@@ -112,7 +112,7 @@ module.exports = {
         // 强制使用有效的 JSDoc 注释
         // 'valid-jsdoc': 0,
         // 强制 typeof 表达式与有效的字符串进行比较
-        // typeof foo === "undefined" 错误
+        // typeof foo === "undefimed" 错误
         'valid-typeof': 2,
 
         /**
@@ -407,7 +407,7 @@ module.exports = {
         // 要求 return 语句之前有一空行
         // 'newline-before-return': 0,
         // 要求方法链中每个调用都有一个换行符
-        'newline-per-chained-call': 1,
+        // 'newline-per-chained-call': 1,
         // 禁用 continue 语句
         // 'no-continue': 0,
         // 禁止在代码行后使用内联注释
@@ -468,11 +468,11 @@ module.exports = {
                 ':': 'ignore',
                 '&&': 'ignore',
                 '||': 'ignore',
-                '+': 'before',
-                '-': 'before',
-                '*': 'before',
-                '**': 'before',
-                '/': 'before'
+                '+': 'ignore',
+                '-': 'ignore',
+                '*': 'ignore',
+                '**': 'ignore',
+                '/': 'ignore'
             }
         }],
         // 要求或禁止块内填充
