@@ -23,7 +23,7 @@ const Msg = ({
         <div className="msg-icon">
             {
                 hasIcon ?
-                    <i className={`${type.iconCls}`}></i>
+                    <i className={`${type.iconCls}`}/>
                     :
                     null
             }
