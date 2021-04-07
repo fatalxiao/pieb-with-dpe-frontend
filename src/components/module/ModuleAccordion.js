@@ -31,7 +31,11 @@ const ModuleAccordion = ({
          * 重设高度
          * @type {function(): *}
          */
-        resetHeight = useCallback(() => accordionRef?.current?.resetHeight?.(), [accordionRef]);
+            // eslint-disable-next-line no-unused-vars
+        resetHeight = useCallback(() =>
+            accordionRef?.current?.resetHeight?.(), [
+            accordionRef
+        ]);
 
     return (
         <Accordion {...restProps}
