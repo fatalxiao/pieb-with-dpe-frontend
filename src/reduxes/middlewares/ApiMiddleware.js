@@ -33,7 +33,11 @@ export default store => dispatch => action => {
 
         [requestType, successType, failureType] = types;
 
-    // calculate action data
+    /**
+     * calculate action data
+     * @param data
+     * @returns {*}
+     */
     function actionWith(data) {
         const finalAction = Object.assign({}, action, data);
         delete finalAction[actionTypes.CALL_API];
