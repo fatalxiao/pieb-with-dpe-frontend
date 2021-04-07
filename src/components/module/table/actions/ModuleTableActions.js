@@ -28,7 +28,7 @@ const ModuleTableActions = ({
             extraActions ?
                 <Fragment>
                     {extraActions}
-                    <div className="module-table-actions-extra-separator"></div>
+                    <div className="module-table-actions-extra-separator"/>
                 </Fragment>
                 :
                 null
