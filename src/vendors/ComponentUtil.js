@@ -18,18 +18,12 @@ function getDerivedState(props, state, ...keys) {
         return;
     }
 
-    let propsKey = '',
-        stateKey = '';
-
-    if (keys.length === 2) {
-        propsKey = keys[0];
-        stateKey = keys[1];
-    } else {
-        propsKey = keys[0];
-        stateKey = keys[0];
-    }
-
-    const prevProps = state.prevProps;
+    const propsKey = keys[0],
+        stateKey = keys.length === 2 ?
+            keys[1]
+            :
+            keys[0],
+        prevProps = state.prevProps;
 
     return prevProps ?
         isEqual(prevProps[propsKey], props[propsKey]) ?
