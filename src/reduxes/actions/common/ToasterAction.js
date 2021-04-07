@@ -59,9 +59,8 @@ export const updateToastes = toastes => dispatch => dispatch({
 
 /**
  * 清除 Toastes
- * @param toastes
  * @returns {function(*): *}
  */
-export const clearToaste = toastes => dispatch => dispatch({
+export const clearToaste = () => dispatch => dispatch({
     type: types.CLEAR_TOASTE
 });
