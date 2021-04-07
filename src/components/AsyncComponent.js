@@ -21,7 +21,7 @@ export default (getComponent, store) => props => {
          */
         startLoadComponent = useCallback(() => setTimeout(() => store.dispatch({
             type: actionTypes.LOAD_COMPONENT_START
-        }), 0), [store]),
+        }), 0), []),
 
         /**
          * 加载组件完毕
@@ -29,7 +29,7 @@ export default (getComponent, store) => props => {
          */
         finishLoadComponent = useCallback(() => setTimeout(() => store.dispatch({
             type: actionTypes.LOAD_COMPONENT_COMPLETE
-        }), 0), [store]),
+        }), 0), []),
 
         /**
          * 加载组件
@@ -51,7 +51,7 @@ export default (getComponent, store) => props => {
             setComponent(component?.default || component);
             callback?.();
 
-        }, [getComponent]);
+        }, []);
 
     /**
      * 如果 Component 为空的时候，加载 component
