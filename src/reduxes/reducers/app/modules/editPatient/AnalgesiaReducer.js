@@ -11,7 +11,7 @@ const
 
     /**
      * 每一行的默认数据
-     * @type {{thoracicSensoryBlockLeft: null, bromageScore: string, fetalHeartRate: string, sacralSensoryBlockRight: null, heartRate: string, thoracicSensoryBlockRight: null, sacralSensoryBlockLeft: null, diastolicBloodPressure: string, systolicBloodPressure: string, vasScore: string}}
+     * @type {{}}
      */
     BASE_DATA = {
         vasScore: '',

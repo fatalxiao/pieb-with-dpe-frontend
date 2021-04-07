@@ -11,7 +11,7 @@ const
 
     /**
      * 默认的表单信息
-     * @type {{pulseOxygenSaturation: string, hasOxytocinAtTimeOfEA: boolean, cervicalDilationAtTimeOfEA: string, initialVasScore: string, diastolicBloodPressure: string, weight: string, description: string, systolicBloodPressure: string, fetalHeartRate: string, gestationalDaysDays: string, hasInduction: boolean, heartRate: string, gestationalDaysWeeks: string, name: string, id: string, age: string, group: null, height: string, status: number}}
+     * @type {{}}
      */
     DEFAULT_FORM = {
         group: null,

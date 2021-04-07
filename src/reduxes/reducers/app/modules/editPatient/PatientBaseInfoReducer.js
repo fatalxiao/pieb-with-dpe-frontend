@@ -11,7 +11,7 @@ const
 
     /**
      * 默认的表单数据
-     * @type {{name: string, id: string, group: null}}
+     * @type {{}}
      */
     DEFAULT_FORM = {
         group: null,
