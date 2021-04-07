@@ -2,7 +2,7 @@
  * @file NotifierAction.js
  */
 
-import * as types from 'reduxes/actionTypes';
+import * as actionTypes from 'reduxes/actionTypes';
 
 // Statics
 import MsgType from 'alcedo-ui/_statics/MsgType';
@@ -13,7 +13,7 @@ import MsgType from 'alcedo-ui/_statics/MsgType';
  * @returns {Function}
  */
 export const addNotifier = notifier => dispatch => dispatch({
-    type: types.ADD_NOTIFIER,
+    type: actionTypes.ADD_NOTIFIER,
     notifier
 });
 
@@ -23,7 +23,7 @@ export const addNotifier = notifier => dispatch => dispatch({
  * @returns {Function}
  */
 export const addInfoNotifier = message => dispatch => dispatch({
-    type: types.ADD_NOTIFIER,
+    type: actionTypes.ADD_NOTIFIER,
     notifier: {
         title: '',
         message,
@@ -38,7 +38,7 @@ export const addInfoNotifier = message => dispatch => dispatch({
  * @returns {Function}
  */
 export const addWarningNotifier = message => dispatch => dispatch({
-    type: types.ADD_NOTIFIER,
+    type: actionTypes.ADD_NOTIFIER,
     notifier: {
         title: '',
         message,
@@ -53,7 +53,7 @@ export const addWarningNotifier = message => dispatch => dispatch({
  * @returns {Function}
  */
 export const updateNotifiers = notifiers => dispatch => dispatch({
-    type: types.UPDATE_NOTIFIERS,
+    type: actionTypes.UPDATE_NOTIFIERS,
     notifiers
 });
 
@@ -62,5 +62,5 @@ export const updateNotifiers = notifiers => dispatch => dispatch({
  * @returns {Function}
  */
 export const clearNotifier = () => dispatch => dispatch({
-    type: types.CLEAR_NOTIFIER
+    type: actionTypes.CLEAR_NOTIFIER
 });

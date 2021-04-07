@@ -2,7 +2,7 @@
  * @file ToasterAction.js
  */
 
-import * as types from 'reduxes/actionTypes';
+import * as actionTypes from 'reduxes/actionTypes';
 
 // Statics
 import MsgType from 'alcedo-ui/_statics/MsgType';
@@ -13,7 +13,7 @@ import MsgType from 'alcedo-ui/_statics/MsgType';
  * @returns {function(*): *}
  */
 export const addToaste = toaste => dispatch => dispatch({
-    type: types.ADD_TOASTE,
+    type: actionTypes.ADD_TOASTE,
     toaste
 });
 
@@ -23,7 +23,7 @@ export const addToaste = toaste => dispatch => dispatch({
  * @returns {function(*): *}
  */
 export const addSuccessToaste = message => dispatch => dispatch({
-    type: types.ADD_TOASTE,
+    type: actionTypes.ADD_TOASTE,
     toaste: {
         title: '',
         message,
@@ -38,7 +38,7 @@ export const addSuccessToaste = message => dispatch => dispatch({
  * @returns {function(*): *}
  */
 export const addErrorToaste = message => dispatch => dispatch({
-    type: types.ADD_TOASTE,
+    type: actionTypes.ADD_TOASTE,
     toaste: {
         title: '',
         message,
@@ -53,7 +53,7 @@ export const addErrorToaste = message => dispatch => dispatch({
  * @returns {function(*): *}
  */
 export const updateToastes = toastes => dispatch => dispatch({
-    type: types.UPDATE_TOASTES,
+    type: actionTypes.UPDATE_TOASTES,
     toastes
 });
 
@@ -62,5 +62,5 @@ export const updateToastes = toastes => dispatch => dispatch({
  * @returns {function(*): *}
  */
 export const clearToaste = () => dispatch => dispatch({
-    type: types.CLEAR_TOASTE
+    type: actionTypes.CLEAR_TOASTE
 });
