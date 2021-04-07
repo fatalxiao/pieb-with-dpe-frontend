@@ -12,7 +12,8 @@ import {resetPatientData} from 'reduxes/actions/app/modules/editPatient/EditPati
 
 /**
  * 获取妊娠天数
- * @param data
+ * @param weeks
+ * @param days
  * @returns {number}
  */
 export function getGestationalDays(weeks, days) {
