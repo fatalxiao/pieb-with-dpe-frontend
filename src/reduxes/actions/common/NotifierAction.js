@@ -59,9 +59,8 @@ export const updateNotifiers = notifiers => dispatch => dispatch({
 
 /**
  * 清除 Notifiers
- * @param notifiers
  * @returns {Function}
  */
-export const clearNotifier = notifiers => dispatch => dispatch({
+export const clearNotifier = () => dispatch => dispatch({
     type: types.CLEAR_NOTIFIER
 });
