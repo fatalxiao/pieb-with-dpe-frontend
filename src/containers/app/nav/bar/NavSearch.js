@@ -53,7 +53,7 @@ const NavSearch = ({
             hidden: !visible
         })}>
             <div className="nav-search-modal"
-                 onClick={onRequestClose}></div>
+                 onClick={onRequestClose}/>
             <Paper className="nav-search"
                    nonRounded={true}
                    depth={6}>

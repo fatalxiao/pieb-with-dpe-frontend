@@ -35,7 +35,7 @@ const NavNoPatient = () => {
         <div className="nav-no-patient">
 
             <i className="icon-plus add-patient-icon"
-               onClick={showAddPatientDialog}></i>
+               onClick={showAddPatientDialog}/>
 
             You have no patient now.<br/>
             Would you

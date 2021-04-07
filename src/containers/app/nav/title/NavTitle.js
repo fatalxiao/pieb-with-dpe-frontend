@@ -24,13 +24,17 @@ const NavTitle = ({state}) => {
          * 获取当前 location 的 pathname
          * @type {string}
          */
-        pathName = useMemo(() => location.pathname, [location.pathname]),
+        pathName = useMemo(() =>
+            location.pathname, []),
 
         /**
          * 根据 pathname 去 sitemap 里计算出 path
          * @type {*[]}
          */
-        navPath = useMemo(() => getPath(pathName, state), [pathName, state]);
+        navPath = useMemo(() =>
+            getPath(pathName, state), [
+            pathName, state
+        ]);
 
     return (
         <div className="nav-title">
@@ -38,7 +42,7 @@ const NavTitle = ({state}) => {
                 navPath?.length > 0 ?
                     <div className="nav-title-crumbs-wrapper">
 
-                        <i className="icon-location-pin nav-title-crumbs-icon"></i>
+                        <i className="icon-location-pin nav-title-crumbs-icon"/>
 
                         <Crumbs className="nav-title-crumbs"
                                 data={navPath}

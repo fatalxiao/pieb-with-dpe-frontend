@@ -8,7 +8,7 @@ import React from 'react';
 import './NavBarBottom.scss';
 
 const NavBarBottom = () => (
-    <div className="nav-bar-bottom"></div>
+    <div className="nav-bar-bottom"/>
 );
 
 export default NavBarBottom;

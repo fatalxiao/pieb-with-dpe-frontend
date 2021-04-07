@@ -19,7 +19,6 @@ import classNames from 'classnames';
 
 // Styles
 import './NavPatients.scss';
-import patientGroup from '../../../../reduxes/reducers/app/common/PatientGroupReducer';
 
 const NavPatient = ({
     isCollapsed, isFold, groupListActionType, patientList, patientListActionType

@@ -92,13 +92,17 @@ const Nav = () => {
          * 当前导航栏是否折叠
          * @type {boolean}
          */
-        collapsed = useMemo(() => navWidth === Nav.NAV_BAR_WIDTH, [navWidth]),
+        collapsed = useMemo(() =>
+            navWidth === Nav.NAV_BAR_WIDTH, [
+            navWidth
+        ]),
 
         /**
          * 更新导航栏宽度到 local storage
          * @type {function(*=): void}
          */
-        saveNavWidth = useCallback(navWidth => localStorage.setItem('navWidth', navWidth), []),
+        saveNavWidth = useCallback(navWidth =>
+            localStorage.setItem('navWidth', navWidth), []),
 
         /**
          * 按下鼠标开始拖拽
@@ -113,7 +117,9 @@ const Nav = () => {
             setStartWidth(navWidth);
             setMouseX(e.pageX);
 
-        }, [navWidth]),
+        }, [
+            navWidth
+        ]),
 
         /**
          * 处理鼠标拖拽移动
@@ -137,7 +143,9 @@ const Nav = () => {
             setNavPatientCollapsed(isNavPatientCollapsed(nextNavWidth));
             setNavPatientFold(false);
 
-        }, [resizing, mouseX, startWidth]),
+        }, [
+            resizing, mouseX, startWidth, isNavPatientCollapsed
+        ]),
 
         /**
          * 处理鼠标拖拽结束
@@ -159,7 +167,10 @@ const Nav = () => {
             setNavPatientFold(isFold);
             saveNavWidth(nextNavWidth);
 
-        }, [navWidth]),
+        }, [
+            isNavPatientCollapsed, isNavPatientFold, navWidth,
+            saveNavWidth
+        ]),
 
         /**
          * 切换患者栏显示/塌缩
@@ -224,7 +235,7 @@ const Nav = () => {
                      onMouseUp={toggleNavPatient}>
                     <div className={classNames('nav-toggle', {
                         collapsed
-                    })}></div>
+                    })}/>
                 </div>
 
             </div>
@@ -256,6 +267,6 @@ Nav.DEFAULT_WIDTH = Nav.NAV_BAR_WIDTH + Nav.NAV_PATIENT_WIDTH;
  * 初始化宽度
  * @type {number}
  */
-Nav.INIT_WIDTH = parseInt(localStorage.getItem('navWidth')) || Nav.DEFAULT_WIDTH;
+Nav.INIT_WIDTH = parseInt(localStorage.getItem('navWidth'), 10) || Nav.DEFAULT_WIDTH;
 
 export default Nav;
