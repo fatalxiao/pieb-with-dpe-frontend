@@ -170,14 +170,14 @@ class TableHead extends Component {
 
                 {
                     isFrozen ?
-                        <i className="table-head-icon dsicon dsicon-pin-fixed-sd"></i>
+                        <i className="table-head-icon dsicon dsicon-pin-fixed-sd"/>
                         :
                         null
                 }
 
                 {
                     hasFilter ?
-                        <i className="table-head-icon dsicon dsicon-filter"></i>
+                        <i className="table-head-icon dsicon dsicon-filter"/>
                         :
                         null
                 }
