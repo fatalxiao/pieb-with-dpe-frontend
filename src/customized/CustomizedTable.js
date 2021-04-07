@@ -78,7 +78,7 @@ class CustomizedTable extends Component {
 
     /**
      * 处理冻结 column index 的更新
-     * @param frozenIndex
+     * @param column
      */
     handleFrozenChange = column => {
 
