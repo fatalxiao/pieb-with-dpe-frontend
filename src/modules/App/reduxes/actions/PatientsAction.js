@@ -2,6 +2,8 @@
  * @file PatientsAction.js
  */
 
+// Action Types
+import {CALL_API} from 'reduxes/actionTypes';
 import * as actionTypes from '../actionTypes/PatientsActionType';
 
 // Apis
@@ -12,7 +14,7 @@ import PatientApi from 'apis/app/common/PatientApi';
  * @returns {function(*): *}
  */
 export const getPatients = () => dispatch => dispatch({
-    [actionTypes.CALL_API]: {
+    [CALL_API]: {
         types: [
             actionTypes.GET_PATIENTS_REQUEST,
             actionTypes.GET_PATIENTS_SUCCESS,
@@ -28,7 +30,7 @@ export const getPatients = () => dispatch => dispatch({
  * @returns {function(*): *}
  */
 export const getFullPatients = () => dispatch => dispatch({
-    [actionTypes.CALL_API]: {
+    [CALL_API]: {
         types: [
             actionTypes.GET_FULL_PATIENTS_REQUEST,
             actionTypes.GET_FULL_PATIENTS_SUCCESS,
@@ -52,7 +54,7 @@ export const updatePatientName = (id, name) => dispatch => {
     }
 
     return dispatch({
-        [actionTypes.CALL_API]: {
+        [CALL_API]: {
             types: [
                 actionTypes.UPDATE_PATIENT_NAME_REQUEST,
                 actionTypes.UPDATE_PATIENT_NAME_SUCCESS,
@@ -84,7 +86,7 @@ export const updatePatientGroup = (id, group) => dispatch => {
     }
 
     return dispatch({
-        [actionTypes.CALL_API]: {
+        [CALL_API]: {
             types: [
                 actionTypes.UPDATE_PATIENT_GROUP_REQUEST,
                 actionTypes.UPDATE_PATIENT_GROUP_SUCCESS,
@@ -115,7 +117,7 @@ export const enablePatient = id => dispatch => {
     }
 
     return dispatch({
-        [actionTypes.CALL_API]: {
+        [CALL_API]: {
             types: [
                 actionTypes.ENABLE_PATIENT_REQUEST,
                 actionTypes.ENABLE_PATIENT_SUCCESS,
@@ -144,7 +146,7 @@ export const disablePatient = id => dispatch => {
     }
 
     return dispatch({
-        [actionTypes.CALL_API]: {
+        [CALL_API]: {
             types: [
                 actionTypes.DISABLE_PATIENT_REQUEST,
                 actionTypes.DISABLE_PATIENT_SUCCESS,

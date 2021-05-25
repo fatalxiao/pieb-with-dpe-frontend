@@ -16,6 +16,8 @@ export default ({dispatch, getState}) => next => action => {
 
     // not an api action
     if (typeof options === 'undefined') {
+        // console.log(action);
+        // debugger;
         return next(action);
     }
 

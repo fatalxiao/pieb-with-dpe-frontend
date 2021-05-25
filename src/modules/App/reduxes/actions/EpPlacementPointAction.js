@@ -2,6 +2,8 @@
  * @file EpPlacementPointAction.js
  */
 
+// Action Types
+import {CALL_API} from 'reduxes/actionTypes';
 import * as actionTypes from '../actionTypes/EpPlacementPointActionType';
 
 // Apis
@@ -12,7 +14,7 @@ import EpPlacementPointApi from 'apis/app/common/EpPlacementPointApi';
  * @returns {function(*): *}
  */
 export const getEpPlacementPoints = () => dispatch => dispatch({
-    [actionTypes.CALL_API]: {
+    [CALL_API]: {
         types: [
             actionTypes.GET_EP_PLACEMENT_POINT_REQUEST,
             actionTypes.GET_EP_PLACEMENT_POINT_SUCCESS,

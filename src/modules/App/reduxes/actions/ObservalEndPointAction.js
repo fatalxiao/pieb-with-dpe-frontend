@@ -2,6 +2,8 @@
  * @file ObservalEndPointAction.js
  */
 
+// Action Types
+import {CALL_API} from 'reduxes/actionTypes';
 import * as actionTypes from '../actionTypes/ObservalEndPointActionType';
 
 // Apis
@@ -12,7 +14,7 @@ import ObservalEndPointApi from 'apis/app/common/ObservalEndPointApi';
  * @returns {function(*): *}
  */
 export const getObservalEndPoints = () => dispatch => dispatch({
-    [actionTypes.CALL_API]: {
+    [CALL_API]: {
         types: [
             actionTypes.GET_OBSERVAL_END_POINT_REQUEST,
             actionTypes.GET_OBSERVAL_END_POINT_SUCCESS,

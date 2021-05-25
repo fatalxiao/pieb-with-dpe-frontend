@@ -2,6 +2,8 @@
  * @file PatientGroupAction.js
  */
 
+// Action Types
+import {CALL_API} from 'reduxes/actionTypes';
 import * as actionTypes from '../actionTypes/PatientGroupActionType';
 
 // Apis
@@ -12,7 +14,7 @@ import GroupApi from 'apis/app/common/PatientGroupApi';
  * @returns {function(*): *}
  */
 export const getPatientGroups = () => dispatch => dispatch({
-    [actionTypes.CALL_API]: {
+    [CALL_API]: {
         types: [
             actionTypes.GET_PATIENT_GROUPS_REQUEST,
             actionTypes.GET_PATIENT_GROUPS_SUCCESS,
