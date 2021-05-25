@@ -17,7 +17,7 @@ module.exports = {
         'Atomics': 'readonly',
         'SharedArrayBuffer': 'readonly'
     },
-    'parser': 'babel-eslint',
+    'parser': '@babel/eslint-parser',
     'parserOptions': {
         'ecmaFeatures': {
             'jsx': true
@@ -33,13 +33,18 @@ module.exports = {
             'flowVersion': '0.53'
         },
         'propWrapperFunctions': [
-            'forbidExtraProps',
-            {'property': 'freeze', 'object': 'Object'},
-            {'property': 'myFavoriteWrapper'}
+            'forbidExtraProps', {
+                'property': 'freeze',
+                'object': 'Object'
+            }, {
+                'property': 'myFavoriteWrapper'
+            }
         ],
         'linkComponents': [
-            'Hyperlink',
-            {'name': 'Link', 'linkAttribute': 'to'}
+            'Hyperlink', {
+                'name': 'Link',
+                'linkAttribute': 'to'
+            }
         ]
     },
     'plugins': [
@@ -386,7 +391,7 @@ module.exports = {
         // 强制最大行数
         // 'max-lines': 0,
         // 强制 function 定义中最多允许的参数数量
-        'max-params': [1, 7],
+        // 'max-params': [1, 7],
         // 强制 function 块最多允许的的语句数量
         'max-statements': [1, 200],
         // 强制每一行中所允许的最大语句数量
