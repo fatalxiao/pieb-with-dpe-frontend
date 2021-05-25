@@ -57,6 +57,7 @@ module.exports = {
             'messages': resolveRootPath('src/assets/messages'),
             'stylesheets': resolveRootPath('src/assets/stylesheets'),
             'containers': resolveRootPath('src/containers'),
+            'modules': resolveRootPath('src/modules'),
             'components': resolveRootPath('src/components'),
             'customized': resolveRootPath('src/customized'),
             'reduxes': resolveRootPath('src/reduxes'),

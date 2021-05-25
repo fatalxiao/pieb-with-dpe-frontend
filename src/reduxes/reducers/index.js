@@ -6,12 +6,6 @@
 import {combineReducers} from 'redux';
 import {connectRouter} from 'connected-react-router';
 
-// App Reducers
-import loadComponent from './common/LoadComponentReducer';
-import appToaster from './common/ToasterReducer';
-import appNotifier from './common/NotifierReducer';
-import fullScreen from './common/FullScreenReducer';
-
 // common Reducers
 import patientGroup from './app/common/PatientGroupReducer';
 import patients from './app/common/PatientsReducer';
@@ -27,11 +21,6 @@ import analgesia from './app/modules/editPatient/AnalgesiaReducer';
 import observal from './app/modules/editPatient/ObservalReducer';
 
 export default history => combineReducers({
-
-    loadComponent,
-    appToaster,
-    appNotifier,
-    fullScreen,
 
     patientGroup,
     patients,

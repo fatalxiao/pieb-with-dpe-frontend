@@ -5,6 +5,9 @@
 // Components
 import ac from 'components/AsyncComponent';
 
+// Routes config
+import configureRootRoutes from 'modules/Root/config.routes';
+
 /**
  * 返回 routes 配置
  * @param store
@@ -12,10 +15,7 @@ import ac from 'components/AsyncComponent';
  */
 export function configureRoutes(store) {
     return [{
-        path: '/',
-        component: ac(() => import(
-            /* webpackChunkName: "Root" */
-            'containers/Root'), store),
+        ...configureRootRoutes(store),
         routes: [{
             path: '/app',
             component: ac(() => import(
