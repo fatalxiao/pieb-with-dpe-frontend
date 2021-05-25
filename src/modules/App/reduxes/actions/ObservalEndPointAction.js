@@ -2,7 +2,7 @@
  * @file ObservalEndPointAction.js
  */
 
-import * as actionTypes from 'reduxes/actionTypes';
+import * as actionTypes from '../actionTypes/ObservalEndPointActionType';
 
 // Apis
 import ObservalEndPointApi from 'apis/app/common/ObservalEndPointApi';

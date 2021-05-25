@@ -1,5 +1,5 @@
 /**
- * @file PatientActionType.js
+ * @file PatientsActionType.js
  */
 
 /**

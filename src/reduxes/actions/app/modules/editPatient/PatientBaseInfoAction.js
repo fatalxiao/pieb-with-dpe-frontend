@@ -8,7 +8,7 @@ import * as actionTypes from 'reduxes/actionTypes';
 import PatientApi from 'apis/app/modules/patient/PatientApi';
 
 // Actions
-import {getPatients} from 'reduxes/actions/app/common/PatientAction';
+import {getPatients} from 'modules/App/reduxes/actions/PatientsAction';
 
 /**
  * 重置 Patient 基础信息

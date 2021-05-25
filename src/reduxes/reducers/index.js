@@ -8,13 +8,6 @@ import {connectRouter} from 'connected-react-router';
 
 import loadComponent from './LoadComponentReducer';
 
-// common Reducers
-import patientGroup from './app/common/PatientGroupReducer';
-import patients from './app/common/PatientsReducer';
-import sensoryBlock from './app/common/SensoryBlockReducer';
-import observalEndPoint from './app/common/ObservalEndPointReducer';
-import epPlacementPoint from './app/common/EpPlacementPointReducer';
-
 // module Reducers
 import editPatient from './app/modules/editPatient/EditPatientReducer';
 import patientBaseInfo from './app/modules/editPatient/PatientBaseInfoReducer';
@@ -25,12 +18,6 @@ import observal from './app/modules/editPatient/ObservalReducer';
 export default (history, asyncReducers) => combineReducers({
 
     loadComponent,
-
-    patientGroup,
-    patients,
-    sensoryBlock,
-    observalEndPoint,
-    epPlacementPoint,
 
     editPatient,
     patientBaseInfo,

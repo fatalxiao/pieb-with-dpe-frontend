@@ -2,7 +2,7 @@
  * @file EpPlacementPointAction.js
  */
 
-import * as actionTypes from 'reduxes/actionTypes';
+import * as actionTypes from '../actionTypes/EpPlacementPointActionType';
 
 // Apis
 import EpPlacementPointApi from 'apis/app/common/EpPlacementPointApi';

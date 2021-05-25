@@ -2,7 +2,7 @@
  * @file SensoryBlockAction.js
  */
 
-import * as actionTypes from 'reduxes/actionTypes';
+import * as actionTypes from '../actionTypes/SensoryBlockActionType';
 
 // Apis
 import SensoryBlockApi from 'apis/app/common/SensoryBlockApi';

@@ -1,0 +1,10 @@
+/**
+ * @file NavPatientList.scss
+ */
+
+@import 'scss/common.scss';
+
+.nav-patient-list {
+    flex: 1;
+    overflow-y: auto;
+}

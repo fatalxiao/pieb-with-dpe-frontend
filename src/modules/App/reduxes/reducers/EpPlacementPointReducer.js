@@ -2,7 +2,7 @@
  * @file EpPlacementPointReducer.js
  */
 
-import * as actionTypes from 'reduxes/actionTypes';
+import * as actionTypes from '../actionTypes/EpPlacementPointActionType';
 
 const initialState = {
 

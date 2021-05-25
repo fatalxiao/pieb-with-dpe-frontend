@@ -1,8 +1,8 @@
 /**
- * @file PatientAction.js
+ * @file PatientsAction.js
  */
 
-import * as actionTypes from 'reduxes/actionTypes';
+import * as actionTypes from '../actionTypes/PatientsActionType';
 
 // Apis
 import PatientApi from 'apis/app/common/PatientApi';
