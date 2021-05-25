@@ -2,7 +2,7 @@
  * @file FullScreenActionType.js
  */
 
-import * as actionTypes from 'reduxes/actionTypes';
+import * as actionTypes from '../actionTypes/FullScreenActionType';
 
 /**
  * 请求全屏

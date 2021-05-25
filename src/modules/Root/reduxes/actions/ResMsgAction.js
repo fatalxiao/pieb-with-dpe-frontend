@@ -3,8 +3,8 @@
  */
 
 // Actions
-import {addSuccessToaste, addErrorToaste} from 'reduxes/actions/common/ToasterAction';
-import {addWarningNotifier} from 'reduxes/actions/common/NotifierAction';
+import {addSuccessToaste, addErrorToaste} from './ToasterAction';
+import {addWarningNotifier} from './NotifierAction';
 
 // 默认的错误消息
 const DEFAULT_ERROR_MSG = 'Server or Network failure. Please try again later or contact your account manager.';

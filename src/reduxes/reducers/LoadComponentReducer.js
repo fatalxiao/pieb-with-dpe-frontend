@@ -2,7 +2,7 @@
  * @file LoadComponentReducer.js
  */
 
-import * as actionTypes from 'reduxes/actionTypes';
+import * as actionTypes from '../actionTypes/LoadComponentActionType';
 
 const initialState = {
     loading: false

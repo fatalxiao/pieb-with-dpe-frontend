@@ -2,21 +2,21 @@
  * @file ApiMiddleware.js
  */
 
-import * as actionTypes from 'reduxes/actionTypes';
+import {CALL_API} from 'reduxes/actionTypes';
 
 // Actions
-import {addSuccessResMsg, addFailureResMsg} from 'reduxes/actions/common/ResMsgAction';
+import {addSuccessResMsg, addFailureResMsg} from 'modules/Root/reduxes/actions/ResMsgAction';
 
 // Vendors
 import RequestManagement from 'apis/RequestManagement';
 
-export default store => dispatch => action => {
+export default ({dispatch, getState}) => next => action => {
 
-    const options = action[actionTypes.CALL_API];
+    const options = action[CALL_API];
 
     // not an api action
     if (typeof options === 'undefined') {
-        return dispatch(action);
+        return next(action);
     }
 
     const {
@@ -40,12 +40,12 @@ export default store => dispatch => action => {
      */
     function actionWith(data) {
         const finalAction = Object.assign({}, action, data);
-        delete finalAction[actionTypes.CALL_API];
+        delete finalAction[CALL_API];
         return finalAction;
     }
 
-    // dispatch request action
-    dispatch(actionWith({type: requestType}));
+    // next request action
+    next(actionWith({type: requestType}));
 
     api({
         header,
@@ -55,7 +55,7 @@ export default store => dispatch => action => {
 
             !resMsgDisabled && !successResMsgDisabled && addSuccessResMsg()(dispatch);
 
-            dispatch(actionWith({
+            next(actionWith({
                 type: successType,
                 responseData,
                 response,
@@ -80,7 +80,7 @@ export default store => dispatch => action => {
                 }
             }
 
-            dispatch(actionWith({
+            next(actionWith({
                 type: failureType,
                 responseData,
                 response,

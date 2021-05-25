@@ -20,9 +20,6 @@ export default function configureRoutes(store) {
                 nameSpace: 'fullScreen',
                 getReducer: () => import('./reduxes/reducers/FullScreenReducer')
             }, {
-                nameSpace: 'loadComponent',
-                getReducer: () => import('./reduxes/reducers/LoadComponentReducer')
-            }, {
                 nameSpace: 'appNotifier',
                 getReducer: () => import('./reduxes/reducers/NotifierReducer')
             }, {

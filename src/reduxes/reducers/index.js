@@ -6,6 +6,8 @@
 import {combineReducers} from 'redux';
 import {connectRouter} from 'connected-react-router';
 
+import loadComponent from './LoadComponentReducer';
+
 // common Reducers
 import patientGroup from './app/common/PatientGroupReducer';
 import patients from './app/common/PatientsReducer';
@@ -21,6 +23,8 @@ import analgesia from './app/modules/editPatient/AnalgesiaReducer';
 import observal from './app/modules/editPatient/ObservalReducer';
 
 export default (history, asyncReducers) => combineReducers({
+
+    loadComponent,
 
     patientGroup,
     patients,
