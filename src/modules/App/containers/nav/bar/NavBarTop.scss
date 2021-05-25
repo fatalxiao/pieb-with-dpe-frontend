@@ -42,12 +42,12 @@
             }
 
             .logo {
-                background-image: url("../../../../assets/images/logo.png");
+                background-image: url("assets/images/logo.png");
             }
 
             .logo-animated {
                 opacity: 0;
-                background-image: url("../../../../assets/images/logo-animated.png");
+                background-image: url("assets/images/logo-animated.png");
                 animation: logo-spin 1s linear infinite;
             }
 

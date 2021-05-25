@@ -2,6 +2,8 @@
  * @file index.js
  */
 
+export * from './RouterAction';
+
 // Module Actions
 export * from './app/modules/editPatient/EditPatientAction';
 export * from './app/modules/editPatient/PatientBaseInfoAction';

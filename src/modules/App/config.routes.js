@@ -15,7 +15,7 @@ export default function configureRoutes(store) {
         path: '/app',
         component: amc(
             store,
-            () => import('containers/app/App'),
+            () => import('./containers/App'),
             [{
                 nameSpace: 'epPlacementPoint',
                 getReducer: () => import('./reduxes/reducers/EpPlacementPointReducer')

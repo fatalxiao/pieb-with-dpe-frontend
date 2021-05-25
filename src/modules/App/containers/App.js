@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import * as actions from 'reduxes/actions';
-import * as actionTypes from 'reduxes/actionTypes';
+import * as actions from 'modules/App/reduxes/actions';
+import * as actionTypes from 'modules/App/reduxes/actionTypes';
 
 // Components
 import Nav from './nav/Nav';
