@@ -15,7 +15,7 @@ export default function configureRoutes(store) {
         path: '/',
         component: amc(
             store,
-            () => import('modules/Root/containers/Root'),
+            () => import('./containers/Root'),
             [{
                 nameSpace: 'fullScreen',
                 getReducer: () => import('./reduxes/reducers/FullScreenReducer')

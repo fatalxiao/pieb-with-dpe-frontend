@@ -20,7 +20,7 @@ import patientInfo from './app/modules/editPatient/PatientInfoReducer';
 import analgesia from './app/modules/editPatient/AnalgesiaReducer';
 import observal from './app/modules/editPatient/ObservalReducer';
 
-export default history => combineReducers({
+export default (history, asyncReducers) => combineReducers({
 
     patientGroup,
     patients,
@@ -34,6 +34,8 @@ export default history => combineReducers({
     analgesia,
     observal,
 
-    router: connectRouter(history)
+    router: connectRouter(history),
+
+    ...asyncReducers
 
 });

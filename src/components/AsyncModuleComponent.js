@@ -111,9 +111,7 @@ export default (
             return;
         }
 
-        for (let reducerConfig of reducersConfig) {
-            await this.loadReducer(reducerConfig);
-        }
+        await Promise.all(reducersConfig.map(reducerConfig => this.loadReducer(reducerConfig)));
 
     };
 
