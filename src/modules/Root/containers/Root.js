@@ -49,6 +49,9 @@ const Root = ({
 
 Root.propTypes = {
 
+    route: PropTypes.object,
+    location: PropTypes.object,
+
     toastes: PropTypes.array,
     notifiers: PropTypes.array,
 
