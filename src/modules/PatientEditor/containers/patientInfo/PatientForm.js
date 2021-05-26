@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import * as actions from 'reduxes/actions';
+import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
 
 // Components
 import Checkbox from 'customized/CustomizedMaterialCheckbox';
@@ -155,6 +155,6 @@ PatientForm.propTypes = {
 export default connect(state => ({
     form: state.patientInfo.form
 }), dispatch => bindActionCreators({
-    updatePatientInfoField: actions.updatePatientInfoField,
-    updatePatientInfo: actions.updatePatientInfo
+    updatePatientInfoField: patientEditorActions.updatePatientInfoField,
+    updatePatientInfo: patientEditorActions.updatePatientInfo
 }, dispatch))(PatientForm);

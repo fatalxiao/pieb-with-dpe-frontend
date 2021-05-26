@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import * as actions from 'reduxes/actions';
+import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
 
 // Components
 import ModuleTableCard from 'components/module/table/ModuleTableCard';
@@ -187,6 +187,6 @@ export default connect(state => ({
     sacralList: state.sensoryBlock.sacralList,
     analgesiaData: state.analgesia.data
 }), dispatch => bindActionCreators({
-    updateAnalgesiaDataField: actions.updateAnalgesiaDataField,
-    createOrUpdateAnalgesiaData: actions.createOrUpdateAnalgesiaData
+    updateAnalgesiaDataField: patientEditorActions.updateAnalgesiaDataField,
+    createOrUpdateAnalgesiaData: patientEditorActions.createOrUpdateAnalgesiaData
 }, dispatch))(AnalgesiaTable);

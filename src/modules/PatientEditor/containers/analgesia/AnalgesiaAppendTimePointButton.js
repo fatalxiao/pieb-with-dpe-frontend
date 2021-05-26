@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import * as actions from 'reduxes/actions';
+import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
 
 // Components
 import AnchorButton from 'alcedo-ui/AnchorButton';
@@ -30,5 +30,5 @@ AnalgesiaAppendTimePointButton.propTypes = {
 };
 
 export default connect(null, dispatch => bindActionCreators({
-    appendTimePoint: actions.appendTimePoint
+    appendTimePoint: patientEditorActions.appendTimePoint
 }, dispatch))(AnalgesiaAppendTimePointButton);

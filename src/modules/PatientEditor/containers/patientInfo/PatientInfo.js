@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import * as actions from 'reduxes/actions';
+import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
 import * as actionTypes from 'reduxes/actionTypes';
 
 // Components
@@ -42,7 +43,8 @@ const PatientInfo = ({
                 getPatientInfo?.(patientId)
                 :
                 routerPush?.('/app/patient-list'), [
-            patientId, getPatientInfo
+            patientId, getPatientInfo,
+            routerPush
         ]),
 
         /**
@@ -70,7 +72,8 @@ const PatientInfo = ({
      */
     useEffect(() =>
         loadData(), [
-        patientId
+        patientId,
+        loadData
     ]);
 
     return (
@@ -90,6 +93,8 @@ const PatientInfo = ({
 
 PatientInfo.propTypes = {
 
+    match: PropTypes.object,
+
     getActionType: PropTypes.string,
 
     routerPush: PropTypes.func,
@@ -103,7 +108,7 @@ export default connect(state => ({
     getActionType: state.patientInfo.getActionType
 }), dispatch => bindActionCreators({
     routerPush: actions.routerPush,
-    updatePatientStep: actions.updatePatientStep,
-    getPatientInfo: actions.getPatientInfo,
-    updatePatientInfo: actions.updatePatientInfo
+    updatePatientStep: patientEditorActions.updatePatientStep,
+    getPatientInfo: patientEditorActions.getPatientInfo,
+    updatePatientInfo: patientEditorActions.updatePatientInfo
 }, dispatch))(PatientInfo);

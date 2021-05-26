@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import * as actions from 'reduxes/actions';
+import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
 
 // Components
 import Checkbox from 'customized/CustomizedMaterialCheckbox';
@@ -240,6 +240,6 @@ export default connect(state => ({
     observalEndPoints: state.observalEndPoint.list,
     epPlacementPoints: state.epPlacementPoint.list
 }), dispatch => bindActionCreators({
-    updateObservalDataField: actions.updateObservalDataField,
-    createOrUpdateObservalData: actions.createOrUpdateObservalData
+    updateObservalDataField: patientEditorActions.updateObservalDataField,
+    createOrUpdateObservalData: patientEditorActions.createOrUpdateObservalData
 }, dispatch))(ObservalForm);

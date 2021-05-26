@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import * as actions from 'reduxes/actions';
+import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
 import * as actionTypes from 'reduxes/actionTypes';
 
 // Components
@@ -106,8 +107,8 @@ export default connect(state => ({
     getActionType: state.analgesia.getActionType
 }), dispatch => bindActionCreators({
     routerPush: actions.routerPush,
-    updatePatientStep: actions.updatePatientStep,
-    getPatientInfo: actions.getPatientInfo,
-    getAnalgesiaData: actions.getAnalgesiaData,
-    createOrUpdateAnalgesiaData: actions.createOrUpdateAnalgesiaData
+    updatePatientStep: patientEditorActions.updatePatientStep,
+    getPatientInfo: patientEditorActions.getPatientInfo,
+    getAnalgesiaData: patientEditorActions.getAnalgesiaData,
+    createOrUpdateAnalgesiaData: patientEditorActions.createOrUpdateAnalgesiaData
 }, dispatch))(AnalgesiaData);

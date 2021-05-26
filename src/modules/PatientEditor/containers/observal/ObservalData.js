@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import * as actions from 'reduxes/actions';
+import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
 import * as actionTypes from 'reduxes/actionTypes';
 
 // Components
@@ -111,8 +112,8 @@ export default connect(state => ({
     getActionType: state.observal.getActionType
 }), dispatch => bindActionCreators({
     routerPush: actions.routerPush,
-    updatePatientStep: actions.updatePatientStep,
-    getPatientInfo: actions.getPatientInfo,
-    getObservalData: actions.getObservalData,
-    createOrUpdateObservalData: actions.createOrUpdateObservalData
+    updatePatientStep: patientEditorActions.updatePatientStep,
+    getPatientInfo: patientEditorActions.getPatientInfo,
+    getObservalData: patientEditorActions.getObservalData,
+    createOrUpdateObservalData: patientEditorActions.createOrUpdateObservalData
 }, dispatch))(ObservalData);
