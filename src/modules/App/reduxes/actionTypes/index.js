@@ -6,4 +6,5 @@ export * from './EpPlacementPointActionType';
 export * from './ObservalEndPointActionType';
 export * from './PatientGroupActionType';
 export * from './PatientsActionType';
+export * from './PatientBaseInfoActionType';
 export * from './SensoryBlockActionType';

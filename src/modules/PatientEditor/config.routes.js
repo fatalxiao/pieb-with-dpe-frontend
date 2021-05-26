@@ -16,16 +16,13 @@ export default function configureRoutes(store) {
         component: amc(store, () => import('./containers/PatientEditor'), [{
             nameSpace: 'editPatient',
             getReducer: () => import('./reduxes/reducers/EditPatientReducer')
+        }, {
+            nameSpace: 'patientInfo',
+            getReducer: () => import('./reduxes/reducers/PatientInfoReducer')
         }]),
         routes: [{
             path: '/app/patient/info/:id',
-            component: amc(store, () => import('./containers/patientInfo/PatientInfo'), [{
-                nameSpace: 'patientBaseInfo',
-                getReducer: () => import('./reduxes/reducers/PatientBaseInfoReducer')
-            }, {
-                nameSpace: 'patientInfo',
-                getReducer: () => import('./reduxes/reducers/PatientInfoReducer')
-            }])
+            component: amc(store, () => import('./containers/patientInfo/PatientInfo'))
         }, {
             path: '/app/patient/analgesia/:patientId',
             component: amc(store, () => import('./containers/analgesia/AnalgesiaData'), [{

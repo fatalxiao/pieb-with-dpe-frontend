@@ -26,6 +26,9 @@ export default function configureRoutes(store) {
             nameSpace: 'patients',
             getReducer: () => import('./reduxes/reducers/PatientsReducer')
         }, {
+            nameSpace: 'patientBaseInfo',
+            getReducer: () => import('../App/reduxes/reducers/PatientBaseInfoReducer')
+        }, {
             nameSpace: 'sensoryBlock',
             getReducer: () => import('./reduxes/reducers/SensoryBlockReducer')
         }])
