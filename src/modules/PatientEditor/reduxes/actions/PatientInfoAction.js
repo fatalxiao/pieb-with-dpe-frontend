@@ -10,7 +10,7 @@ import * as actionTypes from 'reduxes/actionTypes';
 import PatientApi from 'apis/app/modules/patient/PatientApi';
 
 // Actions
-import {resetPatientData} from 'reduxes/actions/app/modules/editPatient/EditPatientAction';
+import {resetPatientData} from './EditPatientAction';
 
 /**
  * 获取妊娠天数
