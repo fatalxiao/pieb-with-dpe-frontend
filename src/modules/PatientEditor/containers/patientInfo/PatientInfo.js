@@ -7,9 +7,12 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
+// Actions
 import * as actions from 'reduxes/actions';
 import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
-import * as actionTypes from 'reduxes/actionTypes';
+
+// Action Types
+import * as patientEditorActionTypes from 'modules/PatientEditor/reduxes/actionTypes';
 
 // Components
 import ModuleLoading from 'components/module/loading/ModuleLoading';
@@ -78,7 +81,7 @@ const PatientInfo = ({
 
     return (
         <div className="patient-info">
-            <ModuleLoading loading={getActionType !== actionTypes.GET_PATIENT_INFO_SUCCESS}>
+            <ModuleLoading loading={getActionType !== patientEditorActionTypes.GET_PATIENT_INFO_SUCCESS}>
 
                 <PatientForm patientId={patientId}/>
 
