@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 // Components
 import Paper from 'alcedo-ui/Paper';
 import TextField from 'alcedo-ui/TextField';
-import NavPatientList from 'containers/app/nav/patients/NavPatientList';
+import NavPatientList from '../patients/NavPatientList';
 
 // Vendors
 import classNames from 'classnames';

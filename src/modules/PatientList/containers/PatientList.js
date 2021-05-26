@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 // Components
 import PatientListFilter from './PatientListFilter';
 import PatientListTable from './PatientListTable';
-import NavNoPatient from 'containers/app/nav/patients/NavNoPatient';
+import NavNoPatient from 'modules/App/containers/nav/patients/NavNoPatient';
 
 // Styles
 import './PatientList.scss';
