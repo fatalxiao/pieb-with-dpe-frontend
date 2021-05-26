@@ -4,7 +4,7 @@
 
 // Action Types
 import {CALL_API} from 'reduxes/actionTypes';
-import * as actionTypes from 'reduxes/actionTypes';
+import * as actionTypes from '../actionTypes';
 
 // Apis
 import PatientApi from 'apis/app/modules/patient/PatientApi';
@@ -60,7 +60,7 @@ export const getPatientInfo = id => dispatch => {
     resetPatientData()(dispatch);
 
     return dispatch({
-        [actionTypes.CALL_API]: {
+        [CALL_API]: {
             types: [
                 actionTypes.GET_PATIENT_INFO_REQUEST,
                 actionTypes.GET_PATIENT_INFO_SUCCESS,
