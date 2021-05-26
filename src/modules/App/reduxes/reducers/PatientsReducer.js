@@ -2,7 +2,7 @@
  * @file PatientsReducer.js
  */
 
-import * as actionTypes from '../actionTypes/PatientsActionType';
+import * as actionTypes from '../actionTypes';
 
 // Vendors
 import cloneDeep from 'lodash/cloneDeep';

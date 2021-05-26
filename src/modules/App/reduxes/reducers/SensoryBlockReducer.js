@@ -2,7 +2,7 @@
  * @file SensoryBlockReducer.js
  */
 
-import * as actionTypes from '../actionTypes/SensoryBlockActionType';
+import * as actionTypes from '../actionTypes';
 
 const initialState = {
 

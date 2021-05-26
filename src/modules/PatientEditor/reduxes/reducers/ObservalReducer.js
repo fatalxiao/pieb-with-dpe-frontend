@@ -2,7 +2,7 @@
  * @file ObservalReducer.js
  */
 
-import * as actionTypes from 'reduxes/actionTypes';
+import * as actionTypes from '../actionTypes';
 
 const
 

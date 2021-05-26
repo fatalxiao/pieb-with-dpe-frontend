@@ -2,7 +2,7 @@
  * @file PatientBaseInfoReducer.js
  */
 
-import * as actionTypes from 'reduxes/actionTypes';
+import * as actionTypes from '../actionTypes';
 
 // Vendors
 import cloneDeep from 'lodash/cloneDeep';
@@ -91,8 +91,8 @@ function patientInfo(state = initialState, action) {
 
             return {
                 ...state,
-                form,
-                getActionType: actionTypes.GET_PATIENT_INFO_SUCCESS
+                getActionType: actionTypes.GET_PATIENT_INFO_SUCCESS,
+                form
             };
 
         }

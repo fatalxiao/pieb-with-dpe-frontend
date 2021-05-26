@@ -2,7 +2,7 @@
  * @file PatientGroupReducer.js
  */
 
-import * as actionTypes from '../actionTypes/PatientGroupActionType';
+import * as actionTypes from '../actionTypes';
 
 const initialState = {
 

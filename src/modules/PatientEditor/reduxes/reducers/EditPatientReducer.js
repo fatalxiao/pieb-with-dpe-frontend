@@ -2,7 +2,7 @@
  * @file EditPatientReducer.js
  */
 
-import * as actionTypes from 'reduxes/actionTypes';
+import * as actionTypes from '../actionTypes';
 
 // Vendors
 import Valid from 'vendors/Valid';

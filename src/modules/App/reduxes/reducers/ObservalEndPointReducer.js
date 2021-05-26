@@ -2,7 +2,7 @@
  * @file ObservalEndPointReducer.js
  */
 
-import * as actionTypes from '../actionTypes/ObservalEndPointActionType';
+import * as actionTypes from '../actionTypes';
 
 const initialState = {
 
