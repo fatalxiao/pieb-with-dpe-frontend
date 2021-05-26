@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import * as actions from 'reduxes/actions';
+import * as actions from 'modules/App/reduxes/actions';
 
 // Components
 import {NavLink} from 'react-router-dom';
