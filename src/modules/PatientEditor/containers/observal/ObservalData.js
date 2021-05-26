@@ -7,9 +7,12 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
+// Actions
 import * as actions from 'reduxes/actions';
 import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
-import * as actionTypes from 'reduxes/actionTypes';
+
+// Action Types
+import * as patientEditorActionTypes from 'modules/PatientEditor/reduxes/actionTypes';
 
 // Components
 import ModuleLoading from 'components/module/loading/ModuleLoading';
@@ -30,6 +33,15 @@ const ObservalData = ({
         patientId = useMemo(() =>
             match?.params?.patientId, [
             match?.params?.patientId
+        ]),
+
+        /**
+         * 是否正在加载数据
+         * @type {boolean}
+         */
+        loading = useMemo(() =>
+            getActionType !== patientEditorActionTypes.GET_OBSERVAL_SUCCESS, [
+            getActionType
         ]),
 
         /**
@@ -65,23 +77,33 @@ const ObservalData = ({
          * @type {function(): *}
          */
         save = useCallback(() => createOrUpdateObservalData(patientId, () =>
-            routerPush?.(`/app/patient-list`)
+            routerPush?.('/app/patient-list')
         ), [
             patientId,
             routerPush, createOrUpdateObservalData
         ]);
 
     /**
-     * 初始化
+     * 初始加载数据
+     */
+    useEffect(() => {
+        loadData();
+    }, [
+        loadData
+    ]);
+
+    /**
+     * 初始更新 step
      */
     useEffect(() => {
         updatePatientStep?.(2);
-        loadData();
-    }, []);
+    }, [
+        updatePatientStep
+    ]);
 
     return (
         <div className="observal-data">
-            <ModuleLoading loading={getActionType !== actionTypes.GET_OBSERVAL_SUCCESS}>
+            <ModuleLoading loading={loading}>
 
                 <ObservalForm patientId={patientId}/>
 
