@@ -7,9 +7,12 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
+// Actions
 import * as actions from 'reduxes/actions';
 import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
-import * as actionTypes from 'reduxes/actionTypes';
+
+// Action Types
+import * as patientEditorActionTypes from 'modules/PatientEditor/reduxes/actionTypes';
 
 // Components
 import ModuleLoading from 'components/module/loading/ModuleLoading';
@@ -30,7 +33,19 @@ const AnalgesiaData = ({
         /**
          * 从路由 params 中取出的 patient ID
          */
-        patientId = useMemo(() => match.params.patientId, [match.params.patientId]),
+        patientId = useMemo(() =>
+            match.params.patientId, [
+            match.params.patientId
+        ]),
+
+        /**
+         * 是否正在加载数据
+         * @type {boolean}
+         */
+        loading = useMemo(() =>
+            getActionType !== patientEditorActionTypes.GET_ANALGESIA_SUCCESS, [
+            getActionType
+        ]),
 
         /**
          * 加载数据
@@ -55,9 +70,10 @@ const AnalgesiaData = ({
          * @type {function(): *}
          */
         prevStep = useCallback(() =>
-                routerPush?.(`/app/patient/info/${patientId}`),
-            [patientId, routerPush]
-        ),
+            routerPush?.(`/app/patient/info/${patientId}`), [
+            patientId,
+            routerPush
+        ]),
 
         /**
          * 提交到后端
@@ -65,19 +81,32 @@ const AnalgesiaData = ({
          */
         save = useCallback(() => createOrUpdateAnalgesiaData?.(patientId, () =>
             routerPush(`/app/patient/observal/${patientId}`)
-        ), [patientId, routerPush, createOrUpdateAnalgesiaData]);
+        ), [
+            patientId,
+            routerPush, createOrUpdateAnalgesiaData
+        ]);
 
     /**
-     * 初始化
+     * 初始加载数据
+     */
+    useEffect(() => {
+        loadData();
+    }, [
+        loadData
+    ]);
+
+    /**
+     * 初始更新 step
      */
     useEffect(() => {
         updatePatientStep(1);
-        loadData();
-    }, []);
+    }, [
+        updatePatientStep
+    ]);
 
     return (
         <div className="analgesia-data">
-            <ModuleLoading loading={getActionType !== actionTypes.GET_ANALGESIA_SUCCESS}>
+            <ModuleLoading loading={loading}>
 
                 <AnalgesiaTable patientId={patientId}/>
 

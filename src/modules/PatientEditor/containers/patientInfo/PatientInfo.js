@@ -38,6 +38,15 @@ const PatientInfo = ({
         ]),
 
         /**
+         * 是否正在加载数据
+         * @type {boolean}
+         */
+        loading = useMemo(() =>
+            getActionType !== patientEditorActionTypes.GET_PATIENT_INFO_SUCCESS, [
+            getActionType
+        ]),
+
+        /**
          * 获取数据
          * @type {function(): *}
          */
@@ -81,7 +90,7 @@ const PatientInfo = ({
 
     return (
         <div className="patient-info">
-            <ModuleLoading loading={getActionType !== patientEditorActionTypes.GET_PATIENT_INFO_SUCCESS}>
+            <ModuleLoading loading={loading}>
 
                 <PatientForm patientId={patientId}/>
 
