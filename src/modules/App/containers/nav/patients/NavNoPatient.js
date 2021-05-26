@@ -5,7 +5,7 @@
 import React, {useState, useCallback} from 'react';
 
 // Components
-import AddPatientDialog from 'containers/app/modules/editPatient/patientBaseInfo/AddPatientDialog';
+import AddPatientDialog from 'modules/PatientEditor/containers/patientBaseInfo/AddPatientDialog';
 
 // Styles
 import './NavNoPatient.scss';

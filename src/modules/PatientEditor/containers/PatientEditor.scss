@@ -1,39 +1,39 @@
 /**
- * @file EditPatient.scss
+ * @file PatientEditor.scss
  */
 
 @import 'scss/common.scss';
 
-.edit-patient {
+.patient-editor {
     position: relative;
     display: flex;
     flex-direction: column;
     min-height: 100%;
 
-    .edit-patient-stepper {
+    .patient-editor-stepper {
         margin-bottom: 16px;
     }
 
-    .edit-patient-base-info {
+    .patient-editor-base-info {
         padding-bottom: 16px;
         border-bottom: 1px solid $theme-border;
 
-        .edit-patient-name {
+        .patient-editor-name {
             margin: 0;
         }
 
-        .edit-patient-desc {
+        .patient-editor-desc {
             opacity: .5;
         }
     }
 
-    .edit-patient-content {
+    .patient-editor-content {
         position: relative;
         flex: 1;
         padding: 24px;
         overflow: hidden;
 
-        .edit-patient-content-title {
+        .patient-editor-content-title {
             margin-bottom: 0;
         }
     }

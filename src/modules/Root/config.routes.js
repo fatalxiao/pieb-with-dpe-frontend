@@ -13,19 +13,15 @@ import amc from 'components/AsyncModuleComponent';
 export default function configureRoutes(store) {
     return {
         path: '/',
-        component: amc(
-            store,
-            () => import('./containers/Root'),
-            [{
-                nameSpace: 'fullScreen',
-                getReducer: () => import('./reduxes/reducers/FullScreenReducer')
-            }, {
-                nameSpace: 'appNotifier',
-                getReducer: () => import('./reduxes/reducers/NotifierReducer')
-            }, {
-                nameSpace: 'appToaster',
-                getReducer: () => import('./reduxes/reducers/ToasterReducer')
-            }]
-        )
+        component: amc(store, () => import('./containers/Root'), [{
+            nameSpace: 'fullScreen',
+            getReducer: () => import('./reduxes/reducers/FullScreenReducer')
+        }, {
+            nameSpace: 'appNotifier',
+            getReducer: () => import('./reduxes/reducers/NotifierReducer')
+        }, {
+            nameSpace: 'appToaster',
+            getReducer: () => import('./reduxes/reducers/ToasterReducer')
+        }])
     };
 }

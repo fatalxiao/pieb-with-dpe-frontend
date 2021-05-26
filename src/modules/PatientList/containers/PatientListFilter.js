@@ -13,7 +13,7 @@ import * as actions from 'reduxes/actions';
 import TextField from 'customized/CustomizedMaterialTextField';
 import RaisedButton from 'alcedo-ui/RaisedButton';
 import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
-import AddPatientDialog from 'containers/app/modules/editPatient/patientBaseInfo/AddPatientDialog';
+import AddPatientDialog from 'modules/PatientEditor/containers/patientBaseInfo/AddPatientDialog';
 
 // Styles
 import './PatientListFilter.scss';

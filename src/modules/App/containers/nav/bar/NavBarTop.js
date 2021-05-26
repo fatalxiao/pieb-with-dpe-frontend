@@ -11,7 +11,7 @@ import * as actions from 'reduxes/actions';
 
 // Components
 import IconButton from 'alcedo-ui/IconButton';
-import AddPatientDialog from 'containers/app/modules/editPatient/patientBaseInfo/AddPatientDialog';
+import AddPatientDialog from 'modules/PatientEditor/containers/patientBaseInfo/AddPatientDialog';
 import NavSearch from './NavSearch';
 
 // Statics

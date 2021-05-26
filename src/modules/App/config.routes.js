@@ -13,25 +13,21 @@ import amc from 'components/AsyncModuleComponent';
 export default function configureRoutes(store) {
     return {
         path: '/app',
-        component: amc(
-            store,
-            () => import('./containers/App'),
-            [{
-                nameSpace: 'epPlacementPoint',
-                getReducer: () => import('./reduxes/reducers/EpPlacementPointReducer')
-            }, {
-                nameSpace: 'observalEndPoint',
-                getReducer: () => import('./reduxes/reducers/ObservalEndPointReducer')
-            }, {
-                nameSpace: 'patientGroup',
-                getReducer: () => import('./reduxes/reducers/PatientGroupReducer')
-            }, {
-                nameSpace: 'patients',
-                getReducer: () => import('./reduxes/reducers/PatientsReducer')
-            }, {
-                nameSpace: 'sensoryBlock',
-                getReducer: () => import('./reduxes/reducers/SensoryBlockReducer')
-            }]
-        )
+        component: amc(store, () => import('./containers/App'), [{
+            nameSpace: 'epPlacementPoint',
+            getReducer: () => import('./reduxes/reducers/EpPlacementPointReducer')
+        }, {
+            nameSpace: 'observalEndPoint',
+            getReducer: () => import('./reduxes/reducers/ObservalEndPointReducer')
+        }, {
+            nameSpace: 'patientGroup',
+            getReducer: () => import('./reduxes/reducers/PatientGroupReducer')
+        }, {
+            nameSpace: 'patients',
+            getReducer: () => import('./reduxes/reducers/PatientsReducer')
+        }, {
+            nameSpace: 'sensoryBlock',
+            getReducer: () => import('./reduxes/reducers/SensoryBlockReducer')
+        }])
     };
 }

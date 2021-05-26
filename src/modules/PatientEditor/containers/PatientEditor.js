@@ -1,5 +1,5 @@
 /**
- * @file EditPatient.js
+ * @file PatientEditor.js
  */
 
 import React, {useCallback} from 'react';
@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {renderRoutes} from 'react-router-config';
 
-import * as actions from 'reduxes/actions/index';
+import * as actions from 'reduxes/actions';
 
 // Components
 import {Redirect} from 'react-router-dom';
@@ -16,9 +16,9 @@ import PointStep from 'alcedo-ui/PointStep';
 import ModuleCard from 'components/module/ModuleCard';
 
 // Styles
-import './EditPatient.scss';
+import './PatientEditor.scss';
 
-const EditPatient = ({
+const PatientEditor = ({
     route, form, steps, activatedStep,
     routerPush
 }) => {
@@ -37,28 +37,28 @@ const EditPatient = ({
         ]);
 
     return (
-        <div className="edit-patient">
+        <div className="patient-editor">
 
-            <PointStep className="edit-patient-stepper"
+            <PointStep className="patient-editor-stepper"
                        steps={steps}
                        activatedStep={activatedStep}
                        finishedStep={steps?.length - 1}
                        onChange={handleStepChange}/>
 
-            <ModuleCard className="edit-patient-content">
+            <ModuleCard className="patient-editor-content">
 
                 {
                     form?.name ?
                         <div>
-                            <div className="edit-patient-base-info">
-                                <h1 className="edit-patient-name">{form.name}</h1>
-                                <div className="edit-patient-desc">
+                            <div className="patient-editor-base-info">
+                                <h1 className="patient-editor-name">{form.name}</h1>
+                                <div className="patient-editor-desc">
                                     {`${form.id}  ·  ${form.group && form.group?.name}`}
                                 </div>
                             </div>
                             {
                                 activatedStep >= 0 ?
-                                    <h2 className="edit-patient-content-title">
+                                    <h2 className="patient-editor-content-title">
                                         {`Step ${activatedStep + 1}. ${steps?.[activatedStep].title}`}
                                     </h2>
                                     :
@@ -86,7 +86,7 @@ const EditPatient = ({
 
 };
 
-EditPatient.propTypes = {
+PatientEditor.propTypes = {
 
     route: PropTypes.object,
 
@@ -105,4 +105,4 @@ export default connect(state => ({
     activatedStep: state.editPatient.activatedStep
 }), dispatch => bindActionCreators({
     routerPush: actions.routerPush
-}, dispatch))(EditPatient);
+}, dispatch))(PatientEditor);
