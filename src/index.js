@@ -48,7 +48,5 @@ renderAppContainer();
 if (process.env.NODE_ENV === 'development' && module?.hot) {
     module.hot.accept('src/config.routes.js', renderAppContainer);
     module.hot.accept('reduxes/store', renderAppContainer);
-    module.hot.accept('reduxes/reducers', () => {
-        store.replaceReducer(require('reduxes/reducers')?.default);
-    });
+    module.hot.accept('reduxes/reducers', () => store.replaceReducer(require('reduxes/reducers')?.default));
 }
