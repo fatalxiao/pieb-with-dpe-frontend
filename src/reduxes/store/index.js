@@ -3,13 +3,13 @@
  */
 
 import {createStore, applyMiddleware} from 'redux';
-import thunk from 'redux-thunk';
-import {routerMiddleware} from 'connected-react-router';
 
 // Reducers Root
 import createRootReducer from 'reduxes/reducers';
 
 // Middlewares
+import thunk from 'redux-thunk';
+import {routerMiddleware} from 'connected-react-router';
 import ComponentLoading from 'reduxes/middlewares/ComponentLoadingMiddleware';
 import Api from 'reduxes/middlewares/ApiMiddleware';
 
