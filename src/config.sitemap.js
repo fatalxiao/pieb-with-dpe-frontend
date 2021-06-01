@@ -2,6 +2,15 @@
  * @file config.sitemap.js
  */
 
+// Sitemaps
+import appSitemap from 'modules/App/config.sitemap';
+import patientListSitemap from 'modules/PatientList/config.sitemap';
+import patientEditorSitemap from 'modules/PatientEditor/config.sitemap';
+
+/**
+ * sitemap root 标志
+ * @type {string}
+ */
 const rootSymbol = 'root';
 
 /**
@@ -13,25 +22,19 @@ export function sitemap(state) {
     return {
         [rootSymbol]: true,
         children: [{
-            name: 'DPE Manager',
-            route: '/app',
-            children: [{
-                name: 'Patient List',
-                route: '/app/patient-list'
-            }, {
-                name: 'Patient',
-                route: '/app/patient',
-                children: [{
-                    name: 'Patient Information',
-                    route: '/app/patient/info'
-                }, {
-                    name: 'Analgesia Data',
-                    route: '/app/patient/analgesia'
-                }, {
-                    name: 'Observal Data',
-                    route: '/app/patient/observal'
-                }]
-            }]
+
+            // App
+            ...appSitemap(),
+
+            children: [
+
+                // Patient List
+                patientListSitemap(),
+
+                // Patient Editor
+                patientEditorSitemap()
+
+            ]
         }]
     };
 }
