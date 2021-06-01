@@ -1,23 +1,23 @@
 /**
- * @file ObservalEndPointApi.js
+ * @file SensoryBlockApi.js
  */
 
 // Statics
 import {appBaseUrl} from 'src/config';
 
 // Vendors
-import Api from 'apis/Api';
+import Api from 'vendors/api/Api';
 
 export default {
 
     /**
-     * 获取所有的 Observal End Point
+     * 获取所有的 Sensory Block 数据
      * @param options
      */
-    getObservalEndPoints(options) {
+    getSensoryBlocks(options) {
         Api.get({
             ...options,
-            url: `${appBaseUrl}/observalEndPoint/getObservalEndPoints`,
+            url: `${appBaseUrl}/sensoryBlock/getSensoryBlocks`,
             cancelable: false
         });
     }

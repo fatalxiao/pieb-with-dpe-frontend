@@ -7,7 +7,7 @@ import {CALL_API} from 'reduxes/actionTypes';
 import * as actionTypes from '../actionTypes';
 
 // Apis
-import ObservalApi from 'apis/app/modules/patient/ObservalApi';
+import ObservalApi from 'modules/PatientEditor/apis/ObservalApi';
 
 /**
  * 格式化 observalData

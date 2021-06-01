@@ -6,8 +6,8 @@
 import {appBaseUrl} from 'src/config';
 
 // Vendors
-import Api from 'apis/Api';
-import RequestManagement from 'apis/RequestManagement';
+import Api from 'vendors/api/Api';
+import RequestManagement from 'vendors/api/RequestManagement';
 
 export default {
 

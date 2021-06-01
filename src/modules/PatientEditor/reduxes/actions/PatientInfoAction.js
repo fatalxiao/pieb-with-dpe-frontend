@@ -7,7 +7,7 @@ import {CALL_API} from 'reduxes/actionTypes';
 import * as actionTypes from '../actionTypes';
 
 // Apis
-import PatientApi from 'apis/app/modules/patient/PatientApi';
+import PatientApi from 'modules/App/apis/PatientApi';
 
 // Actions
 import {resetPatientData} from './EditPatientAction';

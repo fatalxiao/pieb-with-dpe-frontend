@@ -7,7 +7,7 @@ import {CALL_API} from 'reduxes/actionTypes';
 import * as actionTypes from '../actionTypes/ObservalEndPointActionType';
 
 // Apis
-import ObservalEndPointApi from 'apis/app/common/ObservalEndPointApi';
+import ObservalEndPointApi from 'modules/App/apis/ObservalEndPointApi';
 
 /**
  * 获取所有的 Observal End Point

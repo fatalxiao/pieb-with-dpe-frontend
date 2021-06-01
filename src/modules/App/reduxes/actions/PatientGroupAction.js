@@ -7,7 +7,7 @@ import {CALL_API} from 'reduxes/actionTypes';
 import * as actionTypes from '../actionTypes/PatientGroupActionType';
 
 // Apis
-import GroupApi from 'apis/app/common/PatientGroupApi';
+import GroupApi from 'modules/App/apis/PatientGroupApi';
 
 /**
  * 获取 Patient Groups

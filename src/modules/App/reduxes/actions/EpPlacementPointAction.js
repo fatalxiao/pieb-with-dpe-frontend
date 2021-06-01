@@ -7,7 +7,7 @@ import {CALL_API} from 'reduxes/actionTypes';
 import * as actionTypes from '../actionTypes/EpPlacementPointActionType';
 
 // Apis
-import EpPlacementPointApi from 'apis/app/common/EpPlacementPointApi';
+import EpPlacementPointApi from 'modules/App/apis/EpPlacementPointApi';
 
 /**
  * 获取所有的 Ep Placement Point

@@ -7,7 +7,7 @@ import {CALL_API} from 'reduxes/actionTypes';
 import * as actionTypes from '../actionTypes/SensoryBlockActionType';
 
 // Apis
-import SensoryBlockApi from 'apis/app/common/SensoryBlockApi';
+import SensoryBlockApi from 'modules/App/apis/SensoryBlockApi';
 
 /**
  * 获取所有的 Sensory Blocks

@@ -8,7 +8,7 @@ import {CALL_API} from 'reduxes/actionTypes';
 import {addSuccessResMsg, addFailureResMsg} from 'modules/Root/reduxes/actions/ResMsgAction';
 
 // Vendors
-import RequestManagement from 'apis/RequestManagement';
+import RequestManagement from 'vendors/api/RequestManagement';
 
 export default ({dispatch, getState}) => next => action => {
 

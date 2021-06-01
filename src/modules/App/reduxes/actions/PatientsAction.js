@@ -7,7 +7,7 @@ import {CALL_API} from 'reduxes/actionTypes';
 import * as actionTypes from '../actionTypes/PatientsActionType';
 
 // Apis
-import PatientApi from 'apis/app/common/PatientApi';
+import PatientApi from 'modules/App/apis/PatientsApi';
 
 /**
  * 获取用于列表的 patients 数据

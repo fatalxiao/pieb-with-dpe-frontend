@@ -6,7 +6,7 @@
 import config from 'src/config';
 
 // Vendors
-import Api from 'apis/Api';
+import Api from 'vendors/api/Api';
 
 export default {
 

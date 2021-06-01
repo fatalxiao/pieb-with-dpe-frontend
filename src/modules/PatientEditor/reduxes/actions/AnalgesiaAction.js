@@ -7,7 +7,7 @@ import {CALL_API} from 'reduxes/actionTypes';
 import * as actionTypes from '../actionTypes';
 
 // Apis
-import AnalgesiaApi from 'apis/app/modules/patient/AnalgesiaApi';
+import AnalgesiaApi from 'modules/PatientEditor/apis/AnalgesiaApi';
 
 /**
  * 格式化 Sensory Block
