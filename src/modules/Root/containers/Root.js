@@ -9,7 +9,8 @@ import {bindActionCreators} from 'redux';
 import {renderRoutes} from 'react-router-config';
 import {Redirect} from 'react-router-dom';
 
-import * as actions from 'reduxes/actions';
+// Actions
+import * as rootActions from 'modules/Root/reduxes/actions';
 
 // Components
 import Toaster from 'alcedo-ui/Toaster';
@@ -64,6 +65,6 @@ export default connect(state => ({
     toastes: state.appToaster.toastes,
     notifiers: state.appNotifier.notifiers
 }), dispatch => bindActionCreators({
-    clearToaste: actions.clearToaste,
-    clearNotifier: actions.clearNotifier
+    clearToaste: rootActions.clearToaste,
+    clearNotifier: rootActions.clearNotifier
 }, dispatch))(Root);

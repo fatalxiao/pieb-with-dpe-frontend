@@ -7,7 +7,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import * as actions from 'reduxes/actions';
+// Actions
+import * as appActions from 'modules/App/reduxes/actions';
 
 // Components
 import TextField from 'customized/CustomizedMaterialTextField';
@@ -127,5 +128,5 @@ PatientListFilter.propTypes = {
 };
 
 export default connect(null, dispatch => bindActionCreators({
-    resetPatientBaseInfo: actions.resetPatientBaseInfo
+    resetPatientBaseInfo: appActions.resetPatientBaseInfo
 }, dispatch))(PatientListFilter);

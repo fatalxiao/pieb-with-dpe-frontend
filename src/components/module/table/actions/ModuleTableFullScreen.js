@@ -7,7 +7,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import * as actions from 'reduxes/actions';
+// Actions
+import * as rootActions from 'modules/Root/reduxes/actions';
 
 // Components
 import Action from './ModuleTableAction';
@@ -48,5 +49,5 @@ ModuleTableFullScreen.propTypes = {
 export default connect(state => ({
     isFullScreen: state.fullScreen.isFullScreen
 }), dispatch => bindActionCreators({
-    toggleFullScreen: actions.toggleFullScreen
+    toggleFullScreen: rootActions.toggleFullScreen
 }, dispatch))(ModuleTableFullScreen);

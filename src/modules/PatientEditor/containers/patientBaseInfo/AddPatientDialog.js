@@ -7,8 +7,9 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
+// Actions
 import * as actions from 'reduxes/actions';
-import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
+import * as appActions from 'modules/App/reduxes/actions';
 
 // Components
 import Dialog from 'alcedo-ui/Dialog';
@@ -157,6 +158,6 @@ export default connect(state => ({
     form: state.patientBaseInfo.form
 }), dispatch => bindActionCreators({
     routerPush: actions.routerPush,
-    updatePatientBaseInfoField: patientEditorActions.updatePatientBaseInfoField,
-    createPatient: patientEditorActions.createPatient
+    updatePatientBaseInfoField: appActions.updatePatientBaseInfoField,
+    createPatient: appActions.createPatient
 }, dispatch))(AddPatientDialog);

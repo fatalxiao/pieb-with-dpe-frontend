@@ -4,7 +4,7 @@
 
 // Action Types
 import {CALL_API} from 'reduxes/actionTypes';
-import * as actionTypes from 'reduxes/actionTypes';
+import * as appActionTypes from 'modules/App/reduxes/actionTypes';
 
 // Apis
 import PatientApi from 'apis/app/modules/patient/PatientApi';
@@ -17,7 +17,7 @@ import {getPatients} from 'modules/App/reduxes/actions/PatientsAction';
  * @returns {{type: string}}
  */
 export const resetPatientBaseInfo = () => ({
-    type: actionTypes.RESET_PATIENT_BASE_INFO
+    type: appActionTypes.RESET_PATIENT_BASE_INFO
 });
 
 /**
@@ -27,7 +27,7 @@ export const resetPatientBaseInfo = () => ({
  * @returns {{fieldName: *, type: string, fieldValue: *}}
  */
 export const updatePatientBaseInfoField = (fieldName, fieldValue) => ({
-    type: actionTypes.UPDATE_PATIENT_BASE_INFO_FIELD,
+    type: appActionTypes.UPDATE_PATIENT_BASE_INFO_FIELD,
     fieldName,
     fieldValue
 });
@@ -48,9 +48,9 @@ export const createPatient = callback => (dispatch, getState) => {
     return dispatch({
         [CALL_API]: {
             types: [
-                actionTypes.CREATE_PATIENT_REQUEST,
-                actionTypes.CREATE_PATIENT_SUCCESS,
-                actionTypes.CREATE_PATIENT_FAILURE
+                appActionTypes.CREATE_PATIENT_REQUEST,
+                appActionTypes.CREATE_PATIENT_SUCCESS,
+                appActionTypes.CREATE_PATIENT_FAILURE
             ],
             api: PatientApi.createPatient,
             params: {

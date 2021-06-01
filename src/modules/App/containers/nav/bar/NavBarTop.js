@@ -7,7 +7,9 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
+// Actions
 import * as actions from 'reduxes/actions';
+import * as appActions from 'modules/App/reduxes/actions';
 
 // Components
 import IconButton from 'alcedo-ui/IconButton';
@@ -134,5 +136,5 @@ NavBarTop.propTypes = {
 
 export default connect(null, dispatch => bindActionCreators({
     routerPush: actions.routerPush,
-    resetPatientBaseInfo: actions.resetPatientBaseInfo
+    resetPatientBaseInfo: appActions.resetPatientBaseInfo
 }, dispatch))(NavBarTop);
