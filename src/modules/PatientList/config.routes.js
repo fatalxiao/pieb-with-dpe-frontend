@@ -13,9 +13,6 @@ import amc from 'components/AsyncModuleComponent';
 export default function configureRoutes(store) {
     return {
         path: '/app/patient-list',
-        component: amc(
-            store,
-            () => import('modules/PatientList/containers/PatientList')
-        )
+        component: amc(store, () => import('modules/PatientList/containers/PatientList'))
     };
 }
