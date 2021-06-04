@@ -10,12 +10,12 @@ import {bindActionCreators} from 'redux';
 import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
 
 // Components
-import Checkbox from 'customized/CustomizedMaterialCheckbox';
-import TextField from 'customized/CustomizedMaterialTextField';
-import TextArea from 'customized/CustomizedMaterialTextArea';
-import TimePicker from 'customized/CustomizedMaterialTimePicker';
+import Checkbox from 'customized/MaterialCheckbox';
+import TextField from 'customized/MaterialTextField';
+import TextArea from 'customized/MaterialTextArea';
+import TimePicker from 'customized/MaterialTimePicker';
 import FieldSet from 'components/FieldSet';
-import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
+import DropdownSelect from 'customized/MaterialDropdownSelect';
 
 // Vendors
 import debounce from 'lodash/debounce';

@@ -1,5 +1,5 @@
 /**
- * @file CustomizedMaterialCheckbox.js
+ * @file MaterialCheckbox.js
  */
 
 import React from 'react';
@@ -12,7 +12,7 @@ import Checkbox from 'alcedo-ui/Checkbox';
 // Statics
 import Theme from 'alcedo-ui/Theme';
 
-const CustomizedMaterialCheckbox = ({
+const MaterialCheckbox = ({
     className, label, isLabelAnimate, useSeparator,
     ...restProps
 }) => (
@@ -24,7 +24,7 @@ const CustomizedMaterialCheckbox = ({
     </MaterialProvider>
 );
 
-CustomizedMaterialCheckbox.propTypes = {
+MaterialCheckbox.propTypes = {
 
     className: PropTypes.string,
 
@@ -35,7 +35,7 @@ CustomizedMaterialCheckbox.propTypes = {
 
 };
 
-CustomizedMaterialCheckbox.defaultProps = {
+MaterialCheckbox.defaultProps = {
 
     theme: Theme.HIGHLIGHT,
 
@@ -45,4 +45,4 @@ CustomizedMaterialCheckbox.defaultProps = {
 
 };
 
-export default CustomizedMaterialCheckbox;
+export default MaterialCheckbox;

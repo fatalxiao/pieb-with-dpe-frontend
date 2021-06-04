@@ -1,30 +1,30 @@
 /**
- * @file CustomizedMaterialRadioGroup.js
+ * @file MaterialRadioGroup.js
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import MaterialProvider from 'alcedo-ui/MaterialProvider';
+import AlcedoMaterialProvider from 'alcedo-ui/MaterialProvider';
 import RadioGroup from 'alcedo-ui/RadioGroup';
 
 // Statics
 import Theme from 'alcedo-ui/Theme';
 
-const CustomizedMaterialRadioGroup = ({
+const MaterialRadioGroup = ({
     className, label, isLabelAnimate, useSeparator,
     ...restProps
 }) => (
-    <MaterialProvider className={className}
-                      label={label}
-                      isLabelAnimate={isLabelAnimate}
-                      useSeparator={useSeparator}>
+    <AlcedoMaterialProvider className={className}
+                            label={label}
+                            isLabelAnimate={isLabelAnimate}
+                            useSeparator={useSeparator}>
         <RadioGroup {...restProps}/>
-    </MaterialProvider>
+    </AlcedoMaterialProvider>
 );
 
-CustomizedMaterialRadioGroup.propTypes = {
+MaterialRadioGroup.propTypes = {
 
     className: PropTypes.string,
 
@@ -35,7 +35,7 @@ CustomizedMaterialRadioGroup.propTypes = {
 
 };
 
-CustomizedMaterialRadioGroup.defaultProps = {
+MaterialRadioGroup.defaultProps = {
 
     theme: Theme.HIGHLIGHT,
 
@@ -45,4 +45,4 @@ CustomizedMaterialRadioGroup.defaultProps = {
 
 };
 
-export default CustomizedMaterialRadioGroup;
+export default MaterialRadioGroup;

@@ -13,8 +13,8 @@ import * as appActions from 'modules/App/reduxes/actions';
 
 // Components
 import Dialog from 'alcedo-ui/Dialog';
-import TextField from 'customized/CustomizedMaterialTextField';
-import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
+import TextField from 'customized/MaterialTextField';
+import DropdownSelect from 'customized/MaterialDropdownSelect';
 import FieldSet from 'components/FieldSet';
 import Msg from 'components/Msg';
 

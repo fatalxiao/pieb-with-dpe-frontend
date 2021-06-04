@@ -10,9 +10,9 @@ import {bindActionCreators} from 'redux';
 import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
 
 // Components
-import Checkbox from 'customized/CustomizedMaterialCheckbox';
-import TextField from 'customized/CustomizedMaterialTextField';
-import TextArea from 'customized/CustomizedMaterialTextArea';
+import Checkbox from 'customized/MaterialCheckbox';
+import TextField from 'customized/MaterialTextField';
+import TextArea from 'customized/MaterialTextArea';
 import FieldSet from 'components/FieldSet';
 
 // Vendors

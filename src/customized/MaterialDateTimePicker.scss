@@ -1,10 +1,10 @@
 /**
- * @file MaterialTimePicker.scss
+ * @file MaterialDateTimePicker.scss
  */
 
-@import 'scss/common.scss';
+@import '../assets/scss/common';
 
-.material-time-picker {
+.material-date-time-picker {
     height: 64px;
 
     .material-provider {
@@ -22,22 +22,6 @@
     &.focused {
         .material-provider-label {
             color: $theme-highlight !important;
-        }
-    }
-}
-
-.portal .popup.material-time-picker-popup {
-    width: 200px;
-
-    .calendar {
-        width: 100%;
-
-        .time-items {
-            width: 50% !important;
-
-            &.seconds {
-                display: none;
-            }
         }
     }
 }

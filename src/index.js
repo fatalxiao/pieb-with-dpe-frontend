@@ -19,7 +19,7 @@ import {configureRoutes} from './config.routes';
 import 'assets/bootstrap/bootstrap-grid.min.css';
 import 'assets/font-awesome/css/all.min.css';
 import 'assets/icomoon/style.css';
-import 'scss/customized/index.scss';
+import 'customized/index.scss';
 import 'scss/global.scss';
 import 'scss/index.scss';
 

@@ -11,9 +11,9 @@ import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
 
 // Components
 import ModuleTableCard from 'components/module/table/ModuleTableCard';
-import Table from 'customized/CustomizedTable';
-import TextField from 'customized/CustomizedMaterialTextField';
-import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
+import Table from 'customized/Table';
+import TextField from 'customized/MaterialTextField';
+import DropdownSelect from 'customized/MaterialDropdownSelect';
 import AppendTimePointButton from './AnalgesiaAppendTimePointButton';
 
 // Vendors

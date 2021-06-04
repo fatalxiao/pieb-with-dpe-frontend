@@ -1,17 +1,17 @@
 /**
- * @file CustomizedMaterialTimePicker.js
+ * @file MaterialTimePicker.js
  */
 
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import MaterialTimePicker from 'alcedo-ui/MaterialTimePicker';
+import AlcedoMaterialTimePicker from 'alcedo-ui/MaterialTimePicker';
 
 // Statics
 import Theme from 'alcedo-ui/Theme';
 
-const CustomizedMaterialTimePicker = ({
+const MaterialTimePicker = ({
     value,
     onChange,
     ...restProps
@@ -45,19 +45,19 @@ const CustomizedMaterialTimePicker = ({
         ]);
 
     return (
-        <MaterialTimePicker {...restProps}
-                            value={formatValue(value)}
-                            onChange={handleChange}/>
+        <AlcedoMaterialTimePicker {...restProps}
+                                  value={formatValue(value)}
+                                  onChange={handleChange}/>
     );
 
 };
 
-CustomizedMaterialTimePicker.propTypes = {
+MaterialTimePicker.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func
 };
 
-CustomizedMaterialTimePicker.defaultProps = {
+MaterialTimePicker.defaultProps = {
 
     theme: Theme.HIGHLIGHT,
 
@@ -66,4 +66,4 @@ CustomizedMaterialTimePicker.defaultProps = {
 
 };
 
-export default CustomizedMaterialTimePicker;
+export default MaterialTimePicker;

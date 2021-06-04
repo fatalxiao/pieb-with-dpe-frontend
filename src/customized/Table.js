@@ -1,12 +1,12 @@
 /**
- * @file CustomizedTable.js
+ * @file Table.js
  */
 
 import React, {Component, createRef} from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import Table from 'alcedo-ui/Table';
+import AlcedoTable from 'alcedo-ui/Table';
 import TableHead from 'components/table/TableHead';
 
 // Statics
@@ -18,14 +18,14 @@ import TableUtil from 'vendors/TableUtil';
 import ComponentUtil from 'vendors/ComponentUtil';
 import {enumerateValue} from 'vendors/Util';
 
-class CustomizedTable extends Component {
+class Table extends Component {
 
-    static Theme = Table.Theme;
-    static Align = Table.Align;
-    static Fixed = Table.Fixed;
-    static SelectMode = Table.SelectMode;
-    static SelectAllMode = Table.SelectAllMode;
-    static SortingType = Table.SortingType;
+    static Theme = AlcedoTable.Theme;
+    static Align = AlcedoTable.Align;
+    static Fixed = AlcedoTable.Fixed;
+    static SelectMode = AlcedoTable.SelectMode;
+    static SelectAllMode = AlcedoTable.SelectAllMode;
+    static SortingType = AlcedoTable.SortingType;
     static FreezeType = FreezeType;
 
     static getDerivedStateFromProps(props, state) {
@@ -262,7 +262,7 @@ class CustomizedTable extends Component {
                         'frozen': isFrozen,
                         [column.footClassName]: column.footClassName
                     }),
-                    fixed: isFrozen ? Table.Fixed.LEFT : null
+                    fixed: isFrozen ? AlcedoTable.Fixed.LEFT : null
                 };
 
             })
@@ -333,30 +333,31 @@ class CustomizedTable extends Component {
             isHorizontalScrollFinal = frozenIndex > -1 ? false : isHorizontalScroll;
 
         return (
-            <Table {...restProps}
-                   ref={this.table}
-                   className={classNames('customized-table', {
-                       'horizontal-scroll': isHorizontalScrollFinal,
-                       'use-head-menu': isUsingHeadMenu,
-                       [className]: className
-                   })}
-                   columns={this.getColumns()}
-                   data={data && data.length > 0 ? data : []}
-                   pageSize={pageSize}
-                   pageSizes={pageSizes}
-                   isPaginated={isPaginated}
-                   paginationPageVisible={paginationPageVisible !== null ? paginationPageVisible : visible}
-                   paginationPageSizeVisible={paginationPageSizeVisible !== null ? paginationPageSizeVisible : visible}
-                   noDataText={noDataText}
-                   isClickSorting={isUsingHeadMenu ? false : isClickSorting}
-                   onScrollStart={this.handleScrollStart}
-                   onColumnsWidthChange={this.handleColumnsWidthChange}/>
+            <AlcedoTable {...restProps}
+                         ref={this.table}
+                         className={classNames('customized-table', {
+                             'horizontal-scroll': isHorizontalScrollFinal,
+                             'use-head-menu': isUsingHeadMenu,
+                             [className]: className
+                         })}
+                         columns={this.getColumns()}
+                         data={data && data.length > 0 ? data : []}
+                         pageSize={pageSize}
+                         pageSizes={pageSizes}
+                         isPaginated={isPaginated}
+                         paginationPageVisible={paginationPageVisible !== null ? paginationPageVisible : visible}
+                         paginationPageSizeVisible={paginationPageSizeVisible !== null ? paginationPageSizeVisible :
+                             visible}
+                         noDataText={noDataText}
+                         isClickSorting={isUsingHeadMenu ? false : isClickSorting}
+                         onScrollStart={this.handleScrollStart}
+                         onColumnsWidthChange={this.handleColumnsWidthChange}/>
         );
 
     }
 }
 
-CustomizedTable.propTypes = {
+Table.propTypes = {
 
     className: PropTypes.string,
 
@@ -400,7 +401,7 @@ CustomizedTable.propTypes = {
      */
     sorting: PropTypes.shape({
         prop: PropTypes.string,
-        type: PropTypes.oneOf(enumerateValue(Table.SortingType))
+        type: PropTypes.oneOf(enumerateValue(AlcedoTable.SortingType))
     }),
 
     paginationParentEl: PropTypes.object,
@@ -450,7 +451,7 @@ CustomizedTable.propTypes = {
 
 };
 
-CustomizedTable.defaultProps = {
+Table.defaultProps = {
 
     sortingAscIconCls: 'fas fa-caret-up',
     sortingDescIconCls: 'fas fa-caret-down',
@@ -475,7 +476,7 @@ CustomizedTable.defaultProps = {
         value: 50,
         text: '50 / page'
     }],
-    defaultSortingType: Table.SortingType.DESC,
+    defaultSortingType: AlcedoTable.SortingType.DESC,
     paginationTotalRenderer: (total, page, totalPage, pageSize) =>
         total <= (page + 1) * pageSize ?
             `Total ${total} items, current ${total > 0 ? page * pageSize + 1 : 0} - ${total}`
@@ -505,4 +506,4 @@ CustomizedTable.defaultProps = {
 
 };
 
-export default CustomizedTable;
+export default Table;

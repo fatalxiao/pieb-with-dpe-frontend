@@ -11,9 +11,9 @@ import {bindActionCreators} from 'redux';
 import * as appActions from 'modules/App/reduxes/actions';
 
 // Components
-import TextField from 'customized/CustomizedMaterialTextField';
+import TextField from 'customized/MaterialTextField';
 import RaisedButton from 'alcedo-ui/RaisedButton';
-import DropdownSelect from 'customized/CustomizedMaterialDropdownSelect';
+import DropdownSelect from 'customized/MaterialDropdownSelect';
 import AddPatientDialog from 'modules/PatientEditor/containers/patientBaseInfo/AddPatientDialog';
 
 // Styles
