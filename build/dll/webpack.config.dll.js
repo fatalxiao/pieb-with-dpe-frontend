@@ -30,9 +30,9 @@ module.exports = {
     entry: {
         'polyfill': ['@babel/polyfill'],
         'moment': ['moment'],
-        'react': ['react', 'react-dom', 'react-redux', 'react-router', 'react-router-config', 'react-router-dom',
-                  'connected-react-router', 'redux', 'redux-thunk', 'react-transition-group'],
-        'tools': ['classnames', 'history', 'js-cookie']
+        'react': ['react', 'react-dom', 'react-redux', 'react-router', 'react-router-config',
+                  'react-router-dom', 'connected-react-router', 'redux', 'redux-thunk'],
+        'tools': ['classnames', 'history']
     },
 
     output: {
