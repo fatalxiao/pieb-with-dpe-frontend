@@ -4,10 +4,10 @@
 
 // Statics
 const webpackConfig = require('./webpack.config.dll.js');
-const logger = require('fancy-node-logger');
 
 // Vendors
 const webpack = require('webpack');
+const logger = require('fancy-node-logger');
 
 logger.wait('Building DLL...');
 
