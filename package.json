@@ -91,6 +91,7 @@
         "eslint-plugin-react-hooks": "^4.2.0",
         "eventsource-polyfill": "^0.9.6",
         "express": "^4.17.1",
+        "fancy-node-logger": "^0.0.2",
         "file-loader": "^6.2.0",
         "happypack": "^5.0.1",
         "html-loader": "^2.1.2",
@@ -109,6 +110,6 @@
         "webpack": "^5.38.1",
         "webpack-dev-middleware": "^5.0.0",
         "webpack-hot-middleware": "^2.25.0",
-        "webpack-merge": "^5.7.3"
+        "webpack-merge": "^5.8.0"
     }
 }
