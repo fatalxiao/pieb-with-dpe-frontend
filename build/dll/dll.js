@@ -4,11 +4,12 @@
 
 // Statics
 const webpackConfig = require('./webpack.config.dll.js');
+const logger = require('fancy-node-logger');
 
 // Vendors
 const webpack = require('webpack');
 
-console.log('WAIT', 'Building DLL...');
+logger.wait('Building DLL...');
 
 webpack(webpackConfig, (err, stats) => {
 
@@ -24,6 +25,6 @@ webpack(webpackConfig, (err, stats) => {
         chunkModules: false
     }) + '\n\n');
 
-    console.log('DONE', 'Build DLL Complete');
+    logger.done('Build DLL Complete');
 
 });

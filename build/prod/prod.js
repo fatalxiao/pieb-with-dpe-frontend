@@ -4,11 +4,12 @@
 
 // Statics
 const webpackConfig = require('./webpack.config.prod.js');
+const logger = require('fancy-node-logger');
 
 // Vendors
 const webpack = require('webpack');
 
-console.log('WAIT', 'Building Production...');
+logger.wait('Building Production...');
 
 webpack(webpackConfig, (err, stats) => {
 
@@ -24,6 +25,6 @@ webpack(webpackConfig, (err, stats) => {
         chunkModules: false
     }) + '\n\n');
 
-    console.log('DONE', `Build Complete `);
+    logger.done('Build Complete ');
 
 });

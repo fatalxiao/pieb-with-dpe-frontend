@@ -11,6 +11,7 @@ const {createProxyMiddleware} = require('http-proxy-middleware');
 const history = require('connect-history-api-fallback');
 const opn = require('opn');
 const compression = require('compression');
+const logger = require('fancy-node-logger');
 
 const
 
@@ -54,20 +55,22 @@ Object.entries(proxyTable).forEach(([context, target]) =>
 app.use(compression())
    .use(history())
    .use(express.static(config.assetsRoot, {
-       setHeaders: (res, path) => {
-           res.setHeader('Cache-Control', path.endsWith('index.html') ?
-               'no-cache, no-store, no_store, max-age=0, must-revalidate' : 'max-age=315360000'
-           );
-       }
+       setHeaders: (res, path) => res.setHeader(
+           'Cache-Control',
+           path.endsWith('index.html') ?
+               'no-cache, no-store, no_store, max-age=0, must-revalidate'
+               :
+               'max-age=315360000'
+       )
    }))
    .listen(port, err => {
 
        if (err) {
-           console.log(err);
+           logger.error(err);
            return;
        }
 
-       console.log('> Listening at ' + url);
+       logger.done(`> Listening at ${url}`);
 
        opn(url);
 

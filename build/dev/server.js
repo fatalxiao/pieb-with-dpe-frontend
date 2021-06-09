@@ -14,6 +14,7 @@ const {createProxyMiddleware} = require('http-proxy-middleware');
 const history = require('connect-history-api-fallback');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
+const logger = require('fancy-node-logger');
 
 const
 
@@ -46,9 +47,7 @@ const
 const devMiddleware = webpackDevMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath
 });
-devMiddleware.waitUntilValid(() =>
-    console.log('DONE', `Listening At ${url} `)
-);
+devMiddleware.waitUntilValid(() => logger.done(`Listening At ${url}`));
 
 /**
  * hot middleware
@@ -88,7 +87,7 @@ app.use(history())
 module.exports = app.listen(port, err => {
 
     if (err) {
-        return console.error(err);
+        return logger.error(err);
     }
 
     opn(url);

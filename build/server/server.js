@@ -7,6 +7,7 @@ const path = require('path');
 const express = require('express');
 const history = require('connect-history-api-fallback');
 const compression = require('compression');
+const logger = require('fancy-node-logger');
 
 const
 
@@ -34,10 +35,10 @@ app.use(compression())
    .listen(port, err => {
 
        if (err) {
-           console.log('ERROR', `${err} `);
+           logger.error(`${err} `);
            return;
        }
 
-       console.log('DONE', `Listening At ${port} `);
+       logger.done(`Listening At ${port} `);
 
    });
