@@ -16,6 +16,8 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const logger = require('fancy-node-logger');
 
+logger.wait('Starting App...\n');
+
 const
 
     /**

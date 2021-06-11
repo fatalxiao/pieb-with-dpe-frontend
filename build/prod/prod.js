@@ -9,7 +9,7 @@ const webpackConfig = require('./webpack.config.prod.js');
 const webpack = require('webpack');
 const logger = require('fancy-node-logger');
 
-logger.wait('Building Production...');
+logger.wait('Building Production...\n');
 
 webpack(webpackConfig, (err, stats) => {
 

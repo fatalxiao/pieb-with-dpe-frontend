@@ -9,7 +9,7 @@ const webpackConfig = require('./webpack.config.dll.js');
 const webpack = require('webpack');
 const logger = require('fancy-node-logger');
 
-logger.wait('Building DLL...');
+logger.wait('Building DLL...\n');
 
 webpack(webpackConfig, (err, stats) => {
 

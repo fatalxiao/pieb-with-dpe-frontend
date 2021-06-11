@@ -13,6 +13,8 @@ const opn = require('opn');
 const compression = require('compression');
 const logger = require('fancy-node-logger');
 
+logger.wait('Starting App...\n');
+
 const
 
     /**
