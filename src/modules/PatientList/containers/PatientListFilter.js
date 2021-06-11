@@ -37,7 +37,10 @@ const PatientListFilter = ({
          */
         handlePatientFilterChange = useCallback(value => {
             onFilterChange?.(value, filterGroup, filterStatus);
-        }, [filterGroup, filterStatus, onFilterChange]),
+        }, [
+            filterGroup, filterStatus,
+            onFilterChange
+        ]),
 
         /**
          * 处理 group filter 的变更
@@ -45,7 +48,10 @@ const PatientListFilter = ({
          */
         handleGroupFilterChange = useCallback(value => {
             onFilterChange?.(filterValue, value, filterStatus);
-        }, [filterValue, filterStatus, onFilterChange]),
+        }, [
+            filterValue, filterStatus,
+            onFilterChange
+        ]),
 
         /**
          * 处理 status filter 的变更
@@ -53,7 +59,10 @@ const PatientListFilter = ({
          */
         handleStatusFilterChange = useCallback(value => {
             onFilterChange?.(filterValue, filterGroup, value);
-        }, [filterValue, filterGroup, onFilterChange]),
+        }, [
+            filterValue, filterGroup,
+            onFilterChange
+        ]),
 
         /**
          * 显示 add patient dialog
@@ -62,16 +71,17 @@ const PatientListFilter = ({
         showAddPatientDialog = useCallback(() => {
             setAddPatientDialogVisible(true);
             resetPatientBaseInfo?.();
-        }, [resetPatientBaseInfo]),
+        }, [
+            resetPatientBaseInfo
+        ]),
 
         /**
          * 隐藏 add patient dialog
          * @type {Function}
          */
-        hideAddPatientDialog = useCallback(() =>
-                setAddPatientDialogVisible(false),
-            []
-        );
+        hideAddPatientDialog = useCallback(() => {
+            setAddPatientDialogVisible(false);
+        }, []);
 
     return (
         <div className="patient-list-filter">

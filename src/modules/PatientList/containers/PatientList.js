@@ -38,13 +38,17 @@ const PatientList = ({
         /**
          * 最终 table 的值
          */
-        tableData = useMemo(() => patientList.filter(item =>
-            (item?.id?.includes(filterValue) || item?.name?.includes(filterValue))
-            &&
-            (filterGroup?.id === 0 ? true : item?.groupId === filterGroup?.id)
-            &&
-            (filterStatus?.id === -1 ? true : item?.status === filterStatus?.id)
-        ), [patientList, filterValue, filterGroup, filterStatus]),
+        tableData = useMemo(() => {
+            return patientList.filter(item =>
+                (item?.id?.includes(filterValue) || item?.name?.includes(filterValue))
+                &&
+                (filterGroup?.id === 0 ? true : item?.groupId === filterGroup?.id)
+                &&
+                (filterStatus?.id === -1 ? true : item?.status === filterStatus?.id)
+            );
+        }, [
+            patientList, filterValue, filterGroup, filterStatus
+        ]),
 
         /**
          * 处理 filter 变更

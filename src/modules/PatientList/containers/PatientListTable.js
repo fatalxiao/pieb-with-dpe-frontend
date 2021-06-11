@@ -34,8 +34,9 @@ const PatientListTable = ({
          * 处理 patient name 的变更
          * @type {*}
          */
-        handleNameChange = useCallback((id, value) =>
-            updatePatientName?.(id, value), [
+        handleNameChange = useCallback((id, value) => {
+            updatePatientName?.(id, value);
+        }, [
             updatePatientName
         ]),
 
@@ -43,8 +44,9 @@ const PatientListTable = ({
          * debounce 处理 patient name 的变更
          * @type {*}
          */
-        debounceHandleNameChange = useMemo(() =>
-            debounce(handleNameChange, 400), [
+        debounceHandleNameChange = useMemo(() => {
+            debounce(handleNameChange, 400);
+        }, [
             handleNameChange
         ]),
 
@@ -52,8 +54,9 @@ const PatientListTable = ({
          * 处理 patient group 的变更
          * @type {function(*=, *=): *}
          */
-        handleGroupChange = useCallback((id, value) =>
-            updatePatientGroup?.(id, value), [
+        handleGroupChange = useCallback((id, value) => {
+            updatePatientGroup?.(id, value);
+        }, [
             updatePatientGroup
         ]),
 
@@ -61,10 +64,12 @@ const PatientListTable = ({
          * 处理 patient status 的变更
          * @type {function(*=, *): *}
          */
-        handleStatusChange = useCallback((id, value) => value ?
-            enablePatient?.(id)
-            :
-            disablePatient?.(id), [
+        handleStatusChange = useCallback((id, value) => {
+            value ?
+                enablePatient?.(id)
+                :
+                disablePatient?.(id);
+        }, [
             enablePatient, disablePatient
         ]),
 
@@ -72,48 +77,50 @@ const PatientListTable = ({
          * 所有 columns 的配置
          * @type {*[]}
          */
-        columns = useMemo(() => [{
-            key: 'id',
-            headRenderer: 'ID',
-            bodyRenderer: rowData =>
-                <NavLink className="id-link"
-                         to={`/app/patient/info/${rowData.id}`}>
-                    {rowData.id}
-                </NavLink>,
-            sortable: true,
-            sortingProp: 'id'
-        }, {
-            key: 'name',
-            headRenderer: 'Name',
-            bodyRenderer: rowData =>
-                <TextField className="hover-activated name-field"
-                           value={rowData.name}
-                           onChange={value => debounceHandleNameChange(rowData.id, value)}/>,
-            sortable: true,
-            sortingProp: 'name'
-        }, {
-            key: 'group',
-            headRenderer: 'Group',
-            bodyRenderer: rowData =>
-                <DropdownSelect className="hover-activated group-select"
-                                data={groupList}
-                                valueField="id"
-                                displayField="name"
-                                value={rowData.group}
-                                onChange={value => handleGroupChange(rowData.id, value)}/>,
-            sortable: true,
-            sortingProp: 'groupId'
-        }, {
-            key: 'status',
-            headRenderer: 'Status',
-            bodyClassName: 'status-td',
-            bodyRenderer: rowData =>
-                <Switcher value={rowData.status === 1}
-                          size={Switcher.Size.SMALL}
-                          onChange={value => handleStatusChange(rowData.id, value)}/>,
-            sortable: true,
-            sortingProp: 'status'
-        }], [
+        columns = useMemo(() => {
+            return [{
+                key: 'id',
+                headRenderer: 'ID',
+                bodyRenderer: rowData =>
+                    <NavLink className="id-link"
+                             to={`/app/patient/info/${rowData.id}`}>
+                        {rowData.id}
+                    </NavLink>,
+                sortable: true,
+                sortingProp: 'id'
+            }, {
+                key: 'name',
+                headRenderer: 'Name',
+                bodyRenderer: rowData =>
+                    <TextField className="hover-activated name-field"
+                               value={rowData.name}
+                               onChange={value => debounceHandleNameChange(rowData.id, value)}/>,
+                sortable: true,
+                sortingProp: 'name'
+            }, {
+                key: 'group',
+                headRenderer: 'Group',
+                bodyRenderer: rowData =>
+                    <DropdownSelect className="hover-activated group-select"
+                                    data={groupList}
+                                    valueField="id"
+                                    displayField="name"
+                                    value={rowData.group}
+                                    onChange={value => handleGroupChange(rowData.id, value)}/>,
+                sortable: true,
+                sortingProp: 'groupId'
+            }, {
+                key: 'status',
+                headRenderer: 'Status',
+                bodyClassName: 'status-td',
+                bodyRenderer: rowData =>
+                    <Switcher value={rowData.status === 1}
+                              size={Switcher.Size.SMALL}
+                              onChange={value => handleStatusChange(rowData.id, value)}/>,
+                sortable: true,
+                sortingProp: 'status'
+            }];
+        }, [
             groupList,
             debounceHandleNameChange, handleGroupChange, handleStatusChange
         ]);
