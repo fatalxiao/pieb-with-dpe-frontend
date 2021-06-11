@@ -25,16 +25,15 @@ const NavPatient = ({
     isCollapsed, isFold, groupListActionType, patientList, patientListActionType
 }) => {
 
-    const
-
-        /**
-         * 是否没有 patient
-         * @type {boolean}
-         */
-        noPatient = useMemo(() =>
-            !patientList || patientList.length < 1,
-            [patientList]
-        );
+    /**
+     * 是否没有 patient
+     * @type {boolean}
+     */
+    const noPatient = useMemo(() => {
+        return !patientList || patientList.length < 1;
+    }, [
+        patientList
+    ]);
 
     return (
         <div className={classNames('nav-patients', {

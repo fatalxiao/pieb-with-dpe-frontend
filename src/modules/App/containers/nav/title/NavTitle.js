@@ -24,15 +24,15 @@ const NavTitle = ({state}) => {
          * 获取当前 location 的 pathname
          * @type {string}
          */
-        pathName = useMemo(() =>
-            location.pathname, []),
+        pathName = location.pathname,
 
         /**
          * 根据 pathname 去 sitemap 里计算出 path
          * @type {*[]}
          */
-        navPath = useMemo(() =>
-            getPath(pathName, state), [
+        navPath = useMemo(() => {
+            return getPath(pathName, state);
+        }, [
             pathName, state
         ]);
 

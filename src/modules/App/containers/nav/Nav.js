@@ -24,19 +24,17 @@ const Nav = () => {
          * 患者栏是否塌缩
          * @type {function(*): boolean}
          */
-        isNavPatientCollapsed = useCallback(navWidth =>
-            navWidth < Nav.NAV_BAR_WIDTH * 2,
-            []
-        ),
+        isNavPatientCollapsed = useCallback(navWidth => {
+            return navWidth < Nav.NAV_BAR_WIDTH * 2;
+        }, []),
 
         /**
          * 患者栏是否折叠
          * @type {function(*): boolean}
          */
-        isNavPatientFold = useCallback(navWidth =>
-            navWidth < Nav.NAV_BAR_WIDTH + Nav.NAV_PATIENT_WIDTH / 3,
-            []
-        ),
+        isNavPatientFold = useCallback(navWidth => {
+            return navWidth < Nav.NAV_BAR_WIDTH + Nav.NAV_PATIENT_WIDTH / 3;
+        }, []),
 
         /**
          * 是否没有移动
@@ -92,8 +90,9 @@ const Nav = () => {
          * 当前导航栏是否折叠
          * @type {boolean}
          */
-        collapsed = useMemo(() =>
-            navWidth === Nav.NAV_BAR_WIDTH, [
+        collapsed = useMemo(() => {
+            return navWidth === Nav.NAV_BAR_WIDTH;
+        }, [
             navWidth
         ]),
 
@@ -101,8 +100,9 @@ const Nav = () => {
          * 更新导航栏宽度到 local storage
          * @type {function(*=): void}
          */
-        saveNavWidth = useCallback(navWidth =>
-            localStorage.setItem('navWidth', navWidth), []),
+        saveNavWidth = useCallback(navWidth => {
+            localStorage.setItem('navWidth', navWidth);
+        }, []),
 
         /**
          * 按下鼠标开始拖拽

@@ -22,16 +22,15 @@ const NavPatientsPopover = ({
     routerPush
 }) => {
 
-    const
-
-        /**
-         * 跳转到列表页
-         * @type {function(): *}
-         */
-        goToList = useCallback(() =>
-                routerPush?.('/app/patient-list'),
-            [routerPush]
-        );
+    /**
+     * 跳转到列表页
+     * @type {function(): *}
+     */
+    const goToList = useCallback(() => {
+        routerPush?.('/app/patient-list');
+    }, [
+        routerPush
+    ]);
 
     return (
         <div className="nav-patients-popover-wrapper">

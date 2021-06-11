@@ -23,13 +23,17 @@ const NavNoPatient = () => {
          * 显示 dialog
          * @type {function(): void}
          */
-        showAddPatientDialog = useCallback(() => setAddPatientDialogVisible(true), []),
+        showAddPatientDialog = useCallback(() => {
+            setAddPatientDialogVisible(true);
+        }, []),
 
         /**
          * 隐藏 dialog
          * @type {function(): void}
          */
-        hideAddPatientDialog = useCallback(() => setAddPatientDialogVisible(false), []);
+        hideAddPatientDialog = useCallback(() => {
+            setAddPatientDialogVisible(false);
+        }, []);
 
     return (
         <div className="nav-no-patient">

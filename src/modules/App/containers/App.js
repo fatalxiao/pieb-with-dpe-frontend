@@ -35,11 +35,12 @@ const App = ({
      * 是否正在加载基础数据
      * @type {*}
      */
-    const loading = useMemo(() =>
-        getPatientGroupsActionType !== actionTypes.GET_PATIENT_GROUPS_SUCCESS
-        || getSensoryBlocksActionType !== actionTypes.GET_SENSORY_BLOCKS_SUCCESS
-        || getObservalEndPointsActionType !== actionTypes.GET_OBSERVAL_END_POINT_SUCCESS
-        || getEpPlacementPointsActionType !== actionTypes.GET_EP_PLACEMENT_POINT_SUCCESS, [
+    const loading = useMemo(() => {
+        return getPatientGroupsActionType !== actionTypes.GET_PATIENT_GROUPS_SUCCESS
+            || getSensoryBlocksActionType !== actionTypes.GET_SENSORY_BLOCKS_SUCCESS
+            || getObservalEndPointsActionType !== actionTypes.GET_OBSERVAL_END_POINT_SUCCESS
+            || getEpPlacementPointsActionType !== actionTypes.GET_EP_PLACEMENT_POINT_SUCCESS;
+    }, [
         getPatientGroupsActionType, getSensoryBlocksActionType,
         getObservalEndPointsActionType, getEpPlacementPointsActionType
     ]);

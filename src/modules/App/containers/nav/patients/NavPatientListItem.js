@@ -25,22 +25,24 @@ const NavPatientListItem = ({
         /**
          * 当前 patient 的 ID
          */
-        patientId = useMemo(() => patient.id, [patient]),
+        patientId = patient?.id,
 
         /**
          * 当前 patient 所属 group 的 name
          */
-        groupName = useMemo(() =>
-                groupList.find(item => item?.id === patient.groupId)?.name,
-            [groupList, patientId]
-        ),
+        groupName = useMemo(() => {
+            return groupList.find(item => item?.id === patient.groupId)?.name;
+        }, [
+            groupList, patientId
+        ]),
 
         /**
          * 处理点击，跳转到 patient info 页面
          * @type {function(): *}
          */
-        handleClick = useCallback(() =>
-            routerPush(`/app/patient/info/${patientId}`), [
+        handleClick = useCallback(() => {
+            routerPush(`/app/patient/info/${patientId}`);
+        }, [
             patientId, routerPush
         ]);
 
