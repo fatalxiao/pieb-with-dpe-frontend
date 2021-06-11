@@ -49,8 +49,9 @@ const NavBarTop = ({
          * 跳转到落地页
          * @type {function(): *}
          */
-        goToLanding = useCallback(() =>
-            routerPush?.(DEFAULT_ROUTE), [
+        goToLanding = useCallback(() => {
+            routerPush?.(DEFAULT_ROUTE);
+        }, [
             routerPush
         ]),
 
@@ -58,8 +59,9 @@ const NavBarTop = ({
          * 切换查询抽屉显示/隐藏
          * @type {function(): void}
          */
-        toggleSearch = useCallback(() =>
-            setSearchDrawerVisible(!searchDrawerVisible), [
+        toggleSearch = useCallback(() => {
+            setSearchDrawerVisible(!searchDrawerVisible);
+        }, [
             searchDrawerVisible
         ]),
 
@@ -67,8 +69,9 @@ const NavBarTop = ({
          * 隐藏查询抽屉
          * @type {function(): void}
          */
-        hideSearch = useCallback(() =>
-            setSearchDrawerVisible(false), []),
+        hideSearch = useCallback(() => {
+            setSearchDrawerVisible(false);
+        }, []),
 
         /**
          * 显示新建患者对话框
@@ -85,8 +88,9 @@ const NavBarTop = ({
          * 隐藏新建患者对话框
          * @type {function(): void}
          */
-        hideAddPatient = useCallback(() =>
-            setAddPatientDialogVisible(false), []);
+        hideAddPatient = useCallback(() => {
+            setAddPatientDialogVisible(false);
+        }, []);
 
     return (
         <div className={classNames('nav-bar-top', {

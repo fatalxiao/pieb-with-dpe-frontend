@@ -33,20 +33,25 @@ const NavSearch = ({
          * 根据 filter value 返回数据
          * @type {Array}
          */
-        data = useMemo(() => filterValue ?
-            patientList ?
-                patientList.filter(item => item?.id?.includes(filterValue) || item?.name?.includes(filterValue))
+        data = useMemo(() => {
+            return filterValue ?
+                patientList ?
+                    patientList.filter(item => item?.id?.includes(filterValue) || item?.name?.includes(filterValue))
+                    :
+                    []
                 :
-                []
-            :
-            patientList,
-            [filterValue, patientList]),
+                patientList;
+        }, [
+            filterValue, patientList
+        ]),
 
         /**
          * 处理 filter 变更
          * @type {function(*=): void}
          */
-        handleFilterChange = useCallback(nextFilterValue => setFilterValue(nextFilterValue), []);
+        handleFilterChange = useCallback(nextFilterValue => {
+            setFilterValue(nextFilterValue);
+        }, []);
 
     return (
         <div className={classNames('nav-search-wrapper', {

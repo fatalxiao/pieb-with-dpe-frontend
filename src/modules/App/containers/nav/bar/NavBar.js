@@ -15,7 +15,9 @@ import classNames from 'classnames';
 // Styles
 import './NavBar.scss';
 
-const NavBar = ({isFold}) => (
+const NavBar = ({
+    isFold
+}) => (
     <div className={classNames('nav-bar', {
         fold: isFold
     })}>
