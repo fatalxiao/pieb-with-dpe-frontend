@@ -2,7 +2,7 @@
  * @file PatientList.js
  */
 
-import React, {Fragment, useState, useMemo, useCallback} from 'react';
+import React, {useState, useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
@@ -64,7 +64,7 @@ const PatientList = ({
         <div className="patient-list">
             {
                 patientList?.length > 0 ?
-                    <Fragment>
+                    <>
 
                         <PatientListFilter filterValue={filterValue}
                                            groupList={[PatientList.ALL_GROUP, ...groupList]}
@@ -75,7 +75,7 @@ const PatientList = ({
 
                         <PatientListTable data={tableData}/>
 
-                    </Fragment>
+                    </>
                     :
                     <NavNoPatient/>
             }

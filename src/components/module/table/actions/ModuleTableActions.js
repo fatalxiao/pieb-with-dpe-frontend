@@ -2,7 +2,7 @@
  * @file ModuleTableActions.js
  */
 
-import React, {Fragment} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 // Components
@@ -26,10 +26,10 @@ const ModuleTableActions = ({
 
         {
             extraActions ?
-                <Fragment>
+                <>
                     {extraActions}
                     <div className="module-table-actions-extra-separator"/>
-                </Fragment>
+                </>
                 :
                 null
         }

@@ -2,7 +2,7 @@
  * @file ModuleTableCard.js
  */
 
-import React, {Fragment, Children, useRef, useState, useMemo, useCallback, useEffect} from 'react';
+import React, {Children, useRef, useState, useMemo, useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
 import {connect} from 'react-redux';
@@ -119,7 +119,7 @@ const ModuleTableCard = ({
     ]);
 
     return (
-        <Fragment>
+        <>
 
             {/** 全屏时的模态框 */}
             {
@@ -160,7 +160,7 @@ const ModuleTableCard = ({
 
             </Card>
 
-        </Fragment>
+        </>
     );
 
 };
