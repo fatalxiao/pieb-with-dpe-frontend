@@ -19,17 +19,21 @@ export default (getComponent, store) => props => {
          * 开始加载组件
          * @type {function(): number}
          */
-        startLoadComponent = useCallback(() => setTimeout(() => store.dispatch({
-            type: actionTypes.LOAD_COMPONENT_START
-        }), 0), []),
+        startLoadComponent = useCallback(() => {
+            setTimeout(() => store.dispatch({
+                type: actionTypes.LOAD_COMPONENT_START
+            }), 0);
+        }, []),
 
         /**
          * 加载组件完毕
          * @type {function(): number}
          */
-        finishLoadComponent = useCallback(() => setTimeout(() => store.dispatch({
-            type: actionTypes.LOAD_COMPONENT_COMPLETE
-        }), 0), []),
+        finishLoadComponent = useCallback(() => {
+            setTimeout(() => store.dispatch({
+                type: actionTypes.LOAD_COMPONENT_COMPLETE
+            }), 0);
+        }, []),
 
         /**
          * 加载组件

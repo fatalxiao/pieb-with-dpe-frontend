@@ -70,8 +70,9 @@ const ModuleTableCard = ({
          * 剩余其他的 children 放在 card 的最后渲染
          * @type {Array<Exclude<React.ReactNode, boolean | null | undefined>>}
          */
-        [tableChild, ...restChildren] = useMemo(() =>
-            Children.toArray(children), [
+        [tableChild, ...restChildren] = useMemo(() => {
+            return Children.toArray(children);
+        }, [
             children
         ]),
 
@@ -79,12 +80,12 @@ const ModuleTableCard = ({
          * 全屏时的固定高度，计算滚动高度时需要排除的高度
          * @type {*}
          */
-        fullScreenTableFixedHeight = useMemo(() =>
-            restChildrenRef?.current?.clientHeight || 0,
+        fullScreenTableFixedHeight = useMemo(() => {
+            return restChildrenRef?.current?.clientHeight || 0;
             // eslint-disable-next-line react-hooks/exhaustive-deps
-            [
-                restChildrenRef?.current
-            ]),
+        }, [
+            restChildrenRef?.current
+        ]),
 
         /**
          * 更新 card 的 element
@@ -111,8 +112,9 @@ const ModuleTableCard = ({
     /**
      * 初始化
      */
-    useEffect(() =>
-        updateCardEl(), [
+    useEffect(() => {
+        updateCardEl();
+    }, [
         updateCardEl
     ]);
 

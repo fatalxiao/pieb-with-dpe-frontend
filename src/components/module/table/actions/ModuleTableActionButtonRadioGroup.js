@@ -40,7 +40,10 @@ const ModuleTableActionButtonRadioGroup = ({
 
             onChange?.(...args);
 
-        }, [tipRef, onChange]);
+        }, [
+            // tipRef,
+            onChange
+        ]);
 
     return (
         <TipProvider ref={tipRef}

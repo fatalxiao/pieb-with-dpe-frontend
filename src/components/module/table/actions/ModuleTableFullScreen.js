@@ -18,16 +18,15 @@ const ModuleTableFullScreen = ({
     toggleFullScreen, onChange
 }) => {
 
-    const
-
-        /**
-         * 切换是否全屏
-         * @type {function(): *}
-         */
-        toggle = useCallback(() =>
-            toggleFullScreen?.(undefined, null, isFullScreen => onChange?.(isFullScreen)), [
-            toggleFullScreen, onChange
-        ]);
+    /**
+     * 切换是否全屏
+     * @type {function(): *}
+     */
+    const toggle = useCallback(() => {
+        toggleFullScreen?.(undefined, null, isFullScreen => onChange?.(isFullScreen));
+    }, [
+        toggleFullScreen, onChange
+    ]);
 
     return (
         <Action iconCls={`far fa-${isFullScreen ? 'compress' : 'expand'}`}

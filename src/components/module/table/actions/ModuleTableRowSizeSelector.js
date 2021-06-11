@@ -27,9 +27,10 @@ const ModuleTableRowSizeSelector = ({
         /**
          * ButtonRadioGroup 选中的值
          */
-        fieldValue = useMemo(() =>
-            ModuleTableRowSizeSelector.Sizes.find(item => item?.value === value)
-            || ModuleTableRowSizeSelector.Sizes[1], [
+        fieldValue = useMemo(() => {
+            return ModuleTableRowSizeSelector.Sizes.find(item => item?.value === value)
+                || ModuleTableRowSizeSelector.Sizes[1];
+        }, [
             value
         ]),
 
@@ -37,8 +38,9 @@ const ModuleTableRowSizeSelector = ({
          * 处理 button 点击事件
          * @type {Function}
          */
-        handleChange = useCallback(v =>
-            onChange?.(v?.value), [
+        handleChange = useCallback(v => {
+            onChange?.(v?.value);
+        }, [
             onChange
         ]);
 

@@ -21,16 +21,21 @@ const ModuleLoading = ({
     ...restProps
 }) => {
 
-    const [loading, setLoading] = useState(true),
+    const
 
-        startLoading = useCallback(() =>
-            setLoading(true), []),
+        [loading, setLoading] = useState(true),
 
-        finishLoading = useCallback(() =>
-            setLoading(false), []),
+        startLoading = useCallback(() => {
+            setLoading(true);
+        }, []),
 
-        debounceFinishLoading = useMemo(() =>
-            debounce(finishLoading, 150), [
+        finishLoading = useCallback(() => {
+            setLoading(false);
+        }, []),
+
+        debounceFinishLoading = useMemo(() => {
+            return debounce(finishLoading, 150);
+        }, [
             finishLoading
         ]);
 
