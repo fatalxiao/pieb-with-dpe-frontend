@@ -30,17 +30,15 @@ const ObservalData = ({
         /**
          * 从路由 params 获取 patient ID
          */
-        patientId = useMemo(() =>
-            match?.params?.patientId, [
-            match?.params?.patientId
-        ]),
+        patientId = match?.params?.patientId,
 
         /**
          * 是否正在加载数据
          * @type {boolean}
          */
-        loading = useMemo(() =>
-            getActionType !== patientEditorActionTypes.GET_OBSERVAL_SUCCESS, [
+        loading = useMemo(() => {
+            return getActionType !== patientEditorActionTypes.GET_OBSERVAL_SUCCESS;
+        }, [
             getActionType
         ]),
 
@@ -66,8 +64,9 @@ const ObservalData = ({
          * 返回上一步
          * @type {function(): *}
          */
-        prevStep = useCallback(() =>
-            routerPush?.(`/app/patient/analgesia/${patientId}`), [
+        prevStep = useCallback(() => {
+            routerPush?.(`/app/patient/analgesia/${patientId}`);
+        }, [
             patientId,
             routerPush
         ]),
@@ -76,9 +75,11 @@ const ObservalData = ({
          * 提交到后端
          * @type {function(): *}
          */
-        save = useCallback(() => createOrUpdateObservalData(patientId, () =>
-            routerPush?.('/app/patient-list')
-        ), [
+        save = useCallback(() => {
+            createOrUpdateObservalData(patientId, () =>
+                routerPush?.('/app/patient-list')
+            );
+        }, [
             patientId,
             routerPush, createOrUpdateObservalData
         ]);

@@ -23,18 +23,16 @@ const PatientEditor = ({
     routerPush
 }) => {
 
-    const
-
-        /**
-         * 处理 step 变更
-         * @type {Function}
-         */
-        handleStepChange = useCallback(({nextActivatedStep}) => {
-            routerPush?.(steps?.[nextActivatedStep]?.route);
-        }, [
-            steps,
-            routerPush
-        ]);
+    /**
+     * 处理 step 变更
+     * @type {Function}
+     */
+    const handleStepChange = useCallback(({nextActivatedStep}) => {
+        routerPush?.(steps?.[nextActivatedStep]?.route);
+    }, [
+        steps,
+        routerPush
+    ]);
 
     return (
         <div className="patient-editor">

@@ -32,8 +32,9 @@ const PatientInfo = ({
         /**
          * 从路由 params 中取出 patientId
          */
-        patientId = useMemo(() =>
-            match.params.id, [
+        patientId = useMemo(() => {
+            return match.params.id;
+        }, [
             match.params.id
         ]),
 
@@ -41,8 +42,9 @@ const PatientInfo = ({
          * 是否正在加载数据
          * @type {boolean}
          */
-        loading = useMemo(() =>
-            getActionType !== patientEditorActionTypes.GET_PATIENT_INFO_SUCCESS, [
+        loading = useMemo(() => {
+            return getActionType !== patientEditorActionTypes.GET_PATIENT_INFO_SUCCESS;
+        }, [
             getActionType
         ]),
 
@@ -50,11 +52,12 @@ const PatientInfo = ({
          * 获取数据
          * @type {function(): *}
          */
-        loadData = useCallback(() =>
+        loadData = useCallback(() => {
             patientId ?
                 getPatientInfo?.(patientId)
                 :
-                routerPush?.('/app/patient-list'), [
+                routerPush?.('/app/patient-list');
+        }, [
             patientId, getPatientInfo,
             routerPush
         ]),
@@ -63,10 +66,11 @@ const PatientInfo = ({
          * 保存到后端
          * @type {function(): *}
          */
-        save = useCallback(() =>
+        save = useCallback(() => {
             updatePatientInfo?.(patientId, () =>
                 routerPush?.(`/app/patient/analgesia/${patientId}`)
-            ), [
+            );
+        }, [
             patientId, updatePatientInfo,
             routerPush
         ]);

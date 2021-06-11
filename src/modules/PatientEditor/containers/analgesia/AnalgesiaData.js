@@ -33,17 +33,15 @@ const AnalgesiaData = ({
         /**
          * 从路由 params 中取出的 patient ID
          */
-        patientId = useMemo(() =>
-            match.params.patientId, [
-            match.params.patientId
-        ]),
+        patientId = match.params?.patientId,
 
         /**
          * 是否正在加载数据
          * @type {boolean}
          */
-        loading = useMemo(() =>
-            getActionType !== patientEditorActionTypes.GET_ANALGESIA_SUCCESS, [
+        loading = useMemo(() => {
+            return getActionType !== patientEditorActionTypes.GET_ANALGESIA_SUCCESS;
+        }, [
             getActionType
         ]),
 
@@ -69,8 +67,9 @@ const AnalgesiaData = ({
          * 返回上一步
          * @type {function(): *}
          */
-        prevStep = useCallback(() =>
-            routerPush?.(`/app/patient/info/${patientId}`), [
+        prevStep = useCallback(() => {
+            routerPush?.(`/app/patient/info/${patientId}`);
+        }, [
             patientId,
             routerPush
         ]),
@@ -79,9 +78,11 @@ const AnalgesiaData = ({
          * 提交到后端
          * @type {function(): *}
          */
-        save = useCallback(() => createOrUpdateAnalgesiaData?.(patientId, () =>
-            routerPush(`/app/patient/observal/${patientId}`)
-        ), [
+        save = useCallback(() => {
+            createOrUpdateAnalgesiaData?.(patientId, () =>
+                routerPush(`/app/patient/observal/${patientId}`)
+            );
+        }, [
             patientId,
             routerPush, createOrUpdateAnalgesiaData
         ]);

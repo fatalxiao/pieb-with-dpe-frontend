@@ -35,8 +35,9 @@ const ObservalForm = ({
          * 提交到后端
          * @type {*}
          */
-        save = useCallback(() =>
-            patientId && createOrUpdateObservalData?.(patientId, undefined, true, true), [
+        save = useCallback(() => {
+            patientId && createOrUpdateObservalData?.(patientId, undefined, true, true);
+        }, [
             patientId,
             createOrUpdateObservalData
         ]),
@@ -45,8 +46,9 @@ const ObservalForm = ({
          * debounce 提交到后端
          * @type {*}
          */
-        debounceSave = useMemo(() =>
-            debounce(save, 400), [
+        debounceSave = useMemo(() => {
+            return debounce(save, 400);
+        }, [
             save
         ]),
 

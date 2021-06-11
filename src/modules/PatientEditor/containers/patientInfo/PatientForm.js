@@ -33,8 +33,9 @@ const PatientForm = ({
          * 提交 field 新值到后端
          * @type {Function}
          */
-        save = useCallback(() =>
-            patientId && updatePatientInfo(patientId, undefined, true), [
+        save = useCallback(() => {
+            patientId && updatePatientInfo(patientId, undefined, true);
+        }, [
             patientId, updatePatientInfo
         ]),
 
@@ -42,7 +43,11 @@ const PatientForm = ({
          * 提交 field 新值到后端
          * @type {Function}
          */
-        debounceSave = useMemo(() => debounce(save, 1000), [save]),
+        debounceSave = useMemo(() => {
+            return debounce(save, 1000);
+        }, [
+            save
+        ]),
 
         /**
          * 更新 field 新值到 reducer
@@ -51,7 +56,9 @@ const PatientForm = ({
         updateField = useCallback((fieldName, fieldValue) => {
             updatePatientInfoField?.(fieldName, fieldValue);
             setTimeout(() => debounceSave(), 0);
-        }, [updatePatientInfoField, debounceSave]);
+        }, [
+            updatePatientInfoField, debounceSave
+        ]);
 
     return (
         <div className="patient-form">
