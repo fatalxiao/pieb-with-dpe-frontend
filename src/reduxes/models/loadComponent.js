@@ -1,5 +1,5 @@
 /**
- * @file LoadComponentReducer.js
+ * @file loadComponent.js
  */
 
 import * as actionTypes from '../actionTypes/LoadComponentActionType';
