@@ -1,21 +1,18 @@
 /**
- * @file ToasterReducer.js
+ * @file appToaster.js
  */
 
-import * as actionTypes from '../actionTypes';
-
-const initialState = {
-    toastes: []
-};
-
-// eslint-disable-next-line complexity,require-jsdoc
-function appToaster(state = initialState, action) {
-    switch (action.type) {
+export default {
+    nameSpace: 'appToaster',
+    state: {
+        toastes: []
+    },
+    reducers: {
 
         /**
          * 创建一条 Toaste
          */
-        case actionTypes.ADD_TOASTE: {
+        addToaste: (state, action) => {
 
             if (!action.toaste) {
                 return state;
@@ -25,33 +22,31 @@ function appToaster(state = initialState, action) {
             toastes.push(action.toaste);
 
             return {
+                ...state,
                 toastes
             };
 
-        }
+        },
 
         /**
          * 更新 Toastes
          */
-        case actionTypes.UPDATE_TOASTES: {
+        updateToastes: (state, action) => {
             return {
+                ...state,
                 toastes: action.toastes
             };
-        }
+        },
 
         /**
          * 清除 Toastes
          */
-        case actionTypes.CLEAR_TOASTE: {
+        clearToaste: (state, action) => {
             return {
+                ...state,
                 toastes: []
             };
         }
 
-        default:
-            return state;
-
     }
-}
-
-export default appToaster;
+};

@@ -1,5 +1,5 @@
 /**
- * @file NotifierReducer.js
+ * @file appNotifier.js
  */
 
 export default {

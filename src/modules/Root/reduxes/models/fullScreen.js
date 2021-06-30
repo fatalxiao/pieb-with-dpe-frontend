@@ -1,16 +1,9 @@
 /**
- * @file FullScreenReducer.js
+ * @file fullScreen.js
  */
-
-import * as actionTypes from '../actionTypes';
 
 // Vendors
 import screenfull from 'screenfull';
-
-const initialState = {
-    isFullScreen: screenfull ? screenfull.isFullscreen : false,
-    fullScreenClassName: null
-};
 
 /**
  * 请求全屏
@@ -45,14 +38,18 @@ async function exit(callback) {
 
 }
 
-// eslint-disable-next-line complexity,require-jsdoc
-async function fullScreen(state = initialState, action) {
-    switch (action.type) {
+export default {
+    nameSpace: 'fullScreen',
+    state: {
+        isFullScreen: screenfull ? screenfull.isFullscreen : false,
+        fullScreenClassName: null
+    },
+    reducers: {
 
         /**
          * 请求全屏
          */
-        case actionTypes.REQUEST_FULL_SCREEN: {
+        requestFullScreen: async (state, action) => {
 
             await request(action.el, action.callback);
 
@@ -62,12 +59,12 @@ async function fullScreen(state = initialState, action) {
                 fullScreenClassName: action.fullScreenClassName
             };
 
-        }
+        },
 
         /**
          * 退出全屏
          */
-        case actionTypes.EXIT_FULL_SCREEN: {
+        exitFullScreen: async (state, action) => {
 
             await exit(action.callback);
 
@@ -77,12 +74,12 @@ async function fullScreen(state = initialState, action) {
                 fullScreenClassName: null
             };
 
-        }
+        },
 
         /**
          * 更新全屏状态
          */
-        case actionTypes.UPDATE_FULL_SCREEN: {
+        updateFullScreen: (state, action) => {
 
             const isFullScreen = action.isFullScreen || (screenfull ? screenfull.isFullscreen : false);
 
@@ -94,10 +91,5 @@ async function fullScreen(state = initialState, action) {
 
         }
 
-        default:
-            return state;
-
     }
-}
-
-export default fullScreen;
+};

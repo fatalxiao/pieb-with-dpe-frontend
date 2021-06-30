@@ -34,12 +34,12 @@ function identify(value) {
 }
 
 /**
- * 生成 action
+ * 生成 Reducer
  * @param actionType
  * @param reducer
  * @returns {(function(*=, *=): (*))|*}
  */
-function handleAction(actionType, reducer = identify) {
+function handleReducer(actionType, reducer = identify) {
     return (state, action) => {
 
         const {type} = action;
@@ -64,16 +64,20 @@ function reduceReducers(...reducers) {
 
 /**
  * 生成 actions
- * @param handlers
- * @param defaultState
+ * @param store
  * @param nameSpace
+ * @param defaultState
+ * @param actions
+ * @param reducers
  * @returns {function(*=, *=): *}
  */
-function handleActions(handlers, defaultState, nameSpace) {
+function handleActions(store, nameSpace, defaultState, actions, reducers) {
 
-    const reducer = reduceReducers(...Object.keys(handlers).map(type =>
-        handleAction(`${nameSpace}/${type}`, handlers[type])
-    ));
+    const handlers = Object.keys(reducers).map(type =>
+        handleReducer(`${nameSpace}/${type}`, reducers[type])
+    );
+    console.log('handlers::', handlers);
+    const reducer = reduceReducers(...handlers);
 
     return (state = defaultState, action) => reducer(state, action);
 
@@ -81,13 +85,15 @@ function handleActions(handlers, defaultState, nameSpace) {
 
 /**
  * 获取 reducer
- * @param reducers
- * @param state
+ * @param store
  * @param nameSpace
+ * @param state
+ * @param actions
+ * @param reducers
  * @returns {function(*=, *=): *}
  */
-function getReducer(reducers, state, nameSpace) {
-    return handleActions(reducers || {}, state, nameSpace);
+function getReducer(store, nameSpace, state, actions, reducers) {
+    return handleActions(store, nameSpace, state, actions, reducers || {});
 }
 
 /**
@@ -101,9 +107,9 @@ export function registerModel(store, model) {
         return;
     }
 
-    const {nameSpace, state, reducers} = model;
+    const {nameSpace, state, actions, reducers} = model;
 
-    store._asyncReducers[nameSpace] = getReducer(reducers, state, nameSpace);
+    store._asyncReducers[nameSpace] = getReducer(store, nameSpace, state, actions, reducers);
     store.replaceReducer(createRootReducer(store._history, store._asyncReducers));
 
 }
