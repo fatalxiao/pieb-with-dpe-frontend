@@ -3,7 +3,7 @@
  */
 
 // Components
-import amc from 'components/AsyncModuleComponent_old';
+import amc from 'components/AsyncModuleComponent';
 
 /**
  * 返回 routes 配置
@@ -13,15 +13,10 @@ import amc from 'components/AsyncModuleComponent_old';
 export default function configureRoutes(store) {
     return {
         path: '/',
-        component: amc(store, () => import('./containers/Root'), [{
-            nameSpace: 'fullScreen',
-            getReducer: () => import('./reduxes/reducers/FullScreenReducer')
-        }, {
-            nameSpace: 'appNotifier',
-            getReducer: () => import('./reduxes/reducers/NotifierReducer')
-        }, {
-            nameSpace: 'appToaster',
-            getReducer: () => import('./reduxes/reducers/ToasterReducer')
-        }])
+        component: amc(store, () => import('./containers/Root'), [
+            () => import('./reduxes/reducers/FullScreenReducer'),
+            () => import('./reduxes/reducers/NotifierReducer'),
+            () => import('./reduxes/reducers/ToasterReducer')
+        ])
     };
 }
