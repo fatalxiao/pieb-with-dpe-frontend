@@ -24,6 +24,34 @@ export function injectAsyncReducer(store, nameSpace, asyncReducer) {
     store.replaceReducer(createRootReducer(store._history, store._asyncReducers));
 }
 
+function identify(value) {
+    return value;
+}
+
+function handleAction(actionType, reducer = identify) {
+    return (state, action) => {
+        const {type} = action;
+        if (actionType === type) {
+            return reducer(state, action);
+        }
+        return state;
+    };
+}
+
+function reduceReducers(...reducers) {
+    return (previous, current) => reducers.reduce((p, r) => r(p, current), previous);
+}
+
+function handleActions(handlers, defaultState, nameSpace) {
+    const reducers = Object.keys(handlers).map(type => handleAction(`${nameSpace}/${type}`, handlers[type]));
+    const reducer = reduceReducers(...reducers);
+    return (state = defaultState, action) => reducer(state, action);
+}
+
+function getReducer(reducers, state, nameSpace) {
+    return handleActions(reducers || {}, state, nameSpace);
+}
+
 /**
  * 注册 model
  * @param store
@@ -35,9 +63,14 @@ export function registerModel(store, model) {
         return;
     }
 
-    const {nameSpace, reducer} = model;
+    const {nameSpace, state, reducer, reducers} = model;
 
-    store._asyncReducers[nameSpace] = reducer;
+    // store._asyncReducers[nameSpace] = reducer;
+    // console.log('store._asyncReducers[nameSpace]::', store._asyncReducers[nameSpace]);
+
+    store._asyncReducers[nameSpace] = getReducer(reducers, state, nameSpace);
+    console.log('store._asyncReducers[nameSpace]::', store._asyncReducers[nameSpace]);
+
     store.replaceReducer(createRootReducer(store._history, store._asyncReducers));
 
 }

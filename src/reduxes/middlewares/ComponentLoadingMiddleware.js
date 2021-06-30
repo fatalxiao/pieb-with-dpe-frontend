@@ -2,8 +2,6 @@
  * @file ComponentLoadingMiddleware.js
  */
 
-import * as actionTypes from 'reduxes/actionTypes';
-
 const DURATION = 1000;
 let timeoutId = null;
 
@@ -22,7 +20,7 @@ export default ({dispatch, getState}) => next => action => {
     const {loading} = state.loadComponent;
 
     // loading start
-    if (action.type === actionTypes.LOAD_COMPONENT_START) {
+    if (action.type === 'loadComponent/start') {
 
         // 如果有 complete 的 timeout，清除 timeout
         timeoutId && clearTimeout(timeoutId);
@@ -35,7 +33,7 @@ export default ({dispatch, getState}) => next => action => {
     }
 
     // loading complete
-    else if (action.type === actionTypes.LOAD_COMPONENT_COMPLETE) {
+    else if (action.type === 'loadComponent/complete') {
 
         // 清除之前 complete 的 timeout
         timeoutId && clearTimeout(timeoutId);
