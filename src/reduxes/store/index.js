@@ -24,10 +24,21 @@ export function injectAsyncReducer(store, nameSpace, asyncReducer) {
     store.replaceReducer(createRootReducer(store._history, store._asyncReducers));
 }
 
+/**
+ * 默认的 reducer
+ * @param value
+ * @returns {*}
+ */
 function identify(value) {
     return value;
 }
 
+/**
+ * 生成 action
+ * @param actionType
+ * @param reducer
+ * @returns {(function(*=, *=): (*))|*}
+ */
 function handleAction(actionType, reducer = identify) {
     return (state, action) => {
 
@@ -42,10 +53,22 @@ function handleAction(actionType, reducer = identify) {
     };
 }
 
+/**
+ * reduce reducers
+ * @param reducers
+ * @returns {function(*=, *=): *}
+ */
 function reduceReducers(...reducers) {
     return (previous, current) => reducers.reduce((p, r) => r(p, current), previous);
 }
 
+/**
+ * 生成 actions
+ * @param handlers
+ * @param defaultState
+ * @param nameSpace
+ * @returns {function(*=, *=): *}
+ */
 function handleActions(handlers, defaultState, nameSpace) {
 
     const reducer = reduceReducers(...Object.keys(handlers).map(type =>
@@ -56,6 +79,13 @@ function handleActions(handlers, defaultState, nameSpace) {
 
 }
 
+/**
+ * 获取 reducer
+ * @param reducers
+ * @param state
+ * @param nameSpace
+ * @returns {function(*=, *=): *}
+ */
 function getReducer(reducers, state, nameSpace) {
     return handleActions(reducers || {}, state, nameSpace);
 }
