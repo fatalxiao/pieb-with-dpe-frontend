@@ -76,7 +76,7 @@ function handleActions(store, nameSpace, defaultState, actions, reducers) {
     const handlers = Object.keys(reducers).map(type =>
         handleReducer(`${nameSpace}/${type}`, reducers[type])
     );
-    console.log('handlers::', handlers);
+
     const reducer = reduceReducers(...handlers);
 
     return (state = defaultState, action) => reducer(state, action);
