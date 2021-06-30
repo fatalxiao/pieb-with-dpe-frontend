@@ -5,8 +5,6 @@
 
 import React, {Component} from 'react';
 
-import * as actionTypes from 'reduxes/actionTypes';
-
 // Vendors
 import isFunction from 'lodash/isFunction';
 import {injectAsyncReducer} from 'reduxes/store';

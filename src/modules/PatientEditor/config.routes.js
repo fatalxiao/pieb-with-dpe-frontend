@@ -3,7 +3,7 @@
  */
 
 // Components
-import amc from 'components/AsyncModuleComponent';
+import amc from 'components/AsyncModuleComponent_old';
 
 /**
  * 返回 routes 配置
