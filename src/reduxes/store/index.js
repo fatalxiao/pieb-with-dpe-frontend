@@ -34,6 +34,24 @@ function identify(value) {
 }
 
 /**
+ * 生成 Action
+ * @param actionType
+ * @param action
+ * @returns {(function(*=, *=): (*))|*}
+ */
+function handleAction(actionType, action) {
+    return (state, payload) => (dispatch, getState) => {
+
+        const {type, ...restPayload} = payload;
+
+        if (actionType === type) {
+            return action(restPayload)(dispatch, getState);
+        }
+
+    };
+}
+
+/**
  * 生成 Reducer
  * @param actionType
  * @param reducer
@@ -71,15 +89,30 @@ function reduceReducers(...reducers) {
  * @param reducers
  * @returns {function(*=, *=): *}
  */
-function handleActions(store, nameSpace, defaultState, actions, reducers) {
+function handleReducers(store, nameSpace, defaultState, actions, reducers) {
 
-    const handlers = Object.keys(reducers).map(type =>
-        handleReducer(`${nameSpace}/${type}`, reducers[type])
-    );
+    const
 
-    const reducer = reduceReducers(...handlers);
+        actionHandlers = actions ?
+            Object.keys(actions).map(type =>
+                handleAction(`${nameSpace}/${type}`, actions[type])
+            )
+            :
+            [],
 
-    return (state = defaultState, action) => reducer(state, action);
+        reducerHandlers = reducers ?
+            Object.keys(reducers).map(type =>
+                handleReducer(`${nameSpace}/${type}`, reducers[type])
+            )
+            :
+            [],
+
+        reducer = reduceReducers(...reducerHandlers);
+
+    return (state = defaultState, action) => {
+        actionHandlers.forEach(actionHandler => actionHandler?.(state, action)(store.dispatch, store.getState));
+        return reducer(state, action);
+    };
 
 }
 
@@ -93,7 +126,7 @@ function handleActions(store, nameSpace, defaultState, actions, reducers) {
  * @returns {function(*=, *=): *}
  */
 function getReducer(store, nameSpace, state, actions, reducers) {
-    return handleActions(store, nameSpace, state, actions, reducers || {});
+    return handleReducers(store, nameSpace, state, actions, reducers || {});
 }
 
 /**

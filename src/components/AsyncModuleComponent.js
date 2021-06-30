@@ -34,7 +34,14 @@ export default (
     }
 
     async componentDidMount() {
+
+        store?.dispatch({
+            type: 'loadComponent/test',
+            value: 'test123'
+        });
+
         await this.init();
+
     }
 
     /**

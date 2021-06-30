@@ -7,6 +7,13 @@ export default {
     state: {
         loading: false
     },
+    actions: {
+        test: action => (dispatch, getState) => {
+            console.log('action::', action);
+            console.log('dispatch::', dispatch);
+            console.log('getState::', getState);
+        }
+    },
     reducers: {
 
         /**
