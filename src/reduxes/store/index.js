@@ -30,11 +30,15 @@ function identify(value) {
 
 function handleAction(actionType, reducer = identify) {
     return (state, action) => {
+
         const {type} = action;
+
         if (actionType === type) {
             return reducer(state, action);
         }
+
         return state;
+
     };
 }
 
@@ -43,9 +47,13 @@ function reduceReducers(...reducers) {
 }
 
 function handleActions(handlers, defaultState, nameSpace) {
-    const reducers = Object.keys(handlers).map(type => handleAction(`${nameSpace}/${type}`, handlers[type]));
-    const reducer = reduceReducers(...reducers);
+
+    const reducer = reduceReducers(...Object.keys(handlers).map(type =>
+        handleAction(`${nameSpace}/${type}`, handlers[type])
+    ));
+
     return (state = defaultState, action) => reducer(state, action);
+
 }
 
 function getReducer(reducers, state, nameSpace) {
@@ -63,14 +71,9 @@ export function registerModel(store, model) {
         return;
     }
 
-    const {nameSpace, state, reducer, reducers} = model;
-
-    // store._asyncReducers[nameSpace] = reducer;
-    // console.log('store._asyncReducers[nameSpace]::', store._asyncReducers[nameSpace]);
+    const {nameSpace, state, reducers} = model;
 
     store._asyncReducers[nameSpace] = getReducer(reducers, state, nameSpace);
-    console.log('store._asyncReducers[nameSpace]::', store._asyncReducers[nameSpace]);
-
     store.replaceReducer(createRootReducer(store._history, store._asyncReducers));
 
 }
