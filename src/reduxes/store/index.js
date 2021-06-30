@@ -24,6 +24,24 @@ export function injectAsyncReducer(store, nameSpace, asyncReducer) {
     store.replaceReducer(createRootReducer(store._history, store._asyncReducers));
 }
 
+/**
+ * 注册 model
+ * @param store
+ * @param model
+ */
+export function registerModel(store, model) {
+
+    if (!model) {
+        return;
+    }
+
+    const {nameSpace, reducer} = model;
+
+    store._asyncReducers[nameSpace] = reducer;
+    store.replaceReducer(createRootReducer(store._history, store._asyncReducers));
+
+}
+
 export default history => {
 
     const store = createStore(
