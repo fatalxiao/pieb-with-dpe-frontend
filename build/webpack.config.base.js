@@ -47,7 +47,7 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['.js', '.scss'],
+        extensions: ['.jsx', '.js', '.scss'],
         alias: {
             'src': resolveRootPath('src'),
             'apis': resolveRootPath('src/apis'),
@@ -68,7 +68,7 @@ module.exports = {
 
     module: {
         rules: [{
-            test: /\.js$/,
+            test: /\.jsx?$/,
             use: 'happypack/loader?id=js'
         }, {
             test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
