@@ -6,6 +6,9 @@
 
 import React from 'react';
 
+// Sync Models
+import LoadComponent from 'reduxes/reducers/LoadComponent';
+
 // Vendors
 import {render} from 'react-dom';
 import {createBrowserHistory} from 'history';
@@ -15,7 +18,6 @@ import {ConnectedRouter} from 'connected-react-router';
 import configureStore from 'reduxes/store';
 import {configureRoutes} from './config.routes';
 import {registerModel} from 'reduxes/store';
-import LoadComponentReducer from 'reduxes/reducers/LoadComponentReducer';
 
 // Styles
 import 'assets/bootstrap/bootstrap-grid.min.css';
@@ -25,10 +27,19 @@ import 'customized/index.scss';
 import 'scss/global.scss';
 import 'scss/index.scss';
 
+/**
+ * 开发环境时，添加热替换监听
+ */
+if (process.env.NODE_ENV === 'development' && module?.hot) {
+    module.hot.accept();
+}
+
+/**
+ * 初始化 history / store
+ */
 const history = createBrowserHistory(),
     store = configureStore(history);
-
-registerModel(store, LoadComponentReducer);
+registerModel(store, LoadComponent);
 
 /**
  * 渲染应用到dom
@@ -41,10 +52,3 @@ render(
     </Provider>,
     document.getElementById('app-container')
 );
-
-/**
- * 开发环境时，添加热替换监听
- */
-if (process.env.NODE_ENV === 'development' && module?.hot) {
-    module.hot.accept();
-}
