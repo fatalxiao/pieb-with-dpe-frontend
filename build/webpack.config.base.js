@@ -50,13 +50,9 @@ module.exports = {
         extensions: ['.js', '.scss'],
         alias: {
             'src': resolveRootPath('src'),
-            'apis': resolveRootPath('src/apis'),
             'assets': resolveRootPath('src/assets'),
             'scss': resolveRootPath('src/assets/scss'),
             'images': resolveRootPath('src/assets/images'),
-            'messages': resolveRootPath('src/assets/messages'),
-            'stylesheets': resolveRootPath('src/assets/stylesheets'),
-            'containers': resolveRootPath('src/containers'),
             'modules': resolveRootPath('src/modules'),
             'components': resolveRootPath('src/components'),
             'customized': resolveRootPath('src/customized'),
