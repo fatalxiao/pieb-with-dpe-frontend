@@ -103,7 +103,7 @@ function getReducer(store, nameSpace, state, actions, reducers) {
  */
 export function registerModel(store, model) {
 
-    if (!model) {
+    if (!model?.nameSpace) {
         return;
     }
 
