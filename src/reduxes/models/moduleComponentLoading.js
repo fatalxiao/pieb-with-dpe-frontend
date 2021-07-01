@@ -10,14 +10,14 @@ export default {
         /**
          * 开始加载 component
          */
-        start: state => {
+        start: () => {
             return true;
         },
 
         /**
          * 加载 component 完毕
          */
-        complete: state => {
+        complete: () => {
             return false;
         }
 
