@@ -23,7 +23,7 @@ import {DEFAULT_ROUTE} from 'src/config.routes';
 import './Root.scss';
 
 const Root = ({
-    toastes, notifiers, route, location, clearToaste, clearNotifier
+    toastes, notifications, route, location, clearToaste, clearNotifier
 }) => (
     <div className="root">
 
@@ -31,7 +31,7 @@ const Root = ({
                  position={Toaster.Position.TOP}
                  onToastPop={clearToaste}/>
 
-        <Notifier notifications={notifiers}
+        <Notifier notifications={notifications}
                   position={Notifier.Position.TOP_RIGHT}
                   onNotificationPop={clearNotifier}
                   duration={8000}/>
@@ -54,7 +54,7 @@ Root.propTypes = {
     location: PropTypes.object,
 
     toastes: PropTypes.array,
-    notifiers: PropTypes.array,
+    notifications: PropTypes.array,
 
     clearToaste: PropTypes.func,
     clearNotifier: PropTypes.func
@@ -63,7 +63,7 @@ Root.propTypes = {
 
 export default connect(state => ({
     toastes: state.appToaster.toastes,
-    notifiers: state.appNotifier.notifiers
+    notifications: state.appNotifications
 }), dispatch => bindActionCreators({
     clearToaste: rootActions.clearToaste,
     clearNotifier: rootActions.clearNotifier

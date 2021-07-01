@@ -14,7 +14,7 @@ export default function configureRoutes(store) {
     return {
         path: '/',
         component: amc(store, () => import('./containers/Root'), [
-            () => import('./reduxes/models/appNotifier'),
+            () => import('./reduxes/models/appNotifications'),
             () => import('./reduxes/models/appToaster'),
             () => import('./reduxes/models/fullScreen')
         ])
