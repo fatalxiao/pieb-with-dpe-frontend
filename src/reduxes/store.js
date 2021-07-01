@@ -39,17 +39,17 @@ function identify(value) {
  * @param action
  * @returns {(function(*=, *=): (*))|*}
  */
-function handleAction(actionType, action) {
-    return (state, payload) => (dispatch, getState) => {
-
-        const {type, ...restPayload} = payload;
-
-        if (actionType === type) {
-            return action(restPayload, state)(dispatch, getState);
-        }
-
-    };
-}
+// function handleAction(actionType, action) {
+//     return (state, payload) => (dispatch, getState) => {
+//
+//         const {type, ...restPayload} = payload;
+//
+//         if (actionType === type) {
+//             return action(...Object.values(restPayload), state)(dispatch, getState);
+//         }
+//
+//     };
+// }
 
 /**
  * 生成 Reducer
@@ -93,12 +93,12 @@ function handleActionsAndReducers(store, nameSpace, defaultState, actions, reduc
 
     const
 
-        actionHandlers = actions ?
-            Object.keys(actions).map(type =>
-                handleAction(`${nameSpace}/${type}`, actions[type])
-            )
-            :
-            [],
+        // actionHandlers = actions ?
+        //     Object.keys(actions).map(type =>
+        //         handleAction(`${nameSpace}/${type}`, actions[type])
+        //     )
+        //     :
+        //     [],
 
         reducerHandlers = reducers ?
             Object.keys(reducers).map(type =>
@@ -110,7 +110,7 @@ function handleActionsAndReducers(store, nameSpace, defaultState, actions, reduc
         reducer = reduceReducers(...reducerHandlers);
 
     return (state = defaultState, action) => {
-        actionHandlers.forEach(actionHandler => actionHandler?.(state, action)(store.dispatch, store.getState));
+        // actionHandlers.forEach(actionHandler => actionHandler?.(state, action)(store.dispatch, store.getState));
         return reducer(state, action);
     };
 

@@ -60,11 +60,10 @@ export default {
          * @param el
          * @param fullScreenClassName
          * @param callback
-         * @param isFullScreen
          * @returns {(function(*): void)|*}
          */
-        toggleFullScreen: ({el, fullScreenClassName, callback}, {isFullScreen}) => dispatch => {
-            if (isFullScreen) {
+        toggleFullScreen: (el, fullScreenClassName, callback) => (dispatch, getState) => {
+            if (getState().fullScreen.isFullScreen) {
                 dispatch({
                     type: 'fullScreen/exitFullScreen',
                     callback
