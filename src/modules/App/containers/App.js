@@ -103,7 +103,7 @@ App.propTypes = {
 };
 
 export default connect(state => ({
-    componentLoading: state.loadComponent.loading,
+    componentLoading: state.moduleComponentLoading,
     getPatientGroupsActionType: state.patientGroup.actionType,
     getSensoryBlocksActionType: state.sensoryBlock.actionType,
     getObservalEndPointsActionType: state.observalEndPoint.actionType,

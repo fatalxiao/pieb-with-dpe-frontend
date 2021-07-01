@@ -61,7 +61,7 @@ export default (
      */
     loadStartCallback = () => {
         store?.dispatch({
-            type: 'loadComponent/start'
+            type: 'moduleComponentLoading/start'
         });
     };
 
@@ -70,7 +70,7 @@ export default (
      */
     loadCompleteCallback = () => {
         store?.dispatch({
-            type: 'loadComponent/complete'
+            type: 'moduleComponentLoading/complete'
         });
     };
 

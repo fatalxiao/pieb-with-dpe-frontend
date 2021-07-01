@@ -34,14 +34,7 @@ export default (
     }
 
     async componentDidMount() {
-
-        store?.dispatch({
-            type: 'loadComponent/test',
-            value: 'test123'
-        });
-
         await this.init();
-
     }
 
     /**
@@ -68,7 +61,7 @@ export default (
      */
     loadStartCallback = () => {
         store?.dispatch({
-            type: 'loadComponent/start'
+            type: 'moduleComponentLoading/start'
         });
     };
 
@@ -77,7 +70,7 @@ export default (
      */
     loadCompleteCallback = () => {
         store?.dispatch({
-            type: 'loadComponent/complete'
+            type: 'moduleComponentLoading/complete'
         });
     };
 

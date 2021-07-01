@@ -7,7 +7,7 @@
 import React from 'react';
 
 // Sync Models
-import loadComponent from 'reduxes/models/loadComponent';
+import moduleComponentLoading from 'reduxes/models/moduleComponentLoading';
 
 // Vendors
 import {render} from 'react-dom';
@@ -39,7 +39,7 @@ if (process.env.NODE_ENV === 'development' && module?.hot) {
  */
 const history = createBrowserHistory(),
     store = configureStore(history);
-registerModel(store, loadComponent);
+registerModel(store, moduleComponentLoading);
 
 /**
  * 渲染应用到dom

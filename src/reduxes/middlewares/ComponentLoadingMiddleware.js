@@ -13,27 +13,25 @@ export default ({dispatch, getState}) => next => action => {
 
     const state = getState();
 
-    if (!state?.loadComponent) {
+    if (!state?.moduleComponentLoading) {
         return next(action);
     }
 
-    const {loading} = state.loadComponent;
-
     // loading start
-    if (action.type === 'loadComponent/start') {
+    if (action.type === 'moduleComponentLoading/start') {
 
         // 如果有 complete 的 timeout，清除 timeout
         timeoutId && clearTimeout(timeoutId);
 
         // 只有非 loading 时 dispatch start 的 action
-        if (!loading) {
+        if (!state.moduleComponentLoading) {
             next(action);
         }
 
     }
 
     // loading complete
-    else if (action.type === 'loadComponent/complete') {
+    else if (action.type === 'moduleComponentLoading/complete') {
 
         // 清除之前 complete 的 timeout
         timeoutId && clearTimeout(timeoutId);
