@@ -41,8 +41,44 @@ async function exit(callback) {
 export default {
     nameSpace: 'fullScreen',
     state: {
+
+        /**
+         * 当前是否是全屏状态
+         */
         isFullScreen: screenfull ? screenfull.isFullscreen : false,
+
+        /**
+         * 请求全屏状态时附带的 className
+         */
         fullScreenClassName: null
+
+    },
+    actions: {
+
+        /**
+         * 切换全屏
+         * @param el
+         * @param fullScreenClassName
+         * @param callback
+         * @param state
+         * @returns {(function(*): void)|*}
+         */
+        toggleFullScreen: ({el, fullScreenClassName, callback}, state) => dispatch => {
+            if (state.isFullScreen) {
+                dispatch({
+                    type: 'fullScreen/exitFullScreen',
+                    callback
+                });
+            } else {
+                dispatch({
+                    type: 'fullScreen/requestFullScreen',
+                    el,
+                    fullScreenClassName,
+                    callback
+                });
+            }
+        }
+
     },
     reducers: {
 

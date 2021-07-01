@@ -62,7 +62,7 @@ Root.propTypes = {
 };
 
 export default connect(state => ({
-    toastes: state.appToaster.toastes,
+    toastes: state.appToastes,
     notifications: state.appNotifications
 }), dispatch => bindActionCreators({
     clearToaste: rootActions.clearToaste,

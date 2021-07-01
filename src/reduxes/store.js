@@ -45,7 +45,7 @@ function handleAction(actionType, action) {
         const {type, ...restPayload} = payload;
 
         if (actionType === type) {
-            return action(restPayload)(dispatch, getState);
+            return action(restPayload, state)(dispatch, getState);
         }
 
     };
@@ -89,7 +89,7 @@ function reduceReducers(...reducers) {
  * @param reducers
  * @returns {function(*=, *=): *}
  */
-function handleReducers(store, nameSpace, defaultState, actions, reducers) {
+function handleActionsAndReducers(store, nameSpace, defaultState, actions, reducers) {
 
     const
 
@@ -126,7 +126,7 @@ function handleReducers(store, nameSpace, defaultState, actions, reducers) {
  * @returns {function(*=, *=): *}
  */
 function getReducer(store, nameSpace, state, actions, reducers) {
-    return handleReducers(store, nameSpace, state, actions, reducers || {});
+    return handleActionsAndReducers(store, nameSpace, state, actions, reducers || {});
 }
 
 /**
