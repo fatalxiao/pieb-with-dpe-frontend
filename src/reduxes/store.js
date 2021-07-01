@@ -20,8 +20,8 @@ import Api from 'reduxes/middlewares/ApiMiddleware';
  * @param asyncReducer
  */
 export function injectAsyncReducer(store, nameSpace, asyncReducer) {
-    store._asyncReducers[nameSpace] = asyncReducer;
-    store.replaceReducer(createRootReducer(store._history, store._asyncReducers));
+    store.asyncReducers[nameSpace] = asyncReducer;
+    store.replaceReducer(createRootReducer(store.history, store.asyncReducers));
 }
 
 /**
@@ -31,24 +31,6 @@ export function injectAsyncReducer(store, nameSpace, asyncReducer) {
  */
 function identify(value) {
     return value;
-}
-
-/**
- * 生成 Action
- * @param actionType
- * @param action
- * @returns {(function(*=, *=): (*))|*}
- */
-function handleAction(actionType, action) {
-    return (state, payload) => (dispatch, getState) => {
-
-        const {type, ...restPayload} = payload;
-
-        if (actionType === type) {
-            return action(restPayload)(dispatch, getState);
-        }
-
-    };
 }
 
 /**
@@ -89,44 +71,19 @@ function reduceReducers(...reducers) {
  * @param reducers
  * @returns {function(*=, *=): *}
  */
-function handleReducers(store, nameSpace, defaultState, actions, reducers) {
+function getReducer(store, nameSpace, initialState, reducers) {
 
-    const
-
-        actionHandlers = actions ?
-            Object.keys(actions).map(type =>
-                handleAction(`${nameSpace}/${type}`, actions[type])
-            )
-            :
-            [],
-
-        reducerHandlers = reducers ?
-            Object.keys(reducers).map(type =>
-                handleReducer(`${nameSpace}/${type}`, reducers[type])
-            )
-            :
-            [],
+    const reducerHandlers = reducers ?
+        Object.keys(reducers).map(type =>
+            handleReducer(`${nameSpace}/${type}`, reducers[type])
+        )
+        :
+        [],
 
         reducer = reduceReducers(...reducerHandlers);
 
-    return (state = defaultState, action) => {
-        actionHandlers.forEach(actionHandler => actionHandler?.(state, action)(store.dispatch, store.getState));
-        return reducer(state, action);
-    };
+    return (state = initialState, action) => reducer(state, action);
 
-}
-
-/**
- * 获取 reducer
- * @param store
- * @param nameSpace
- * @param state
- * @param actions
- * @param reducers
- * @returns {function(*=, *=): *}
- */
-function getReducer(store, nameSpace, state, actions, reducers) {
-    return handleReducers(store, nameSpace, state, actions, reducers || {});
 }
 
 /**
@@ -142,26 +99,38 @@ export function registerModel(store, model) {
 
     const {nameSpace, state, actions, reducers} = model;
 
-    store._asyncReducers[nameSpace] = getReducer(store, nameSpace, state, actions, reducers);
-    store.replaceReducer(createRootReducer(store._history, store._asyncReducers));
+    store.asyncActions[nameSpace] = actions;
 
+    store.asyncReducers[nameSpace] = getReducer(store, nameSpace, state, reducers || {});
+    store.replaceReducer(createRootReducer(store.history, store.asyncReducers));
+
+}
+
+export function createModelActionMiddleware() {
+    return ({dispatch, getState}) => next => action => {
+        return next(action);
+    };
 }
 
 export default history => {
 
-    const store = createStore(
-        createRootReducer(history),
-        applyMiddleware(
-            thunk,
-            ComponentLoading,
-            Api,
-            routerMiddleware(history)
-        )
-    );
+    const modelActionMiddleware = createModelActionMiddleware();
 
-    store._history = history;
-    store._asyncReducers = {};
-
-    return store;
+    return {
+        ...createStore(
+            createRootReducer(history),
+            applyMiddleware(
+                thunk,
+                ComponentLoading,
+                modelActionMiddleware,
+                Api,
+                routerMiddleware(history)
+            )
+        ),
+        history,
+        asyncActions: {},
+        asyncReducers: {},
+        registerAction: modelActionMiddleware.register
+    };
 
 };
