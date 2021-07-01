@@ -46,14 +46,14 @@ export default {
         /**
          * 新增一个 Notification
          */
-        addNotification: (state, action) => {
+        addNotification: (state, {notification}) => {
 
-            if (!action.notification) {
+            if (!notification) {
                 return state;
             }
 
             const notifications = [...state];
-            notifications.push(action.notification);
+            notifications.push(notification);
 
             return notifications;
 
@@ -62,14 +62,14 @@ export default {
         /**
          * 更新 Notifications
          */
-        updateNotifications: (state, action) => {
-            return action.notifications;
+        updateNotifications: (state, {notifications}) => {
+            return notifications;
         },
 
         /**
          * 清除 Notifications
          */
-        clearNotifications: (state, action) => {
+        clearNotifications: () => {
             return [];
         }
 

@@ -46,14 +46,14 @@ export default {
         /**
          * 创建一条 Toaste
          */
-        addToaste: (state, action) => {
+        addToaste: (state, {toaste}) => {
 
-            if (!action.toaste) {
+            if (!toaste) {
                 return state;
             }
 
             const toastes = [...state];
-            toastes.push(action.toaste);
+            toastes.push(toaste);
 
             return toastes;
 
@@ -62,14 +62,14 @@ export default {
         /**
          * 更新 Toastes
          */
-        updateToastes: (state, action) => {
-            return action.toastes;
+        updateToastes: (state, {toastes}) => {
+            return toastes;
         },
 
         /**
          * 清除 Toastes
          */
-        clearToaste: (state, action) => {
+        clearToaste: () => {
             return [];
         }
 

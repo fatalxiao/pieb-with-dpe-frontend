@@ -60,11 +60,11 @@ export default {
          * @param el
          * @param fullScreenClassName
          * @param callback
-         * @param state
+         * @param isFullScreen
          * @returns {(function(*): void)|*}
          */
-        toggleFullScreen: ({el, fullScreenClassName, callback}, state) => dispatch => {
-            if (state.isFullScreen) {
+        toggleFullScreen: ({el, fullScreenClassName, callback}, {isFullScreen}) => dispatch => {
+            if (isFullScreen) {
                 dispatch({
                     type: 'fullScreen/exitFullScreen',
                     callback
@@ -85,14 +85,14 @@ export default {
         /**
          * 请求全屏
          */
-        requestFullScreen: async (state, action) => {
+        requestFullScreen: async (state, {el, fullScreenClassName, callback}) => {
 
-            await request(action.el, action.callback);
+            await request(el, callback);
 
             return {
                 ...state,
                 isFullScreen: true,
-                fullScreenClassName: action.fullScreenClassName
+                fullScreenClassName
             };
 
         },
@@ -100,9 +100,9 @@ export default {
         /**
          * 退出全屏
          */
-        exitFullScreen: async (state, action) => {
+        exitFullScreen: async (state, {callback}) => {
 
-            await exit(action.callback);
+            await exit(callback);
 
             return {
                 ...state,
@@ -115,14 +115,14 @@ export default {
         /**
          * 更新全屏状态
          */
-        updateFullScreen: (state, action) => {
+        updateFullScreen: (state, {isFullScreen}) => {
 
-            const isFullScreen = action.isFullScreen || (screenfull ? screenfull.isFullscreen : false);
+            const nextIsFullScreen = isFullScreen || (screenfull ? screenfull.isFullscreen : false);
 
             return {
                 ...state,
-                isFullScreen,
-                fullScreenClassName: isFullScreen ? state.fullScreenClassName : null
+                isFullScreen: nextIsFullScreen,
+                fullScreenClassName: nextIsFullScreen ? state.fullScreenClassName : null
             };
 
         }
