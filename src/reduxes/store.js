@@ -39,17 +39,17 @@ function identify(value) {
  * @param action
  * @returns {(function(*=, *=): (*))|*}
  */
-// function handleAction(actionType, action) {
-//     return (state, payload) => (dispatch, getState) => {
-//
-//         const {type, ...restPayload} = payload;
-//
-//         if (actionType === type) {
-//             return action(...Object.values(restPayload), state)(dispatch, getState);
-//         }
-//
-//     };
-// }
+function handleAction(actionType, action) {
+    return (state, payload) => (dispatch, getState) => {
+
+        const {type, ...restPayload} = payload;
+
+        if (actionType === type) {
+            action(restPayload, state)(dispatch, getState);
+        }
+
+    };
+}
 
 /**
  * 生成 Reducer
@@ -84,21 +84,21 @@ function reduceReducers(...reducers) {
  * 生成 actions
  * @param store
  * @param nameSpace
- * @param defaultState
+ * @param initialState
  * @param actions
  * @param reducers
  * @returns {function(*=, *=): *}
  */
-function handleActionsAndReducers(store, nameSpace, defaultState, actions, reducers) {
+function handleActionsAndReducers(store, nameSpace, initialState, actions, reducers) {
 
     const
 
-        // actionHandlers = actions ?
-        //     Object.keys(actions).map(type =>
-        //         handleAction(`${nameSpace}/${type}`, actions[type])
-        //     )
-        //     :
-        //     [],
+        actionHandlers = actions ?
+            Object.keys(actions).map(type =>
+                handleAction(`${nameSpace}/${type}`, actions[type])
+            )
+            :
+            [],
 
         reducerHandlers = reducers ?
             Object.keys(reducers).map(type =>
@@ -109,24 +109,13 @@ function handleActionsAndReducers(store, nameSpace, defaultState, actions, reduc
 
         reducer = reduceReducers(...reducerHandlers);
 
-    return (state = defaultState, action) => {
-        // actionHandlers.forEach(actionHandler => actionHandler?.(state, action)(store.dispatch, store.getState));
+    return (state = initialState, action) => {
+        setTimeout(() => {
+            actionHandlers.forEach(actionHandler => actionHandler?.(state, action)(store.dispatch, store.getState));
+        }, 0);
         return reducer(state, action);
     };
 
-}
-
-/**
- * 获取 reducer
- * @param store
- * @param nameSpace
- * @param state
- * @param actions
- * @param reducers
- * @returns {function(*=, *=): *}
- */
-function getReducer(store, nameSpace, state, actions, reducers) {
-    return handleActionsAndReducers(store, nameSpace, state, actions, reducers || {});
 }
 
 /**
@@ -142,7 +131,7 @@ export function registerModel(store, model) {
 
     const {nameSpace, state, actions, reducers} = model;
 
-    store._asyncReducers[nameSpace] = getReducer(store, nameSpace, state, actions, reducers);
+    store._asyncReducers[nameSpace] = handleActionsAndReducers(store, nameSpace, state, actions, reducers || {});
     store.replaceReducer(createRootReducer(store._history, store._asyncReducers));
 
 }

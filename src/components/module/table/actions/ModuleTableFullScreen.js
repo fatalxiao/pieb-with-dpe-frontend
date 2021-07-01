@@ -5,17 +5,13 @@
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-
-// Models
-import fullScreen from 'modules/Root/reduxes/models/fullScreen';
 
 // Components
 import Action from './ModuleTableAction';
 
 const ModuleTableFullScreen = ({
     isFullScreen,
-    toggleFullScreen, onChange
+    dispatch, onChange
 }) => {
 
     /**
@@ -23,9 +19,12 @@ const ModuleTableFullScreen = ({
      * @type {function(): *}
      */
     const toggle = useCallback(() => {
-        toggleFullScreen?.(undefined, null, isFullScreen => onChange?.(isFullScreen));
+        dispatch({
+            type: 'fullScreen/toggleFullScreen',
+            callback: isFullScreen => onChange?.(isFullScreen)
+        });
     }, [
-        toggleFullScreen, onChange
+        dispatch, onChange
     ]);
 
     return (
@@ -40,13 +39,11 @@ ModuleTableFullScreen.propTypes = {
 
     isFullScreen: PropTypes.bool,
 
-    toggleFullScreen: PropTypes.func,
+    dispatch: PropTypes.func,
     onChange: PropTypes.func
 
 };
 
 export default connect(state => ({
     isFullScreen: state.fullScreen.isFullScreen
-}), dispatch => bindActionCreators({
-    toggleFullScreen: fullScreen.actions.toggleFullScreen
-}, dispatch))(ModuleTableFullScreen);
+}))(ModuleTableFullScreen);
