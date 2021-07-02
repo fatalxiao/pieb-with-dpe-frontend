@@ -3,7 +3,7 @@
  */
 
 // Actions
-import {addSuccessToaste, addErrorToaste} from './ToasterAction';
+import {addSuccessToast, addErrorToast} from './ToasterAction';
 import {addWarningNotifier} from './NotifierAction';
 
 // 默认的错误消息
@@ -14,7 +14,7 @@ const DEFAULT_ERROR_MSG = 'Server or Network failure. Please try again later or 
  * @returns {Function}
  */
 export const addSuccessResMsg = () => dispatch => {
-    addSuccessToaste('Successfully')(dispatch);
+    addSuccessToast('Successfully')(dispatch);
 };
 
 /**
@@ -23,6 +23,6 @@ export const addSuccessResMsg = () => dispatch => {
  * @returns {Function}
  */
 export const addFailureResMsg = msg => dispatch => {
-    addErrorToaste('Failure')(dispatch);
+    addErrorToast('Failure')(dispatch);
     addWarningNotifier(msg && typeof msg === 'string' ? msg : DEFAULT_ERROR_MSG)(dispatch);
 };

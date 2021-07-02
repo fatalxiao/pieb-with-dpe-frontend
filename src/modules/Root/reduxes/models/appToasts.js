@@ -1,22 +1,22 @@
 /**
- * @file appToastes.js
+ * @file appToasts.js
  */
 
 // Statics
 import MsgType from 'alcedo-ui/_statics/MsgType';
 
 export default {
-    nameSpace: 'appToastes',
+    nameSpace: 'appToasts',
     state: [],
     actions: {
 
         /**
-         * 创建一条 Success 类型的 Toaste
+         * 创建一条 Success 类型的 Toast
          * @param message
          * @returns {function(*): *}
          */
-        addSuccessToaste: ({message}) => dispatch => dispatch({
-            type: 'appToastes/addToaste',
+        addSuccessToast: ({message}) => dispatch => dispatch({
+            type: 'appToasts/addToast',
             toaste: {
                 title: '',
                 message,
@@ -26,12 +26,12 @@ export default {
         }),
 
         /**
-         * 创建一条 Error 类型的 Toaste
+         * 创建一条 Error 类型的 Toast
          * @param message
          * @returns {function(*): *}
          */
-        addErrorToaste: ({message}) => dispatch => dispatch({
-            type: 'appToastes/addToaste',
+        addErrorToast: ({message}) => dispatch => dispatch({
+            type: 'appToasts/addToast',
             toaste: {
                 title: '',
                 message,
@@ -44,32 +44,32 @@ export default {
     reducers: {
 
         /**
-         * 创建一条 Toaste
+         * 创建一条 Toast
          */
-        addToaste: (state, {toaste}) => {
+        addToast: (state, {toast}) => {
 
-            if (!toaste) {
+            if (!toast) {
                 return state;
             }
 
             const toastes = [...state];
-            toastes.push(toaste);
+            toastes.push(toast);
 
             return toastes;
 
         },
 
         /**
-         * 更新 Toastes
+         * 更新 Toasts
          */
-        updateToastes: (state, {toastes}) => {
-            return toastes;
+        updateToasts: (state, {toasts}) => {
+            return toasts;
         },
 
         /**
-         * 清除 Toastes
+         * 清除 Toasts
          */
-        clearToaste: () => {
+        clearToasts: () => {
             return [];
         }
 

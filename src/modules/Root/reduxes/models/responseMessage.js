@@ -19,7 +19,7 @@ export default {
          * @returns {function(*): *}
          */
         addSuccessResMsg: () => dispatch => dispatch({
-            type: 'appToastes/addSuccessToaste',
+            type: 'appToasts/addSuccessToast',
             message: 'Successfully'
         }),
 
@@ -31,7 +31,7 @@ export default {
          */
         addFailureResMsg: ({message}, {DEFAULT_ERROR_MSG}) => dispatch => {
             dispatch({
-                type: 'appToastes/addErrorToaste',
+                type: 'appToasts/addErrorToast',
                 message: 'Successfully'
             });
             dispatch({
