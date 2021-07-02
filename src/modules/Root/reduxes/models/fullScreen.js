@@ -85,9 +85,9 @@ export default {
         /**
          * 请求全屏
          */
-        requestFullScreen: async (state, {el, fullScreenClassName, callback}) => {
+        requestFullScreen: (state, {el, fullScreenClassName, callback}) => {
 
-            await request(el, callback);
+            request(el, callback);
 
             return {
                 ...state,
@@ -100,9 +100,9 @@ export default {
         /**
          * 退出全屏
          */
-        exitFullScreen: async (state, {callback}) => {
+        exitFullScreen: (state, {callback}) => {
 
-            await exit(callback);
+            exit(callback);
 
             return {
                 ...state,
