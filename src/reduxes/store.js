@@ -34,24 +34,6 @@ function identify(value) {
 }
 
 /**
- * 生成 Action
- * @param actionType
- * @param action
- * @returns {(function(*=, *=): (*))|*}
- */
-// function handleAction(actionType, action) {
-//     return (state, payload) => (dispatch, getState) => {
-//
-//         const {type, ...restPayload} = payload;
-//
-//         if (actionType === type) {
-//             action(restPayload, state)(dispatch, getState);
-//         }
-//
-//     };
-// }
-
-/**
  * 生成 Reducer
  * @param actionType
  * @param reducer
@@ -90,30 +72,60 @@ function reduceReducers(...reducers) {
  */
 function getReducer(store, nameSpace, initialState, reducers) {
 
-    const
-
-        // actionHandlers = actions ?
-        //     Object.keys(actions).map(type =>
-        //         handleAction(`${nameSpace}/${type}`, actions[type])
-        //     )
-        //     :
-        //     [],
-
-        reducerHandlers = reducers ?
-            Object.keys(reducers).map(type =>
-                handleReducer(`${nameSpace}/${type}`, reducers[type])
-            )
-            :
-            [],
+    const reducerHandlers = reducers ?
+        Object.keys(reducers).map(type =>
+            handleReducer(`${nameSpace}/${type}`, reducers[type])
+        )
+        :
+        [],
 
         reducer = reduceReducers(...reducerHandlers);
 
-    return (state = initialState, action) => {
-        // setTimeout(() => {
-        //     actionHandlers.forEach(actionHandler => actionHandler?.(state, action)(store.dispatch, store.getState));
-        // }, 0);
-        return reducer(state, action);
+    return (state = initialState, action) => reducer(state, action);
+
+}
+
+/**
+ * 创建 ModelActionMiddleware
+ * @returns {function({dispatch?: *, getState?: *}): function(*): function(*=): *}
+ */
+export function createModelActionMiddleware() {
+
+    // 异步 actions
+    const asyncActions = {};
+
+    /**
+     * ModelActionMiddleware
+     * @param dispatch
+     * @param getState
+     * @returns {function(*): function(*=): *}
+     * @constructor
+     */
+    function ModelActionMiddleware({dispatch, getState}) {
+        return next => action => {
+
+            // 调用 asyncActions 匹配的 action
+            if (asyncActions?.hasOwnProperty(action?.type)) {
+                asyncActions[action.type]?.(action)?.(dispatch, getState);
+            }
+
+            return next(action);
+
+        };
+    }
+
+    /**
+     * 暴露出去的 register 方法，用于注册异步 actions
+     * @param nameSpace
+     * @param actions
+     */
+    ModelActionMiddleware.register = function (nameSpace, actions) {
+        Object.keys(actions).forEach(type =>
+            asyncActions[`${nameSpace}/${type}`] = actions[type]
+        );
     };
+
+    return ModelActionMiddleware;
 
 }
 
@@ -130,63 +142,45 @@ export function registerModel(store, model) {
 
     const {nameSpace, state, actions, reducers} = model;
 
-    // store.asyncActions[nameSpace] = actions;
-
+    // 注册 reducers
     store.asyncReducers[nameSpace] = getReducer(store, nameSpace, state, reducers || {});
     store.replaceReducer(createRootReducer(store.history, store.asyncReducers));
 
+    // 注册 actions
     if (actions) {
-        store.registerAction(store, nameSpace, state, actions || {});
+        store.registerAction(nameSpace, actions || {});
     }
-
-}
-
-export function createModelActionMiddleware() {
-
-    const asyncActions = {};
-
-    function modelActionMiddleware({dispatch, getState}) {
-        return next => action => {
-
-            console.log('asyncActions::', asyncActions);
-
-            if (asyncActions.hasOwnProperty(action.type)) {
-                asyncActions[action.type](action)(dispatch, getState);
-            }
-
-            return next(action);
-
-        };
-    }
-
-    modelActionMiddleware.register = function (store, nameSpace, state, actions) {
-        Object.keys(actions).forEach(type => {
-            asyncActions[`${nameSpace}/${type}`] = actions[type];
-        });
-    };
-
-    return modelActionMiddleware;
 
 }
 
 export default history => {
 
-    const modelActionMiddleware = createModelActionMiddleware();
+    // 用于加载和调用异步 actions 的 ModelActionMiddleware
+    const ModelActionMiddleware = createModelActionMiddleware();
 
     return {
+
+        // 创建的默认 store
         ...createStore(
             createRootReducer(history),
             applyMiddleware(
                 thunk,
                 ComponentLoading,
-                modelActionMiddleware,
+                ModelActionMiddleware,
                 Api,
                 routerMiddleware(history)
             )
         ),
+
+        // history 实例
         history,
+
+        // 异步的 reducers
         asyncReducers: {},
-        registerAction: modelActionMiddleware.register
+
+        // 暴露给 store 的注册异步 actions 的方法
+        registerAction: ModelActionMiddleware.register
+
     };
 
 };
