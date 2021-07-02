@@ -130,17 +130,43 @@ export function registerModel(store, model) {
 
     const {nameSpace, state, actions, reducers} = model;
 
-    store.asyncActions[nameSpace] = actions;
+    // store.asyncActions[nameSpace] = actions;
 
     store.asyncReducers[nameSpace] = getReducer(store, nameSpace, state, reducers || {});
     store.replaceReducer(createRootReducer(store.history, store.asyncReducers));
 
+    if (actions) {
+        store.registerAction(store, nameSpace, state, actions || {});
+    }
+
 }
 
 export function createModelActionMiddleware() {
-    return ({dispatch, getState}) => next => action => {
-        return next(action);
+
+    const asyncActions = {};
+
+    function modelActionMiddleware({dispatch, getState}) {
+        return next => action => {
+
+            console.log('asyncActions::', asyncActions);
+
+            if (asyncActions.hasOwnProperty(action.type)) {
+                asyncActions[action.type](action)(dispatch, getState);
+            }
+
+            return next(action);
+
+        };
+    }
+
+    modelActionMiddleware.register = function (store, nameSpace, state, actions) {
+        Object.keys(actions).forEach(type => {
+            asyncActions[`${nameSpace}/${type}`] = actions[type];
+        });
     };
+
+    return modelActionMiddleware;
+
 }
 
 export default history => {
@@ -159,7 +185,6 @@ export default history => {
             )
         ),
         history,
-        asyncActions: {},
         asyncReducers: {},
         registerAction: modelActionMiddleware.register
     };
