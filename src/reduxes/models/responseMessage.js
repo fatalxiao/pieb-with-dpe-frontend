@@ -26,10 +26,9 @@ export default {
         /**
          * 创建一条返回失败消息
          * @param message
-         * @param DEFAULT_ERROR_MSG
          * @returns {(function(*): void)|*}
          */
-        addFailureResMsg: ({message}, {DEFAULT_ERROR_MSG}) => dispatch => {
+        addFailureResMsg: ({message}) => (dispatch, getState) => {
             dispatch({
                 type: 'toasts/addErrorToast',
                 message: 'Successfully'
@@ -39,7 +38,7 @@ export default {
                 message: message && typeof message === 'string' ?
                     message
                     :
-                    DEFAULT_ERROR_MSG
+                    getState().responseMessage.DEFAULT_ERROR_MSG
             });
         }
 

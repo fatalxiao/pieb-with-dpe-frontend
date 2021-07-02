@@ -4,9 +4,6 @@
 
 import {CALL_API} from 'reduxes/actionTypes';
 
-// Actions
-import {addSuccessResMsg, addFailureResMsg} from 'modules/Root/reduxes/actions/ResMsgAction';
-
 // Vendors
 import RequestManagement from 'vendors/api/RequestManagement';
 
@@ -53,7 +50,9 @@ export default ({dispatch, getState}) => next => action => {
         contentType,
         successCallback(xhr, response, responseData) {
 
-            !resMsgDisabled && !successResMsgDisabled && addSuccessResMsg()(dispatch);
+            !resMsgDisabled && !successResMsgDisabled && dispatch({
+                type: 'responseMessage/addSuccessResMsg'
+            });
 
             next(actionWith({
                 type: successType,
@@ -68,15 +67,20 @@ export default ({dispatch, getState}) => next => action => {
         failureCallback(xhr, response, responseData) {
 
             if (xhr[RequestManagement.CANCEL_FLAG] === true) {
-                actionCancelCallback && actionCancelCallback(xhr);
+                actionCancelCallback?.(xhr);
                 return;
             }
 
             if (!resMsgDisabled && !failureResMsgDisabled) {
                 if (xhr.status === 500) {
-                    addFailureResMsg()(dispatch);
+                    dispatch({
+                        type: 'responseMessage/addFailureResMsg'
+                    });
                 } else {
-                    addFailureResMsg(responseData)(dispatch);
+                    dispatch({
+                        type: 'responseMessage/addFailureResMsg',
+                        message: responseData
+                    });
                 }
             }
 

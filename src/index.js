@@ -21,7 +21,7 @@ import {Provider} from 'react-redux';
 import {ConnectedRouter} from 'connected-react-router';
 import configureStore from 'reduxes/store';
 import {configureRoutes} from './config.routes';
-import {registerModel} from 'reduxes/store';
+import {registerModels} from 'reduxes/store';
 
 // Styles
 import 'assets/bootstrap/bootstrap-grid.min.css';
@@ -45,7 +45,7 @@ const history = createBrowserHistory(),
     store = configureStore(history);
 
 // 注册同步的 model
-registerModel(store, [
+registerModels(store, [
     fullScreen,
     moduleComponentLoading,
     notifications,
