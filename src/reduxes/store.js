@@ -136,7 +136,7 @@ export function createModelActionMiddleware() {
  */
 export function registerModel(store, model) {
 
-    if (!model?.nameSpace) {
+    if (!store || !model?.nameSpace) {
         return;
     }
 
@@ -155,6 +155,15 @@ export function registerModel(store, model) {
         store.registerActions(nameSpace, actions || {});
     }
 
+}
+
+/**
+ * 注册 models
+ * @param store
+ * @param models
+ */
+export function registerModels(store, models) {
+    models.forEach(model => registerModel(store, model));
 }
 
 export default history => {

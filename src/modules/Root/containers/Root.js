@@ -31,7 +31,7 @@ const Root = ({
          */
         clearToasts = useCallback(() => {
             dispatch?.({
-                type: 'appToasts/clearToasts'
+                type: 'toasts/clearToasts'
             });
         }, [
             dispatch
@@ -43,7 +43,7 @@ const Root = ({
          */
         clearNotifications = useCallback(() => {
             dispatch?.({
-                type: 'appNotifications/clearNotifications'
+                type: 'notifications/clearNotifications'
             });
         }, [
             dispatch
@@ -88,6 +88,6 @@ Root.propTypes = {
 };
 
 export default connect(state => ({
-    toastes: state.appToasts,
-    notifications: state.appNotifications
+    toastes: state.toasts,
+    notifications: state.notifications
 }))(Root);

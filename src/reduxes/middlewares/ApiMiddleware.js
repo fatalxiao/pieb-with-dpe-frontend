@@ -14,11 +14,6 @@ export default ({dispatch, getState}) => next => action => {
 
     const options = action[CALL_API];
 
-    // console.log(action);
-    // if (!action || !action.type) {
-    //     debugger;
-    // }
-
     // not an api action
     if (typeof options === 'undefined') {
         return next(action);

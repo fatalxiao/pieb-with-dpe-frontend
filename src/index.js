@@ -7,7 +7,11 @@
 import React from 'react';
 
 // Sync Models
+import fullScreen from 'reduxes/models/fullScreen';
 import moduleComponentLoading from 'reduxes/models/moduleComponentLoading';
+import notifications from 'reduxes/models/notifications';
+import toasts from 'reduxes/models/toasts';
+import responseMessage from 'reduxes/models/responseMessage';
 
 // Vendors
 import {render} from 'react-dom';
@@ -39,7 +43,15 @@ if (process.env.NODE_ENV === 'development' && module?.hot) {
  */
 const history = createBrowserHistory(),
     store = configureStore(history);
-registerModel(store, moduleComponentLoading);
+
+// 注册同步的 model
+registerModel(store, [
+    fullScreen,
+    moduleComponentLoading,
+    notifications,
+    toasts,
+    responseMessage
+]);
 
 /**
  * 渲染应用到dom

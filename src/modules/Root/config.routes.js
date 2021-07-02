@@ -13,11 +13,6 @@ import amc from 'components/AsyncModuleComponent';
 export default function configureRoutes(store) {
     return {
         path: '/',
-        component: amc(store, () => import('./containers/Root'), [
-            () => import('./models/appNotifications'),
-            () => import('./models/appToasts'),
-            () => import('./models/fullScreen'),
-            () => import('./models/responseMessage')
-        ])
+        component: amc(() => import('./containers/Root'), store)
     };
 }

@@ -1,12 +1,12 @@
 /**
- * @file appNotifications.js
+ * @file notifications.js
  */
 
 // Statics
 import MsgType from 'alcedo-ui/_statics/MsgType';
 
 export default {
-    nameSpace: 'appNotifications',
+    nameSpace: 'notifications',
     state: [],
     actions: {
 
@@ -16,7 +16,7 @@ export default {
          * @returns {function(*): *}
          */
         addInfoNotifier: ({message}) => dispatch => dispatch({
-            type: 'appNotifications/addNotification',
+            type: 'notifications/addNotification',
             notification: {
                 title: '',
                 message,
@@ -31,7 +31,7 @@ export default {
          * @returns {function(*): *}
          */
         addWarningNotifier: ({message}) => dispatch => dispatch({
-            type: 'appNotifications/addNotification',
+            type: 'notifications/addNotification',
             notification: {
                 title: '',
                 message,

@@ -19,7 +19,7 @@ export default {
          * @returns {function(*): *}
          */
         addSuccessResMsg: () => dispatch => dispatch({
-            type: 'appToasts/addSuccessToast',
+            type: 'toasts/addSuccessToast',
             message: 'Successfully'
         }),
 
@@ -31,11 +31,11 @@ export default {
          */
         addFailureResMsg: ({message}, {DEFAULT_ERROR_MSG}) => dispatch => {
             dispatch({
-                type: 'appToasts/addErrorToast',
+                type: 'toasts/addErrorToast',
                 message: 'Successfully'
             });
             dispatch({
-                type: 'appNotifications/addWarningNotifier',
+                type: 'notifications/addWarningNotifier',
                 message: message && typeof message === 'string' ?
                     message
                     :

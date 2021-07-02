@@ -1,12 +1,12 @@
 /**
- * @file appToasts.js
+ * @file toasts.js
  */
 
 // Statics
 import MsgType from 'alcedo-ui/_statics/MsgType';
 
 export default {
-    nameSpace: 'appToasts',
+    nameSpace: 'toasts',
     state: [],
     actions: {
 
@@ -16,7 +16,7 @@ export default {
          * @returns {function(*): *}
          */
         addSuccessToast: ({message}) => dispatch => dispatch({
-            type: 'appToasts/addToast',
+            type: 'toasts/addToast',
             toaste: {
                 title: '',
                 message,
@@ -31,7 +31,7 @@ export default {
          * @returns {function(*): *}
          */
         addErrorToast: ({message}) => dispatch => dispatch({
-            type: 'appToasts/addToast',
+            type: 'toasts/addToast',
             toaste: {
                 title: '',
                 message,

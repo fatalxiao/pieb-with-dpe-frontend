@@ -10,8 +10,8 @@ import isFunction from 'lodash/isFunction';
 import {registerModel} from 'reduxes/store';
 
 export default (
-    store,
     getComponent,
+    store,
     getModels
 ) => class AsyncModuleComponent extends Component {
 
