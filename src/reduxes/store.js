@@ -20,8 +20,8 @@ import Api from 'reduxes/middlewares/ApiMiddleware';
  * @param asyncReducer
  */
 export function injectAsyncReducer(store, nameSpace, asyncReducer) {
-    store._asyncReducers[nameSpace] = asyncReducer;
-    store.replaceReducer(createRootReducer(store._history, store._asyncReducers));
+    store.asyncReducers[nameSpace] = asyncReducer;
+    store.replaceReducer(createRootReducer(store.history, store.asyncReducers));
 }
 
 /**
@@ -39,17 +39,17 @@ function identify(value) {
  * @param action
  * @returns {(function(*=, *=): (*))|*}
  */
-function handleAction(actionType, action) {
-    return (state, payload) => (dispatch, getState) => {
-
-        const {type, ...restPayload} = payload;
-
-        if (actionType === type) {
-            action(restPayload, state)(dispatch, getState);
-        }
-
-    };
-}
+// function handleAction(actionType, action) {
+//     return (state, payload) => (dispatch, getState) => {
+//
+//         const {type, ...restPayload} = payload;
+//
+//         if (actionType === type) {
+//             action(restPayload, state)(dispatch, getState);
+//         }
+//
+//     };
+// }
 
 /**
  * 生成 Reducer
@@ -85,20 +85,19 @@ function reduceReducers(...reducers) {
  * @param store
  * @param nameSpace
  * @param initialState
- * @param actions
  * @param reducers
  * @returns {function(*=, *=): *}
  */
-function handleActionsAndReducers(store, nameSpace, initialState, actions, reducers) {
+function getReducer(store, nameSpace, initialState, reducers) {
 
     const
 
-        actionHandlers = actions ?
-            Object.keys(actions).map(type =>
-                handleAction(`${nameSpace}/${type}`, actions[type])
-            )
-            :
-            [],
+        // actionHandlers = actions ?
+        //     Object.keys(actions).map(type =>
+        //         handleAction(`${nameSpace}/${type}`, actions[type])
+        //     )
+        //     :
+        //     [],
 
         reducerHandlers = reducers ?
             Object.keys(reducers).map(type =>
@@ -110,9 +109,9 @@ function handleActionsAndReducers(store, nameSpace, initialState, actions, reduc
         reducer = reduceReducers(...reducerHandlers);
 
     return (state = initialState, action) => {
-        setTimeout(() => {
-            actionHandlers.forEach(actionHandler => actionHandler?.(state, action)(store.dispatch, store.getState));
-        }, 0);
+        // setTimeout(() => {
+        //     actionHandlers.forEach(actionHandler => actionHandler?.(state, action)(store.dispatch, store.getState));
+        // }, 0);
         return reducer(state, action);
     };
 
@@ -131,26 +130,38 @@ export function registerModel(store, model) {
 
     const {nameSpace, state, actions, reducers} = model;
 
-    store._asyncReducers[nameSpace] = handleActionsAndReducers(store, nameSpace, state, actions, reducers || {});
-    store.replaceReducer(createRootReducer(store._history, store._asyncReducers));
+    store.asyncActions[nameSpace] = actions;
 
+    store.asyncReducers[nameSpace] = getReducer(store, nameSpace, state, reducers || {});
+    store.replaceReducer(createRootReducer(store.history, store.asyncReducers));
+
+}
+
+export function createModelActionMiddleware() {
+    return ({dispatch, getState}) => next => action => {
+        return next(action);
+    };
 }
 
 export default history => {
 
-    const store = createStore(
-        createRootReducer(history),
-        applyMiddleware(
-            thunk,
-            ComponentLoading,
-            Api,
-            routerMiddleware(history)
-        )
-    );
+    const modelActionMiddleware = createModelActionMiddleware();
 
-    store._history = history;
-    store._asyncReducers = {};
-
-    return store;
+    return {
+        ...createStore(
+            createRootReducer(history),
+            applyMiddleware(
+                thunk,
+                ComponentLoading,
+                modelActionMiddleware,
+                Api,
+                routerMiddleware(history)
+            )
+        ),
+        history,
+        asyncActions: {},
+        asyncReducers: {},
+        registerAction: modelActionMiddleware.register
+    };
 
 };
