@@ -3,7 +3,7 @@
  */
 
 // Components
-import amc from 'components/AsyncModuleComponent_old';
+import amc from 'components/AsyncModuleComponent';
 
 /**
  * 返回 routes 配置
@@ -13,21 +13,9 @@ import amc from 'components/AsyncModuleComponent_old';
 export default function configureRoutes(store) {
     return {
         path: '/app',
-        component: amc(store, () => import('./containers/App'), [{
-            nameSpace: 'observalEndPoint',
-            getReducer: () => import('./reduxes/reducers/ObservalEndPointReducer')
-        }, {
-            nameSpace: 'patientGroup',
-            getReducer: () => import('./reduxes/reducers/PatientGroupReducer')
-        }, {
-            nameSpace: 'patients',
-            getReducer: () => import('./reduxes/reducers/PatientsReducer')
-        }, {
-            nameSpace: 'patientBaseInfo',
-            getReducer: () => import('../App/reduxes/reducers/PatientBaseInfoReducer')
-        }, {
-            nameSpace: 'sensoryBlock',
-            getReducer: () => import('./reduxes/reducers/SensoryBlockReducer')
-        }])
+        component: amc(() => import('./containers/App'), store, [
+            () => import('./models/epPlacementPoint'),
+            () => import('./models/observalEndPoint')
+        ])
     };
 }
