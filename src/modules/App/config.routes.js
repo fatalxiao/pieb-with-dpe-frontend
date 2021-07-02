@@ -14,9 +14,6 @@ export default function configureRoutes(store) {
     return {
         path: '/app',
         component: amc(store, () => import('./containers/App'), [{
-            nameSpace: 'epPlacementPoint',
-            getReducer: () => import('./reduxes/reducers/EpPlacementPointReducer')
-        }, {
             nameSpace: 'observalEndPoint',
             getReducer: () => import('./reduxes/reducers/ObservalEndPointReducer')
         }, {
