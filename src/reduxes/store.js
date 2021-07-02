@@ -142,13 +142,17 @@ export function registerModel(store, model) {
 
     const {nameSpace, state, actions, reducers} = model;
 
+    if (store.asyncReducers.hasOwnProperty(nameSpace)) {
+        console.error(`nameSpace: ${nameSpace} has been registered.`);
+    }
+
     // 注册 reducers
     store.asyncReducers[nameSpace] = getReducer(store, nameSpace, state, reducers || {});
     store.replaceReducer(createRootReducer(store.history, store.asyncReducers));
 
     // 注册 actions
     if (actions) {
-        store.registerAction(nameSpace, actions || {});
+        store.registerActions(nameSpace, actions || {});
     }
 
 }
@@ -179,7 +183,7 @@ export default history => {
         asyncReducers: {},
 
         // 暴露给 store 的注册异步 actions 的方法
-        registerAction: ModelActionMiddleware.register
+        registerActions: ModelActionMiddleware.register
 
     };
 
