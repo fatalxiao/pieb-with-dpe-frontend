@@ -26,7 +26,7 @@ export default {
     actions: {
 
         /**
-         * 获取所有的 Ep Placement Point
+         * 获取所有的 Observal End Point
          * @returns {function(*): *}
          */
         getObservalEndPoints: () => dispatch => dispatch({

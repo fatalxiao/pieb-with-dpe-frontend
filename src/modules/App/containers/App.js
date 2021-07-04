@@ -2,12 +2,10 @@
  * @file App.js
  */
 
-import React, {useMemo, useEffect} from 'react';
+import React, {useMemo, useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 
-import * as actions from 'modules/App/reduxes/actions';
 import * as actionTypes from 'modules/App/reduxes/actionTypes';
 
 // Components
@@ -23,37 +21,101 @@ import {renderRoutes} from 'react-router-config';
 import './App.scss';
 
 const App = ({
+
     route,
     componentLoading,
     getPatientGroupsActionType, getSensoryBlocksActionType,
     getObservalEndPointsActionType, getEpPlacementPointsActionType,
-    getPatientGroups, getSensoryBlocks, getObservalEndPoints, getEpPlacementPoints,
-    getPatients
+
+    dispatch
+
 }) => {
 
-    /**
-     * 是否正在加载基础数据
-     * @type {*}
-     */
-    const loading = useMemo(() => {
-        return getPatientGroupsActionType !== actionTypes.GET_PATIENT_GROUPS_SUCCESS
-            || getSensoryBlocksActionType !== actionTypes.GET_SENSORY_BLOCKS_SUCCESS
-            || getObservalEndPointsActionType !== actionTypes.GET_OBSERVAL_END_POINT_SUCCESS
-            || getEpPlacementPointsActionType !== actionTypes.GET_EP_PLACEMENT_POINT_SUCCESS;
-    }, [
-        getPatientGroupsActionType, getSensoryBlocksActionType,
-        getObservalEndPointsActionType, getEpPlacementPointsActionType
-    ]);
+    const
+
+        /**
+         * 是否正在加载基础数据
+         * @type {*}
+         */
+        loading = useMemo(() => {
+            return getPatientGroupsActionType !== actionTypes.GET_PATIENT_GROUPS_SUCCESS
+                || getSensoryBlocksActionType !== actionTypes.GET_SENSORY_BLOCKS_SUCCESS
+                || getObservalEndPointsActionType !== actionTypes.GET_OBSERVAL_END_POINT_SUCCESS
+                || getEpPlacementPointsActionType !== actionTypes.GET_EP_PLACEMENT_POINT_SUCCESS;
+        }, [
+            getPatientGroupsActionType, getSensoryBlocksActionType,
+            getObservalEndPointsActionType, getEpPlacementPointsActionType
+        ]),
+
+        /**
+         * 获取 Patient Groups
+         * @type {(function(): void)|*}
+         */
+        getPatientGroups = useCallback(() => {
+            dispatch({
+                type: 'patientGroup/getPatientGroups'
+            });
+        }, [
+            dispatch
+        ]),
+
+        /**
+         * 获取所有的 Sensory Blocks
+         * @type {(function(): void)|*}
+         */
+        getSensoryBlocks = useCallback(() => {
+            dispatch({
+                type: 'sensoryBlock/getSensoryBlocks'
+            });
+        }, [
+            dispatch
+        ]),
+
+        /**
+         * 获取所有的 Observal End Point
+         * @type {(function(): void)|*}
+         */
+        getObservalEndPoints = useCallback(() => {
+            dispatch({
+                type: 'observalEndPoint/getObservalEndPoints'
+            });
+        }, [
+            dispatch
+        ]),
+
+        /**
+         * 获取所有的 Ep Placement Point
+         * @type {(function(): void)|*}
+         */
+        getEpPlacementPoints = useCallback(() => {
+            dispatch({
+                type: 'epPlacementPoint/getEpPlacementPoints'
+            });
+        }, [
+            dispatch
+        ]),
+
+        /**
+         * 获取用于表格的 patients 数据
+         * @type {(function(): void)|*}
+         */
+        getPatients = useCallback(() => {
+            dispatch({
+                type: 'patients/getPatients'
+            });
+        }, [
+            dispatch
+        ]);
 
     /**
      * init
      */
     useEffect(() => {
-        getPatientGroups?.();
-        getSensoryBlocks?.();
-        getObservalEndPoints?.();
-        getEpPlacementPoints?.();
-        getPatients?.();
+        getPatientGroups();
+        getSensoryBlocks();
+        getObservalEndPoints();
+        getEpPlacementPoints();
+        getPatients();
     }, [
         getPatientGroups, getSensoryBlocks, getObservalEndPoints, getEpPlacementPoints,
         getPatients
@@ -92,13 +154,7 @@ App.propTypes = {
     getPatientGroupsActionType: PropTypes.string,
     getSensoryBlocksActionType: PropTypes.string,
     getObservalEndPointsActionType: PropTypes.string,
-    getEpPlacementPointsActionType: PropTypes.string,
-
-    getPatientGroups: PropTypes.func,
-    getSensoryBlocks: PropTypes.func,
-    getObservalEndPoints: PropTypes.func,
-    getEpPlacementPoints: PropTypes.func,
-    getPatients: PropTypes.func
+    getEpPlacementPointsActionType: PropTypes.string
 
 };
 
@@ -108,10 +164,4 @@ export default connect(state => ({
     getSensoryBlocksActionType: state.sensoryBlock.actionType,
     getObservalEndPointsActionType: state.observalEndPoint.actionType,
     getEpPlacementPointsActionType: state.epPlacementPoint.actionType
-}), dispatch => bindActionCreators({
-    getPatientGroups: actions.getPatientGroups,
-    getSensoryBlocks: actions.getSensoryBlocks,
-    getObservalEndPoints: actions.getObservalEndPoints,
-    getEpPlacementPoints: actions.getEpPlacementPoints,
-    getPatients: actions.getPatients
-}, dispatch))(App);
+}))(App);
