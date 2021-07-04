@@ -15,7 +15,11 @@ export default function configureRoutes(store) {
         path: '/app',
         component: amc(() => import('./containers/App'), store, [
             () => import('./models/epPlacementPoint'),
-            () => import('./models/observalEndPoint')
+            () => import('./models/observalEndPoint'),
+            () => import('./models/patientBaseInfo'),
+            () => import('./models/patientGroup'),
+            () => import('./models/patients'),
+            () => import('./models/sensoryBlock')
         ])
     };
 }
