@@ -19,7 +19,7 @@ import {DEFAULT_ROUTE} from 'src/config.routes';
 import './Root.scss';
 
 const Root = ({
-    toastes, notifications, route, location,
+    toasts, notifications, route, location,
     dispatch
 }) => {
 
@@ -52,7 +52,7 @@ const Root = ({
     return (
         <div className="root">
 
-            <Toaster toasts={toastes}
+            <Toaster toasts={toasts}
                      position={Toaster.Position.TOP}
                      onToastPop={clearToasts}/>
 
@@ -80,7 +80,7 @@ Root.propTypes = {
     route: PropTypes.object,
     location: PropTypes.object,
 
-    toastes: PropTypes.array,
+    toasts: PropTypes.array,
     notifications: PropTypes.array,
 
     dispatch: PropTypes.func
@@ -88,6 +88,6 @@ Root.propTypes = {
 };
 
 export default connect(state => ({
-    toastes: state.toasts,
+    toasts: state.toasts,
     notifications: state.notifications
 }))(Root);
