@@ -29,81 +29,79 @@ const App = ({
 
 }) => {
 
-    const
+    /**
+     * 是否正在加载基础数据
+     * @type {*}
+     */
+    const loading = useMemo(() => {
+        return getPatientGroupsActionType !== 'patientGroup/getPatientGroupsSuccess'
+            || getSensoryBlocksActionType !== 'sensoryBlock/getSensoryBlocksSuccess'
+            || getObservalEndPointsActionType !== 'observalEndPoint/getObservalEndPointsSuccess'
+            || getEpPlacementPointsActionType !== 'epPlacementPoint/getEpPlacementPointSuccess';
+    }, [
+        getPatientGroupsActionType, getSensoryBlocksActionType,
+        getObservalEndPointsActionType, getEpPlacementPointsActionType
+    ]);
 
-        /**
-         * 是否正在加载基础数据
-         * @type {*}
-         */
-        loading = useMemo(() => {
-            return getPatientGroupsActionType !== 'patientGroup/getPatientGroupsSuccess'
-                || getSensoryBlocksActionType !== 'sensoryBlock/getSensoryBlocksSuccess'
-                || getObservalEndPointsActionType !== 'observalEndPoint/getObservalEndPointsSuccess'
-                || getEpPlacementPointsActionType !== 'epPlacementPoint/getEpPlacementPointSuccess';
-        }, [
-            getPatientGroupsActionType, getSensoryBlocksActionType,
-            getObservalEndPointsActionType, getEpPlacementPointsActionType
-        ]),
+    /**
+     * 获取 Patient Groups
+     * @type {(function(): void)|*}
+     */
+    const getPatientGroups = useCallback(() => {
+        dispatch({
+            type: 'patientGroup/getPatientGroups'
+        });
+    }, [
+        dispatch
+    ]);
 
-        /**
-         * 获取 Patient Groups
-         * @type {(function(): void)|*}
-         */
-        getPatientGroups = useCallback(() => {
-            dispatch({
-                type: 'patientGroup/getPatientGroups'
-            });
-        }, [
-            dispatch
-        ]),
+    /**
+     * 获取所有的 Sensory Blocks
+     * @type {(function(): void)|*}
+     */
+    const getSensoryBlocks = useCallback(() => {
+        dispatch({
+            type: 'sensoryBlock/getSensoryBlocks'
+        });
+    }, [
+        dispatch
+    ]);
 
-        /**
-         * 获取所有的 Sensory Blocks
-         * @type {(function(): void)|*}
-         */
-        getSensoryBlocks = useCallback(() => {
-            dispatch({
-                type: 'sensoryBlock/getSensoryBlocks'
-            });
-        }, [
-            dispatch
-        ]),
+    /**
+     * 获取所有的 Observal End Point
+     * @type {(function(): void)|*}
+     */
+    const getObservalEndPoints = useCallback(() => {
+        dispatch({
+            type: 'observalEndPoint/getObservalEndPoints'
+        });
+    }, [
+        dispatch
+    ]);
 
-        /**
-         * 获取所有的 Observal End Point
-         * @type {(function(): void)|*}
-         */
-        getObservalEndPoints = useCallback(() => {
-            dispatch({
-                type: 'observalEndPoint/getObservalEndPoints'
-            });
-        }, [
-            dispatch
-        ]),
+    /**
+     * 获取所有的 Ep Placement Point
+     * @type {(function(): void)|*}
+     */
+    const getEpPlacementPoints = useCallback(() => {
+        dispatch({
+            type: 'epPlacementPoint/getEpPlacementPoints'
+        });
+    }, [
+        dispatch
+    ]);
 
-        /**
-         * 获取所有的 Ep Placement Point
-         * @type {(function(): void)|*}
-         */
-        getEpPlacementPoints = useCallback(() => {
-            dispatch({
-                type: 'epPlacementPoint/getEpPlacementPoints'
-            });
-        }, [
-            dispatch
-        ]),
-
-        /**
-         * 获取用于表格的 patients 数据
-         * @type {(function(): void)|*}
-         */
-        getPatients = useCallback(() => {
-            dispatch({
-                type: 'patients/getPatients'
-            });
-        }, [
-            dispatch
-        ]);
+    /**
+     * 获取用于表格的 patients 数据
+     * @type {(function(): void)|*}
+     */
+    const getPatients = useCallback(() => {
+        dispatch({
+            type: 'patients/getPatients'
+        });
+    }, [
+        dispatch
+    ]);
 
     /**
      * init

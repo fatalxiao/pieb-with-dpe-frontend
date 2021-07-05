@@ -23,31 +23,29 @@ const Root = ({
     dispatch
 }) => {
 
-    const
+    /**
+     * 处理 toasts 出栈
+     * @type {(function(): void)|*}
+     */
+    const clearToasts = useCallback(() => {
+        dispatch?.({
+            type: 'toasts/clearToasts'
+        });
+    }, [
+        dispatch
+    ]);
 
-        /**
-         * 处理 toasts 出栈
-         * @type {(function(): void)|*}
-         */
-        clearToasts = useCallback(() => {
-            dispatch?.({
-                type: 'toasts/clearToasts'
-            });
-        }, [
-            dispatch
-        ]),
-
-        /**
-         * 处理 notifications 出栈
-         * @type {(function(): void)|*}
-         */
-        clearNotifications = useCallback(() => {
-            dispatch?.({
-                type: 'notifications/clearNotifications'
-            });
-        }, [
-            dispatch
-        ]);
+    /**
+     * 处理 notifications 出栈
+     * @type {(function(): void)|*}
+     */
+    const clearNotifications = useCallback(() => {
+        dispatch?.({
+            type: 'notifications/clearNotifications'
+        });
+    }, [
+        dispatch
+    ]);
 
     return (
         <div className="root">
