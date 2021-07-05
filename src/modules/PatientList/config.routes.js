@@ -3,7 +3,7 @@
  */
 
 // Components
-import amc from 'components/AsyncModuleComponent_old';
+import amc from 'components/AsyncModuleComponent';
 
 /**
  * 返回 routes 配置
@@ -13,6 +13,6 @@ import amc from 'components/AsyncModuleComponent_old';
 export default function configureRoutes(store) {
     return {
         path: '/app/patient-list',
-        component: amc(store, () => import('modules/PatientList/containers/PatientList'))
+        component: amc(() => import('modules/PatientList/containers/PatientList'), store)
     };
 }
