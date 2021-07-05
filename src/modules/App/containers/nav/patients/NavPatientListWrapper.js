@@ -5,9 +5,6 @@
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-
-import * as actions from 'reduxes/actions';
 
 // Components
 import FlatButton from 'alcedo-ui/FlatButton';
@@ -18,7 +15,7 @@ import './NavPatientListWrapper.scss';
 
 const NavPatientListWrapper = ({
     patientList,
-    routerPush
+    dispatch
 }) => {
 
     /**
@@ -26,9 +23,12 @@ const NavPatientListWrapper = ({
      * @type {function(): *}
      */
     const goToList = useCallback(() => {
-        routerPush?.('/app/patient-list');
+        dispatch?.({
+            type: 'route/push',
+            route: '/app/patient-list'
+        });
     }, [
-        routerPush
+        dispatch
     ]);
 
     return (
@@ -52,11 +52,9 @@ const NavPatientListWrapper = ({
 
 NavPatientListWrapper.propTypes = {
     patientList: PropTypes.array,
-    routerPush: PropTypes.func
+    dispatch: PropTypes.func
 };
 
 export default connect(state => ({
     patientList: state.patients.list
-}), dispatch => bindActionCreators({
-    routerPush: actions.routerPush
-}, dispatch))(NavPatientListWrapper);
+}))(NavPatientListWrapper);
