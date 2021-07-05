@@ -22,36 +22,34 @@ const NavSearch = ({
     onRequestClose
 }) => {
 
-    const
+    /**
+     * 过滤的值
+     */
+    const [filterValue, setFilterValue] = useState('');
 
-        /**
-         * 过滤的值
-         */
-        [filterValue, setFilterValue] = useState(''),
-
-        /**
-         * 根据 filter value 返回数据
-         * @type {Array}
-         */
-        data = useMemo(() => {
-            return filterValue ?
-                patientList ?
-                    patientList.filter(item => item?.id?.includes(filterValue) || item?.name?.includes(filterValue))
-                    :
-                    []
+    /**
+     * 根据 filter value 返回数据
+     * @type {Array}
+     */
+    const data = useMemo(() => {
+        return filterValue ?
+            patientList ?
+                patientList.filter(item => item?.id?.includes(filterValue) || item?.name?.includes(filterValue))
                 :
-                patientList;
-        }, [
-            filterValue, patientList
-        ]),
+                []
+            :
+            patientList;
+    }, [
+        filterValue, patientList
+    ]);
 
-        /**
-         * 处理 filter 变更
-         * @type {function(*=): void}
-         */
-        handleFilterChange = useCallback(nextFilterValue => {
-            setFilterValue(nextFilterValue);
-        }, []);
+    /**
+     * 处理 filter 变更
+     * @type {function(*=): void}
+     */
+    const handleFilterChange = useCallback(nextFilterValue => {
+        setFilterValue(nextFilterValue);
+    }, []);
 
     return (
         <div className={classNames('nav-search-wrapper', {

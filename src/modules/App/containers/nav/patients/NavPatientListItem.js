@@ -5,9 +5,6 @@
 import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-
-import * as actions from 'reduxes/actions';
 
 // Components
 import FlatButton from 'alcedo-ui/FlatButton';
@@ -17,34 +14,35 @@ import './NavPatientListItem.scss';
 
 const NavPatientListItem = ({
     groupList, patient,
-    routerPush
+    dispatch
 }) => {
 
-    const
+    /**
+     * 当前 patient 的 ID
+     */
+    const patientId = patient?.id;
 
-        /**
-         * 当前 patient 的 ID
-         */
-        patientId = patient?.id,
+    /**
+     * 当前 patient 所属 group 的 name
+     */
+    const groupName = useMemo(() => {
+        return groupList.find(item => item?.id === patient.groupId)?.name;
+    }, [
+        groupList, patient
+    ]);
 
-        /**
-         * 当前 patient 所属 group 的 name
-         */
-        groupName = useMemo(() => {
-            return groupList.find(item => item?.id === patient.groupId)?.name;
-        }, [
-            groupList, patientId
-        ]),
-
-        /**
-         * 处理点击，跳转到 patient info 页面
-         * @type {function(): *}
-         */
-        handleClick = useCallback(() => {
-            routerPush(`/app/patient/info/${patientId}`);
-        }, [
-            patientId, routerPush
-        ]);
+    /**
+     * 处理点击，跳转到 patient info 页面
+     * @type {function(): *}
+     */
+    const handleClick = useCallback(() => {
+        dispatch?.({
+            type: 'route/push',
+            route: `/app/patient/info/${patientId}`
+        });
+    }, [
+        patientId, dispatch
+    ]);
 
     return patient ?
         <FlatButton className="nav-patient-list-item"
@@ -71,12 +69,10 @@ NavPatientListItem.propTypes = {
     groupList: PropTypes.array,
     patient: PropTypes.object,
 
-    routerPush: PropTypes.func
+    dispatch: PropTypes.func
 
 };
 
 export default connect(state => ({
     groupList: state.patientGroup.list
-}), dispatch => bindActionCreators({
-    routerPush: actions.routerPush
-}, dispatch))(NavPatientListItem);
+}))(NavPatientListItem);

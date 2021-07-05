@@ -19,16 +19,14 @@ const NavPatientList = ({
     patientList, data
 }) => {
 
-    const
-
-        /**
-         * 列表的数据
-         */
-        listData = useMemo(() => {
-            return data || patientList;
-        }, [
-            data, patientList
-        ]);
+    /**
+     * 列表的数据
+     */
+    const listData = useMemo(() => {
+        return data || patientList;
+    }, [
+        data, patientList
+    ]);
 
     return (
         <div className="nav-patient-list"
