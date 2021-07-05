@@ -5,11 +5,6 @@
 import React, {useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-
-// Actions
-import * as actions from 'reduxes/actions';
-import * as appActions from 'modules/App/reduxes/actions';
 
 // Components
 import IconButton from 'alcedo-ui/IconButton';
@@ -28,69 +23,70 @@ import './NavBarTop.scss';
 
 const NavBarTop = ({
     children, isFold,
-    routerPush, resetPatientBaseInfo
+    dispatch, resetPatientBaseInfo
 }) => {
 
-    const
+    /**
+     * 是否显示查询抽屉
+     * @type {React.MutableRefObject<undefined>}
+     */
+    const [searchDrawerVisible, setSearchDrawerVisible] = useState(false);
 
-        /**
-         * 是否显示查询抽屉
-         * @type {React.MutableRefObject<undefined>}
-         */
-        [searchDrawerVisible, setSearchDrawerVisible] = useState(false),
+    /**
+     * 是否显示新建患者对话框
+     * @type {React.MutableRefObject<undefined>}
+     */
+    const [addPatientDialogVisible, setAddPatientDialogVisible] = useState(false);
 
-        /**
-         * 是否显示新建患者对话框
-         * @type {React.MutableRefObject<undefined>}
-         */
-        [addPatientDialogVisible, setAddPatientDialogVisible] = useState(false),
+    /**
+     * 跳转到落地页
+     * @type {function(): *}
+     */
+    const goToLanding = useCallback(() => {
+        dispatch?.({
+            type: 'route/push',
+            route: DEFAULT_ROUTE
+        });
+    }, [
+        dispatch
+    ]);
 
-        /**
-         * 跳转到落地页
-         * @type {function(): *}
-         */
-        goToLanding = useCallback(() => {
-            routerPush?.(DEFAULT_ROUTE);
-        }, [
-            routerPush
-        ]),
+    /**
+     * 切换查询抽屉显示/隐藏
+     * @type {function(): void}
+     */
+    const toggleSearch = useCallback(() => {
+        setSearchDrawerVisible(!searchDrawerVisible);
+    }, [
+        searchDrawerVisible
+    ]);
 
-        /**
-         * 切换查询抽屉显示/隐藏
-         * @type {function(): void}
-         */
-        toggleSearch = useCallback(() => {
-            setSearchDrawerVisible(!searchDrawerVisible);
-        }, [
-            searchDrawerVisible
-        ]),
+    /**
+     * 隐藏查询抽屉
+     * @type {function(): void}
+     */
+    const hideSearch = useCallback(() => {
+        setSearchDrawerVisible(false);
+    }, []);
 
-        /**
-         * 隐藏查询抽屉
-         * @type {function(): void}
-         */
-        hideSearch = useCallback(() => {
-            setSearchDrawerVisible(false);
-        }, []),
+    /**
+     * 显示新建患者对话框
+     * @type {Function}
+     */
+    const showAddPatient = useCallback(() => {
+        setAddPatientDialogVisible(true);
+        resetPatientBaseInfo?.();
+    }, [
+        resetPatientBaseInfo
+    ]);
 
-        /**
-         * 显示新建患者对话框
-         * @type {Function}
-         */
-        showAddPatient = useCallback(() => {
-            setAddPatientDialogVisible(true);
-            resetPatientBaseInfo?.();
-        }, [
-            resetPatientBaseInfo
-        ]),
-
-        /**
-         * 隐藏新建患者对话框
-         * @type {function(): void}
-         */
-        hideAddPatient = useCallback(() => {
-            setAddPatientDialogVisible(false);
-        }, []);
+    /**
+     * 隐藏新建患者对话框
+     * @type {function(): void}
+     */
+    const hideAddPatient = useCallback(() => {
+        setAddPatientDialogVisible(false);
+    }, []);
 
     return (
         <div className={classNames('nav-bar-top', {
@@ -140,15 +136,10 @@ const NavBarTop = ({
 NavBarTop.propTypes = {
 
     children: PropTypes.any,
-
     isFold: PropTypes.bool,
 
-    routerPush: PropTypes.func,
-    resetPatientBaseInfo: PropTypes.func
+    dispatch: PropTypes.func
 
 };
 
-export default connect(null, dispatch => bindActionCreators({
-    routerPush: actions.routerPush,
-    resetPatientBaseInfo: appActions.resetPatientBaseInfo
-}, dispatch))(NavBarTop);
+export default connect()(NavBarTop);

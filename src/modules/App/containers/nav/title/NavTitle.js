@@ -18,23 +18,21 @@ import './NavTitle.scss';
 
 const NavTitle = ({state}) => {
 
-    const
+    /**
+     * 获取当前 location 的 pathname
+     * @type {string}
+     */
+    const pathName = location.pathname;
 
-        /**
-         * 获取当前 location 的 pathname
-         * @type {string}
-         */
-        pathName = location.pathname,
-
-        /**
-         * 根据 pathname 去 sitemap 里计算出 path
-         * @type {*[]}
-         */
-        navPath = useMemo(() => {
-            return getPath(pathName, state);
-        }, [
-            pathName, state
-        ]);
+    /**
+     * 根据 pathname 去 sitemap 里计算出 path
+     * @type {*[]}
+     */
+    const navPath = useMemo(() => {
+        return getPath(pathName, state);
+    }, [
+        pathName, state
+    ]);
 
     return (
         <div className="nav-title">
