@@ -5,10 +5,6 @@
 import React, {useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-
-// Actions
-import * as appActions from 'modules/App/reduxes/actions';
 
 // Components
 import TextField from 'customized/MaterialTextField';
@@ -21,67 +17,67 @@ import './PatientListFilter.scss';
 
 const PatientListFilter = ({
     filterValue, groupList, filterGroup, statusList, filterStatus,
-    resetPatientBaseInfo, onFilterChange
+    dispatch, onFilterChange
 }) => {
 
-    const
+    /**
+     * add patient dialog 是否显示的标志
+     */
+    const [addPatientDialogVisible, setAddPatientDialogVisible] = useState(false);
 
-        /**
-         * add patient dialog 是否显示的标志
-         */
-        [addPatientDialogVisible, setAddPatientDialogVisible] = useState(false),
+    /**
+     * 处理 patient filter 的变更
+     * @type {Function}
+     */
+    const handlePatientFilterChange = useCallback(value => {
+        onFilterChange?.(value, filterGroup, filterStatus);
+    }, [
+        filterGroup, filterStatus,
+        onFilterChange
+    ]);
 
-        /**
-         * 处理 patient filter 的变更
-         * @type {Function}
-         */
-        handlePatientFilterChange = useCallback(value => {
-            onFilterChange?.(value, filterGroup, filterStatus);
-        }, [
-            filterGroup, filterStatus,
-            onFilterChange
-        ]),
+    /**
+     * 处理 group filter 的变更
+     * @type {Function}
+     */
+    const handleGroupFilterChange = useCallback(value => {
+        onFilterChange?.(filterValue, value, filterStatus);
+    }, [
+        filterValue, filterStatus,
+        onFilterChange
+    ]);
 
-        /**
-         * 处理 group filter 的变更
-         * @type {Function}
-         */
-        handleGroupFilterChange = useCallback(value => {
-            onFilterChange?.(filterValue, value, filterStatus);
-        }, [
-            filterValue, filterStatus,
-            onFilterChange
-        ]),
+    /**
+     * 处理 status filter 的变更
+     * @type {Function}
+     */
+    const handleStatusFilterChange = useCallback(value => {
+        onFilterChange?.(filterValue, filterGroup, value);
+    }, [
+        filterValue, filterGroup,
+        onFilterChange
+    ]);
 
-        /**
-         * 处理 status filter 的变更
-         * @type {Function}
-         */
-        handleStatusFilterChange = useCallback(value => {
-            onFilterChange?.(filterValue, filterGroup, value);
-        }, [
-            filterValue, filterGroup,
-            onFilterChange
-        ]),
+    /**
+     * 显示 add patient dialog
+     * @type {Function}
+     */
+    const showAddPatientDialog = useCallback(() => {
+        setAddPatientDialogVisible(true);
+        dispatch?.({
+            type: 'patientBaseInfo/resetPatientBaseInfo'
+        });
+    }, [
+        dispatch
+    ]);
 
-        /**
-         * 显示 add patient dialog
-         * @type {Function}
-         */
-        showAddPatientDialog = useCallback(() => {
-            setAddPatientDialogVisible(true);
-            resetPatientBaseInfo?.();
-        }, [
-            resetPatientBaseInfo
-        ]),
-
-        /**
-         * 隐藏 add patient dialog
-         * @type {Function}
-         */
-        hideAddPatientDialog = useCallback(() => {
-            setAddPatientDialogVisible(false);
-        }, []);
+    /**
+     * 隐藏 add patient dialog
+     * @type {Function}
+     */
+    const hideAddPatientDialog = useCallback(() => {
+        setAddPatientDialogVisible(false);
+    }, []);
 
     return (
         <div className="patient-list-filter">
@@ -132,11 +128,9 @@ PatientListFilter.propTypes = {
     statusList: PropTypes.array,
     filterStatus: PropTypes.object,
 
-    resetPatientBaseInfo: PropTypes.func,
+    dispatch: PropTypes.func,
     onFilterChange: PropTypes.func
 
 };
 
-export default connect(null, dispatch => bindActionCreators({
-    resetPatientBaseInfo: appActions.resetPatientBaseInfo
-}, dispatch))(PatientListFilter);
+export default connect()(PatientListFilter);

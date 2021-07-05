@@ -18,47 +18,45 @@ const PatientList = ({
     groupList, patientList
 }) => {
 
-    const
+    /**
+     * id / name 文本 filter 的值
+     */
+    const [filterValue, setFilterValue] = useState('');
 
-        /**
-         * id / name 文本 filter 的值
-         */
-        [filterValue, setFilterValue] = useState(''),
+    /**
+     * group filter 的值
+     */
+    const [filterGroup, setFilterGroup] = useState(PatientList.ALL_GROUP);
 
-        /**
-         * group filter 的值
-         */
-        [filterGroup, setFilterGroup] = useState(PatientList.ALL_GROUP),
+    /**
+     * status filter 的值
+     */
+    const [filterStatus, setFilterStatus] = useState(PatientList.ALL_STATUS);
 
-        /**
-         * status filter 的值
-         */
-        [filterStatus, setFilterStatus] = useState(PatientList.ALL_STATUS),
+    /**
+     * 最终 table 的值
+     */
+    const tableData = useMemo(() => {
+        return patientList.filter(item =>
+            (item?.id?.includes(filterValue) || item?.name?.includes(filterValue))
+            &&
+            (filterGroup?.id === 0 ? true : item?.groupId === filterGroup?.id)
+            &&
+            (filterStatus?.id === -1 ? true : item?.status === filterStatus?.id)
+        );
+    }, [
+        patientList, filterValue, filterGroup, filterStatus
+    ]);
 
-        /**
-         * 最终 table 的值
-         */
-        tableData = useMemo(() => {
-            return patientList.filter(item =>
-                (item?.id?.includes(filterValue) || item?.name?.includes(filterValue))
-                &&
-                (filterGroup?.id === 0 ? true : item?.groupId === filterGroup?.id)
-                &&
-                (filterStatus?.id === -1 ? true : item?.status === filterStatus?.id)
-            );
-        }, [
-            patientList, filterValue, filterGroup, filterStatus
-        ]),
-
-        /**
-         * 处理 filter 变更
-         * @type {Function}
-         */
-        handleFilterChange = useCallback((filterValue, filterGroup, filterStatus) => {
-            setFilterValue(filterValue);
-            setFilterGroup(filterGroup);
-            setFilterStatus(filterStatus);
-        }, []);
+    /**
+     * 处理 filter 变更
+     * @type {Function}
+     */
+    const handleFilterChange = useCallback((filterValue, filterGroup, filterStatus) => {
+        setFilterValue(filterValue);
+        setFilterGroup(filterGroup);
+        setFilterStatus(filterStatus);
+    }, []);
 
     return (
         <div className="patient-list">
