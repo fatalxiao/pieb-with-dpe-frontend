@@ -23,7 +23,7 @@ import './NavBarTop.scss';
 
 const NavBarTop = ({
     children, isFold,
-    dispatch, resetPatientBaseInfo
+    dispatch
 }) => {
 
     /**
@@ -75,9 +75,11 @@ const NavBarTop = ({
      */
     const showAddPatient = useCallback(() => {
         setAddPatientDialogVisible(true);
-        resetPatientBaseInfo?.();
+        dispatch?.({
+            type: 'patientBaseInfo/resetPatientBaseInfo'
+        });
     }, [
-        resetPatientBaseInfo
+        dispatch
     ]);
 
     /**
