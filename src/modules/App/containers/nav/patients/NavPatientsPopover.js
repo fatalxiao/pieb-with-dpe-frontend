@@ -5,9 +5,6 @@
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-
-import * as actions from 'reduxes/actions';
 
 // Components
 import IconButton from 'alcedo-ui/IconButton';
@@ -19,7 +16,7 @@ import PatientList from './NavPatientList';
 import './NavPatientsPopover.scss';
 
 const NavPatientsPopover = ({
-    routerPush
+    dispatch
 }) => {
 
     /**
@@ -27,9 +24,12 @@ const NavPatientsPopover = ({
      * @type {function(): *}
      */
     const goToList = useCallback(() => {
-        routerPush?.('/app/patient-list');
+        dispatch?.({
+            type: 'route/push',
+            route: '/app/patient-list'
+        });
     }, [
-        routerPush
+        dispatch
     ]);
 
     return (
@@ -53,10 +53,8 @@ NavPatientsPopover.propTypes = {
 
     isFold: PropTypes.bool,
 
-    routerPush: PropTypes.func
+    dispatch: PropTypes.func
 
 };
 
-export default connect(null, dispatch => bindActionCreators({
-    routerPush: actions.routerPush
-}, dispatch))(NavPatientsPopover);
+export default connect()(NavPatientsPopover);

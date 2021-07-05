@@ -6,9 +6,6 @@ import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-// Action Types
-import * as appActionTypes from 'modules/App/reduxes/actionTypes';
-
 // Components
 import CircularLoading from 'alcedo-ui/CircularLoading';
 import NavPatientCollapsed from './NavPatientsPopover';
@@ -42,8 +39,8 @@ const NavPatient = ({
             fold: isFold
         })}>
             {
-                groupListActionType === appActionTypes.GET_PATIENT_GROUPS_REQUEST
-                || patientListActionType === appActionTypes.GET_PATIENTS_REQUEST ?
+                groupListActionType === 'patientGroup/getPatientGroupsRequest'
+                || patientListActionType === 'patients/getPatientsRequest' ?
                     <CircularLoading/>
                     :
                     isCollapsed ?
