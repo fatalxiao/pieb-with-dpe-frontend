@@ -6,8 +6,6 @@ import React, {useMemo, useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import * as actionTypes from 'modules/App/reduxes/actionTypes';
-
 // Components
 import Nav from './nav/Nav';
 import NavTitle from './nav/title/NavTitle';
@@ -38,10 +36,10 @@ const App = ({
          * @type {*}
          */
         loading = useMemo(() => {
-            return getPatientGroupsActionType !== actionTypes.GET_PATIENT_GROUPS_SUCCESS
-                || getSensoryBlocksActionType !== actionTypes.GET_SENSORY_BLOCKS_SUCCESS
-                || getObservalEndPointsActionType !== actionTypes.GET_OBSERVAL_END_POINT_SUCCESS
-                || getEpPlacementPointsActionType !== actionTypes.GET_EP_PLACEMENT_POINT_SUCCESS;
+            return getPatientGroupsActionType !== 'patientGroup/getPatientGroupsSuccess'
+                || getSensoryBlocksActionType !== 'sensoryBlock/getSensoryBlocksSuccess'
+                || getObservalEndPointsActionType !== 'observalEndPoint/getObservalEndPointsSuccess'
+                || getEpPlacementPointsActionType !== 'epPlacementPoint/getEpPlacementPointSuccess';
         }, [
             getPatientGroupsActionType, getSensoryBlocksActionType,
             getObservalEndPointsActionType, getEpPlacementPointsActionType
@@ -154,7 +152,9 @@ App.propTypes = {
     getPatientGroupsActionType: PropTypes.string,
     getSensoryBlocksActionType: PropTypes.string,
     getObservalEndPointsActionType: PropTypes.string,
-    getEpPlacementPointsActionType: PropTypes.string
+    getEpPlacementPointsActionType: PropTypes.string,
+
+    dispatch: PropTypes.func
 
 };
 
