@@ -122,9 +122,9 @@ export default {
         getAnalgesiaRequest: ({patientId}) => dispatch => dispatch({
             [CALL_API]: {
                 types: [
-                    'analgesia/getAnalgesiaRequestRequest',
-                    'analgesia/getAnalgesiaRequestSuccess',
-                    'analgesia/getAnalgesiaRequestFailure'
+                    'analgesia/getAnalgesiaRequest',
+                    'analgesia/getAnalgesiaSuccess',
+                    'analgesia/getAnalgesiaFailure'
                 ],
                 api: AnalgesiaApi.getAnalgesiaDataByPatientId,
                 params: {patientId},
