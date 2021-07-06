@@ -170,7 +170,7 @@ export default {
         }
 
     },
-    reducers: {
+    globalReducers: {
 
         /**
          * 重置数据
@@ -182,7 +182,10 @@ export default {
                 ...state,
                 data: getDefaultData()
             };
-        },
+        }
+
+    },
+    reducers: {
 
         /**
          * 追加新的时间节点

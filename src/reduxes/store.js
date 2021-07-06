@@ -67,19 +67,27 @@ function reduceReducers(...reducers) {
  * @param store
  * @param nameSpace
  * @param initialState
+ * @param globalReducers
  * @param reducers
  * @returns {function(*=, *=): *}
  */
-function getReducer(store, nameSpace, initialState, reducers) {
+function getReducer(store, nameSpace, initialState, globalReducers, reducers) {
+
+    const globalReducerHandlers = globalReducers ?
+        Object.keys(globalReducers).map(type =>
+            handleReducer(type, globalReducers[type])
+        )
+        :
+        [];
 
     const reducerHandlers = reducers ?
         Object.keys(reducers).map(type =>
             handleReducer(`${nameSpace}/${type}`, reducers[type])
         )
         :
-        [],
+        [];
 
-        reducer = reduceReducers(...reducerHandlers);
+    const reducer = reduceReducers(...globalReducerHandlers, ...reducerHandlers);
 
     return (state = initialState, action) => reducer(state, action);
 
@@ -140,14 +148,16 @@ export function registerModel(store, model) {
         return;
     }
 
-    const {nameSpace, state, actions, reducers} = model;
+    const {nameSpace, state, actions, globalReducers, reducers} = model;
 
     if (store.asyncReducers.hasOwnProperty(nameSpace)) {
         console.error(`nameSpace: ${nameSpace} has been registered.`);
     }
 
     // 注册 reducers
-    store.asyncReducers[nameSpace] = getReducer(store, nameSpace, state, reducers || {});
+    store.asyncReducers[nameSpace] = getReducer(
+        store, nameSpace, state, globalReducers || {}, reducers || {}
+    );
     store.replaceReducer(createRootReducer(store.history, store.asyncReducers));
 
     // 注册 actions

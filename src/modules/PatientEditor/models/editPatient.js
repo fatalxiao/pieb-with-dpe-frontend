@@ -26,7 +26,17 @@ export default {
         activatedStep: -1
 
     },
-    actions: {},
+    actions: {
+
+        /**
+         * 重置数据
+         * @returns {function(*): *}
+         */
+        resetPatientData: () => dispatch => dispatch({
+            type: 'resetData'
+        })
+
+    },
     reducers: {
 
         /**
