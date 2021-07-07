@@ -3,7 +3,7 @@
  */
 
 // Components
-import amc from 'components/AsyncModuleComponent_old';
+import ac from 'components/AsyncComponent';
 
 /**
  * 返回 routes 配置
@@ -13,28 +13,23 @@ import amc from 'components/AsyncModuleComponent_old';
 export default function configureRoutes(store) {
     return {
         path: '/app/patient',
-        component: amc(store, () => import('./containers/PatientEditor'), [{
-            nameSpace: 'editPatient',
-            getReducer: () => import('./reduxes/reducers/EditPatientReducer')
-        }, {
-            nameSpace: 'patientInfo',
-            getReducer: () => import('./reduxes/reducers/PatientInfoReducer')
-        }]),
+        component: ac(() => import('./containers/PatientEditor'), store, [
+            () => import('./models/editPatient'),
+            () => import('./models/patientInfo')
+        ]),
         routes: [{
             path: '/app/patient/info/:id',
-            component: amc(store, () => import('./containers/patientInfo/PatientInfo'))
+            component: ac(() => import('./containers/patientInfo/PatientInfo'), store)
         }, {
             path: '/app/patient/analgesia/:patientId',
-            component: amc(store, () => import('./containers/analgesia/AnalgesiaData'), [{
-                nameSpace: 'analgesia',
-                getReducer: () => import('./reduxes/reducers/AnalgesiaReducer')
-            }])
+            component: ac(() => import('./containers/analgesia/AnalgesiaData'), store, [
+                () => import('./models/analgesia')
+            ])
         }, {
             path: '/app/patient/observal/:patientId',
-            component: amc(store, () => import('./containers/observal/ObservalData'), [{
-                nameSpace: 'observal',
-                getReducer: () => import('./reduxes/reducers/ObservalReducer')
-            }])
+            component: ac(() => import('./containers/observal/ObservalData'), store, [
+                () => import('./models/observal')
+            ])
         }]
     };
 }
