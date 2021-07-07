@@ -108,8 +108,8 @@ export default {
 
         data: getDefaultData(),
 
-        getActionType: '',
-        updateActionType: ''
+        getActionType: null,
+        updateActionType: null
 
     },
     actions: {

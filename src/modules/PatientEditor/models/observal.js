@@ -65,8 +65,8 @@ export default {
 
         form: {...DEFAULT_FORM},
 
-        getActionType: '',
-        updateActionType: ''
+        getActionType: null,
+        updateActionType: null
 
     },
     actions: {
