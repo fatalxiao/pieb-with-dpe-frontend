@@ -2,7 +2,7 @@
  * @file ApiMiddleware.js
  */
 
-import {CALL_API} from 'reduxes/actionTypes';
+import CALL_API from 'reduxes/ApiActionType';
 
 // Vendors
 import RequestManagement from 'vendors/api/RequestManagement';

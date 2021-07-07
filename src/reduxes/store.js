@@ -12,7 +12,7 @@ import thunk from 'redux-thunk';
 import {routerMiddleware} from 'connected-react-router';
 import ComponentLoadingMiddleware from 'reduxes/middlewares/ComponentLoadingMiddleware';
 import ApiMiddleware from 'reduxes/middlewares/ApiMiddleware';
-import {CALL_API} from './actionTypes';
+import CALL_API from './ApiActionType';
 
 /**
  * 注入异步的 reducer

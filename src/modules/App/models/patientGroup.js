@@ -2,9 +2,6 @@
  * @file patientGroup.js
  */
 
-// Action Types
-import {CALL_API} from 'reduxes/actionTypes';
-
 // Apis
 import GroupApi from 'modules/App/apis/PatientGroupApi';
 
