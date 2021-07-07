@@ -128,11 +128,9 @@ export function createModelActionMiddleware() {
      * @param nameSpace
      * @param actions
      */
-    ModelActionMiddleware.register = function (nameSpace, actions) {
-        Object.keys(actions).forEach(type =>
-            asyncActions[`${nameSpace}/${type}`] = actions[type]
-        );
-    };
+    ModelActionMiddleware.register = (nameSpace, actions) => Object.keys(actions).forEach(type =>
+        asyncActions[`${nameSpace}/${type}`] = actions[type]
+    );
 
     return ModelActionMiddleware;
 
@@ -156,18 +154,16 @@ export function createModelApiMiddleware() {
      */
     function ModelApiMiddleware({dispatch, getState}) {
 
-        const dispatchApi = type => apiAction => {
-            return dispatch({
-                [CALL_API]: {
-                    ...apiAction,
-                    types: [
-                        `${type}Request`,
-                        `${type}Success`,
-                        `${type}Failure`
-                    ]
-                }
-            });
-        };
+        const dispatchApi = type => apiAction => dispatch({
+            [CALL_API]: {
+                ...apiAction,
+                types: [
+                    `${type}Request`,
+                    `${type}Success`,
+                    `${type}Failure`
+                ]
+            }
+        });
 
         return next => action => {
 
@@ -179,6 +175,7 @@ export function createModelApiMiddleware() {
             return next(action);
 
         };
+
     }
 
     /**
@@ -186,11 +183,9 @@ export function createModelApiMiddleware() {
      * @param nameSpace
      * @param apis
      */
-    ModelApiMiddleware.register = function (nameSpace, apis) {
-        Object.keys(apis).forEach(type =>
-            asyncApis[`${nameSpace}/${type}`] = apis[type]
-        );
-    };
+    ModelApiMiddleware.register = (nameSpace, apis) => Object.keys(apis).forEach(type =>
+        asyncApis[`${nameSpace}/${type}`] = apis[type]
+    );
 
     return ModelApiMiddleware;
 
