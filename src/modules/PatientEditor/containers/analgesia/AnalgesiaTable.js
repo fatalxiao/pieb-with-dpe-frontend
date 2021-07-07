@@ -5,9 +5,6 @@
 import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-
-import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
 
 // Components
 import ModuleTableCard from 'components/module/table/ModuleTableCard';
@@ -25,136 +22,143 @@ import './AnalgesiaTable.scss';
 
 const AnalgesiaTable = ({
     patientId, thoracicList, sacralList, analgesiaData,
-    updateAnalgesiaDataField, createOrUpdateAnalgesiaData
+    dispatch
 }) => {
 
-    const
-
-        /**
-         * 将 Analgesia 数据提交到后端
-         * @type {*}
-         */
-        save = useCallback(() => {
-            patientId && createOrUpdateAnalgesiaData(patientId, undefined, true);
-        }, [
+    /**
+     * 将 Analgesia 数据提交到后端
+     * @type {*}
+     */
+    const save = useCallback(() => {
+        patientId && dispatch?.({
+            type: 'analgesia/createOrUpdateAnalgesiaData',
             patientId,
-            createOrUpdateAnalgesiaData
-        ]),
+            successResMsgDisabled: true
+        });
+    }, [
+        patientId,
+        dispatch
+    ]);
 
-        /**
-         * 将 Analgesia 数据 debounce 提交到后端
-         */
-        debounceSave = useMemo(() => {
-            return debounce(save, 400);
-        }, [
-            save
-        ]),
+    /**
+     * 将 Analgesia 数据 debounce 提交到后端
+     */
+    const debounceSave = useMemo(() => {
+        return debounce(save, 400);
+    }, [
+        save
+    ]);
 
-        /**
-         * 处理值变更
-         * @type {Function}
-         */
-        updateField = useCallback((timePoint, fieldName, fieldValue) => {
-            updateAnalgesiaDataField?.(timePoint, fieldName, fieldValue);
-            setTimeout(() => debounceSave(), 0);
-        }, [
-            updateAnalgesiaDataField, debounceSave
-        ]),
+    /**
+     * 处理值变更
+     * @type {Function}
+     */
+    const updateField = useCallback((timePoint, fieldName, fieldValue) => {
+        dispatch?.({
+            type: 'analgesia/updateAnalgesiaDataField',
+            timePoint,
+            fieldName,
+            fieldValue
+        });
+        setTimeout(() => debounceSave(), 0);
+    }, [
+        dispatch, debounceSave
+    ]);
 
-        /**
-         * 所有 columns 的配置
-         * @type {*[]}
-         */
-        columns = useMemo(() => {
-            return [{
-                key: 'timePoint',
-                width: 48,
-                headRenderer: 'Time',
-                bodyRenderer: rowData => rowData.timePoint < 60 ?
-                    `${rowData.timePoint} min`
-                    :
-                    `${rowData.timePoint / 60} h`
-            }, {
-                key: 'vasScore',
-                headRenderer: 'Vas',
-                bodyRenderer: rowData =>
-                    <TextField value={formatString(rowData.vasScore)}
-                               onChange={v => updateField(rowData.timePoint, 'vasScore', v)}/>
-            }, {
-                key: 'thoracicSensoryBlock',
-                width: 166,
-                noWrap: true,
-                headRenderer: 'TSB',
-                bodyRenderer: rowData =>
-                    <div>
-                        <label>L: </label>
-                        <DropdownSelect data={thoracicList}
-                                        value={rowData.thoracicSensoryBlockLeft}
-                                        valueField="value"
-                                        displayField="name"
-                                        onChange={v => updateField(rowData.timePoint, 'thoracicSensoryBlockLeft', v)}/>
-                        <label>, R: </label>
-                        <DropdownSelect data={thoracicList}
-                                        value={rowData.thoracicSensoryBlockRight}
-                                        valueField="value"
-                                        displayField="name"
-                                        onChange={v => updateField(rowData.timePoint, 'thoracicSensoryBlockRight', v)}/>
-                    </div>
-            }, {
-                key: 'sacralSensoryBlock',
-                width: 166,
-                noWrap: true,
-                headRenderer: 'SSB',
-                bodyRenderer: rowData =>
-                    <div>
-                        <label>L: </label>
-                        <DropdownSelect data={sacralList}
-                                        value={rowData.sacralSensoryBlockLeft}
-                                        valueField="value"
-                                        displayField="name"
-                                        onChange={v => updateField(rowData.timePoint, 'sacralSensoryBlockLeft', v)}/>
-                        <label>, R: </label>
-                        <DropdownSelect data={sacralList}
-                                        value={rowData.sacralSensoryBlockRight}
-                                        valueField="value"
-                                        displayField="name"
-                                        onChange={v => updateField(rowData.timePoint, 'sacralSensoryBlockRight', v)}/>
-                    </div>
-            }, {
-                key: 'bromageScore',
-                headRenderer: 'Bromage',
-                bodyRenderer: rowData =>
-                    <TextField value={formatString(rowData.bromageScore)}
-                               onChange={v => updateField(rowData.timePoint, 'bromageScore', v)}/>
-            }, {
-                key: 'systolicBloodPressure',
-                headRenderer: 'SBP',
-                bodyRenderer: rowData =>
-                    <TextField value={formatString(rowData.systolicBloodPressure)}
-                               onChange={v => updateField(rowData.timePoint, 'systolicBloodPressure', v)}/>
-            }, {
-                key: 'diastolicBloodPressure',
-                headRenderer: 'DBP',
-                bodyRenderer: rowData =>
-                    <TextField value={formatString(rowData.diastolicBloodPressure)}
-                               onChange={v => updateField(rowData.timePoint, 'diastolicBloodPressure', v)}/>
-            }, {
-                key: 'heartRate',
-                headRenderer: 'HR',
-                bodyRenderer: rowData =>
-                    <TextField value={formatString(rowData.heartRate)}
-                               onChange={v => updateField(rowData.timePoint, 'heartRate', v)}/>
-            }, {
-                key: 'fetalHeartRate',
-                headRenderer: 'FHR',
-                bodyRenderer: rowData =>
-                    <TextField value={formatString(rowData.fetalHeartRate)}
-                               onChange={v => updateField(rowData.timePoint, 'fetalHeartRate', v)}/>
-            }];
-        }, [
-            thoracicList, sacralList,
-            updateField
-        ]);
+    /**
+     * 所有 columns 的配置
+     * @type {*[]}
+     */
+    const columns = useMemo(() => {
+        return [{
+            key: 'timePoint',
+            width: 48,
+            headRenderer: 'Time',
+            bodyRenderer: rowData => rowData.timePoint < 60 ?
+                `${rowData.timePoint} min`
+                :
+                `${rowData.timePoint / 60} h`
+        }, {
+            key: 'vasScore',
+            headRenderer: 'Vas',
+            bodyRenderer: rowData =>
+                <TextField value={formatString(rowData.vasScore)}
+                           onChange={v => updateField(rowData.timePoint, 'vasScore', v)}/>
+        }, {
+            key: 'thoracicSensoryBlock',
+            width: 166,
+            noWrap: true,
+            headRenderer: 'TSB',
+            bodyRenderer: rowData =>
+                <div>
+                    <label>L: </label>
+                    <DropdownSelect data={thoracicList}
+                                    value={rowData.thoracicSensoryBlockLeft}
+                                    valueField="value"
+                                    displayField="name"
+                                    onChange={v => updateField(rowData.timePoint, 'thoracicSensoryBlockLeft', v)}/>
+                    <label>, R: </label>
+                    <DropdownSelect data={thoracicList}
+                                    value={rowData.thoracicSensoryBlockRight}
+                                    valueField="value"
+                                    displayField="name"
+                                    onChange={v => updateField(rowData.timePoint, 'thoracicSensoryBlockRight', v)}/>
+                </div>
+        }, {
+            key: 'sacralSensoryBlock',
+            width: 166,
+            noWrap: true,
+            headRenderer: 'SSB',
+            bodyRenderer: rowData =>
+                <div>
+                    <label>L: </label>
+                    <DropdownSelect data={sacralList}
+                                    value={rowData.sacralSensoryBlockLeft}
+                                    valueField="value"
+                                    displayField="name"
+                                    onChange={v => updateField(rowData.timePoint, 'sacralSensoryBlockLeft', v)}/>
+                    <label>, R: </label>
+                    <DropdownSelect data={sacralList}
+                                    value={rowData.sacralSensoryBlockRight}
+                                    valueField="value"
+                                    displayField="name"
+                                    onChange={v => updateField(rowData.timePoint, 'sacralSensoryBlockRight', v)}/>
+                </div>
+        }, {
+            key: 'bromageScore',
+            headRenderer: 'Bromage',
+            bodyRenderer: rowData =>
+                <TextField value={formatString(rowData.bromageScore)}
+                           onChange={v => updateField(rowData.timePoint, 'bromageScore', v)}/>
+        }, {
+            key: 'systolicBloodPressure',
+            headRenderer: 'SBP',
+            bodyRenderer: rowData =>
+                <TextField value={formatString(rowData.systolicBloodPressure)}
+                           onChange={v => updateField(rowData.timePoint, 'systolicBloodPressure', v)}/>
+        }, {
+            key: 'diastolicBloodPressure',
+            headRenderer: 'DBP',
+            bodyRenderer: rowData =>
+                <TextField value={formatString(rowData.diastolicBloodPressure)}
+                           onChange={v => updateField(rowData.timePoint, 'diastolicBloodPressure', v)}/>
+        }, {
+            key: 'heartRate',
+            headRenderer: 'HR',
+            bodyRenderer: rowData =>
+                <TextField value={formatString(rowData.heartRate)}
+                           onChange={v => updateField(rowData.timePoint, 'heartRate', v)}/>
+        }, {
+            key: 'fetalHeartRate',
+            headRenderer: 'FHR',
+            bodyRenderer: rowData =>
+                <TextField value={formatString(rowData.fetalHeartRate)}
+                           onChange={v => updateField(rowData.timePoint, 'fetalHeartRate', v)}/>
+        }];
+    }, [
+        thoracicList, sacralList,
+        updateField
+    ]);
 
     return (
         <ModuleTableCard className="analgesia-data-table-card"
@@ -181,8 +185,7 @@ AnalgesiaTable.propTypes = {
     sacralList: PropTypes.array,
     analgesiaData: PropTypes.array,
 
-    updateAnalgesiaDataField: PropTypes.func,
-    createOrUpdateAnalgesiaData: PropTypes.func
+    dispatch: PropTypes.func
 
 };
 
@@ -190,7 +193,4 @@ export default connect(state => ({
     thoracicList: state.sensoryBlock.thoracicList,
     sacralList: state.sensoryBlock.sacralList,
     analgesiaData: state.analgesia.data
-}), dispatch => bindActionCreators({
-    updateAnalgesiaDataField: patientEditorActions.updateAnalgesiaDataField,
-    createOrUpdateAnalgesiaData: patientEditorActions.createOrUpdateAnalgesiaData
-}, dispatch))(AnalgesiaTable);
+}))(AnalgesiaTable);
