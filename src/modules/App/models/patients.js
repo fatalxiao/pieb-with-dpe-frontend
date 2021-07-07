@@ -2,9 +2,6 @@
  * @file patients.js
  */
 
-// Action Types
-import {CALL_API} from 'reduxes/actionTypes';
-
 // Apis
 import PatientApi from '../apis/PatientsApi';
 
@@ -25,38 +22,24 @@ export default {
         disableActionType: ''
 
     },
-    actions: {
+    apis: {
 
         /**
          * 获取用于表格的 patients 数据
          * @returns {function(*): *}
          */
-        getPatients: () => dispatch => dispatch({
-            [CALL_API]: {
-                types: [
-                    'patients/getPatientsRequest',
-                    'patients/getPatientsSuccess',
-                    'patients/getPatientsFailure'
-                ],
-                api: PatientApi.getPatients,
-                successResMsgDisabled: true
-            }
+        getPatients: () => apiDispatch => apiDispatch({
+            api: PatientApi.getPatients,
+            successResMsgDisabled: true
         }),
 
         /**
          * 获取完整的 patients 数据
          * @returns {function(*): *}
          */
-        getFullPatients: () => dispatch => dispatch({
-            [CALL_API]: {
-                types: [
-                    'patients/getFullPatientsRequest',
-                    'patients/getFullPatientsSuccess',
-                    'patients/getFullPatientsFailure'
-                ],
-                api: PatientApi.getFullPatients,
-                successResMsgDisabled: true
-            }
+        getFullPatients: () => apiDispatch => apiDispatch({
+            api: PatientApi.getFullPatients,
+            successResMsgDisabled: true
         }),
 
         /**
@@ -65,28 +48,19 @@ export default {
          * @param name
          * @returns {function(*): *}
          */
-        updatePatientName: ({id, name}) => dispatch => {
+        updatePatientName: ({id, name}) => apiDispatch => {
 
             if (!id || !name) {
                 return;
             }
 
-            dispatch({
-                [CALL_API]: {
-                    types: [
-                        'patients/updatePatientNameRequest',
-                        'patients/updatePatientNameSuccess',
-                        'patients/updatePatientNameFailure'
-                    ],
-                    api: PatientApi.updatePatientName,
-                    params: {
-                        id,
-                        name
-                    },
-                    successResMsgDisabled: true
+            apiDispatch({
+                api: PatientApi.updatePatientName,
+                params: {
+                    id,
+                    name
                 },
-                id,
-                name
+                successResMsgDisabled: true
             });
 
         },
@@ -97,28 +71,19 @@ export default {
          * @param group
          * @returns {function(*): *}
          */
-        updatePatientGroup: ({id, group}) => dispatch => {
+        updatePatientGroup: ({id, group}) => apiDispatch => {
 
             if (!id || !group) {
                 return;
             }
 
-            dispatch({
-                [CALL_API]: {
-                    types: [
-                        'patients/updatePatientGroupRequest',
-                        'patients/updatePatientGroupSuccess',
-                        'patients/updatePatientGroupFailure'
-                    ],
-                    api: PatientApi.updatePatientGroup,
-                    params: {
-                        id,
-                        groupId: group.id
-                    },
-                    successResMsgDisabled: true
+            apiDispatch({
+                api: PatientApi.updatePatientGroup,
+                params: {
+                    id,
+                    groupId: group.id
                 },
-                id,
-                group
+                successResMsgDisabled: true
             });
 
         },
@@ -128,26 +93,18 @@ export default {
          * @param id
          * @returns {function(*): *}
          */
-        enablePatient: ({id}) => dispatch => {
+        enablePatient: ({id}) => apiDispatch => {
 
             if (!id) {
                 return;
             }
 
-            dispatch({
-                [CALL_API]: {
-                    types: [
-                        'patients/enablePatientRequest',
-                        'patients/enablePatientSuccess',
-                        'patients/enablePatientFailure'
-                    ],
-                    api: PatientApi.enablePatient,
-                    params: {
-                        id
-                    },
-                    successResMsgDisabled: true
+            apiDispatch({
+                api: PatientApi.enablePatient,
+                params: {
+                    id
                 },
-                id
+                successResMsgDisabled: true
             });
 
         },
@@ -157,29 +114,178 @@ export default {
          * @param id
          * @returns {function(*): *}
          */
-        disablePatient: ({id}) => dispatch => {
+        disablePatient: ({id}) => apiDispatch => {
 
             if (!id) {
                 return;
             }
 
-            dispatch({
-                [CALL_API]: {
-                    types: [
-                        'patients/disablePatientRequest',
-                        'patients/disablePatientSuccess',
-                        'patients/disablePatientFailure'
-                    ],
-                    api: PatientApi.disablePatient,
-                    params: {
-                        id
-                    },
-                    successResMsgDisabled: true
+            apiDispatch({
+                api: PatientApi.disablePatient,
+                params: {
+                    id
                 },
-                id
+                successResMsgDisabled: true
             });
 
         }
+
+    },
+    actions: {
+
+        // /**
+        //  * 获取用于表格的 patients 数据
+        //  * @returns {function(*): *}
+        //  */
+        // getPatients: () => dispatch => dispatch({
+        //     [CALL_API]: {
+        //         types: [
+        //             'patients/getPatientsRequest',
+        //             'patients/getPatientsSuccess',
+        //             'patients/getPatientsFailure'
+        //         ],
+        //         api: PatientApi.getPatients,
+        //         successResMsgDisabled: true
+        //     }
+        // }),
+
+        // /**
+        //  * 获取完整的 patients 数据
+        //  * @returns {function(*): *}
+        //  */
+        // getFullPatients: () => dispatch => dispatch({
+        //     [CALL_API]: {
+        //         types: [
+        //             'patients/getFullPatientsRequest',
+        //             'patients/getFullPatientsSuccess',
+        //             'patients/getFullPatientsFailure'
+        //         ],
+        //         api: PatientApi.getFullPatients,
+        //         successResMsgDisabled: true
+        //     }
+        // }),
+
+        // /**
+        //  * 更新某个 id 的 patient name
+        //  * @param id
+        //  * @param name
+        //  * @returns {function(*): *}
+        //  */
+        // updatePatientName: ({id, name}) => dispatch => {
+        //
+        //     if (!id || !name) {
+        //         return;
+        //     }
+        //
+        //     dispatch({
+        //         [CALL_API]: {
+        //             types: [
+        //                 'patients/updatePatientNameRequest',
+        //                 'patients/updatePatientNameSuccess',
+        //                 'patients/updatePatientNameFailure'
+        //             ],
+        //             api: PatientApi.updatePatientName,
+        //             params: {
+        //                 id,
+        //                 name
+        //             },
+        //             successResMsgDisabled: true
+        //         },
+        //         id,
+        //         name
+        //     });
+        //
+        // },
+
+        // /**
+        //  * 更新某个 id 的 patient group
+        //  * @param id
+        //  * @param group
+        //  * @returns {function(*): *}
+        //  */
+        // updatePatientGroup: ({id, group}) => dispatch => {
+        //
+        //     if (!id || !group) {
+        //         return;
+        //     }
+        //
+        //     dispatch({
+        //         [CALL_API]: {
+        //             types: [
+        //                 'patients/updatePatientGroupRequest',
+        //                 'patients/updatePatientGroupSuccess',
+        //                 'patients/updatePatientGroupFailure'
+        //             ],
+        //             api: PatientApi.updatePatientGroup,
+        //             params: {
+        //                 id,
+        //                 groupId: group.id
+        //             },
+        //             successResMsgDisabled: true
+        //         },
+        //         id,
+        //         group
+        //     });
+        //
+        // },
+
+        // /**
+        //  * 启用 patient
+        //  * @param id
+        //  * @returns {function(*): *}
+        //  */
+        // enablePatient: ({id}) => dispatch => {
+        //
+        //     if (!id) {
+        //         return;
+        //     }
+        //
+        //     dispatch({
+        //         [CALL_API]: {
+        //             types: [
+        //                 'patients/enablePatientRequest',
+        //                 'patients/enablePatientSuccess',
+        //                 'patients/enablePatientFailure'
+        //             ],
+        //             api: PatientApi.enablePatient,
+        //             params: {
+        //                 id
+        //             },
+        //             successResMsgDisabled: true
+        //         },
+        //         id
+        //     });
+        //
+        // },
+
+        // /**
+        //  * 禁用 patient
+        //  * @param id
+        //  * @returns {function(*): *}
+        //  */
+        // disablePatient: ({id}) => dispatch => {
+        //
+        //     if (!id) {
+        //         return;
+        //     }
+        //
+        //     dispatch({
+        //         [CALL_API]: {
+        //             types: [
+        //                 'patients/disablePatientRequest',
+        //                 'patients/disablePatientSuccess',
+        //                 'patients/disablePatientFailure'
+        //             ],
+        //             api: PatientApi.disablePatient,
+        //             params: {
+        //                 id
+        //             },
+        //             successResMsgDisabled: true
+        //         },
+        //         id
+        //     });
+        //
+        // }
 
     },
     reducers: {

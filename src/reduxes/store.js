@@ -12,6 +12,7 @@ import thunk from 'redux-thunk';
 import {routerMiddleware} from 'connected-react-router';
 import ComponentLoadingMiddleware from 'reduxes/middlewares/ComponentLoadingMiddleware';
 import ApiMiddleware from 'reduxes/middlewares/ApiMiddleware';
+import {CALL_API} from './actionTypes';
 
 /**
  * 注入异步的 reducer
@@ -138,6 +139,64 @@ export function createModelActionMiddleware() {
 }
 
 /**
+ * 创建 ModelApiMiddleware
+ * @returns {function({dispatch?: *, getState?: *}): function(*): function(*=): *}
+ */
+export function createModelApiMiddleware() {
+
+    // 异步 apis
+    const asyncApis = {};
+
+    /**
+     * ModelApiMiddleware
+     * @param dispatch
+     * @param getState
+     * @returns {function(*): function(*=): *}
+     * @constructor
+     */
+    function ModelApiMiddleware({dispatch, getState}) {
+
+        const apiDispatch = (type) => apiAction => {
+            return dispatch({
+                [CALL_API]: {
+                    ...apiAction,
+                    types: [
+                        `${type}Request`,
+                        `${type}Success`,
+                        `${type}Failure`
+                    ]
+                }
+            });
+        };
+
+        return next => action => {
+
+            // 调用 asyncActions 匹配的 action
+            if (asyncApis?.hasOwnProperty(action?.type)) {
+                asyncApis[action.type]?.(action)?.(apiDispatch(action.type), getState);
+            }
+
+            return next(action);
+
+        };
+    }
+
+    /**
+     * 暴露出去的 registerApis 方法，用于注册异步 apis
+     * @param nameSpace
+     * @param apis
+     */
+    ModelApiMiddleware.register = function (nameSpace, apis) {
+        Object.keys(apis).forEach(type =>
+            asyncApis[`${nameSpace}/${type}`] = apis[type]
+        );
+    };
+
+    return ModelApiMiddleware;
+
+}
+
+/**
  * 注册 model
  * @param store
  * @param model
@@ -148,7 +207,7 @@ export function registerModel(store, model) {
         return;
     }
 
-    const {nameSpace, state, actions, globalReducers, reducers} = model;
+    const {nameSpace, state, actions, apis, globalReducers, reducers} = model;
 
     if (store.asyncReducers.hasOwnProperty(nameSpace)) {
         console.error(`nameSpace: ${nameSpace} has been registered.`);
@@ -163,6 +222,11 @@ export function registerModel(store, model) {
     // 注册 actions
     if (actions) {
         store.registerActions(nameSpace, actions || {});
+    }
+
+    // 注册 apis
+    if (apis) {
+        store.registerApis(nameSpace, apis || {});
     }
 
 }
@@ -181,6 +245,9 @@ export default history => {
     // 用于加载和调用异步 actions 的 ModelActionMiddleware
     const ModelActionMiddleware = createModelActionMiddleware();
 
+    // 用于加载和调用异步 api 的 ModelApiMiddleware
+    const ModelApiMiddleware = createModelApiMiddleware();
+
     return {
 
         // 创建的默认 store
@@ -190,6 +257,7 @@ export default history => {
                 thunk,
                 ComponentLoadingMiddleware,
                 ModelActionMiddleware,
+                ModelApiMiddleware,
                 ApiMiddleware,
                 routerMiddleware(history)
             )
@@ -202,7 +270,10 @@ export default history => {
         asyncReducers: {},
 
         // 暴露给 store 的注册异步 actions 的方法
-        registerActions: ModelActionMiddleware.register
+        registerActions: ModelActionMiddleware.register,
+
+        // 暴露给 store 的注册异步 apis 的方法
+        registerApis: ModelApiMiddleware.register
 
     };
 
