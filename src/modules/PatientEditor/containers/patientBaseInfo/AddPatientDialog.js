@@ -5,11 +5,6 @@
 import React, {useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-
-// Actions
-import * as actions from 'reduxes/actions';
-import * as appActions from 'modules/App/reduxes/actions';
 
 // Components
 import Dialog from 'alcedo-ui/Dialog';
@@ -26,7 +21,7 @@ import './AddPatientDialog.scss';
 
 const AddPatientDialog = ({
     groupList, form, visible,
-    onRequestClose, updatePatientBaseInfoField, createPatient, routerPush
+    dispatch, onRequestClose
 }) => {
 
     const
@@ -46,11 +41,15 @@ const AddPatientDialog = ({
                 setErrorMsg('');
             }
 
-            updatePatientBaseInfoField?.(fieldName, fieldValue);
+            dispatch?.({
+                type: 'patientBaseInfo/updatePatientBaseInfoField',
+                fieldName,
+                fieldValue
+            });
 
         }, [
             errorMsg,
-            updatePatientBaseInfoField
+            dispatch
         ]),
 
         /**
@@ -78,14 +77,20 @@ const AddPatientDialog = ({
                 return;
             }
 
-            createPatient?.(() => {
-                onRequestClose();
-                routerPush(`/app/patient/info/${form.id}`);
+            dispatch?.({
+                type: 'patientBaseInfo/createPatient',
+                callback: () => {
+                    onRequestClose();
+                    dispatch?.({
+                        type: 'route/push',
+                        route: `/app/patient/info/${form.id}`
+                    });
+                }
             });
 
         }, [
             form,
-            createPatient, onRequestClose, routerPush
+            dispatch, onRequestClose
         ]);
 
     return (
@@ -146,18 +151,12 @@ AddPatientDialog.propTypes = {
 
     visible: PropTypes.bool,
 
-    onRequestClose: PropTypes.func,
-    routerPush: PropTypes.func,
-    updatePatientBaseInfoField: PropTypes.func,
-    createPatient: PropTypes.func
+    dispatch: PropTypes.func,
+    onRequestClose: PropTypes.func
 
 };
 
 export default connect(state => ({
     groupList: state.patientGroup.list,
     form: state.patientBaseInfo.form
-}), dispatch => bindActionCreators({
-    routerPush: actions.routerPush,
-    updatePatientBaseInfoField: appActions.updatePatientBaseInfoField,
-    createPatient: appActions.createPatient
-}, dispatch))(AddPatientDialog);
+}))(AddPatientDialog);
