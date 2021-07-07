@@ -5,14 +5,6 @@
 import React, {useMemo, useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-
-// Actions
-import * as actions from 'reduxes/actions';
-import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
-
-// Action Types
-import * as patientEditorActionTypes from 'modules/PatientEditor/reduxes/actionTypes';
 
 // Components
 import ModuleLoading from 'components/module/loading/ModuleLoading';
@@ -24,68 +16,82 @@ import './AnalgesiaData.scss';
 
 const AnalgesiaData = ({
     match, getActionType,
-    routerPush, getPatientInfo, getAnalgesiaData,
-    updatePatientStep, createOrUpdateAnalgesiaData
+    dispatch
 }) => {
 
-    const
+    /**
+     * 从路由 params 中取出的 patient ID
+     */
+    const patientId = match.params?.patientId;
 
-        /**
-         * 从路由 params 中取出的 patient ID
-         */
-        patientId = match.params?.patientId,
+    /**
+     * 是否正在加载数据
+     * @type {boolean}
+     */
+    const loading = useMemo(() => {
+        return getActionType !== 'analgesia/getAnalgesiaSuccess';
+    }, [
+        getActionType
+    ]);
 
-        /**
-         * 是否正在加载数据
-         * @type {boolean}
-         */
-        loading = useMemo(() => {
-            return getActionType !== patientEditorActionTypes.GET_ANALGESIA_SUCCESS;
-        }, [
-            getActionType
-        ]),
+    /**
+     * 加载数据
+     * @type {Function}
+     */
+    const loadData = useCallback(() => {
 
-        /**
-         * 加载数据
-         * @type {Function}
-         */
-        loadData = useCallback(() => {
+        if (!patientId) {
+            dispatch?.({
+                type: 'route/push',
+                route: '/app/patient-list'
+            });
+        }
 
-            if (!patientId) {
-                routerPush?.('/app/patient-list');
-            }
+        dispatch?.({
+            type: 'patientInfo/getPatientInfo',
+            id: patientId
+        });
+        dispatch?.({
+            type: 'analgesia/getAnalgesia',
+            patientId
+        });
 
-            getPatientInfo?.(patientId);
-            getAnalgesiaData?.(patientId);
+    }, [
+        patientId,
+        dispatch
+    ]);
 
-        }, [
+    /**
+     * 返回上一步
+     * @type {function(): *}
+     */
+    const prevStep = useCallback(() => {
+        dispatch?.({
+            type: 'route/push',
+            route: `/app/patient/info/${patientId}`
+        });
+    }, [
+        patientId,
+        dispatch
+    ]);
+
+    /**
+     * 提交到后端
+     * @type {function(): *}
+     */
+    const save = useCallback(() => {
+        dispatch?.({
+            type: 'analgesia/createOrUpdateAnalgesiaData',
             patientId,
-            routerPush, getPatientInfo, getAnalgesiaData
-        ]),
-
-        /**
-         * 返回上一步
-         * @type {function(): *}
-         */
-        prevStep = useCallback(() => {
-            routerPush?.(`/app/patient/info/${patientId}`);
-        }, [
-            patientId,
-            routerPush
-        ]),
-
-        /**
-         * 提交到后端
-         * @type {function(): *}
-         */
-        save = useCallback(() => {
-            createOrUpdateAnalgesiaData?.(patientId, () =>
-                routerPush(`/app/patient/observal/${patientId}`)
-            );
-        }, [
-            patientId,
-            routerPush, createOrUpdateAnalgesiaData
-        ]);
+            callback: () => dispatch?.({
+                type: 'route/push',
+                route: `/app/patient/observal/${patientId}`
+            })
+        });
+    }, [
+        patientId,
+        dispatch
+    ]);
 
     /**
      * 初始加载数据
@@ -100,9 +106,12 @@ const AnalgesiaData = ({
      * 初始更新 step
      */
     useEffect(() => {
-        updatePatientStep(1);
+        dispatch?.({
+            type: 'editPatient/updatePatientStep',
+            activatedStep: 1
+        });
     }, [
-        updatePatientStep
+        dispatch
     ]);
 
     return (
@@ -125,20 +134,10 @@ AnalgesiaData.propTypes = {
     match: PropTypes.object,
     getActionType: PropTypes.string,
 
-    routerPush: PropTypes.func,
-    updatePatientStep: PropTypes.func,
-    getPatientInfo: PropTypes.func,
-    getAnalgesiaData: PropTypes.func,
-    createOrUpdateAnalgesiaData: PropTypes.func
+    dispatch: PropTypes.func
 
 };
 
 export default connect(state => ({
     getActionType: state.analgesia.getActionType
-}), dispatch => bindActionCreators({
-    routerPush: actions.routerPush,
-    updatePatientStep: patientEditorActions.updatePatientStep,
-    getPatientInfo: patientEditorActions.getPatientInfo,
-    getAnalgesiaData: patientEditorActions.getAnalgesiaData,
-    createOrUpdateAnalgesiaData: patientEditorActions.createOrUpdateAnalgesiaData
-}, dispatch))(AnalgesiaData);
+}))(AnalgesiaData);

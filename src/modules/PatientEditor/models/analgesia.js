@@ -119,7 +119,7 @@ export default {
          * @param patientId
          * @returns {function(*): *}
          */
-        getAnalgesiaRequest: ({patientId}) => dispatch => dispatch({
+        getAnalgesia: ({patientId}) => dispatch => dispatch({
             [CALL_API]: {
                 types: [
                     'analgesia/getAnalgesiaRequest',
