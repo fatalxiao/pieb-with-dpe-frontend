@@ -24,74 +24,72 @@ const AddPatientDialog = ({
     dispatch, onRequestClose
 }) => {
 
-    const
+    /**
+     * 当前 form 的错误消息
+     */
+    const [errorMsg, setErrorMsg] = useState('');
 
-        /**
-         * 当前 form 的错误消息
-         */
-        [errorMsg, setErrorMsg] = useState(''),
+    /**
+     * 更新值
+     * @type {Function}
+     */
+    const updateField = useCallback((fieldName, fieldValue) => {
 
-        /**
-         * 更新值
-         * @type {Function}
-         */
-        updateField = useCallback((fieldName, fieldValue) => {
+        if (errorMsg) {
+            setErrorMsg('');
+        }
 
-            if (errorMsg) {
-                setErrorMsg('');
+        dispatch?.({
+            type: 'patientBaseInfo/updatePatientBaseInfoField',
+            fieldName,
+            fieldValue
+        });
+
+    }, [
+        errorMsg,
+        dispatch
+    ]);
+
+    /**
+     * 提交新值到后端
+     * @type {Function}
+     */
+    const save = useCallback(() => {
+
+        const error = [];
+
+        // 校验值
+        if (!form.id) {
+            error.push('ID');
+        }
+        if (!form.name) {
+            error.push('Name');
+        }
+        if (!form.group) {
+            error.push('Group');
+        }
+
+        // 如果有 error 中断提交
+        if (error.length > 0) {
+            setErrorMsg(`${error.join(', ')} is required!`);
+            return;
+        }
+
+        dispatch?.({
+            type: 'patientBaseInfo/createPatient',
+            callback: () => {
+                onRequestClose();
+                dispatch?.({
+                    type: 'route/push',
+                    route: `/app/patient/info/${form.id}`
+                });
             }
+        });
 
-            dispatch?.({
-                type: 'patientBaseInfo/updatePatientBaseInfoField',
-                fieldName,
-                fieldValue
-            });
-
-        }, [
-            errorMsg,
-            dispatch
-        ]),
-
-        /**
-         * 提交新值到后端
-         * @type {Function}
-         */
-        save = useCallback(() => {
-
-            const error = [];
-
-            // 校验值
-            if (!form.id) {
-                error.push('ID');
-            }
-            if (!form.name) {
-                error.push('Name');
-            }
-            if (!form.group) {
-                error.push('Group');
-            }
-
-            // 如果有 error 中断提交
-            if (error.length > 0) {
-                setErrorMsg(`${error.join(', ')} is required!`);
-                return;
-            }
-
-            dispatch?.({
-                type: 'patientBaseInfo/createPatient',
-                callback: () => {
-                    onRequestClose();
-                    dispatch?.({
-                        type: 'route/push',
-                        route: `/app/patient/info/${form.id}`
-                    });
-                }
-            });
-
-        }, [
-            form,
-            dispatch, onRequestClose
-        ]);
+    }, [
+        form,
+        dispatch, onRequestClose
+    ]);
 
     return (
         <Dialog className="add-patient-dialog"
