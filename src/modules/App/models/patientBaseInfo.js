@@ -2,9 +2,6 @@
  * @file patientBaseInfo.js
  */
 
-// Action Types
-import {CALL_API} from 'reduxes/actionTypes';
-
 // Apis
 import PatientApi from 'modules/App/apis/PatientApi';
 
@@ -27,14 +24,14 @@ export default {
         form: {...DEFAULT_FORM},
         actionType: null
     },
-    actions: {
+    apis: {
 
         /**
          * 创建 patient
          * @param callback
-         * @returns {function(*, *): *}
+         * @returns {function(*, *, *): *}
          */
-        createPatient: ({callback}) => (dispatch, getState) => {
+        createPatient: ({callback}) => (dispatchApi, dispatch, getState) => {
 
             const data = getState().patientBaseInfo.form;
 
@@ -42,24 +39,18 @@ export default {
                 return;
             }
 
-            return dispatch({
-                [CALL_API]: {
-                    types: [
-                        'patientBaseInfo/createPatientRequest',
-                        'patientBaseInfo/createPatientSuccess',
-                        'patientBaseInfo/createPatientFailure'
-                    ],
-                    api: PatientApi.createPatient,
-                    params: {
-                        id: data.id,
-                        name: data.name,
-                        groupId: data.group.id
-                    },
-                    successCallback() {
-                        // TODO
-                        // getPatients()(dispatch);
-                        callback?.();
-                    }
+            return dispatchApi({
+                api: PatientApi.createPatient,
+                params: {
+                    id: data.id,
+                    name: data.name,
+                    groupId: data.group.id
+                },
+                successCallback() {
+                    dispatch({
+                        type: 'patients/getPatients'
+                    });
+                    callback?.();
                 }
             });
 

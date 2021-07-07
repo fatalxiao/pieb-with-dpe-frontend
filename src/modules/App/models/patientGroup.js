@@ -23,22 +23,15 @@ export default {
         actionType: null
 
     },
-    actions: {
+    apis: {
 
         /**
          * 获取 Patient Groups
          * @returns {function(*): *}
          */
-        getPatientGroups: () => dispatch => dispatch({
-            [CALL_API]: {
-                types: [
-                    'patientGroup/getPatientGroupsRequest',
-                    'patientGroup/getPatientGroupsSuccess',
-                    'patientGroup/getPatientGroupsFailure'
-                ],
-                api: GroupApi.getPatientGroups,
-                successResMsgDisabled: true
-            }
+        getPatientGroups: () => dispatchApi => dispatchApi({
+            api: GroupApi.getPatientGroups,
+            successResMsgDisabled: true
         })
 
     },

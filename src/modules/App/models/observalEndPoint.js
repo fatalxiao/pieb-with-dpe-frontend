@@ -2,9 +2,6 @@
  * @file observalEndPoint.js
  */
 
-// Action Types
-import {CALL_API} from 'reduxes/actionTypes';
-
 // Apis
 import ObservalEndPointApi from '../apis/ObservalEndPointApi';
 
@@ -23,22 +20,15 @@ export default {
         actionType: null
 
     },
-    actions: {
+    apis: {
 
         /**
          * 获取所有的 Observal End Point
          * @returns {function(*): *}
          */
-        getObservalEndPoints: () => dispatch => dispatch({
-            [CALL_API]: {
-                types: [
-                    'observalEndPoint/getObservalEndPointsRequest',
-                    'observalEndPoint/getObservalEndPointsSuccess',
-                    'observalEndPoint/getObservalEndPointsFailure'
-                ],
-                api: ObservalEndPointApi.getObservalEndPoints,
-                successResMsgDisabled: true
-            }
+        getObservalEndPoints: () => dispatchApi => dispatchApi({
+            api: ObservalEndPointApi.getObservalEndPoints,
+            successResMsgDisabled: true
         })
 
     },

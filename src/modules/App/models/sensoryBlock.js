@@ -2,9 +2,6 @@
  * @file sensoryBlock.js
  */
 
-// Action Types
-import {CALL_API} from 'reduxes/actionTypes';
-
 // Apis
 import SensoryBlockApi from '../apis/SensoryBlockApi';
 
@@ -33,22 +30,15 @@ export default {
         actionType: null
 
     },
-    actions: {
+    apis: {
 
         /**
          * 获取所有的 Sensory Blocks
          * @returns {function(*): *}
          */
-        getSensoryBlocks: () => dispatch => dispatch({
-            [CALL_API]: {
-                types: [
-                    'sensoryBlock/getSensoryBlocksRequest',
-                    'sensoryBlock/getSensoryBlocksSuccess',
-                    'sensoryBlock/getSensoryBlocksFailure'
-                ],
-                api: SensoryBlockApi.getSensoryBlocks,
-                successResMsgDisabled: true
-            }
+        getSensoryBlocks: () => dispatchApi => dispatchApi({
+            api: SensoryBlockApi.getSensoryBlocks,
+            successResMsgDisabled: true
         })
 
     },

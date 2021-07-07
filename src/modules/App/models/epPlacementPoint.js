@@ -2,9 +2,6 @@
  * @file epPlacementPoint.js
  */
 
-// Action Types
-import {CALL_API} from 'reduxes/actionTypes';
-
 // Apis
 import EpPlacementPointApi from 'modules/App/apis/EpPlacementPointApi';
 
@@ -23,22 +20,15 @@ export default {
         actionType: null
 
     },
-    actions: {
+    apis: {
 
         /**
          * 获取所有的 Ep Placement Point
          * @returns {function(*): *}
          */
-        getEpPlacementPoints: () => dispatch => dispatch({
-            [CALL_API]: {
-                types: [
-                    'epPlacementPoint/getEpPlacementPointRequest',
-                    'epPlacementPoint/getEpPlacementPointSuccess',
-                    'epPlacementPoint/getEpPlacementPointFailure'
-                ],
-                api: EpPlacementPointApi.getEpPlacementPoints,
-                successResMsgDisabled: true
-            }
+        getEpPlacementPoints: () => dispatchApi => dispatchApi({
+            api: EpPlacementPointApi.getEpPlacementPoints,
+            successResMsgDisabled: true
         })
 
     },
