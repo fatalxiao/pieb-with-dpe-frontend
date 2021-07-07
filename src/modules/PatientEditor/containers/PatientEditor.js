@@ -5,10 +5,7 @@
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import {renderRoutes} from 'react-router-config';
-
-import * as actions from 'reduxes/actions';
 
 // Components
 import {Redirect} from 'react-router-dom';
@@ -20,7 +17,7 @@ import './PatientEditor.scss';
 
 const PatientEditor = ({
     route, form, steps, activatedStep,
-    routerPush
+    dispatch
 }) => {
 
     /**
@@ -28,10 +25,13 @@ const PatientEditor = ({
      * @type {Function}
      */
     const handleStepChange = useCallback(({nextActivatedStep}) => {
-        routerPush?.(steps?.[nextActivatedStep]?.route);
+        dispatch?.({
+            type: 'route/push',
+            route: steps?.[nextActivatedStep]?.route
+        });
     }, [
         steps,
-        routerPush
+        dispatch
     ]);
 
     return (
@@ -93,7 +93,7 @@ PatientEditor.propTypes = {
 
     activatedStep: PropTypes.number,
 
-    routerPush: PropTypes.func
+    dispatch: PropTypes.func
 
 };
 
@@ -101,6 +101,4 @@ export default connect(state => ({
     form: state.patientInfo.form,
     steps: state.editPatient.steps,
     activatedStep: state.editPatient.activatedStep
-}), dispatch => bindActionCreators({
-    routerPush: actions.routerPush
-}, dispatch))(PatientEditor);
+}))(PatientEditor);
