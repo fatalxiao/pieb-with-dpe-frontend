@@ -5,9 +5,6 @@
 import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-
-import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
 
 // Components
 import Checkbox from 'customized/MaterialCheckbox';
@@ -26,42 +23,49 @@ import './ObservalForm.scss';
 
 const ObservalForm = ({
     patientId, form, observalEndPoints, epPlacementPoints,
-    updateObservalDataField, createOrUpdateObservalData
+    dispatch
 }) => {
 
-    const
-
-        /**
-         * 提交到后端
-         * @type {*}
-         */
-        save = useCallback(() => {
-            patientId && createOrUpdateObservalData?.(patientId, undefined, true, true);
-        }, [
+    /**
+     * 提交到后端
+     * @type {*}
+     */
+    const save = useCallback(() => {
+        patientId && dispatch?.({
+            type: 'observal/createOrUpdateObservalData',
             patientId,
-            createOrUpdateObservalData
-        ]),
+            successResMsgDisabled: true,
+            failureResMsgDisabled: true
+        });
+    }, [
+        patientId,
+        dispatch
+    ]);
 
-        /**
-         * debounce 提交到后端
-         * @type {*}
-         */
-        debounceSave = useMemo(() => {
-            return debounce(save, 400);
-        }, [
-            save
-        ]),
+    /**
+     * debounce 提交到后端
+     * @type {*}
+     */
+    const debounceSave = useMemo(() => {
+        return debounce(save, 400);
+    }, [
+        save
+    ]);
 
-        /**
-         * 更新数据到 reducer
-         * @type {Function}
-         */
-        updateField = useCallback((fieldName, fieldValue) => {
-            updateObservalDataField?.(fieldName, fieldValue);
-            setTimeout(() => debounceSave(), 0);
-        }, [
-            updateObservalDataField, debounceSave
-        ]);
+    /**
+     * 更新数据到 reducer
+     * @type {Function}
+     */
+    const updateField = useCallback((fieldName, fieldValue) => {
+        dispatch?.({
+            type: 'observal/updateObservalField',
+            fieldName,
+            fieldValue
+        });
+        setTimeout(() => debounceSave(), 0);
+    }, [
+        dispatch, debounceSave
+    ]);
 
     return (
         <div className="observal-data-form">
@@ -232,8 +236,7 @@ ObservalForm.propTypes = {
     observalEndPoints: PropTypes.array,
     epPlacementPoints: PropTypes.array,
 
-    updateObservalDataField: PropTypes.func,
-    createOrUpdateObservalData: PropTypes.func
+    dispatch: PropTypes.func
 
 };
 
@@ -241,7 +244,4 @@ export default connect(state => ({
     form: state.observal.form,
     observalEndPoints: state.observalEndPoint.list,
     epPlacementPoints: state.epPlacementPoint.list
-}), dispatch => bindActionCreators({
-    updateObservalDataField: patientEditorActions.updateObservalDataField,
-    createOrUpdateObservalData: patientEditorActions.createOrUpdateObservalData
-}, dispatch))(ObservalForm);
+}))(ObservalForm);
