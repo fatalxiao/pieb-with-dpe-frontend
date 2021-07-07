@@ -1,5 +1,5 @@
 /**
- * @file index.js
+ * @file store.js
  */
 
 import {createStore, applyMiddleware} from 'redux';
@@ -10,8 +10,8 @@ import createRootReducer from 'reduxes/reducers';
 // Middlewares
 import thunk from 'redux-thunk';
 import {routerMiddleware} from 'connected-react-router';
-import ComponentLoading from 'reduxes/middlewares/ComponentLoadingMiddleware';
-import Api from 'reduxes/middlewares/ApiMiddleware';
+import ComponentLoadingMiddleware from 'reduxes/middlewares/ComponentLoadingMiddleware';
+import ApiMiddleware from 'reduxes/middlewares/ApiMiddleware';
 
 /**
  * 注入异步的 reducer
@@ -188,9 +188,9 @@ export default history => {
             createRootReducer(history),
             applyMiddleware(
                 thunk,
-                ComponentLoading,
+                ComponentLoadingMiddleware,
                 ModelActionMiddleware,
-                Api,
+                ApiMiddleware,
                 routerMiddleware(history)
             )
         ),
