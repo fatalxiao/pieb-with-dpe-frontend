@@ -5,9 +5,6 @@
 import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-
-import * as patientEditorActions from 'modules/PatientEditor/reduxes/actions';
 
 // Components
 import Checkbox from 'customized/MaterialCheckbox';
@@ -24,41 +21,48 @@ import './PatientForm.scss';
 
 const PatientForm = ({
     form, patientId,
-    updatePatientInfoField, updatePatientInfo
+    dispatch
 }) => {
 
-    const
+    /**
+     * 提交 field 新值到后端
+     * @type {Function}
+     */
+    const save = useCallback(() => {
+        patientId && dispatch?.({
+            type: 'patientInfo/updatePatientInfo',
+            id: patientId,
+            successResMsgDisabled: true
+        });
+    }, [
+        patientId,
+        dispatch
+    ]);
 
-        /**
-         * 提交 field 新值到后端
-         * @type {Function}
-         */
-        save = useCallback(() => {
-            patientId && updatePatientInfo(patientId, undefined, true);
-        }, [
-            patientId, updatePatientInfo
-        ]),
+    /**
+     * 提交 field 新值到后端
+     * @type {Function}
+     */
+    const debounceSave = useMemo(() => {
+        return debounce(save, 1000);
+    }, [
+        save
+    ]);
 
-        /**
-         * 提交 field 新值到后端
-         * @type {Function}
-         */
-        debounceSave = useMemo(() => {
-            return debounce(save, 1000);
-        }, [
-            save
-        ]),
-
-        /**
-         * 更新 field 新值到 reducer
-         * @type {Function}
-         */
-        updateField = useCallback((fieldName, fieldValue) => {
-            updatePatientInfoField?.(fieldName, fieldValue);
-            setTimeout(() => debounceSave(), 0);
-        }, [
-            updatePatientInfoField, debounceSave
-        ]);
+    /**
+     * 更新 field 新值到 reducer
+     * @type {Function}
+     */
+    const updateField = useCallback((fieldName, fieldValue) => {
+        dispatch?.({
+            type: 'patientInfo/updatePatientInfoField',
+            fieldName,
+            fieldValue
+        });
+        setTimeout(() => debounceSave(), 0);
+    }, [
+        dispatch, debounceSave
+    ]);
 
     return (
         <div className="patient-form">
@@ -154,14 +158,10 @@ PatientForm.propTypes = {
     patientId: PropTypes.string,
     form: PropTypes.object,
 
-    updatePatientInfoField: PropTypes.func,
-    updatePatientInfo: PropTypes.func
+    dispatch: PropTypes.func
 
 };
 
 export default connect(state => ({
     form: state.patientInfo.form
-}), dispatch => bindActionCreators({
-    updatePatientInfoField: patientEditorActions.updatePatientInfoField,
-    updatePatientInfo: patientEditorActions.updatePatientInfo
-}, dispatch))(PatientForm);
+}))(PatientForm);
