@@ -17,7 +17,7 @@ export default {
          */
         addSuccessToast: ({message}) => dispatch => dispatch({
             type: 'toasts/addToast',
-            toaste: {
+            toast: {
                 title: '',
                 message,
                 iconCls: 'icon-check success',
@@ -32,7 +32,7 @@ export default {
          */
         addErrorToast: ({message}) => dispatch => dispatch({
             type: 'toasts/addToast',
-            toaste: {
+            toast: {
                 title: '',
                 message,
                 iconCls: 'icon-circle-with-cross error',
@@ -52,10 +52,10 @@ export default {
                 return state;
             }
 
-            const toastes = [...state];
-            toastes.push(toast);
+            const toasts = [...state];
+            toasts.push(toast);
 
-            return toastes;
+            return toasts;
 
         },
 
