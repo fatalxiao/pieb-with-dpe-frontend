@@ -2,9 +2,6 @@
  * @file patientInfo.js
  */
 
-// Action Types
-import {CALL_API} from 'reduxes/actionTypes';
-
 // Apis
 import PatientApi from 'modules/App/apis/PatientApi';
 
@@ -66,14 +63,14 @@ export default {
         updateActionType: null
 
     },
-    actions: {
+    apis: {
 
         /**
          * 获取 Patient 信息
          * @param id
          * @returns {(function(*): void)|*}
          */
-        getPatientInfo: ({id}) => dispatch => {
+        getPatientInfo: ({id}) => (dispatchApi, dispatch) => {
 
             if (!id) {
                 return;
@@ -83,17 +80,10 @@ export default {
                 type: 'resetData'
             });
 
-            dispatch({
-                [CALL_API]: {
-                    types: [
-                        'patientInfo/getPatientInfoRequest',
-                        'patientInfo/getPatientInfoSuccess',
-                        'patientInfo/getPatientInfoFailure'
-                    ],
-                    api: PatientApi.getPatientById,
-                    params: {id},
-                    successResMsgDisabled: true
-                }
+            dispatchApi({
+                api: PatientApi.getPatientById,
+                params: {id},
+                successResMsgDisabled: true
             });
 
         },
@@ -105,7 +95,11 @@ export default {
          * @param successResMsgDisabled
          * @returns {(function(*, *): void)|*}
          */
-        updatePatientInfo: ({id, callback, successResMsgDisabled}) => (dispatch, getState) => {
+        updatePatientInfo: ({
+            id,
+            callback,
+            successResMsgDisabled
+        }) => (dispatchApi, dispatch, getState) => {
 
             const data = getState().patientInfo.form;
 
@@ -113,35 +107,28 @@ export default {
                 return;
             }
 
-            dispatch({
-                [CALL_API]: {
-                    types: [
-                        'patientInfo/updatePatientInfoRequest',
-                        'patientInfo/updatePatientInfoSuccess',
-                        'patientInfo/updatePatientInfoFailure'
-                    ],
-                    api: PatientApi.createOrUpdatePatient,
-                    params: {
-                        id,
-                        age: data.age,
-                        gestationalDays: getGestationalDays(data.gestationalDaysWeeks, data.gestationalDaysDays),
-                        height: data.height,
-                        weight: data.weight,
-                        heartRate: data.heartRate,
-                        initialVasScore: data.initialVasScore,
-                        systolicBloodPressure: data.systolicBloodPressure,
-                        diastolicBloodPressure: data.diastolicBloodPressure,
-                        fetalHeartRate: data.fetalHeartRate,
-                        pulseOxygenSaturation: data.pulseOxygenSaturation,
-                        cervicalDilationAtTimeOfEA: data.cervicalDilationAtTimeOfEA,
-                        hasOxytocinAtTimeOfEA: data.hasOxytocinAtTimeOfEA,
-                        hasInduction: data.hasInduction,
-                        description: data.description
-                    },
-                    successResMsgDisabled,
-                    successCallback() {
-                        callback?.();
-                    }
+            dispatchApi({
+                api: PatientApi.createOrUpdatePatient,
+                params: {
+                    id,
+                    age: data.age,
+                    gestationalDays: getGestationalDays(data.gestationalDaysWeeks, data.gestationalDaysDays),
+                    height: data.height,
+                    weight: data.weight,
+                    heartRate: data.heartRate,
+                    initialVasScore: data.initialVasScore,
+                    systolicBloodPressure: data.systolicBloodPressure,
+                    diastolicBloodPressure: data.diastolicBloodPressure,
+                    fetalHeartRate: data.fetalHeartRate,
+                    pulseOxygenSaturation: data.pulseOxygenSaturation,
+                    cervicalDilationAtTimeOfEA: data.cervicalDilationAtTimeOfEA,
+                    hasOxytocinAtTimeOfEA: data.hasOxytocinAtTimeOfEA,
+                    hasInduction: data.hasInduction,
+                    description: data.description
+                },
+                successResMsgDisabled,
+                successCallback() {
+                    callback?.();
                 }
             });
 

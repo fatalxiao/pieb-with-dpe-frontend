@@ -2,9 +2,6 @@
  * @file observal.js
  */
 
-// Action Types
-import {CALL_API} from 'reduxes/actionTypes';
-
 // Apis
 import ObservalApi from '../apis/ObservalApi';
 
@@ -69,24 +66,17 @@ export default {
         updateActionType: null
 
     },
-    actions: {
+    apis: {
 
         /**
          * 获取某个 patientId 的 Analgesia 数据
          * @param patientId
          * @returns {function(*): *}
          */
-        getObservalData: ({patientId}) => dispatch => dispatch({
-            [CALL_API]: {
-                types: [
-                    'observal/getObservalRequest',
-                    'observal/getObservalSuccess',
-                    'observal/getObservalFailure'
-                ],
-                api: ObservalApi.getObservalDataByPatientId,
-                params: {patientId},
-                successResMsgDisabled: true
-            }
+        getObservalData: ({patientId}) => dispatchApi => dispatchApi({
+            api: ObservalApi.getObservalDataByPatientId,
+            params: {patientId},
+            successResMsgDisabled: true
         }),
 
         /**
@@ -95,11 +85,14 @@ export default {
          * @param callback
          * @param successResMsgDisabled
          * @param failureResMsgDisabled
-         * @returns {function(*, *): *}
+         * @returns {function(*, *, *): *}
          */
         createOrUpdateObservalData: ({
-            patientId, callback, successResMsgDisabled, failureResMsgDisabled = false
-        }) => (dispatch, getState) => {
+            patientId,
+            callback,
+            successResMsgDisabled,
+            failureResMsgDisabled = false
+        }) => (dispatchApi, dispatch, getState) => {
 
             const observalData = getState().observal.form;
 
@@ -107,23 +100,16 @@ export default {
                 return;
             }
 
-            return dispatch({
-                [CALL_API]: {
-                    types: [
-                        'observal/updateObservalRequest',
-                        'observal/updateObservalSuccess',
-                        'observal/updateObservalFailure'
-                    ],
-                    api: ObservalApi.createOrUpdateObservalData,
-                    params: {
-                        patientId,
-                        observalData: formatObservalData(observalData)()
-                    },
-                    successResMsgDisabled,
-                    failureResMsgDisabled,
-                    successCallback() {
-                        callback?.();
-                    }
+            return dispatchApi({
+                api: ObservalApi.createOrUpdateObservalData,
+                params: {
+                    patientId,
+                    observalData: formatObservalData(observalData)()
+                },
+                successResMsgDisabled,
+                failureResMsgDisabled,
+                successCallback() {
+                    callback?.();
                 }
             });
 

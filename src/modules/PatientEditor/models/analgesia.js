@@ -2,9 +2,6 @@
  * @file analgesia.js
  */
 
-// Action Types
-import {CALL_API} from 'reduxes/actionTypes';
-
 // Apis
 import AnalgesiaApi from 'modules/PatientEditor/apis/AnalgesiaApi';
 
@@ -112,24 +109,17 @@ export default {
         updateActionType: null
 
     },
-    actions: {
+    apis: {
 
         /**
          * 获取某个 patientId 的 Analgesia 数据
          * @param patientId
          * @returns {function(*): *}
          */
-        getAnalgesia: ({patientId}) => dispatch => dispatch({
-            [CALL_API]: {
-                types: [
-                    'analgesia/getAnalgesiaRequest',
-                    'analgesia/getAnalgesiaSuccess',
-                    'analgesia/getAnalgesiaFailure'
-                ],
-                api: AnalgesiaApi.getAnalgesiaDataByPatientId,
-                params: {patientId},
-                successResMsgDisabled: true
-            }
+        getAnalgesia: ({patientId}) => dispatchApi => dispatchApi({
+            api: AnalgesiaApi.getAnalgesiaDataByPatientId,
+            params: {patientId},
+            successResMsgDisabled: true
         }),
 
         /**
@@ -137,9 +127,13 @@ export default {
          * @param patientId
          * @param callback
          * @param successResMsgDisabled
-         * @returns {function(*, *): *}
+         * @returns {function(*, *, *): *}
          */
-        createOrUpdateAnalgesiaData: ({patientId, callback, successResMsgDisabled}) => (dispatch, getState) => {
+        createOrUpdateAnalgesiaData: ({
+            patientId,
+            callback,
+            successResMsgDisabled
+        }) => (dispatchApi, ispatch, getState) => {
 
             const {analgesia} = getState(),
                 {data} = analgesia;
@@ -148,22 +142,15 @@ export default {
                 return;
             }
 
-            return dispatch({
-                [CALL_API]: {
-                    types: [
-                        'analgesia/updateAnalgesiaRequest',
-                        'analgesia/updateAnalgesiaSuccess',
-                        'analgesia/updateAnalgesiaFailure'
-                    ],
-                    api: AnalgesiaApi.createOrUpdateAnalgesiaData,
-                    params: {
-                        patientId,
-                        analgesiaData: formatAnalgesiaData(data, analgesia.BASE_DATA)()
-                    },
-                    successResMsgDisabled,
-                    successCallback() {
-                        callback?.();
-                    }
+            return dispatchApi({
+                api: AnalgesiaApi.createOrUpdateAnalgesiaData,
+                params: {
+                    patientId,
+                    analgesiaData: formatAnalgesiaData(data, analgesia.BASE_DATA)()
+                },
+                successResMsgDisabled,
+                successCallback() {
+                    callback?.();
                 }
             });
 
