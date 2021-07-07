@@ -24,7 +24,9 @@ export default ({dispatch, getState}) => next => action => {
 
             successCallback: actionSuccessCallback,
             failureCallback: actionFailureCallback,
-            cancelCallback: actionCancelCallback
+            cancelCallback: actionCancelCallback,
+
+            ...restOptions
 
         } = options,
 
@@ -55,6 +57,7 @@ export default ({dispatch, getState}) => next => action => {
             });
 
             next(actionWith({
+                ...restOptions,
                 type: successType,
                 responseData,
                 response,
@@ -85,6 +88,7 @@ export default ({dispatch, getState}) => next => action => {
             }
 
             next(actionWith({
+                ...restOptions,
                 type: failureType,
                 responseData,
                 response,

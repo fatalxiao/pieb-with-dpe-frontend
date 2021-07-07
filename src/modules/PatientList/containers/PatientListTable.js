@@ -44,7 +44,7 @@ const PatientListTable = ({
      * @type {*}
      */
     const debounceHandleNameChange = useMemo(() => {
-        debounce(handleNameChange, 400);
+        return debounce(handleNameChange, 400);
     }, [
         handleNameChange
     ]);
