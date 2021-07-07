@@ -44,7 +44,7 @@ export default {
          * @param state
          * @returns {*&{activatedStep}}
          */
-        patientStepPrev: state => {
+        prevPatientStep: state => {
             return {
                 ...state,
                 activatedStep: Valid.range(state.activatedStep - 1, 0, state.steps.length - 1)
@@ -56,7 +56,7 @@ export default {
          * @param state
          * @returns {{}}
          */
-        patientStepNext: state => {
+        nextPatientStep: state => {
 
             const activatedStep = Valid.range(state.activatedStep + 1, 0, state.steps.length - 1),
                 finishedStep = state.finishedStep > activatedStep ? state.finishedStep : activatedStep;
@@ -75,7 +75,7 @@ export default {
          * @param activatedStep
          * @returns {*&{activatedStep}}
          */
-        patientStepUpdate: (state, {activatedStep}) => {
+        updatePatientStep: (state, {activatedStep}) => {
             return {
                 ...state,
                 activatedStep
