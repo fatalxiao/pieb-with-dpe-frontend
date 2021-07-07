@@ -28,7 +28,7 @@ export default {
          * 获取用于表格的 patients 数据
          * @returns {function(*): *}
          */
-        getPatients: () => apiDispatch => apiDispatch({
+        getPatients: () => dispatchApi => dispatchApi({
             api: PatientApi.getPatients,
             successResMsgDisabled: true
         }),
@@ -37,7 +37,7 @@ export default {
          * 获取完整的 patients 数据
          * @returns {function(*): *}
          */
-        getFullPatients: () => apiDispatch => apiDispatch({
+        getFullPatients: () => dispatchApi => dispatchApi({
             api: PatientApi.getFullPatients,
             successResMsgDisabled: true
         }),
@@ -48,13 +48,13 @@ export default {
          * @param name
          * @returns {function(*): *}
          */
-        updatePatientName: ({id, name}) => apiDispatch => {
+        updatePatientName: ({id, name}) => dispatchApi => {
 
             if (!id || !name) {
                 return;
             }
 
-            apiDispatch({
+            dispatchApi({
                 api: PatientApi.updatePatientName,
                 params: {
                     id,
@@ -73,13 +73,13 @@ export default {
          * @param group
          * @returns {function(*): *}
          */
-        updatePatientGroup: ({id, group}) => apiDispatch => {
+        updatePatientGroup: ({id, group}) => dispatchApi => {
 
             if (!id || !group) {
                 return;
             }
 
-            apiDispatch({
+            dispatchApi({
                 api: PatientApi.updatePatientGroup,
                 params: {
                     id,
@@ -97,13 +97,13 @@ export default {
          * @param id
          * @returns {function(*): *}
          */
-        enablePatient: ({id}) => apiDispatch => {
+        enablePatient: ({id}) => dispatchApi => {
 
             if (!id) {
                 return;
             }
 
-            apiDispatch({
+            dispatchApi({
                 api: PatientApi.enablePatient,
                 params: {
                     id
@@ -119,13 +119,13 @@ export default {
          * @param id
          * @returns {function(*): *}
          */
-        disablePatient: ({id}) => apiDispatch => {
+        disablePatient: ({id}) => dispatchApi => {
 
             if (!id) {
                 return;
             }
 
-            apiDispatch({
+            dispatchApi({
                 api: PatientApi.disablePatient,
                 params: {
                     id

@@ -156,7 +156,7 @@ export function createModelApiMiddleware() {
      */
     function ModelApiMiddleware({dispatch, getState}) {
 
-        const apiDispatch = (type) => apiAction => {
+        const dispatchApi = type => apiAction => {
             return dispatch({
                 [CALL_API]: {
                     ...apiAction,
@@ -173,7 +173,7 @@ export function createModelApiMiddleware() {
 
             // 调用 asyncActions 匹配的 action
             if (asyncApis?.hasOwnProperty(action?.type)) {
-                asyncApis[action.type]?.(action)?.(apiDispatch(action.type), getState);
+                asyncApis[action.type]?.(action)?.(dispatchApi(action.type), dispatch, getState);
             }
 
             return next(action);
