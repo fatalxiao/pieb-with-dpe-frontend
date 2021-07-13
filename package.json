@@ -46,9 +46,9 @@
         "redux": "^4.1.0",
         "redux-thunk": "^2.3.0",
         "screenfull": "^5.1.0",
-        "vivy": "0.0.9",
-        "vivy-api": "0.0.1",
-        "vivy-async-component": "0.0.1"
+        "vivy": "^0.0.9",
+        "vivy-api": "^0.0.1",
+        "vivy-async-component": "^0.0.1"
     },
     "devDependencies": {
         "@babel/core": "^7.14.6",
