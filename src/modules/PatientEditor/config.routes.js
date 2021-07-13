@@ -3,7 +3,7 @@
  */
 
 // Components
-import ac from 'components/AsyncComponent';
+import {AsyncComponent} from 'vivy-async-component';
 
 /**
  * 返回 routes 配置
@@ -13,21 +13,21 @@ import ac from 'components/AsyncComponent';
 export default function configureRoutes(store) {
     return {
         path: '/app/patient',
-        component: ac(() => import('./containers/PatientEditor'), store, [
+        component: AsyncComponent(() => import('./containers/PatientEditor'), store, [
             () => import('./models/editPatient'),
             () => import('./models/patientInfo')
         ]),
         routes: [{
             path: '/app/patient/info/:id',
-            component: ac(() => import('./containers/patientInfo/PatientInfo'), store)
+            component: AsyncComponent(() => import('./containers/patientInfo/PatientInfo'), store)
         }, {
             path: '/app/patient/analgesia/:patientId',
-            component: ac(() => import('./containers/analgesia/AnalgesiaData'), store, [
+            component: AsyncComponent(() => import('./containers/analgesia/AnalgesiaData'), store, [
                 () => import('./models/analgesia')
             ])
         }, {
             path: '/app/patient/observal/:patientId',
-            component: ac(() => import('./containers/observal/ObservalData'), store, [
+            component: AsyncComponent(() => import('./containers/observal/ObservalData'), store, [
                 () => import('./models/observal')
             ])
         }]
