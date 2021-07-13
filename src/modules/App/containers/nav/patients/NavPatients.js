@@ -12,6 +12,9 @@ import NavPatientCollapsed from './NavPatientsPopover';
 import NoPatient from './NavNoPatient';
 import PatientListWrapper from './NavPatientListWrapper';
 
+// Statics
+import {ApiStatus} from 'vivy-api';
+
 // Vendors
 import classNames from 'classnames';
 
@@ -19,7 +22,7 @@ import classNames from 'classnames';
 import './NavPatients.scss';
 
 const NavPatient = ({
-    isCollapsed, isFold, groupListActionType, patientList, patientListActionType
+    isCollapsed, isFold, getGroupListStatus, patientList, getPatientListStatus
 }) => {
 
     /**
@@ -39,8 +42,8 @@ const NavPatient = ({
             fold: isFold
         })}>
             {
-                groupListActionType === 'patientGroup/getPatientGroupsRequest'
-                || patientListActionType === 'patients/getPatientsRequest' ?
+                getGroupListStatus === ApiStatus.REQUEST
+                || getPatientListStatus === ApiStatus.REQUEST ?
                     <CircularLoading/>
                     :
                     isCollapsed ?
@@ -59,13 +62,13 @@ const NavPatient = ({
 NavPatient.propTypes = {
     isCollapsed: PropTypes.bool,
     isFold: PropTypes.bool,
-    groupListActionType: PropTypes.string,
+    getGroupListStatus: PropTypes.string,
     patientList: PropTypes.array,
-    patientListActionType: PropTypes.string
+    getPatientListStatus: PropTypes.string
 };
 
 export default connect(state => ({
-    groupListActionType: state.patientGroup.actionType,
+    getGroupListStatus: state.apiStatus.patientGroup?.getPatientGroups,
     patientList: state.patients.list,
-    patientListActionType: state.patients.getActionType
+    getPatientListStatus: state.apiStatus.patients?.getPatients
 }))(NavPatient);

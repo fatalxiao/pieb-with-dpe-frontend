@@ -12,6 +12,9 @@ import NavTitle from './nav/title/NavTitle';
 import PageLoading from 'alcedo-ui/PageLoading';
 import ModuleLoading from 'components/module/loading/ModuleLoading';
 
+// Statics
+import {ApiStatus} from 'vivy-api';
+
 // Vendors
 import {renderRoutes} from 'react-router-config';
 
@@ -21,9 +24,9 @@ import './App.scss';
 const App = ({
 
     route,
-    componentLoading,
-    getPatientGroupsActionType, getSensoryBlocksActionType,
-    getObservalEndPointsActionType, getEpPlacementPointsActionType,
+    asyncComponentLoading,
+    getPatientGroupsStatus, getSensoryBlocksStatus,
+    getObservalEndPointsStatus, getEpPlacementPointsStatus,
 
     dispatch
 
@@ -34,13 +37,13 @@ const App = ({
      * @type {*}
      */
     const loading = useMemo(() => {
-        return getPatientGroupsActionType !== 'patientGroup/getPatientGroupsSuccess'
-            || getSensoryBlocksActionType !== 'sensoryBlock/getSensoryBlocksSuccess'
-            || getObservalEndPointsActionType !== 'observalEndPoint/getObservalEndPointsSuccess'
-            || getEpPlacementPointsActionType !== 'epPlacementPoint/getEpPlacementPointSuccess';
+        return getPatientGroupsStatus !== ApiStatus.SUCCESS
+            || getSensoryBlocksStatus !== ApiStatus.SUCCESS
+            || getObservalEndPointsStatus !== ApiStatus.SUCCESS
+            || getEpPlacementPointsStatus !== ApiStatus.SUCCESS;
     }, [
-        getPatientGroupsActionType, getSensoryBlocksActionType,
-        getObservalEndPointsActionType, getEpPlacementPointsActionType
+        getPatientGroupsStatus, getSensoryBlocksStatus,
+        getObservalEndPointsStatus, getEpPlacementPointsStatus
     ]);
 
     /**
@@ -124,7 +127,7 @@ const App = ({
 
             <div className="app-content">
 
-                <PageLoading visible={componentLoading}
+                <PageLoading visible={asyncComponentLoading}
                              showStripes={false}/>
 
                 <NavTitle/>
@@ -146,20 +149,24 @@ App.propTypes = {
 
     route: PropTypes.object,
 
-    componentLoading: PropTypes.bool,
-    getPatientGroupsActionType: PropTypes.string,
-    getSensoryBlocksActionType: PropTypes.string,
-    getObservalEndPointsActionType: PropTypes.string,
-    getEpPlacementPointsActionType: PropTypes.string,
+    asyncComponentLoading: PropTypes.bool,
+
+    getPatientGroupsStatus: PropTypes.string,
+    getSensoryBlocksStatus: PropTypes.string,
+    getObservalEndPointsStatus: PropTypes.string,
+    getEpPlacementPointsStatus: PropTypes.string,
 
     dispatch: PropTypes.func
 
 };
 
 export default connect(state => ({
-    componentLoading: state.moduleComponentLoading,
-    getPatientGroupsActionType: state.patientGroup.actionType,
-    getSensoryBlocksActionType: state.sensoryBlock.actionType,
-    getObservalEndPointsActionType: state.observalEndPoint.actionType,
-    getEpPlacementPointsActionType: state.epPlacementPoint.actionType
+
+    asyncComponentLoading: state.asyncComponentLoading,
+
+    getPatientGroupsStatus: state.apiStatus.patientGroup?.getPatientGroups,
+    getSensoryBlocksStatus: state.apiStatus.sensoryBlock?.getSensoryBlocks,
+    getObservalEndPointsStatus: state.apiStatus.observalEndPoint?.getObservalEndPoints,
+    getEpPlacementPointsStatus: state.apiStatus.epPlacementPoint?.getEpPlacementPoints
+
 }))(App);
