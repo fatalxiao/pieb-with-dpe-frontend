@@ -15,10 +15,9 @@ export default {
      * @param options
      */
     getEpPlacementPoints(options) {
-        Api.get({
+        return Api.get({
             ...options,
             url: `${appBaseUrl}/epPlacementPoint/getEPPlacementPoints`,
-            cancelable: false
         });
     }
 

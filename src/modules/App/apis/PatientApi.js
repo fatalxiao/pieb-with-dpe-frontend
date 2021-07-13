@@ -15,12 +15,10 @@ export default {
      * @param options
      */
     getPatientById(options) {
-        if (options?.params?.id) {
-            Api.get({
-                ...options,
-                url: `${config.appBaseUrl}/patient/getPatientById/${options.params.id}`
-            });
-        }
+        return Api.get({
+            ...options,
+            url: `${config.appBaseUrl}/patient/getPatientById/${options?.params?.id}`
+        });
     },
 
     /**
@@ -28,10 +26,9 @@ export default {
      * @param options
      */
     createPatient(options) {
-        Api.post({
+        return Api.post({
             ...options,
             url: `${config.appBaseUrl}/patient/createPatient`,
-            cancelable: false
         });
     },
 
@@ -40,10 +37,9 @@ export default {
      * @param options
      */
     createOrUpdatePatient(options) {
-        Api.post({
+        return Api.post({
             ...options,
             url: `${config.appBaseUrl}/patient/createOrUpdatePatient`,
-            cancelable: false
         });
     }
 

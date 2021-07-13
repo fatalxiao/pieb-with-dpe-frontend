@@ -3,6 +3,7 @@
  */
 
 // Vendors
+import axios from 'axios';
 import RequestManagement from './RequestManagement';
 
 /**
@@ -12,76 +13,102 @@ import RequestManagement from './RequestManagement';
  * @param url
  * @param params
  * @param formData
- * @param cancelable
  * @param header
  * @param contentType
- * @param isUpload
+ * @param source
  * @param successCallback
  * @param failureCallback
  */
-function ajax(method, {
-    name, url, params, formData, cancelable, header, contentType, isUpload,
+function request(method, {
+    name, url, params, formData, header, contentType, source,
     successCallback, failureCallback
 }) {
 
-    const xhr = new XMLHttpRequest();
-
-    xhr.open(method, url, true);
-
-    let body;
-    if (params) {
-
-        if (isUpload) {
-            body = new FormData(formData);
-        } else {
-            xhr.setRequestHeader('Content-type', contentType || 'application/json');
-            body = JSON.stringify(params);
-        }
-
-    }
-
-    if (header) {
-        Object.entries(header).forEach(([key, value]) => xhr.setRequestHeader(key, value));
-    }
-
-    xhr.onreadystatechange = () => {
-
-        if (xhr.readyState === 4) {
-
-            let response = xhr.responseText;
-
-            if (xhr.status === 500) {
-                failureCallback?.(xhr, response);
-                return;
-            }
-
-            try {
-                response = JSON.parse(response);
-            } catch (e) {
-                failureCallback?.(xhr);
-                return;
-            }
-
-            if (parseInt(`${response.code / 1000}`, 10) === 2) {
-                successCallback?.(xhr, response, response.data);
-            } else {
-                failureCallback?.(xhr, response, response.data);
-            }
-
-        }
-
-    };
+    // const xhr = new XMLHttpRequest();
+    //
+    // xhr.open(method, url, true);
+    //
+    // let body;
+    // if (params) {
+    //
+    //     if (isUpload) {
+    //         body = new FormData(formData);
+    //     } else {
+    //         xhr.setRequestHeader('Content-type', contentType || 'application/json');
+    //         body = JSON.stringify(params);
+    //     }
+    //
+    // }
+    //
+    // if (header) {
+    //     Object.entries(header).forEach(([key, value]) => xhr.setRequestHeader(key, value));
+    // }
+    //
+    // xhr.onreadystatechange = () => {
+    //
+    //     if (xhr.readyState === 4) {
+    //
+    //         let response = xhr.responseText;
+    //
+    //         if (xhr.status === 500) {
+    //             failureCallback?.(xhr, response);
+    //             return;
+    //         }
+    //
+    //         try {
+    //             response = JSON.parse(response);
+    //         } catch (e) {
+    //             failureCallback?.(xhr);
+    //             return;
+    //         }
+    //
+    //         if (parseInt(`${response.code / 1000}`, 10) === 2) {
+    //             successCallback?.(xhr, response, response.data);
+    //         } else {
+    //             failureCallback?.(xhr, response, response.data);
+    //         }
+    //
+    //     }
+    //
+    // };
+    //
+    // // add request to cancelable list if it's cancelable
+    // if (cancelable !== false) {
+    //     RequestManagement.add({
+    //         name,
+    //         url,
+    //         xhr
+    //     });
+    // }
+    //
+    // xhr.send(body);
 
     // add request to cancelable list if it's cancelable
-    if (cancelable !== false) {
+    if (source) {
         RequestManagement.add({
             name,
             url,
-            xhr
+            source
         });
     }
 
-    xhr.send(body);
+    return axios({
+        method,
+        url,
+        headers: {
+            ...header,
+            'Content-type': contentType || 'application/json'
+        },
+        params: method === 'get' ?
+            params
+            :
+            null,
+        data: method === 'post' ?
+            params
+            :
+            null,
+        cancelToken: source?.token || null
+    });
 
 }
 
@@ -90,7 +117,10 @@ function ajax(method, {
  * @param options
  */
 function get(options) {
-    ajax('GET', options);
+    return request('get', options);
+    // return axios.get(options.url, {
+    //     params: options.params
+    // });
 }
 
 /**
@@ -98,40 +128,13 @@ function get(options) {
  * @param options
  */
 function post(options) {
-    ajax('POST', options);
-}
-
-/**
- * ajax put
- * @param options
- */
-function put(options) {
-    ajax('PUT', options);
-}
-
-/**
- * ajax delete
- * @param options
- */
-function del(options) {
-    ajax('DELETE', options);
-}
-
-/**
- * ajax post form
- * @param options
- */
-function postForm(options) {
-    ajax('POST', {
-        ...options,
-        isUpload: true
-    });
+    return request('post', options);
+    // return axios.post(options.url, {
+    //     data: options.params
+    // });
 }
 
 export default {
     get,
-    post,
-    put,
-    del,
-    postForm
+    post
 };

@@ -15,12 +15,10 @@ export default {
      * @param options
      */
     getAnalgesiaDataByPatientId(options) {
-        if (options?.params?.patientId) {
-            Api.get({
-                ...options,
-                url: `${config.appBaseUrl}/analgesia/getAnalgesiaDataByPatientId/${options.params.patientId}`
-            });
-        }
+        return Api.get({
+            ...options,
+            url: `${config.appBaseUrl}/analgesia/getAnalgesiaDataByPatientId/${options?.params?.patientId}`
+        });
     },
 
     /**
@@ -28,14 +26,12 @@ export default {
      * @param options
      */
     createOrUpdateAnalgesiaData(options) {
-        if (options?.params?.patientId) {
-            Api.post({
-                ...options,
-                url: `${config.appBaseUrl}/analgesia/createOrUpdateAnalgesiaData/${options.params.patientId}`,
-                params: options.params?.analgesiaData,
-                cancelable: false
-            });
-        }
+        return Api.post({
+            ...options,
+            url: `${config.appBaseUrl}/analgesia/createOrUpdateAnalgesiaData/${options?.params?.patientId}`,
+            params: options.params?.analgesiaData,
+            cancelable: false
+        });
     }
 
 };

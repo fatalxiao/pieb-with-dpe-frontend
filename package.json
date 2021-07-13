@@ -28,6 +28,7 @@
     },
     "dependencies": {
         "alcedo-ui": "^2.56.15",
+        "axios": "^0.21.1",
         "babel-polyfill": "^6.26.0",
         "classnames": "^2.3.1",
         "connected-react-router": "^6.9.1",

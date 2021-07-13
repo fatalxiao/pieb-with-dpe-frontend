@@ -3,12 +3,6 @@
  */
 
 /**
- *
- * @type {string}
- */
-export const CANCEL_FLAG = 'CANCEL_FLAG';
-
-/**
  * 缓存的所有 request
  * @type {*[]}
  */
@@ -28,8 +22,8 @@ export function add(item) {
  */
 export function cancelByName(name) {
     requests = requests.filter(item => {
-        if (item && item.name && item.name === name) {
-            item.xhr && item.xhr.abort();
+        if (item?.name === name) {
+            item?.source?.cancel?.();
             return false;
         } else {
             return true;
@@ -43,11 +37,8 @@ export function cancelByName(name) {
  */
 export function cancelOthersByName(name) {
     requests = requests.filter(item => {
-        if (item && item.name !== name) {
-            if (item.xhr) {
-                item.xhr[CANCEL_FLAG] = true;
-                item.xhr.abort();
-            }
+        if (item?.name !== name) {
+            item?.source?.cancel?.();
             return false;
         } else {
             return true;
@@ -60,18 +51,14 @@ export function cancelOthersByName(name) {
  */
 export function cancelAll() {
     for (let item of requests) {
-        item.xhr.abort();
+        item?.source?.cancel?.();
     }
     requests.length = 0;
 }
 
 export default {
-
-    CANCEL_FLAG,
-
     add,
     cancelByName,
     cancelOthersByName,
     cancelAll
-
 };

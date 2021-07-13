@@ -15,10 +15,9 @@ export default {
      * @param options
      */
     getPatientGroups(options) {
-        Api.get({
+        return Api.get({
             ...options,
-            url: `${appBaseUrl}/patientGroup/getPatientGroups`,
-            cancelable: false
+            url: `${appBaseUrl}/patientGroup/getPatientGroups`
         });
     }
 

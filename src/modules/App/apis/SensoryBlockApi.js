@@ -15,7 +15,7 @@ export default {
      * @param options
      */
     getSensoryBlocks(options) {
-        Api.get({
+        return Api.get({
             ...options,
             url: `${appBaseUrl}/sensoryBlock/getSensoryBlocks`,
             cancelable: false

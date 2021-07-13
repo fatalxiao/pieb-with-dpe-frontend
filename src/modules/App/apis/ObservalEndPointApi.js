@@ -15,10 +15,9 @@ export default {
      * @param options
      */
     getObservalEndPoints(options) {
-        Api.get({
+        return Api.get({
             ...options,
             url: `${appBaseUrl}/observalEndPoint/getObservalEndPoints`,
-            cancelable: false
         });
     }
 

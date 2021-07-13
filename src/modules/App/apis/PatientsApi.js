@@ -6,6 +6,7 @@
 import {appBaseUrl} from 'src/config';
 
 // Vendors
+import axios from 'axios';
 import Api from 'vendors/api/Api';
 import RequestManagement from 'vendors/api/RequestManagement';
 
@@ -16,10 +17,9 @@ export default {
      * @param options
      */
     getPatients(options) {
-        Api.get({
+        return Api.get({
             ...options,
-            url: `${appBaseUrl}/patient/getPatients`,
-            cancelable: false
+            url: `${appBaseUrl}/patient/getPatients`
         });
     },
 
@@ -28,10 +28,9 @@ export default {
      * @param options
      */
     getFullPatients(options) {
-        Api.get({
+        return Api.get({
             ...options,
-            url: `${appBaseUrl}/patient/getFullPatients`,
-            cancelable: false
+            url: `${appBaseUrl}/patient/getFullPatients`
         });
     },
 
@@ -41,13 +40,17 @@ export default {
      */
     updatePatientName(options) {
 
-        const name = `updatePatientName/${options.id}`;
+        const CancelToken = axios.CancelToken;
+        const source = CancelToken.source();
+
+        const name = `updatePatientName/${options?.id}`;
         RequestManagement.cancelByName(name);
 
-        Api.post({
+        return Api.post({
             ...options,
             name,
-            url: `${appBaseUrl}/patient/updatePatient`
+            url: `${appBaseUrl}/patient/updatePatient`,
+            source
         });
 
     },
@@ -57,7 +60,7 @@ export default {
      * @param options
      */
     updatePatientGroup(options) {
-        Api.post({
+        return Api.post({
             ...options,
             url: `${appBaseUrl}/patient/updatePatient`,
             cancelable: false
@@ -69,13 +72,11 @@ export default {
      * @param options
      */
     enablePatient(options) {
-        if (options?.params?.id) {
-            Api.post({
-                ...options,
-                url: `${appBaseUrl}/patient/enable/${options.params.id}`,
-                cancelable: false
-            });
-        }
+        return Api.post({
+            ...options,
+            url: `${appBaseUrl}/patient/enable/${options?.params?.id}`,
+            cancelable: false
+        });
     },
 
     /**
@@ -83,13 +84,11 @@ export default {
      * @param options
      */
     disablePatient(options) {
-        if (options?.params?.id) {
-            Api.post({
-                ...options,
-                url: `${appBaseUrl}/patient/disable/${options.params.id}`,
-                cancelable: false
-            });
-        }
+        return Api.post({
+            ...options,
+            url: `${appBaseUrl}/patient/disable/${options?.params?.id}`,
+            cancelable: false
+        });
     }
 
 };
