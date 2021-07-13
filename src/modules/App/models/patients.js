@@ -11,16 +11,7 @@ import cloneDeep from 'lodash/cloneDeep';
 export default {
     nameSpace: 'patients',
     state: {
-
-        list: [],
-
-        getActionType: '',
-        getFullActionType: '',
-        updatePatientNameActionType: '',
-        updatePatientGroupActionType: '',
-        enableActionType: '',
-        disableActionType: ''
-
+        list: []
     },
     apis: {
 
@@ -142,23 +133,15 @@ export default {
         /**
          * 获取用于表格的 patients 数据
          */
-        getPatientsRequest: state => {
-            return {
-                ...state,
-                actionType: 'patients/getPatientsRequest'
-            };
-        },
         getPatientsSuccess: (state, {responseData}) => {
             return {
                 ...state,
-                actionType: 'patients/getPatientsSuccess',
                 list: responseData
             };
         },
         getPatientsFailure: state => {
             return {
                 ...state,
-                actionType: 'patients/getPatientsFailure',
                 list: []
             };
         },
@@ -166,23 +149,15 @@ export default {
         /**
          * 获取完整的 patients 数据
          */
-        getFullPatientsRequest: state => {
-            return {
-                ...state,
-                actionType: 'patients/getFullPatientsRequest'
-            };
-        },
         getFullPatientsSuccess: (state, {responseData}) => {
             return {
                 ...state,
-                actionType: 'patients/getFullPatientsSuccess',
                 list: responseData
             };
         },
         getFullPatientsFailure: state => {
             return {
                 ...state,
-                actionType: 'patients/getFullPatientsFailure',
                 list: []
             };
         },
@@ -190,20 +165,10 @@ export default {
         /**
          * 更新某个 id 的 patient name
          */
-        updatePatientNameRequest: state => {
-            return {
-                ...state,
-                updatePatientNameActionType: 'patients/updatePatientNameRequest'
-            };
-        },
         updatePatientNameSuccess: (state, {id, name}) => {
 
-            console.log('id::', id);
-            console.log('name::', name);
-
             const nextState = {
-                    ...state,
-                    updatePatientNameActionType: 'patients/updatePatientNameSuccess'
+                    ...state
                 },
 
                 list = [...state.list],
@@ -224,27 +189,14 @@ export default {
             };
 
         },
-        updatePatientNameFailure: state => {
-            return {
-                ...state,
-                updatePatientNameActionType: 'patients/updatePatientNameFailure'
-            };
-        },
 
         /**
          * 更新某个 id 的 patient group
          */
-        updatePatientGroupRequest: state => {
-            return {
-                ...state,
-                updatePatientGroupActionType: 'patients/updatePatientGroupRequest'
-            };
-        },
         updatePatientGroupSuccess: (state, {id, group}) => {
 
             const nextState = {
-                    ...state,
-                    getActionType: 'patients/updatePatientGroupSuccess'
+                    ...state
                 },
 
                 list = [...state.list],
@@ -266,22 +218,10 @@ export default {
             };
 
         },
-        updatePatientGroupFailure: state => {
-            return {
-                ...state,
-                updatePatientGroupActionType: 'patients/updatePatientGroupFailure'
-            };
-        },
 
         /**
          * 启用 patient
          */
-        enablePatientRequest: state => {
-            return {
-                ...state,
-                enableActionType: 'patients/enablePatientRequest'
-            };
-        },
         enablePatientSuccess: (state, {patientId}) => {
 
             const list = cloneDeep(state.list);
@@ -289,27 +229,14 @@ export default {
 
             return {
                 ...state,
-                list,
-                enableActionType: 'patients/enablePatientSuccess'
+                list
             };
 
-        },
-        enablePatientFailure: state => {
-            return {
-                ...state,
-                enableActionType: 'patients/enablePatientFailure'
-            };
         },
 
         /**
          * 禁用 patient
          */
-        disablePatientRequest: state => {
-            return {
-                ...state,
-                disableActionType: 'patients/disablePatientRequest'
-            };
-        },
         disablePatientSuccess: (state, {patientId}) => {
 
             const list = cloneDeep(state.list);
@@ -317,16 +244,9 @@ export default {
 
             return {
                 ...state,
-                list,
-                disableActionType: 'patients/disablePatientSuccess'
+                list
             };
 
-        },
-        disablePatientFailure: state => {
-            return {
-                ...state,
-                disableActionType: 'patients/disablePatientFailure'
-            };
         }
 
     }
