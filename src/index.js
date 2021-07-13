@@ -6,22 +6,25 @@
 
 import React from 'react';
 
-// Sync Models
-import fullScreen from 'reduxes/models/fullScreen';
-import moduleComponentLoading from 'reduxes/models/moduleComponentLoading';
-import notifications from 'reduxes/models/notifications';
-import toasts from 'reduxes/models/toasts';
-import responseMessage from 'reduxes/models/responseMessage';
-
 // Vendors
 import {render} from 'react-dom';
 import {createBrowserHistory} from 'history';
 import {renderRoutes} from 'react-router-config';
 import {Provider} from 'react-redux';
 import {ConnectedRouter} from 'connected-react-router';
-import configureStore from 'reduxes/store';
 import {configureRoutes} from './config.routes';
-import {registerModels} from 'reduxes/store';
+
+// Vivy
+import Vivy, {registerModels} from 'vivy';
+import VivyApi from 'vivy-api';
+import VivyAsyncComponent from 'vivy-async-component';
+
+// Sync Models
+import fullScreen from 'reduxes/models/fullScreen';
+import moduleComponentLoading from 'reduxes/models/moduleComponentLoading';
+import notifications from 'reduxes/models/notifications';
+import toasts from 'reduxes/models/toasts';
+import responseMessage from 'reduxes/models/responseMessage';
 
 // Styles
 import 'assets/bootstrap/bootstrap-grid.min.css';
@@ -38,13 +41,73 @@ if (process.env.NODE_ENV === 'development' && module?.hot) {
     module.hot.accept();
 }
 
-/**
- * 初始化 history / store
- */
-const history = createBrowserHistory(),
-    store = configureStore(history);
+// Create browser history
+const history = createBrowserHistory();
 
-// 注册同步的 model
+// Create vivy
+const vivy = Vivy(history);
+
+// Apply async component plugin
+vivy.use(VivyAsyncComponent());
+
+// Apply api plugin
+vivy.use(VivyApi({
+    checkResponseStatus: response => response?.data?.code === 2000,
+    successResponseHandler: ({dispatch, getState}) => next => action => {
+
+        const {
+            response,
+            resMsgDisabled, successResMsgDisabled,
+            actionSuccessCallback
+        } = action;
+        const responseData = response.data.data;
+
+        !resMsgDisabled && !successResMsgDisabled && dispatch({
+            type: 'responseMessage/addSuccessResMsg'
+        });
+
+        next({
+            ...action,
+            responseData
+        });
+
+        actionSuccessCallback?.(responseData, response);
+
+    },
+    failureResponseHandler: ({dispatch, getState}) => next => action => {
+
+        const {
+            response,
+            resMsgDisabled, failureResMsgDisabled,
+            actionFailureCallback
+        } = action;
+        const responseData = response.data.data;
+
+        if (!resMsgDisabled && !failureResMsgDisabled) {
+            dispatch({
+                type: 'responseMessage/addFailureResMsg',
+                message: responseData
+            });
+        }
+
+        next({
+            ...action,
+            responseData,
+            error: response ?
+                (responseData || response.message)
+                :
+                'Server or Network failure. Please try again later or contact your account manager.'
+        });
+
+        actionFailureCallback?.(responseData, response);
+
+    }
+}));
+
+// Create store after configuration
+const store = vivy.createStore();
+
+// Register model to store
 registerModels(store, [
     fullScreen,
     moduleComponentLoading,

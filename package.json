@@ -47,8 +47,8 @@
         "redux-thunk": "^2.3.0",
         "screenfull": "^5.1.0",
         "vivy": "^0.0.9",
-        "vivy-api": "^0.0.1",
-        "vivy-async-component": "^0.0.1"
+        "vivy-api": "^0.0.2",
+        "vivy-async-component": "^0.0.3"
     },
     "devDependencies": {
         "@babel/core": "^7.14.6",
@@ -108,7 +108,7 @@
         "rimraf": "^3.0.2",
         "sass": "^1.35.2",
         "sass-loader": "^12.1.0",
-        "style-loader": "^3.0.0",
+        "style-loader": "^3.1.0",
         "url-loader": "^4.1.1",
         "webpack": "^5.44.0",
         "webpack-dev-middleware": "^5.0.0",
