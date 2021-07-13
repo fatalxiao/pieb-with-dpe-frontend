@@ -12,16 +12,12 @@ import RequestManagement from './RequestManagement';
  * @param name
  * @param url
  * @param params
- * @param formData
  * @param header
  * @param contentType
  * @param source
- * @param successCallback
- * @param failureCallback
  */
 function request(method, {
-    name, url, params, formData, header, contentType, source,
-    successCallback, failureCallback
+    name, url, params, header, contentType, source
 }) {
 
     // const xhr = new XMLHttpRequest();

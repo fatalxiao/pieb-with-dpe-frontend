@@ -12,12 +12,10 @@ export default {
 
     /**
      * 获取所有的 Ep Placement Point
-     * @param options
      */
-    getEpPlacementPoints(options) {
+    getEpPlacementPoints() {
         return Api.get({
-            ...options,
-            url: `${appBaseUrl}/epPlacementPoint/getEPPlacementPoints`,
+            url: `${appBaseUrl}/epPlacementPoint/getEPPlacementPoints`
         });
     }
 

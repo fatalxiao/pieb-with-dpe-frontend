@@ -14,40 +14,35 @@ export default {
 
     /**
      * 获取用于列表的 patients 数据
-     * @param options
      */
-    getPatients(options) {
+    getPatients() {
         return Api.get({
-            ...options,
             url: `${appBaseUrl}/patient/getPatients`
         });
     },
 
     /**
      * 获取完整的 patients 数据
-     * @param options
      */
-    getFullPatients(options) {
+    getFullPatients() {
         return Api.get({
-            ...options,
             url: `${appBaseUrl}/patient/getFullPatients`
         });
     },
 
     /**
      * 更新 patient name
-     * @param options
+     * @param params
      */
-    updatePatientName(options) {
+    updatePatientName(params) {
 
         const CancelToken = axios.CancelToken;
         const source = CancelToken.source();
 
-        const name = `updatePatientName/${options?.id}`;
+        const name = `updatePatientName/${params?.id}`;
         RequestManagement.cancelByName(name);
 
         return Api.post({
-            ...options,
             name,
             url: `${appBaseUrl}/patient/updatePatient`,
             source
@@ -57,37 +52,30 @@ export default {
 
     /**
      * 更新 patient group
-     * @param options
      */
-    updatePatientGroup(options) {
+    updatePatientGroup() {
         return Api.post({
-            ...options,
-            url: `${appBaseUrl}/patient/updatePatient`,
-            cancelable: false
+            url: `${appBaseUrl}/patient/updatePatient`
         });
     },
 
     /**
      * 启用 patient
-     * @param options
+     * @param params
      */
-    enablePatient(options) {
+    enablePatient(params) {
         return Api.post({
-            ...options,
-            url: `${appBaseUrl}/patient/enable/${options?.params?.id}`,
-            cancelable: false
+            url: `${appBaseUrl}/patient/enable/${params?.patientId}`
         });
     },
 
     /**
      * 禁用 patient
-     * @param options
+     * @param params
      */
-    disablePatient(options) {
+    disablePatient(params) {
         return Api.post({
-            ...options,
-            url: `${appBaseUrl}/patient/disable/${options?.params?.id}`,
-            cancelable: false
+            url: `${appBaseUrl}/patient/disable/${params?.patientId}`
         });
     }
 

@@ -12,34 +12,29 @@ export default {
 
     /**
      * 获取 patient ID 的 Patient 数据
-     * @param options
+     * @param params
      */
-    getPatientById(options) {
+    getPatientById(params) {
         return Api.get({
-            ...options,
-            url: `${config.appBaseUrl}/patient/getPatientById/${options?.params?.id}`
+            url: `${config.appBaseUrl}/patient/getPatientById/${params?.id}`
         });
     },
 
     /**
      * 创建 Patient
-     * @param options
      */
-    createPatient(options) {
+    createPatient() {
         return Api.post({
-            ...options,
-            url: `${config.appBaseUrl}/patient/createPatient`,
+            url: `${config.appBaseUrl}/patient/createPatient`
         });
     },
 
     /**
      * 创建或更新 Patient
-     * @param options
      */
-    createOrUpdatePatient(options) {
+    createOrUpdatePatient() {
         return Api.post({
-            ...options,
-            url: `${config.appBaseUrl}/patient/createOrUpdatePatient`,
+            url: `${config.appBaseUrl}/patient/createOrUpdatePatient`
         });
     }
 

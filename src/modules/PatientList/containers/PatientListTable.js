@@ -67,13 +67,13 @@ const PatientListTable = ({
      * 处理 patient status 的变更
      * @type {function(*=, *): *}
      */
-    const handleStatusChange = useCallback((id, value) => {
+    const handleStatusChange = useCallback((patientId, value) => {
         dispatch?.({
             type: value ?
                 'patients/enablePatient'
                 :
                 'patients/disablePatient',
-            id
+            patientId
         });
     }, [
         dispatch

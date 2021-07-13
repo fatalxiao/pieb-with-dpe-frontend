@@ -12,25 +12,22 @@ export default {
 
     /**
      * 获取 patient ID 的 Analgesia 数据
-     * @param options
+     * @param params
      */
-    getAnalgesiaDataByPatientId(options) {
+    getAnalgesiaDataByPatientId(params) {
         return Api.get({
-            ...options,
-            url: `${config.appBaseUrl}/analgesia/getAnalgesiaDataByPatientId/${options?.params?.patientId}`
+            url: `${config.appBaseUrl}/analgesia/getAnalgesiaDataByPatientId/${params?.patientId}`
         });
     },
 
     /**
      * 创建或更新 Analgesia 数据
-     * @param options
+     * @param params
      */
-    createOrUpdateAnalgesiaData(options) {
+    createOrUpdateAnalgesiaData(params) {
         return Api.post({
-            ...options,
-            url: `${config.appBaseUrl}/analgesia/createOrUpdateAnalgesiaData/${options?.params?.patientId}`,
-            params: options.params?.analgesiaData,
-            cancelable: false
+            url: `${config.appBaseUrl}/analgesia/createOrUpdateAnalgesiaData/${params?.patientId}`,
+            params: params?.analgesiaData
         });
     }
 

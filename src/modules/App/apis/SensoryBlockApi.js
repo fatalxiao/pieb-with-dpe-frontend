@@ -12,13 +12,10 @@ export default {
 
     /**
      * 获取所有的 Sensory Block 数据
-     * @param options
      */
-    getSensoryBlocks(options) {
+    getSensoryBlocks() {
         return Api.get({
-            ...options,
-            url: `${appBaseUrl}/sensoryBlock/getSensoryBlocks`,
-            cancelable: false
+            url: `${appBaseUrl}/sensoryBlock/getSensoryBlocks`
         });
     }
 

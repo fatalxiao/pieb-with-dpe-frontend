@@ -12,25 +12,22 @@ export default {
 
     /**
      * 获取 patient ID 的 Observal 数据
-     * @param options
+     * @param params
      */
-    getObservalDataByPatientId(options) {
+    getObservalDataByPatientId(params) {
         return Api.get({
-            ...options,
-            url: `${config.appBaseUrl}/observal/getObservalDataByPatientId/${options?.params?.patientId}`
+            url: `${config.appBaseUrl}/observal/getObservalDataByPatientId/${params?.patientId}`
         });
     },
 
     /**
      * 创建或更新 Observal 数据
-     * @param options
+     * @param params
      */
-    createOrUpdateObservalData(options) {
+    createOrUpdateObservalData(params) {
         return Api.post({
-            ...options,
-            url: `${config.appBaseUrl}/observal/createOrUpdateObservalData/${options?.params?.patientId}`,
-            params: options.params?.observalData,
-            cancelable: false
+            url: `${config.appBaseUrl}/observal/createOrUpdateObservalData/${params?.patientId}`,
+            params: params?.observalData
         });
     }
 

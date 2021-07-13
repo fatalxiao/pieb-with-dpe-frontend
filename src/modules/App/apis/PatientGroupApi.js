@@ -12,11 +12,9 @@ export default {
 
     /**
      * 获取 patient groups 数据
-     * @param options
      */
-    getPatientGroups(options) {
+    getPatientGroups() {
         return Api.get({
-            ...options,
             url: `${appBaseUrl}/patientGroup/getPatientGroups`
         });
     }

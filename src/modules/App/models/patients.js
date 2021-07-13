@@ -97,19 +97,19 @@ export default {
          * @param id
          * @returns {function(*): *}
          */
-        enablePatient: ({id}) => dispatchApi => {
+        enablePatient: ({patientId}) => dispatchApi => {
 
-            if (!id) {
+            if (!patientId) {
                 return;
             }
 
             dispatchApi({
                 api: PatientApi.enablePatient,
                 params: {
-                    id
+                    patientId
                 },
                 successResMsgDisabled: true,
-                id
+                patientId
             });
 
         },
@@ -119,19 +119,19 @@ export default {
          * @param id
          * @returns {function(*): *}
          */
-        disablePatient: ({id}) => dispatchApi => {
+        disablePatient: ({patientId}) => dispatchApi => {
 
-            if (!id) {
+            if (!patientId) {
                 return;
             }
 
             dispatchApi({
                 api: PatientApi.disablePatient,
                 params: {
-                    id
+                    patientId
                 },
                 successResMsgDisabled: true,
-                id
+                patientId
             });
 
         }
@@ -282,10 +282,10 @@ export default {
                 enableActionType: 'patients/enablePatientRequest'
             };
         },
-        enablePatientSuccess: (state, {id}) => {
+        enablePatientSuccess: (state, {patientId}) => {
 
             const list = cloneDeep(state.list);
-            list.find(item => item.id === id).status = 1;
+            list.find(item => item.id === patientId).status = 1;
 
             return {
                 ...state,
@@ -310,10 +310,10 @@ export default {
                 disableActionType: 'patients/disablePatientRequest'
             };
         },
-        disablePatientSuccess: (state, {id}) => {
+        disablePatientSuccess: (state, {patientId}) => {
 
             const list = cloneDeep(state.list);
-            list.find(item => item.id === id).status = 0;
+            list.find(item => item.id === patientId).status = 0;
 
             return {
                 ...state,

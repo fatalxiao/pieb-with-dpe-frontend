@@ -12,12 +12,10 @@ export default {
 
     /**
      * 获取所有的 Observal End Point
-     * @param options
      */
-    getObservalEndPoints(options) {
+    getObservalEndPoints() {
         return Api.get({
-            ...options,
-            url: `${appBaseUrl}/observalEndPoint/getObservalEndPoints`,
+            url: `${appBaseUrl}/observalEndPoint/getObservalEndPoints`
         });
     }
 
