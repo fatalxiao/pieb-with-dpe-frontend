@@ -21,8 +21,7 @@ const DEFAULT_FORM = {
 export default {
     nameSpace: 'patientBaseInfo',
     state: {
-        form: {...DEFAULT_FORM},
-        actionType: null
+        form: {...DEFAULT_FORM}
     },
     apis: {
 
@@ -89,28 +88,6 @@ export default {
                 form
             };
 
-        },
-
-        /**
-         * 创建 patient
-         */
-        createPatientRequest: state => {
-            return {
-                ...state,
-                actionType: 'patientBaseInfo/createPatientRequest'
-            };
-        },
-        createPatientSuccess: state => {
-            return {
-                ...state,
-                actionType: 'patientBaseInfo/createPatientSuccess'
-            };
-        },
-        createPatientFailure: state => {
-            return {
-                ...state,
-                actionType: 'patientBaseInfo/createPatientFailure'
-            };
         }
 
     }

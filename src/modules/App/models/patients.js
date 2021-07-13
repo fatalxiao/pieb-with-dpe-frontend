@@ -59,25 +59,25 @@ export default {
         },
 
         /**
-         * 更新某个 id 的 patient group
-         * @param id
+         * 更新某个 patientId 的 patient group
+         * @param patientId
          * @param group
          * @returns {function(*): *}
          */
-        updatePatientGroup: ({id, group}) => dispatchApi => {
+        updatePatientGroup: ({patientId, group}) => dispatchApi => {
 
-            if (!id || !group) {
+            if (!patientId || !group) {
                 return;
             }
 
             dispatchApi({
                 api: PatientApi.updatePatientGroup,
                 params: {
-                    id,
+                    id: patientId,
                     groupId: group.id
                 },
                 successResMsgDisabled: true,
-                id,
+                patientId,
                 group
             });
 
@@ -99,8 +99,7 @@ export default {
                 params: {
                     patientId
                 },
-                successResMsgDisabled: true,
-                patientId
+                successResMsgDisabled: true
             });
 
         },
@@ -121,8 +120,7 @@ export default {
                 params: {
                     patientId
                 },
-                successResMsgDisabled: true,
-                patientId
+                successResMsgDisabled: true
             });
 
         }
@@ -191,16 +189,16 @@ export default {
         },
 
         /**
-         * 更新某个 id 的 patient group
+         * 更新某个 patientId 的 patient group
          */
-        updatePatientGroupSuccess: (state, {id, group}) => {
+        updatePatientGroupSuccess: (state, {patientId, group}) => {
 
             const nextState = {
                     ...state
                 },
 
                 list = [...state.list],
-                index = list.findIndex(item => item?.id === id);
+                index = list.findIndex(item => item?.id === patientId);
 
             if (index === -1) {
                 return nextState;
@@ -222,10 +220,10 @@ export default {
         /**
          * 启用 patient
          */
-        enablePatientSuccess: (state, {patientId}) => {
+        enablePatientSuccess: (state, {params}) => {
 
             const list = cloneDeep(state.list);
-            list.find(item => item.id === patientId).status = 1;
+            list.find(item => item?.id === params?.patientId).status = 1;
 
             return {
                 ...state,
@@ -237,10 +235,10 @@ export default {
         /**
          * 禁用 patient
          */
-        disablePatientSuccess: (state, {patientId}) => {
+        disablePatientSuccess: (state, {params}) => {
 
             const list = cloneDeep(state.list);
-            list.find(item => item.id === patientId).status = 0;
+            list.find(item => item?.id === params?.patientId).status = 0;
 
             return {
                 ...state,

@@ -53,9 +53,10 @@ export default {
     /**
      * 更新 patient group
      */
-    updatePatientGroup() {
+    updatePatientGroup(params) {
         return Api.post({
-            url: `${appBaseUrl}/patient/updatePatient`
+            url: `${appBaseUrl}/patient/updatePatient`,
+            params
         });
     },
 

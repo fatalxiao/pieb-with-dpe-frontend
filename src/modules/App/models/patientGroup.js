@@ -12,12 +12,7 @@ export default {
         /**
          * patient groups 数据
          */
-        list: [],
-
-        /**
-         * 获取 patient groups 数据的 action type
-         */
-        actionType: null
+        list: []
 
     },
     apis: {
@@ -37,23 +32,15 @@ export default {
         /**
          * 获取 Patient Groups
          */
-        getPatientGroupsRequest: state => {
-            return {
-                ...state,
-                actionType: 'patientGroup/getPatientGroupsRequest'
-            };
-        },
         getPatientGroupsSuccess: (state, {responseData}) => {
             return {
                 ...state,
-                actionType: 'patientGroup/getPatientGroupsSuccess',
                 list: responseData
             };
         },
         getPatientGroupsFailure: state => {
             return {
                 ...state,
-                actionType: 'patientGroup/getPatientGroupsFailure',
                 list: []
             };
         }

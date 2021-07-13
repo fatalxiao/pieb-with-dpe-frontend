@@ -53,10 +53,10 @@ const PatientListTable = ({
      * 处理 patient group 的变更
      * @type {function(*=, *=): *}
      */
-    const handleGroupChange = useCallback((id, value) => {
+    const handleGroupChange = useCallback((patientId, value) => {
         dispatch?.({
             type: 'patients/updatePatientGroup',
-            id,
+            patientId,
             group: value
         });
     }, [
