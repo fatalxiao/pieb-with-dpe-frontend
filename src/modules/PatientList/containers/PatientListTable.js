@@ -29,10 +29,10 @@ const PatientListTable = ({
      * 处理 patient name 的变更
      * @type {*}
      */
-    const handleNameChange = useCallback((id, value) => {
+    const handleNameChange = useCallback((patientId, value) => {
         dispatch?.({
             type: 'patients/updatePatientName',
-            id,
+            patientId,
             name: value
         });
     }, [

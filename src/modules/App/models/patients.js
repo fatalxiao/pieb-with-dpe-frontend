@@ -34,25 +34,25 @@ export default {
         }),
 
         /**
-         * 更新某个 id 的 patient name
-         * @param id
+         * 更新某个 patientId 的 patient name
+         * @param patientId
          * @param name
          * @returns {function(*): *}
          */
-        updatePatientName: ({id, name}) => dispatchApi => {
+        updatePatientName: ({patientId, name}) => dispatchApi => {
 
-            if (!id || !name) {
+            if (!patientId || !name) {
                 return;
             }
 
             dispatchApi({
                 api: PatientApi.updatePatientName,
                 params: {
-                    id,
+                    id: patientId,
                     name
                 },
                 successResMsgDisabled: true,
-                id,
+                patientId,
                 name
             });
 
@@ -161,16 +161,16 @@ export default {
         },
 
         /**
-         * 更新某个 id 的 patient name
+         * 更新某个 patientId 的 patient name
          */
-        updatePatientNameSuccess: (state, {id, name}) => {
+        updatePatientNameSuccess: (state, {patientId, name}) => {
 
             const nextState = {
                     ...state
                 },
 
                 list = [...state.list],
-                index = list.findIndex(item => item.id === id);
+                index = list.findIndex(item => item.id === patientId);
 
             if (index === -1) {
                 return nextState;

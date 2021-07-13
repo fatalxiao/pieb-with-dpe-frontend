@@ -45,6 +45,7 @@ export default {
         return Api.post({
             name,
             url: `${appBaseUrl}/patient/updatePatient`,
+            params,
             source
         });
 
