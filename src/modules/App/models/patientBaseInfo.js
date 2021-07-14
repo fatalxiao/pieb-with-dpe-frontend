@@ -38,7 +38,7 @@ export default {
                 return;
             }
 
-            return dispatchApi({
+            dispatchApi({
                 api: PatientApi.createPatient,
                 params: {
                     id: data.id,

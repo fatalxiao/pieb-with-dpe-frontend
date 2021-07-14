@@ -23,18 +23,20 @@ export default {
     /**
      * 创建 Patient
      */
-    createPatient() {
+    createPatient(params) {
         return Api.post({
-            url: `${config.appBaseUrl}/patient/createPatient`
+            url: `${config.appBaseUrl}/patient/createPatient`,
+            params
         });
     },
 
     /**
      * 创建或更新 Patient
      */
-    createOrUpdatePatient() {
+    createOrUpdatePatient(params) {
         return Api.post({
-            url: `${config.appBaseUrl}/patient/createOrUpdatePatient`
+            url: `${config.appBaseUrl}/patient/createOrUpdatePatient`,
+            params
         });
     }
 

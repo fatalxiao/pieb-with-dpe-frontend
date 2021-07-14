@@ -58,7 +58,7 @@ vivy.use(VivyApi({
         const {
             response,
             resMsgDisabled, successResMsgDisabled,
-            actionSuccessCallback
+            successCallback
         } = action;
         const responseData = response.data.data;
 
@@ -71,7 +71,7 @@ vivy.use(VivyApi({
             responseData
         });
 
-        actionSuccessCallback?.(responseData, response);
+        successCallback?.(responseData, response);
 
     },
     failureResponseHandler: ({dispatch, getState}) => next => action => {
@@ -79,7 +79,7 @@ vivy.use(VivyApi({
         const {
             response,
             resMsgDisabled, failureResMsgDisabled,
-            actionFailureCallback
+            failureCallback
         } = action;
         const responseData = response.data.data;
 
@@ -99,7 +99,7 @@ vivy.use(VivyApi({
                 'Server or Network failure. Please try again later or contact your account manager.'
         });
 
-        actionFailureCallback?.(responseData, response);
+        failureCallback?.(responseData, response);
 
     }
 }));
