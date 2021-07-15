@@ -20,8 +20,8 @@ import VivyApi from 'vivy-api';
 import VivyAsyncComponent from 'vivy-async-component';
 
 // Sync Models
+import route from 'reduxes/models/route';
 import fullScreen from 'reduxes/models/fullScreen';
-// import moduleComponentLoading from 'reduxes/models/moduleComponentLoading';
 import notifications from 'reduxes/models/notifications';
 import toasts from 'reduxes/models/toasts';
 import responseMessage from 'reduxes/models/responseMessage';
@@ -109,8 +109,8 @@ const store = vivy.createStore();
 
 // Register model to store
 registerModels(store, [
+    route,
     fullScreen,
-    // moduleComponentLoading,
     notifications,
     toasts,
     responseMessage

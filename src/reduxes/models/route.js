@@ -7,6 +7,7 @@ import {push, replace, go, goBack, goForward} from 'connected-react-router';
 
 export default {
     nameSpace: 'route',
+    state: null,
     actions: {
 
         /**
