@@ -6,7 +6,6 @@
 import {appBaseUrl} from 'src/config';
 
 // Vendors
-import axios from 'axios';
 import Api from 'vendors/api/Api';
 import RequestManagement from 'vendors/api/RequestManagement';
 
@@ -36,9 +35,6 @@ export default {
      */
     updatePatientName(params) {
 
-        const CancelToken = axios.CancelToken;
-        const source = CancelToken.source();
-
         const name = `updatePatientName/${params?.id}`;
         RequestManagement.cancelByName(name);
 
@@ -46,7 +42,7 @@ export default {
             name,
             url: `${appBaseUrl}/patient/updatePatient`,
             params,
-            source
+            cancelable: true
         });
 
     },
