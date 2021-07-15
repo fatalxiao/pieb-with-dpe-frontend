@@ -11,11 +11,13 @@ import ModuleLoading from 'components/module/loading/ModuleLoading';
 import PatientForm from './PatientForm';
 import StepAction from 'components/StepAction';
 
+import {ApiStatus} from 'vivy-api';
+
 // Styles
 import './PatientInfo.scss';
 
 const PatientInfo = ({
-    match, getActionType,
+    match, getPatientInfoStatus,
     dispatch
 }) => {
 
@@ -33,9 +35,9 @@ const PatientInfo = ({
      * @type {boolean}
      */
     const loading = useMemo(() => {
-        return getActionType !== 'patientInfo/getPatientInfoSuccess';
+        return getPatientInfoStatus !== ApiStatus.SUCCESS;
     }, [
-        getActionType
+        getPatientInfoStatus
     ]);
 
     /**
@@ -115,12 +117,12 @@ const PatientInfo = ({
 PatientInfo.propTypes = {
 
     match: PropTypes.object,
-    getActionType: PropTypes.string,
+    getPatientInfoStatus: PropTypes.string,
 
     dispatch: PropTypes.func
 
 };
 
 export default connect(state => ({
-    getActionType: state.patientInfo.getActionType
+    getPatientInfoStatus: state.apiStatus.patientInfo?.getPatientInfo
 }))(PatientInfo);
