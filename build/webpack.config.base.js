@@ -53,10 +53,10 @@ module.exports = {
             'assets': resolveRootPath('src/assets'),
             'scss': resolveRootPath('src/assets/scss'),
             'images': resolveRootPath('src/assets/images'),
+            'models': resolveRootPath('src/models'),
             'modules': resolveRootPath('src/modules'),
             'components': resolveRootPath('src/components'),
             'customized': resolveRootPath('src/customized'),
-            'reduxes': resolveRootPath('src/reduxes'),
             'statics': resolveRootPath('src/statics'),
             'vendors': resolveRootPath('src/vendors')
         }

@@ -20,11 +20,11 @@ import VivyApi from 'vivy-api';
 import VivyAsyncComponent from 'vivy-async-component';
 
 // Sync Models
-import route from 'reduxes/models/route';
-import fullScreen from 'reduxes/models/fullScreen';
-import notifications from 'reduxes/models/notifications';
-import toasts from 'reduxes/models/toasts';
-import responseMessage from 'reduxes/models/responseMessage';
+import route from 'models/route';
+import fullScreen from 'models/fullScreen';
+import notifications from 'models/notifications';
+import toasts from 'models/toasts';
+import responseMessage from 'models/responseMessage';
 
 // Styles
 import 'assets/bootstrap/bootstrap-grid.min.css';

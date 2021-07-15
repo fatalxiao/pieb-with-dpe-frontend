@@ -1,5 +1,5 @@
 /**
- * @file notifications.js
+ * @file route.js
  */
 
 // Vendors
