@@ -11,6 +11,7 @@ import ModuleLoading from 'components/module/loading/ModuleLoading';
 import PatientForm from './PatientForm';
 import StepAction from 'components/StepAction';
 
+// Statics
 import {ApiStatus} from 'vivy-api';
 
 // Styles

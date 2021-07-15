@@ -11,8 +11,11 @@ import ModuleLoading from 'components/module/loading/ModuleLoading';
 import StepAction from 'components/StepAction';
 import ObservalForm from './ObservalForm';
 
+// Statics
+import {ApiStatus} from 'vivy-api';
+
 const ObservalData = ({
-    match, getActionType,
+    match, getObservalDataStatus,
     dispatch
 }) => {
 
@@ -26,9 +29,9 @@ const ObservalData = ({
      * @type {boolean}
      */
     const loading = useMemo(() => {
-        return getActionType !== 'observal/getObservalSuccess';
+        return getObservalDataStatus !== ApiStatus.SUCCESS;
     }, [
-        getActionType
+        getObservalDataStatus
     ]);
 
     /**
@@ -130,12 +133,12 @@ const ObservalData = ({
 ObservalData.propTypes = {
 
     match: PropTypes.object,
-    getActionType: PropTypes.string,
+    getObservalDataStatus: PropTypes.string,
 
     dispatch: PropTypes.func
 
 };
 
 export default connect(state => ({
-    getActionType: state.observal.getActionType
+    getObservalDataStatus: state.apiStatus.observal?.getObservalData
 }))(ObservalData);

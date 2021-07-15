@@ -11,11 +11,14 @@ import ModuleLoading from 'components/module/loading/ModuleLoading';
 import StepAction from 'components/StepAction';
 import AnalgesiaTable from './AnalgesiaTable';
 
+// Statics
+import {ApiStatus} from 'vivy-api';
+
 // Styles
 import './AnalgesiaData.scss';
 
 const AnalgesiaData = ({
-    match, getActionType,
+    match, getAnalgesiaStatus,
     dispatch
 }) => {
 
@@ -29,9 +32,9 @@ const AnalgesiaData = ({
      * @type {boolean}
      */
     const loading = useMemo(() => {
-        return getActionType !== 'analgesia/getAnalgesiaSuccess';
+        return getAnalgesiaStatus !== ApiStatus.SUCCESS;
     }, [
-        getActionType
+        getAnalgesiaStatus
     ]);
 
     /**
@@ -132,12 +135,12 @@ const AnalgesiaData = ({
 AnalgesiaData.propTypes = {
 
     match: PropTypes.object,
-    getActionType: PropTypes.string,
+    getAnalgesiaStatus: PropTypes.string,
 
     dispatch: PropTypes.func
 
 };
 
 export default connect(state => ({
-    getActionType: state.analgesia.getActionType
+    getAnalgesiaStatus: state.apiStatus.analgesia?.getAnalgesia
 }))(AnalgesiaData);
