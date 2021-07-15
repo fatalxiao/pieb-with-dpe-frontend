@@ -47,7 +47,7 @@
         "redux": "^4.1.0",
         "redux-thunk": "^2.3.0",
         "screenfull": "^5.1.0",
-        "vivy": "^0.0.9",
+        "vivy": "^0.0.10",
         "vivy-api": "^0.0.5",
         "vivy-async-component": "^0.0.4"
     },
