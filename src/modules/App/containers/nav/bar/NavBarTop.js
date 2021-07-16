@@ -12,7 +12,7 @@ import AddPatientDialog from 'modules/PatientEditor/containers/patientBaseInfo/A
 import NavSearch from './NavSearch';
 
 // Statics
-import config from 'src/config';
+import config from 'src/config.urlPrefix';
 import {DEFAULT_ROUTE} from 'src/config.routes';
 
 // Vendors
