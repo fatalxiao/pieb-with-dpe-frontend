@@ -3,7 +3,7 @@
  */
 
 // Statics
-import DEFAULT_MENU from 'src/menu';
+import DEFAULT_MENU from 'src/config.menu';
 
 // Vendors
 import moment from 'moment';

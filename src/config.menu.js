@@ -1,5 +1,5 @@
 /**
- * @file menu.js
+ * @file config.menu.js
  */
 
 export default [{
