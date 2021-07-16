@@ -1,5 +1,5 @@
 /**
- * @file config.sitemap.js
+ * @file sitemap.js
  */
 
 /**
