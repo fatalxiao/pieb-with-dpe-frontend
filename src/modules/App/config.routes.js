@@ -1,5 +1,5 @@
 /**
- * @file routes.js
+ * @file config.routes.js
  */
 
 // Components

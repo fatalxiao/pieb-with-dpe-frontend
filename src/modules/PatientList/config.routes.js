@@ -1,5 +1,5 @@
 /**
- * @file routes.js
+ * @file config.routes.js
  */
 
 // Components
@@ -12,7 +12,7 @@ import {AsyncComponent} from 'vivy-async-component';
  */
 export default function configureRoutes(store) {
     return {
-        path: '/',
-        component: AsyncComponent(() => import('./containers/Root'), store)
+        path: '/app/patient-list',
+        component: AsyncComponent(() => import('modules/PatientList/containers/PatientList'), store)
     };
 }

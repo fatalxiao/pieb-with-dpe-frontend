@@ -3,10 +3,10 @@
  */
 
 // Routes config
-import configureRootRoutes from 'modules/Root/routes';
-import configureAppRoutes from 'modules/App/routes';
-import configurePatientListRoutes from 'modules/PatientList/routes';
-import configurePatientEditorRoutes from 'modules/PatientEditor/routes';
+import configureRootRoutes from 'modules/Root/config.routes';
+import configureAppRoutes from 'modules/App/config.routes';
+import configurePatientListRoutes from 'modules/PatientList/config.routes';
+import configurePatientEditorRoutes from 'modules/PatientEditor/config.routes';
 
 /**
  * 返回 routes 配置
