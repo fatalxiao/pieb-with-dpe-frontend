@@ -13,7 +13,7 @@ import Toaster from 'alcedo-ui/Toaster';
 import Notifier from 'alcedo-ui/Notifier';
 
 // Statics
-import {DEFAULT_ROUTE} from 'src/config.routes';
+import {DEFAULT_ROUTE} from 'src/config.route';
 
 // Styles
 import './Root.scss';
