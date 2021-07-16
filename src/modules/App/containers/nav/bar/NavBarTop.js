@@ -13,7 +13,7 @@ import NavSearch from './NavSearch';
 
 // Statics
 import config from 'src/config';
-import {DEFAULT_ROUTE} from 'src/routes';
+import {DEFAULT_ROUTE} from 'src/config.routes';
 
 // Vendors
 import classNames from 'classnames';
