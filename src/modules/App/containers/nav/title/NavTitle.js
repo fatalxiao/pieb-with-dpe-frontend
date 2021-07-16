@@ -11,7 +11,7 @@ import {NavLink} from 'react-router-dom';
 import Crumbs from 'alcedo-ui/Crumbs';
 
 // Vendors
-import {getPath} from 'src/config.sitemap';
+import {getPath} from 'src/sitemap';
 
 // Styles
 import './NavTitle.scss';

@@ -3,9 +3,9 @@
  */
 
 // Sitemaps
-import appSitemap from 'modules/App/config.sitemap';
-import patientListSitemap from 'modules/PatientList/config.sitemap';
-import patientEditorSitemap from 'modules/PatientEditor/config.sitemap';
+import appSitemap from 'modules/App/sitemap';
+import patientListSitemap from 'modules/PatientList/sitemap';
+import patientEditorSitemap from 'modules/PatientEditor/sitemap';
 
 /**
  * sitemap root 标志
