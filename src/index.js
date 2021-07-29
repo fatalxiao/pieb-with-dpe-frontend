@@ -12,7 +12,7 @@ import {createBrowserHistory} from 'history';
 import {renderRoutes} from 'react-router-config';
 import {Provider} from 'react-redux';
 import {ConnectedRouter} from 'connected-react-router';
-import {configureRoutes} from './config.routes';
+import {configureRoutes} from './config.route';
 
 // Vivy
 import Vivy from 'vivy';

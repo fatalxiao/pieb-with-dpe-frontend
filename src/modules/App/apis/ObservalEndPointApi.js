@@ -3,7 +3,7 @@
  */
 
 // Statics
-import {appBaseUrl} from 'src/config';
+import {appBaseUrl} from 'src/config.urlPrefix';
 
 // Vendors
 import Api from 'vendors/api/Api';

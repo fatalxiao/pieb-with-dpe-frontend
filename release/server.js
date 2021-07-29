@@ -4,7 +4,7 @@ const express = require('express'),
     history = require('connect-history-api-fallback'),
     compression = require('compression'),
 
-    config = require('../src/config.js'),
+    config = require('../src/config.urlPrefix.js'),
     utils = require('./utils.js'),
 
     app = express(),

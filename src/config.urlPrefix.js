@@ -1,5 +1,5 @@
 /**
- * @file config.js
+ * @file config.urlPrefix.js
  */
 
 /**
