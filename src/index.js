@@ -15,8 +15,9 @@ import {ConnectedRouter} from 'connected-react-router';
 import {configureRoutes} from './config.routes';
 
 // Vivy
-import Vivy, {registerModels} from 'vivy';
+import Vivy from 'vivy';
 import VivyApi from 'vivy-api';
+import VivyRouter from 'vivy-router';
 import VivyAsyncComponent from 'vivy-async-component';
 
 // Sync Models
@@ -45,7 +46,12 @@ if (process.env.NODE_ENV === 'development' && module?.hot) {
 const history = createBrowserHistory();
 
 // Create vivy
-const vivy = Vivy(history);
+const vivy = Vivy();
+
+// Apply router plugin
+vivy.use(VivyRouter({
+    history
+}));
 
 // Apply async component plugin
 vivy.use(VivyAsyncComponent());
@@ -108,7 +114,7 @@ vivy.use(VivyApi({
 const store = vivy.createStore();
 
 // Register model to store
-registerModels(store, [
+store.registerModels([
     route,
     fullScreen,
     notifications,
