@@ -47,7 +47,7 @@
         "screenfull": "^5.1.0",
         "vivy": "^0.3.0",
         "vivy-api": "^0.2.1",
-        "vivy-async-component": "^0.2.3",
+        "vivy-async-component": "^0.2.4",
         "vivy-router": "^0.2.4"
     },
     "devDependencies": {
