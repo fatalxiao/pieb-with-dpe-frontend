@@ -3,7 +3,7 @@
  */
 
 // Apis
-import ObservalEndPointApi from '../apis/ObservalEndPointApi';
+import {getObservalEndPoints} from '../apis/ObservalEndPointApi';
 
 export default {
     nameSpace: 'observalEndPoint',
@@ -27,7 +27,7 @@ export default {
          * @returns {function(*): *}
          */
         getObservalEndPoints: () => dispatchApi => dispatchApi({
-            api: ObservalEndPointApi.getObservalEndPoints,
+            api: getObservalEndPoints,
             successResMsgDisabled: true
         })
 

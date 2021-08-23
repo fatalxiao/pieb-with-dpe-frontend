@@ -3,7 +3,7 @@
  */
 
 // Apis
-import PatientApi from 'modules/App/apis/PatientApi';
+import {getPatientById, createOrUpdatePatient} from 'modules/App/apis/PatientApi';
 
 /**
  * 默认的表单信息
@@ -81,7 +81,7 @@ export default {
             });
 
             dispatchApi({
-                api: PatientApi.getPatientById,
+                api: getPatientById,
                 params: {id},
                 successResMsgDisabled: true
             });
@@ -108,7 +108,7 @@ export default {
             }
 
             dispatchApi({
-                api: PatientApi.createOrUpdatePatient,
+                api: createOrUpdatePatient,
                 params: {
                     id,
                     age: data.age,

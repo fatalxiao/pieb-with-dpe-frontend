@@ -8,18 +8,14 @@ import {appBaseUrl} from 'src/config.urlPrefix';
 // Vendors
 import Api from 'vendors/api/Api';
 
-export default {
-
-    /**
-     * 获取 patient groups 数据
-     * @param options
-     * @returns {*}
-     */
-    getPatientGroups(options) {
-        return Api.get({
-            ...options,
-            url: `${appBaseUrl}/patientGroup/getPatientGroups`
-        });
-    }
-
-};
+/**
+ * 获取 patient groups 数据
+ * @param options
+ * @returns {*}
+ */
+export function getPatientGroups(options) {
+    return Api.get({
+        ...options,
+        url: `${appBaseUrl}/patientGroup/getPatientGroups`
+    });
+}

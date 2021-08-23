@@ -3,7 +3,7 @@
  */
 
 // Apis
-import GroupApi from 'modules/App/apis/PatientGroupApi';
+import {getPatientGroups} from 'modules/App/apis/PatientGroupApi';
 
 export default {
     nameSpace: 'patientGroup',
@@ -22,7 +22,7 @@ export default {
          * @returns {function(*): *}
          */
         getPatientGroups: () => dispatchApi => dispatchApi({
-            api: GroupApi.getPatientGroups,
+            api: getPatientGroups,
             successResMsgDisabled: true
         })
 

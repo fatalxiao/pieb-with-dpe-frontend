@@ -3,7 +3,10 @@
  */
 
 // Apis
-import PatientApi from '../apis/PatientsApi';
+import {
+    getPatients, getFullPatients, updatePatientName,
+    updatePatientGroup, enablePatient, disablePatient
+} from '../apis/PatientsApi';
 
 // Vendors
 import cloneDeep from 'lodash/cloneDeep';
@@ -20,7 +23,7 @@ export default {
          * @returns {function(*): *}
          */
         getPatients: () => dispatchApi => dispatchApi({
-            api: PatientApi.getPatients,
+            api: getPatients,
             successResMsgDisabled: true
         }),
 
@@ -29,7 +32,7 @@ export default {
          * @returns {function(*): *}
          */
         getFullPatients: () => dispatchApi => dispatchApi({
-            api: PatientApi.getFullPatients,
+            api: getFullPatients,
             successResMsgDisabled: true
         }),
 
@@ -46,7 +49,7 @@ export default {
             }
 
             dispatchApi({
-                api: PatientApi.updatePatientName,
+                api: updatePatientName,
                 params: {
                     id: patientId,
                     name
@@ -71,7 +74,7 @@ export default {
             }
 
             dispatchApi({
-                api: PatientApi.updatePatientGroup,
+                api: updatePatientGroup,
                 params: {
                     id: patientId,
                     groupId: group.id
@@ -95,7 +98,7 @@ export default {
             }
 
             dispatchApi({
-                api: PatientApi.enablePatient,
+                api: enablePatient,
                 params: {
                     patientId
                 },
@@ -116,7 +119,7 @@ export default {
             }
 
             dispatchApi({
-                api: PatientApi.disablePatient,
+                api: disablePatient,
                 params: {
                     patientId
                 },

@@ -3,7 +3,7 @@
  */
 
 // Apis
-import EpPlacementPointApi from 'modules/App/apis/EpPlacementPointApi';
+import {getEpPlacementPoints} from 'modules/App/apis/EpPlacementPointApi';
 
 export default {
     nameSpace: 'epPlacementPoint',
@@ -27,7 +27,7 @@ export default {
          * @returns {function(*): *}
          */
         getEpPlacementPoints: () => dispatchApi => dispatchApi({
-            api: EpPlacementPointApi.getEpPlacementPoints,
+            api: getEpPlacementPoints,
             successResMsgDisabled: true
         })
 
