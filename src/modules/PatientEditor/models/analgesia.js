@@ -3,7 +3,9 @@
  */
 
 // Apis
-import AnalgesiaApi from 'modules/PatientEditor/apis/AnalgesiaApi';
+import {
+    getAnalgesiaDataByPatientId, createOrUpdateAnalgesiaData
+} from 'modules/PatientEditor/apis/AnalgesiaApi';
 
 // Vendors
 import cloneDeep from 'lodash/cloneDeep';
@@ -117,7 +119,7 @@ export default {
          * @returns {function(*): *}
          */
         getAnalgesia: ({patientId}) => dispatchApi => dispatchApi({
-            api: AnalgesiaApi.getAnalgesiaDataByPatientId,
+            api: getAnalgesiaDataByPatientId,
             params: {patientId},
             successResMsgDisabled: true
         }),
@@ -143,7 +145,7 @@ export default {
             }
 
             return dispatchApi({
-                api: AnalgesiaApi.createOrUpdateAnalgesiaData,
+                api: createOrUpdateAnalgesiaData,
                 params: {
                     patientId,
                     analgesiaData: formatAnalgesiaData(data, analgesia.BASE_DATA)()
