@@ -3,7 +3,7 @@
  */
 
 // Apis
-import PatientApi from 'modules/App/apis/PatientApi';
+import {createPatient} from 'modules/App/apis/PatientApi';
 
 // Vendors
 import cloneDeep from 'lodash/cloneDeep';
@@ -39,7 +39,7 @@ export default {
             }
 
             dispatchApi({
-                api: PatientApi.createPatient,
+                api: createPatient,
                 params: {
                     id: data.id,
                     name: data.name,

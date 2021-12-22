@@ -8,15 +8,14 @@ import {appBaseUrl} from 'src/config.urlPrefix';
 // Vendors
 import Api from 'vendors/api/Api';
 
-export default {
-
-    /**
-     * 获取所有的 Ep Placement Point
-     */
-    getEpPlacementPoints() {
-        return Api.get({
-            url: `${appBaseUrl}/epPlacementPoint/getEPPlacementPoints`
-        });
-    }
-
-};
+/**
+ * 获取所有的 Ep Placement Point
+ * @param options
+ * @returns {*}
+ */
+export function getEpPlacementPoints(options) {
+    return Api.get({
+        ...options,
+        url: `${appBaseUrl}/epPlacementPoint/getEPPlacementPoints`
+    });
+}

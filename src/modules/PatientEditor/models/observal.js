@@ -3,7 +3,9 @@
  */
 
 // Apis
-import ObservalApi from '../apis/ObservalApi';
+import {
+    getObservalDataByPatientId, createOrUpdateObservalData
+} from '../apis/ObservalApi';
 
 /**
  * 格式化 observalData
@@ -74,7 +76,7 @@ export default {
          * @returns {function(*): *}
          */
         getObservalData: ({patientId}) => dispatchApi => dispatchApi({
-            api: ObservalApi.getObservalDataByPatientId,
+            api: getObservalDataByPatientId,
             params: {patientId},
             successResMsgDisabled: true
         }),
@@ -101,7 +103,7 @@ export default {
             }
 
             return dispatchApi({
-                api: ObservalApi.createOrUpdateObservalData,
+                api: createOrUpdateObservalData,
                 params: {
                     patientId,
                     observalData: formatObservalData(observalData)()

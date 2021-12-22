@@ -3,7 +3,7 @@
  */
 
 // Apis
-import SensoryBlockApi from '../apis/SensoryBlockApi';
+import {getSensoryBlocks} from '../apis/SensoryBlockApi';
 
 export default {
     nameSpace: 'sensoryBlock',
@@ -37,7 +37,7 @@ export default {
          * @returns {function(*): *}
          */
         getSensoryBlocks: () => dispatchApi => dispatchApi({
-            api: SensoryBlockApi.getSensoryBlocks,
+            api: getSensoryBlocks,
             successResMsgDisabled: true
         })
 
