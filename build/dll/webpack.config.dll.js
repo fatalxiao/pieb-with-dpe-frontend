@@ -47,7 +47,10 @@ module.exports = {
     plugins: [
 
         // 排除 moment 的 locale 文件夹下的语言包
-        new IgnorePlugin(/^\.\/locale$/, /moment$/),
+        new IgnorePlugin({
+            contextRegExp: /^\.\/locale$/,
+            resourceRegExp: /moment$/
+        }),
 
         new DllPlugin({
             context: __dirname,
