@@ -5,6 +5,7 @@
 import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
 import Checkbox from 'customized/MaterialCheckbox';
@@ -21,7 +22,7 @@ import './PatientForm.scss';
 
 const PatientForm = ({
     form, patientId,
-    dispatch
+    updatePatientInfo, updatePatientInfoField
 }) => {
 
     /**
@@ -29,14 +30,13 @@ const PatientForm = ({
      * @type {Function}
      */
     const save = useCallback(() => {
-        patientId && dispatch?.({
-            type: 'patientInfo/updatePatientInfo',
+        patientId && updatePatientInfo?.({
             id: patientId,
             successResMsgDisabled: true
         });
     }, [
         patientId,
-        dispatch
+        updatePatientInfo
     ]);
 
     /**
@@ -54,14 +54,13 @@ const PatientForm = ({
      * @type {Function}
      */
     const updateField = useCallback((fieldName, fieldValue) => {
-        dispatch?.({
-            type: 'patientInfo/updatePatientInfoField',
+        updatePatientInfoField?.({
             fieldName,
             fieldValue
         });
         setTimeout(() => debounceSave(), 0);
     }, [
-        dispatch, debounceSave
+        updatePatientInfoField, debounceSave
     ]);
 
     return (
@@ -158,10 +157,14 @@ PatientForm.propTypes = {
     patientId: PropTypes.string,
     form: PropTypes.object,
 
-    dispatch: PropTypes.func
+    updatePatientInfo: PropTypes.func,
+    updatePatientInfoField: PropTypes.func
 
 };
 
 export default connect(state => ({
     form: state.patientInfo.form
-}))(PatientForm);
+}), dispatch => bindModelActionCreators({
+    updatePatientInfo: 'patientInfo/updatePatientInfo',
+    updatePatientInfoField: 'patientInfo/updatePatientInfoField'
+}, dispatch))(PatientForm);
