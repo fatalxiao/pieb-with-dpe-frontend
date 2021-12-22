@@ -5,6 +5,7 @@
 import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
 import Checkbox from 'customized/MaterialCheckbox';
@@ -23,7 +24,7 @@ import './ObservalForm.scss';
 
 const ObservalForm = ({
     patientId, form, observalEndPoints, epPlacementPoints,
-    dispatch
+    createOrUpdateObservalData, updateObservalField
 }) => {
 
     /**
@@ -31,15 +32,14 @@ const ObservalForm = ({
      * @type {*}
      */
     const save = useCallback(() => {
-        patientId && dispatch?.({
-            type: 'observal/createOrUpdateObservalData',
+        patientId && createOrUpdateObservalData?.({
             patientId,
             successResMsgDisabled: true,
             failureResMsgDisabled: true
         });
     }, [
         patientId,
-        dispatch
+        createOrUpdateObservalData
     ]);
 
     /**
@@ -57,14 +57,13 @@ const ObservalForm = ({
      * @type {Function}
      */
     const updateField = useCallback((fieldName, fieldValue) => {
-        dispatch?.({
-            type: 'observal/updateObservalField',
+        updateObservalField?.({
             fieldName,
             fieldValue
         });
         setTimeout(() => debounceSave(), 0);
     }, [
-        dispatch, debounceSave
+        updateObservalField, debounceSave
     ]);
 
     return (
@@ -236,7 +235,8 @@ ObservalForm.propTypes = {
     observalEndPoints: PropTypes.array,
     epPlacementPoints: PropTypes.array,
 
-    dispatch: PropTypes.func
+    createOrUpdateObservalData: PropTypes.func,
+    updateObservalField: PropTypes.func
 
 };
 
@@ -244,4 +244,7 @@ export default connect(state => ({
     form: state.observal.form,
     observalEndPoints: state.observalEndPoint.list,
     epPlacementPoints: state.epPlacementPoint.list
-}))(ObservalForm);
+}), dispatch => bindModelActionCreators({
+    createOrUpdateObservalData: 'observal/createOrUpdateObservalData',
+    updateObservalField: 'observal/updateObservalField'
+}, dispatch))(ObservalForm);
