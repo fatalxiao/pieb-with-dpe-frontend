@@ -5,6 +5,7 @@
 import React, {useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
 import TextField from 'customized/MaterialTextField';
@@ -17,7 +18,7 @@ import './PatientListFilter.scss';
 
 const PatientListFilter = ({
     filterValue, groupList, filterGroup, statusList, filterStatus,
-    dispatch, onFilterChange
+    resetPatientBaseInfo, onFilterChange
 }) => {
 
     /**
@@ -64,11 +65,9 @@ const PatientListFilter = ({
      */
     const showAddPatientDialog = useCallback(() => {
         setAddPatientDialogVisible(true);
-        dispatch?.({
-            type: 'patientBaseInfo/resetPatientBaseInfo'
-        });
+        resetPatientBaseInfo?.();
     }, [
-        dispatch
+        resetPatientBaseInfo
     ]);
 
     /**
@@ -128,9 +127,11 @@ PatientListFilter.propTypes = {
     statusList: PropTypes.array,
     filterStatus: PropTypes.object,
 
-    dispatch: PropTypes.func,
+    resetPatientBaseInfo: PropTypes.func,
     onFilterChange: PropTypes.func
 
 };
 
-export default connect()(PatientListFilter);
+export default connect(null, dispatch => bindModelActionCreators({
+    resetPatientBaseInfo: 'patientBaseInfo/resetPatientBaseInfo'
+}, dispatch))(PatientListFilter);
