@@ -17,17 +17,21 @@ export function configureRoutes(store) {
     return [{
 
         // Root
+        // path: '/'
         ...configureRootRoutes(store),
         routes: [{
 
             // App
+            // path: '/app'
             ...configureAppRoutes(store),
             routes: [
 
                 // PatientList
+                // path: '/app/patient-list'
                 configurePatientListRoutes(store),
 
                 // PatientEditor
+                // path: '/app/patient'
                 configurePatientEditorRoutes(store)
 
             ]
