@@ -2,9 +2,10 @@
  * @file AnalgesiaAppendTimePointButton.js
  */
 
-import React, {useCallback} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
 import AnchorButton from 'alcedo-ui/AnchorButton';
@@ -13,33 +14,19 @@ import AnchorButton from 'alcedo-ui/AnchorButton';
 import './AnalgesiaAppendTimePointButton.scss';
 
 const AnalgesiaAppendTimePointButton = ({
-    dispatch
-}) => {
-
-    /**
-     * 追加时间节点
-     * @type {(function(): void)|*}
-     */
-    const appendTimePoint = useCallback(() => {
-        dispatch?.({
-            type: 'analgesia/appendTimePoint'
-        });
-    }, [
-        dispatch
-    ]);
-
-    return (
-        <AnchorButton className="analgesia-append-time-point-button"
-                      value="Append Time Point"
-                      onClick={appendTimePoint}>
-            <i className="fal fa-chevron-down down-icon"/>
-        </AnchorButton>
-    );
-
-};
+    appendTimePoint
+}) => (
+    <AnchorButton className="analgesia-append-time-point-button"
+                  value="Append Time Point"
+                  onClick={appendTimePoint}>
+        <i className="fal fa-chevron-down down-icon"/>
+    </AnchorButton>
+);
 
 AnalgesiaAppendTimePointButton.propTypes = {
-    dispatch: PropTypes.func
+    appendTimePoint: PropTypes.func
 };
 
-export default connect()(AnalgesiaAppendTimePointButton);
+export default connect(null, dispatch => bindModelActionCreators({
+    appendTimePoint: 'analgesia/appendTimePoint'
+}, dispatch))(AnalgesiaAppendTimePointButton);
