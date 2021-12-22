@@ -5,6 +5,7 @@
 import React, {useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
 import IconButton from 'alcedo-ui/IconButton';
@@ -23,7 +24,7 @@ import './NavBarTop.scss';
 
 const NavBarTop = ({
     children, isFold,
-    dispatch
+    pushRoute, resetPatientBaseInfo
 }) => {
 
     /**
@@ -43,12 +44,11 @@ const NavBarTop = ({
      * @type {function(): *}
      */
     const goToLanding = useCallback(() => {
-        dispatch?.({
-            type: 'route/push',
+        pushRoute?.({
             route: DEFAULT_ROUTE
         });
     }, [
-        dispatch
+        pushRoute
     ]);
 
     /**
@@ -75,11 +75,9 @@ const NavBarTop = ({
      */
     const showAddPatient = useCallback(() => {
         setAddPatientDialogVisible(true);
-        dispatch?.({
-            type: 'patientBaseInfo/resetPatientBaseInfo'
-        });
+        resetPatientBaseInfo?.();
     }, [
-        dispatch
+        resetPatientBaseInfo
     ]);
 
     /**
@@ -140,8 +138,12 @@ NavBarTop.propTypes = {
     children: PropTypes.any,
     isFold: PropTypes.bool,
 
-    dispatch: PropTypes.func
+    pushRoute: PropTypes.func,
+    resetPatientBaseInfo: PropTypes.func
 
 };
 
-export default connect()(NavBarTop);
+export default connect(null, dispatch => bindModelActionCreators({
+    pushRoute: 'route/push',
+    resetPatientBaseInfo: 'patientBaseInfo/resetPatientBaseInfo'
+}, dispatch))(NavBarTop);
