@@ -5,6 +5,7 @@
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
 import FlatButton from 'alcedo-ui/FlatButton';
@@ -15,7 +16,7 @@ import './NavPatientListWrapper.scss';
 
 const NavPatientListWrapper = ({
     patientList,
-    dispatch
+    pushRoute
 }) => {
 
     /**
@@ -23,12 +24,11 @@ const NavPatientListWrapper = ({
      * @type {function(): *}
      */
     const goToList = useCallback(() => {
-        dispatch?.({
-            type: 'route/push',
+        pushRoute?.({
             route: '/app/patient-list'
         });
     }, [
-        dispatch
+        pushRoute
     ]);
 
     return (
@@ -52,9 +52,11 @@ const NavPatientListWrapper = ({
 
 NavPatientListWrapper.propTypes = {
     patientList: PropTypes.array,
-    dispatch: PropTypes.func
+    pushRoute: PropTypes.func
 };
 
 export default connect(state => ({
     patientList: state.patients.list
-}))(NavPatientListWrapper);
+}), dispatch => bindModelActionCreators({
+    pushRoute: 'route/push'
+}, dispatch))(NavPatientListWrapper);
