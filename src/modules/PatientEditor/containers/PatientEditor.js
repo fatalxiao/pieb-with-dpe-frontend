@@ -5,19 +5,22 @@
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {renderRoutes} from 'react-router-config';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
 import {Redirect} from 'react-router-dom';
 import PointStep from 'alcedo-ui/PointStep';
 import ModuleCard from 'components/module/ModuleCard';
 
+// Vendors
+import {renderRoutes} from 'react-router-config';
+
 // Styles
 import './PatientEditor.scss';
 
 const PatientEditor = ({
     route, form, steps, activatedStep,
-    dispatch
+    pushRoute
 }) => {
 
     /**
@@ -25,13 +28,12 @@ const PatientEditor = ({
      * @type {Function}
      */
     const handleStepChange = useCallback(({nextActivatedStep}) => {
-        dispatch?.({
-            type: 'route/push',
+        pushRoute?.({
             route: steps?.[nextActivatedStep]?.route
         });
     }, [
         steps,
-        dispatch
+        pushRoute
     ]);
 
     return (
@@ -93,7 +95,7 @@ PatientEditor.propTypes = {
 
     activatedStep: PropTypes.number,
 
-    dispatch: PropTypes.func
+    pushRoute: PropTypes.func
 
 };
 
@@ -101,4 +103,6 @@ export default connect(state => ({
     form: state.patientInfo.form,
     steps: state.editPatient.steps,
     activatedStep: state.editPatient.activatedStep
-}))(PatientEditor);
+}), dispatch => bindModelActionCreators({
+    pushRoute: 'route/push'
+}, dispatch))(PatientEditor);
