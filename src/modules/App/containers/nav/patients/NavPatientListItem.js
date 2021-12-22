@@ -5,6 +5,7 @@
 import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
 import FlatButton from 'alcedo-ui/FlatButton';
@@ -14,7 +15,7 @@ import './NavPatientListItem.scss';
 
 const NavPatientListItem = ({
     groupList, patient,
-    dispatch
+    pushRoute
 }) => {
 
     /**
@@ -36,12 +37,12 @@ const NavPatientListItem = ({
      * @type {function(): *}
      */
     const handleClick = useCallback(() => {
-        dispatch?.({
-            type: 'route/push',
+        pushRoute?.({
             route: `/app/patient/info/${patientId}`
         });
     }, [
-        patientId, dispatch
+        patientId,
+        pushRoute
     ]);
 
     return patient ?
@@ -69,10 +70,12 @@ NavPatientListItem.propTypes = {
     groupList: PropTypes.array,
     patient: PropTypes.object,
 
-    dispatch: PropTypes.func
+    pushRoute: PropTypes.func
 
 };
 
 export default connect(state => ({
     groupList: state.patientGroup.list
-}))(NavPatientListItem);
+}), dispatch => bindModelActionCreators({
+    pushRoute: 'route/push'
+}, dispatch))(NavPatientListItem);
