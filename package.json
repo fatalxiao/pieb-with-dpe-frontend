@@ -46,7 +46,7 @@
         "react-router-dom": "^5.3.0",
         "react-transition-group": "^4.4.2",
         "screenfull": "^6.0.0",
-        "vivy": "^1.0.0",
+        "vivy": "^1.0.1",
         "vivy-api": "^1.0.0",
         "vivy-async-component": "^1.0.1",
         "vivy-router": "^1.0.0"
