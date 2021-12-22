@@ -8,7 +8,7 @@ const config = require('./config.js');
 // Vendors
 const os = require('os');
 const HappyPack = require('happypack');
-const {resolveRootPath, getAssetsSubPath} = require('./utils.js');
+const {resolveRootPath} = require('./utils.js');
 
 /**
  * css loader 配置
@@ -67,18 +67,16 @@ module.exports = {
             test: /\.js$/,
             use: 'happypack/loader?id=js'
         }, {
-            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-            loader: 'url-loader',
-            options: {
-                limit: 1000,
-                name: getAssetsSubPath('img/[name].[hash:7].[ext]')
+            test: /\.(png|jpe?g|gif|svg|cur|ico)(\?.*)?$/,
+            type: 'asset/resource',
+            generator: {
+                filename: 'img/[name]-[contenthash:8][ext]'
             }
         }, {
             test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-            loader: 'url-loader',
-            options: {
-                limit: 1000,
-                name: getAssetsSubPath('fonts/[name].[hash:7].[ext]')
+            type: 'asset/resource',
+            generator: {
+                filename: 'font/[name]-[contenthash:8][ext]'
             }
         }, {
             test: /\.scss$/,
