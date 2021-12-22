@@ -2,76 +2,51 @@
  * @file Root.js
  */
 
-import React, {useCallback} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {renderRoutes} from 'react-router-config';
-import {Redirect} from 'react-router-dom';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
+import {Redirect} from 'react-router-dom';
 import Toaster from 'alcedo-ui/Toaster';
 import Notifier from 'alcedo-ui/Notifier';
 
 // Statics
 import {DEFAULT_ROUTE} from 'src/config.route';
 
+// Vendors
+import {renderRoutes} from 'react-router-config';
+
 // Styles
 import './Root.scss';
 
 const Root = ({
     toasts, notifications, route, location,
-    dispatch
-}) => {
+    clearToasts, clearNotifications
+}) => (
+    <div className="root">
 
-    /**
-     * 处理 toasts 出栈
-     * @type {(function(): void)|*}
-     */
-    const clearToasts = useCallback(() => {
-        dispatch?.({
-            type: 'toasts/clearToasts'
-        });
-    }, [
-        dispatch
-    ]);
+        <Toaster toasts={toasts}
+                 position={Toaster.Position.TOP}
+                 onToastPop={clearToasts}/>
 
-    /**
-     * 处理 notifications 出栈
-     * @type {(function(): void)|*}
-     */
-    const clearNotifications = useCallback(() => {
-        dispatch?.({
-            type: 'notifications/clearNotifications'
-        });
-    }, [
-        dispatch
-    ]);
+        <Notifier notifications={notifications}
+                  position={Notifier.Position.TOP_RIGHT}
+                  onNotificationPop={clearNotifications}
+                  duration={8000}/>
 
-    return (
-        <div className="root">
+        {renderRoutes(route.routes)}
 
-            <Toaster toasts={toasts}
-                     position={Toaster.Position.TOP}
-                     onToastPop={clearToasts}/>
+        {
+            location.pathname === '/' ?
+                <Redirect from="/" to={DEFAULT_ROUTE}/>
+                :
+                null
+        }
 
-            <Notifier notifications={notifications}
-                      position={Notifier.Position.TOP_RIGHT}
-                      onNotificationPop={clearNotifications}
-                      duration={8000}/>
-
-            {renderRoutes(route.routes)}
-
-            {
-                location.pathname === '/' ?
-                    <Redirect from="/" to={DEFAULT_ROUTE}/>
-                    :
-                    null
-            }
-
-        </div>
-    );
-
-};
+    </div>
+);
 
 Root.propTypes = {
 
@@ -81,11 +56,15 @@ Root.propTypes = {
     toasts: PropTypes.array,
     notifications: PropTypes.array,
 
-    dispatch: PropTypes.func
+    clearToasts: PropTypes.func,
+    clearNotifications: PropTypes.func
 
 };
 
 export default connect(state => ({
     toasts: state.toasts,
     notifications: state.notifications
-}))(Root);
+}), dispatch => bindModelActionCreators({
+    clearToasts: 'toasts/clearToasts',
+    clearNotifications: 'notifications/clearNotifications'
+}, dispatch))(Root);
