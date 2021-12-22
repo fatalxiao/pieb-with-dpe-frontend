@@ -5,6 +5,7 @@
 import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
 import {NavLink} from 'react-router-dom';
@@ -22,7 +23,7 @@ import './PatientListTable.scss';
 
 const PatientListTable = ({
     groupList, data,
-    dispatch
+    updatePatientName, updatePatientGroup, enablePatient, disablePatient
 }) => {
 
     /**
@@ -30,13 +31,12 @@ const PatientListTable = ({
      * @type {*}
      */
     const handleNameChange = useCallback((patientId, value) => {
-        dispatch?.({
-            type: 'patients/updatePatientName',
+        updatePatientName?.({
             patientId,
             name: value
         });
     }, [
-        dispatch
+        updatePatientName
     ]);
 
     /**
@@ -54,13 +54,12 @@ const PatientListTable = ({
      * @type {function(*=, *=): *}
      */
     const handleGroupChange = useCallback((patientId, value) => {
-        dispatch?.({
-            type: 'patients/updatePatientGroup',
+        updatePatientGroup?.({
             patientId,
             group: value
         });
     }, [
-        dispatch
+        updatePatientGroup
     ]);
 
     /**
@@ -68,15 +67,16 @@ const PatientListTable = ({
      * @type {function(*=, *): *}
      */
     const handleStatusChange = useCallback((patientId, value) => {
-        dispatch?.({
-            type: value ?
-                'patients/enablePatient'
-                :
-                'patients/disablePatient',
-            patientId
-        });
+        value ?
+            enablePatient?.({
+                patientId
+            })
+            :
+            disablePatient?.({
+                patientId
+            });
     }, [
-        dispatch
+        enablePatient, disablePatient
     ]);
 
     /**
@@ -154,10 +154,18 @@ PatientListTable.propTypes = {
     groupList: PropTypes.array,
     data: PropTypes.array,
 
-    dispatch: PropTypes.func
+    updatePatientName: PropTypes.func,
+    updatePatientGroup: PropTypes.func,
+    enablePatient: PropTypes.func,
+    disablePatient: PropTypes.func
 
 };
 
 export default connect(state => ({
     groupList: state.patientGroup.list
-}))(PatientListTable);
+}), dispatch => bindModelActionCreators({
+    updatePatientName: 'patients/updatePatientName',
+    updatePatientGroup: 'patients/updatePatientGroup',
+    enablePatient: 'patients/enablePatient',
+    disablePatient: 'patients/disablePatient'
+}, dispatch))(PatientListTable);
