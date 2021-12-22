@@ -5,6 +5,7 @@
 import React, {useMemo, useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
 import ModuleLoading from 'components/module/loading/ModuleLoading';
@@ -19,7 +20,7 @@ import './PatientInfo.scss';
 
 const PatientInfo = ({
     match, getPatientInfoStatus,
-    dispatch
+    pushRoute, getPatientInfo, updatePatientInfo, updatePatientStep
 }) => {
 
     /**
@@ -47,18 +48,16 @@ const PatientInfo = ({
      */
     const loadData = useCallback(() => {
         patientId ?
-            dispatch?.({
-                type: 'patientInfo/getPatientInfo',
+            getPatientInfo?.({
                 id: patientId
             })
             :
-            dispatch?.({
-                type: 'route/push',
+            pushRoute?.({
                 route: '/app/patient-list'
             });
     }, [
         patientId,
-        dispatch
+        getPatientInfo, pushRoute
     ]);
 
     /**
@@ -66,29 +65,26 @@ const PatientInfo = ({
      * @type {function(): *}
      */
     const save = useCallback(() => {
-        dispatch?.({
-            type: 'patientInfo/updatePatientInfo',
+        updatePatientInfo?.({
             id: patientId,
-            callback: () => dispatch?.({
-                type: 'route/push',
+            callback: () => pushRoute?.({
                 route: `/app/patient/analgesia/${patientId}`
             })
         });
     }, [
         patientId,
-        dispatch
+        updatePatientInfo, pushRoute
     ]);
 
     /**
      * 更新 step
      */
     useEffect(() => {
-        dispatch?.({
-            type: 'editPatient/updatePatientStep',
+        updatePatientStep?.({
             activatedStep: 0
         });
     }, [
-        dispatch
+        updatePatientStep
     ]);
 
     /**
@@ -120,10 +116,18 @@ PatientInfo.propTypes = {
     match: PropTypes.object,
     getPatientInfoStatus: PropTypes.string,
 
-    dispatch: PropTypes.func
+    pushRoute: PropTypes.func,
+    getPatientInfo: PropTypes.func,
+    updatePatientInfo: PropTypes.func,
+    updatePatientStep: PropTypes.func
 
 };
 
 export default connect(state => ({
     getPatientInfoStatus: state.apiStatus.patientInfo?.getPatientInfo
-}))(PatientInfo);
+}), dispatch => bindModelActionCreators({
+    pushRoute: 'route/push',
+    getPatientInfo: 'patientInfo/getPatientInfo',
+    updatePatientInfo: 'patientInfo/updatePatientInfo',
+    updatePatientStep: 'editPatient/updatePatientStep'
+}, dispatch))(PatientInfo);
