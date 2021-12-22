@@ -5,6 +5,7 @@
 import React, {useMemo, useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
 import ModuleLoading from 'components/module/loading/ModuleLoading';
@@ -16,7 +17,7 @@ import {ApiStatus} from 'vivy-api';
 
 const ObservalData = ({
     match, getObservalDataStatus,
-    dispatch
+    pushRoute, getPatientInfo, getObservalData, createOrUpdateObservalData, updatePatientStep
 }) => {
 
     /**
@@ -41,24 +42,21 @@ const ObservalData = ({
     const loadData = useCallback(() => {
 
         if (!patientId) {
-            dispatch?.({
-                type: 'route/push',
+            pushRoute?.({
                 route: '/app/patient-list'
             });
         }
 
-        dispatch?.({
-            type: 'patientInfo/getPatientInfo',
+        getPatientInfo?.({
             id: patientId
         });
-        dispatch?.({
-            type: 'observal/getObservalData',
+        getObservalData?.({
             patientId
         });
 
     }, [
         patientId,
-        dispatch
+        pushRoute, getPatientInfo, getObservalData
     ]);
 
     /**
@@ -66,13 +64,12 @@ const ObservalData = ({
      * @type {function(): *}
      */
     const prevStep = useCallback(() => {
-        dispatch?.({
-            type: 'route/push',
+        pushRoute?.({
             route: `/app/patient/analgesia/${patientId}`
         });
     }, [
         patientId,
-        dispatch
+        pushRoute
     ]);
 
     /**
@@ -80,17 +77,15 @@ const ObservalData = ({
      * @type {function(): *}
      */
     const save = useCallback(() => {
-        dispatch?.({
-            type: 'observal/createOrUpdateObservalData',
+        createOrUpdateObservalData?.({
             patientId,
-            callback: () => dispatch?.({
-                type: 'route/push',
+            callback: () => pushRoute?.({
                 route: '/app/patient-list'
             })
         });
     }, [
         patientId,
-        dispatch
+        createOrUpdateObservalData, pushRoute
     ]);
 
     /**
@@ -106,12 +101,11 @@ const ObservalData = ({
      * 初始更新 step
      */
     useEffect(() => {
-        dispatch?.({
-            type: 'editPatient/updatePatientStep',
+        updatePatientStep?.({
             activatedStep: 2
         });
     }, [
-        dispatch
+        updatePatientStep
     ]);
 
     return (
@@ -135,10 +129,20 @@ ObservalData.propTypes = {
     match: PropTypes.object,
     getObservalDataStatus: PropTypes.string,
 
-    dispatch: PropTypes.func
+    pushRoute: PropTypes.func,
+    getPatientInfo: PropTypes.func,
+    getObservalData: PropTypes.func,
+    createOrUpdateObservalData: PropTypes.func,
+    updatePatientStep: PropTypes.func
 
 };
 
 export default connect(state => ({
     getObservalDataStatus: state.apiStatus.observal?.getObservalData
-}))(ObservalData);
+}), dispatch => bindModelActionCreators({
+    pushRoute: 'route/push',
+    getPatientInfo: 'patientInfo/getPatientInfo',
+    getObservalData: 'observal/getObservalData',
+    createOrUpdateObservalData: 'observal/createOrUpdateObservalData',
+    updatePatientStep: 'editPatient/updatePatientStep'
+}, dispatch))(ObservalData);
