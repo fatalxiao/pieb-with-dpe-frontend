@@ -5,6 +5,7 @@
 import React, {useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
 import Dialog from 'alcedo-ui/Dialog';
@@ -21,7 +22,7 @@ import './AddPatientDialog.scss';
 
 const AddPatientDialog = ({
     groupList, form, visible,
-    dispatch, onRequestClose
+    pushRoute, updatePatientBaseInfoField, createPatient, onRequestClose
 }) => {
 
     /**
@@ -39,15 +40,14 @@ const AddPatientDialog = ({
             setErrorMsg('');
         }
 
-        dispatch?.({
-            type: 'patientBaseInfo/updatePatientBaseInfoField',
+        updatePatientBaseInfoField?.({
             fieldName,
             fieldValue
         });
 
     }, [
         errorMsg,
-        dispatch
+        updatePatientBaseInfoField
     ]);
 
     /**
@@ -75,12 +75,10 @@ const AddPatientDialog = ({
             return;
         }
 
-        dispatch?.({
-            type: 'patientBaseInfo/createPatient',
+        createPatient?.({
             callback: () => {
                 onRequestClose();
-                dispatch?.({
-                    type: 'route/push',
+                pushRoute?.({
                     route: `/app/patient/info/${form.id}`
                 });
             }
@@ -88,7 +86,7 @@ const AddPatientDialog = ({
 
     }, [
         form,
-        dispatch, onRequestClose
+        createPatient, onRequestClose, pushRoute
     ]);
 
     return (
@@ -149,7 +147,9 @@ AddPatientDialog.propTypes = {
 
     visible: PropTypes.bool,
 
-    dispatch: PropTypes.func,
+    pushRoute: PropTypes.func,
+    updatePatientBaseInfoField: PropTypes.func,
+    createPatient: PropTypes.func,
     onRequestClose: PropTypes.func
 
 };
@@ -157,4 +157,8 @@ AddPatientDialog.propTypes = {
 export default connect(state => ({
     groupList: state.patientGroup.list,
     form: state.patientBaseInfo.form
-}))(AddPatientDialog);
+}), dispatch => bindModelActionCreators({
+    pushRoute: 'route/push',
+    updatePatientBaseInfoField: 'patientBaseInfo/updatePatientBaseInfoField',
+    createPatient: 'patientBaseInfo/createPatient'
+}, dispatch))(AddPatientDialog);
