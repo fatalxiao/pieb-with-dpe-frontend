@@ -5,6 +5,7 @@
 import React, {useMemo, useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
 import ModuleLoading from 'components/module/loading/ModuleLoading';
@@ -19,7 +20,7 @@ import './AnalgesiaData.scss';
 
 const AnalgesiaData = ({
     match, getAnalgesiaStatus,
-    dispatch
+    pushRoute, getPatientInfo, getAnalgesia, createOrUpdateAnalgesiaData, updatePatientStep
 }) => {
 
     /**
@@ -44,24 +45,21 @@ const AnalgesiaData = ({
     const loadData = useCallback(() => {
 
         if (!patientId) {
-            dispatch?.({
-                type: 'route/push',
+            pushRoute?.({
                 route: '/app/patient-list'
             });
         }
 
-        dispatch?.({
-            type: 'patientInfo/getPatientInfo',
+        getPatientInfo?.({
             id: patientId
         });
-        dispatch?.({
-            type: 'analgesia/getAnalgesia',
+        getAnalgesia?.({
             patientId
         });
 
     }, [
         patientId,
-        dispatch
+        pushRoute, getPatientInfo, getAnalgesia
     ]);
 
     /**
@@ -69,13 +67,12 @@ const AnalgesiaData = ({
      * @type {function(): *}
      */
     const prevStep = useCallback(() => {
-        dispatch?.({
-            type: 'route/push',
+        pushRoute?.({
             route: `/app/patient/info/${patientId}`
         });
     }, [
         patientId,
-        dispatch
+        pushRoute
     ]);
 
     /**
@@ -83,17 +80,15 @@ const AnalgesiaData = ({
      * @type {function(): *}
      */
     const save = useCallback(() => {
-        dispatch?.({
-            type: 'analgesia/createOrUpdateAnalgesiaData',
+        createOrUpdateAnalgesiaData?.({
             patientId,
-            callback: () => dispatch?.({
-                type: 'route/push',
+            callback: () => pushRoute?.({
                 route: `/app/patient/observal/${patientId}`
             })
         });
     }, [
         patientId,
-        dispatch
+        createOrUpdateAnalgesiaData, pushRoute
     ]);
 
     /**
@@ -109,12 +104,11 @@ const AnalgesiaData = ({
      * 初始更新 step
      */
     useEffect(() => {
-        dispatch?.({
-            type: 'editPatient/updatePatientStep',
+        updatePatientStep?.({
             activatedStep: 1
         });
     }, [
-        dispatch
+        updatePatientStep
     ]);
 
     return (
@@ -137,10 +131,20 @@ AnalgesiaData.propTypes = {
     match: PropTypes.object,
     getAnalgesiaStatus: PropTypes.string,
 
-    dispatch: PropTypes.func
+    pushRoute: PropTypes.func,
+    getPatientInfo: PropTypes.func,
+    getAnalgesia: PropTypes.func,
+    createOrUpdateAnalgesiaData: PropTypes.func,
+    updatePatientStep: PropTypes.func
 
 };
 
 export default connect(state => ({
     getAnalgesiaStatus: state.apiStatus.analgesia?.getAnalgesia
-}))(AnalgesiaData);
+}), dispatch => bindModelActionCreators({
+    pushRoute: 'route/push',
+    getPatientInfo: 'patientInfo/getPatientInfo',
+    getAnalgesia: 'analgesia/getAnalgesia',
+    createOrUpdateAnalgesiaData: 'analgesia/createOrUpdateAnalgesiaData',
+    updatePatientStep: 'editPatient/updatePatientStep'
+}, dispatch))(AnalgesiaData);
