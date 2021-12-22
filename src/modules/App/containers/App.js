@@ -2,9 +2,10 @@
  * @file App.js
  */
 
-import React, {useMemo, useCallback, useEffect} from 'react';
+import React, {useMemo, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
 import Nav from './nav/Nav';
@@ -24,11 +25,13 @@ import './App.scss';
 const App = ({
 
     route,
+
     asyncComponentLoading,
+
     getPatientGroupsStatus, getSensoryBlocksStatus,
     getObservalEndPointsStatus, getEpPlacementPointsStatus,
 
-    dispatch
+    getPatientGroups, getSensoryBlocks, getObservalEndPoints, getEpPlacementPoints, getPatients
 
 }) => {
 
@@ -47,74 +50,14 @@ const App = ({
     ]);
 
     /**
-     * 获取 Patient Groups
-     * @type {(function(): void)|*}
-     */
-    const getPatientGroups = useCallback(() => {
-        dispatch({
-            type: 'patientGroup/getPatientGroups'
-        });
-    }, [
-        dispatch
-    ]);
-
-    /**
-     * 获取所有的 Sensory Blocks
-     * @type {(function(): void)|*}
-     */
-    const getSensoryBlocks = useCallback(() => {
-        dispatch({
-            type: 'sensoryBlock/getSensoryBlocks'
-        });
-    }, [
-        dispatch
-    ]);
-
-    /**
-     * 获取所有的 Observal End Point
-     * @type {(function(): void)|*}
-     */
-    const getObservalEndPoints = useCallback(() => {
-        dispatch({
-            type: 'observalEndPoint/getObservalEndPoints'
-        });
-    }, [
-        dispatch
-    ]);
-
-    /**
-     * 获取所有的 Ep Placement Point
-     * @type {(function(): void)|*}
-     */
-    const getEpPlacementPoints = useCallback(() => {
-        dispatch({
-            type: 'epPlacementPoint/getEpPlacementPoints'
-        });
-    }, [
-        dispatch
-    ]);
-
-    /**
-     * 获取用于表格的 patients 数据
-     * @type {(function(): void)|*}
-     */
-    const getPatients = useCallback(() => {
-        dispatch({
-            type: 'patients/getPatients'
-        });
-    }, [
-        dispatch
-    ]);
-
-    /**
      * init
      */
     useEffect(() => {
-        getPatientGroups();
-        getSensoryBlocks();
-        getObservalEndPoints();
-        getEpPlacementPoints();
-        getPatients();
+        getPatientGroups?.();
+        getSensoryBlocks?.();
+        getObservalEndPoints?.();
+        getEpPlacementPoints?.();
+        getPatients?.();
     }, [
         getPatientGroups, getSensoryBlocks, getObservalEndPoints, getEpPlacementPoints,
         getPatients
@@ -156,7 +99,11 @@ App.propTypes = {
     getObservalEndPointsStatus: PropTypes.string,
     getEpPlacementPointsStatus: PropTypes.string,
 
-    dispatch: PropTypes.func
+    getPatientGroups: PropTypes.func,
+    getSensoryBlocks: PropTypes.func,
+    getObservalEndPoints: PropTypes.func,
+    getEpPlacementPoints: PropTypes.func,
+    getPatients: PropTypes.func
 
 };
 
@@ -169,4 +116,10 @@ export default connect(state => ({
     getObservalEndPointsStatus: state.apiStatus.observalEndPoint?.getObservalEndPoints,
     getEpPlacementPointsStatus: state.apiStatus.epPlacementPoint?.getEpPlacementPoints
 
-}))(App);
+}), dispatch => bindModelActionCreators({
+    getPatientGroups: 'patientGroup/getPatientGroups',
+    getSensoryBlocks: 'sensoryBlock/getSensoryBlocks',
+    getObservalEndPoints: 'observalEndPoint/getObservalEndPoints',
+    getEpPlacementPoints: 'epPlacementPoint/getEpPlacementPoints',
+    getPatients: 'patients/getPatients'
+}, dispatch))(App);
