@@ -5,6 +5,7 @@
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
 import IconButton from 'alcedo-ui/IconButton';
