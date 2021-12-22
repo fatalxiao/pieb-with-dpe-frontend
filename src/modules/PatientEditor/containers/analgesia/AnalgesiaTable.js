@@ -5,6 +5,7 @@
 import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
 
 // Components
 import ModuleTableCard from 'components/module/table/ModuleTableCard';
@@ -22,7 +23,7 @@ import './AnalgesiaTable.scss';
 
 const AnalgesiaTable = ({
     patientId, thoracicList, sacralList, analgesiaData,
-    dispatch
+    createOrUpdateAnalgesiaData, updateAnalgesiaDataField
 }) => {
 
     /**
@@ -30,14 +31,13 @@ const AnalgesiaTable = ({
      * @type {*}
      */
     const save = useCallback(() => {
-        patientId && dispatch?.({
-            type: 'analgesia/createOrUpdateAnalgesiaData',
+        patientId && createOrUpdateAnalgesiaData?.({
             patientId,
             successResMsgDisabled: true
         });
     }, [
         patientId,
-        dispatch
+        createOrUpdateAnalgesiaData
     ]);
 
     /**
@@ -54,15 +54,14 @@ const AnalgesiaTable = ({
      * @type {Function}
      */
     const updateField = useCallback((timePoint, fieldName, fieldValue) => {
-        dispatch?.({
-            type: 'analgesia/updateAnalgesiaDataField',
+        updateAnalgesiaDataField?.({
             timePoint,
             fieldName,
             fieldValue
         });
         setTimeout(() => debounceSave(), 0);
     }, [
-        dispatch, debounceSave
+        updateAnalgesiaDataField, debounceSave
     ]);
 
     /**
@@ -185,7 +184,8 @@ AnalgesiaTable.propTypes = {
     sacralList: PropTypes.array,
     analgesiaData: PropTypes.array,
 
-    dispatch: PropTypes.func
+    createOrUpdateAnalgesiaData: PropTypes.func,
+    updateAnalgesiaDataField: PropTypes.func
 
 };
 
@@ -193,4 +193,7 @@ export default connect(state => ({
     thoracicList: state.sensoryBlock.thoracicList,
     sacralList: state.sensoryBlock.sacralList,
     analgesiaData: state.analgesia.data
-}))(AnalgesiaTable);
+}), dispatch => bindModelActionCreators({
+    createOrUpdateAnalgesiaData: 'analgesia/createOrUpdateAnalgesiaData',
+    updateAnalgesiaDataField: 'analgesia/updateAnalgesiaDataField'
+}, dispatch))(AnalgesiaTable);
