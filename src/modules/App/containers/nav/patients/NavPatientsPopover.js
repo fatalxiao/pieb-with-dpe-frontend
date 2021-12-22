@@ -16,7 +16,7 @@ import PatientList from './NavPatientList';
 import './NavPatientsPopover.scss';
 
 const NavPatientsPopover = ({
-    dispatch
+    pushRoute
 }) => {
 
     /**
@@ -24,12 +24,11 @@ const NavPatientsPopover = ({
      * @type {function(): *}
      */
     const goToList = useCallback(() => {
-        dispatch?.({
-            type: 'route/push',
+        pushRoute?.({
             route: '/app/patient-list'
         });
     }, [
-        dispatch
+        pushRoute
     ]);
 
     return (
@@ -50,11 +49,9 @@ const NavPatientsPopover = ({
 };
 
 NavPatientsPopover.propTypes = {
-
-    isFold: PropTypes.bool,
-
-    dispatch: PropTypes.func
-
+    pushRoute: PropTypes.func
 };
 
-export default connect()(NavPatientsPopover);
+export default connect(null, dispatch => bindModelActionCreators({
+    pushRoute: 'route/push'
+}, dispatch))(NavPatientsPopover);
