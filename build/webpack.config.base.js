@@ -6,8 +6,6 @@
 const config = require('./config.js');
 
 // Vendors
-const os = require('os');
-const HappyPack = require('happypack');
 const {resolveRootPath} = require('./utils.js');
 
 /**
@@ -64,8 +62,11 @@ module.exports = {
 
     module: {
         rules: [{
-            test: /\.js$/,
-            use: 'happypack/loader?id=js'
+            test: /\.m?js$/,
+            use: {
+                loader: 'babel-loader'
+            },
+            include: resolveRootPath('src')
         }, {
             test: /\.(png|jpe?g|gif|svg|cur|ico)(\?.*)?$/,
             type: 'asset/resource',
@@ -92,15 +93,6 @@ module.exports = {
             test: /\.css$/,
             use: cssLoaderConfig
         }]
-    },
-
-    plugins: [
-        new HappyPack({
-            id: 'js',
-            threadPool: HappyPack.ThreadPool({size: os.cpus().length}),
-            loaders: ['babel-loader?cacheDirectory=true'],
-            verbose: false
-        })
-    ]
+    }
 
 };
