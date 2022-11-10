@@ -7,7 +7,7 @@
 import React from 'react';
 
 // Vendors
-import {render} from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import {createBrowserHistory} from 'history';
 import {renderRoutes} from 'react-router-config';
 import {Provider} from 'react-redux';
@@ -23,13 +23,6 @@ import 'customized/index.scss';
 import 'scss/global.scss';
 import 'scss/index.scss';
 
-/**
- * 开发环境时，添加热替换监听
- */
-if (process.env.NODE_ENV === 'development' && module?.hot) {
-    module.hot.accept();
-}
-
 // Create browser history
 const history = createBrowserHistory();
 
@@ -39,11 +32,17 @@ const store = configureStore(history);
 /**
  * 渲染应用到dom
  */
-render(
+createRoot(document.getElementById('app-container')).render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
             {renderRoutes(configureRoutes(store))}
         </ConnectedRouter>
-    </Provider>,
-    document.getElementById('app-container')
+    </Provider>
 );
+
+/**
+ * 开发环境时，添加热替换监听
+ */
+if (module?.hot) {
+    module.hot.accept();
+}
