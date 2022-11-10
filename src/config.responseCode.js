@@ -1,5 +1,5 @@
 /**
- * @file config.requestCode.js
+ * @file config.responseCode.js
  */
 
 export default {
